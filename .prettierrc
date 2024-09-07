@@ -1,0 +1,33 @@
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": false,
+  "printWidth": 120,
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "importOrder": [
+    "^@/.*(?<!\\.(c|le|sc)ss)$",
+    "\\.\\.\\/\\.\\.\\/.*(?<!\\.(c|le|sc)ss)$",
+    "\\.\\.\\/|\\.\\/.*(?<!\\.(c|le|sc)ss)$",
+    "^\\.\\.$",
+    "\\.(c|le|sc)ss$"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "overrides": [
+    {
+      "files": ["*.json", ".eslintrc"],
+      "options": {
+        "trailingComma": "none"
+      }
+    },
+    {
+      "files": ["*.jsx", "*.tsx"],
+      "options": {
+        "printWidth": 80
+      }
+    }
+  ]
+}

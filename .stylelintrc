@@ -1,0 +1,20 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-css-modules"],
+  "plugins": ["stylelint-prettier"],
+  "rules": {
+    "prettier/prettier": true
+  },
+  "overrides": [
+    {
+      "files": ["*.module.css"],
+      "rules": {
+        "selector-class-pattern": [
+          "^[a-z][a-zA-Z]+$",
+          {
+            "message": "Use camelCase for selectors in module CSS files"
+          }
+        ]
+      }
+    }
+  ]
+}

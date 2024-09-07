@@ -1,0 +1,4 @@
+{
+  "src/**/*.{ts,tsx}": ["eslint --quiet --fix", "prettier --write"],
+  "src/**/*.{css,module.css}": ["stylelint -q --fix", "prettier --write"]
+}
