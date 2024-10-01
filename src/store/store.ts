@@ -1,9 +1,10 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 
+import { authSlice } from "./slices/authSlice";
 import { counterSlice } from "./slices/counterSlice";
 
-const rootReducer = combineSlices(counterSlice);
+const rootReducer = combineSlices(counterSlice, authSlice);
 
 export const makeStore = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({
