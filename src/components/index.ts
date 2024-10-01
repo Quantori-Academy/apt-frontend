@@ -2,3 +2,8 @@ export { Counter } from "./Counter";
 export { PageLayout } from "./PageLayout";
 export { PageLoader } from "./PageLoader";
 export { StatusChecker } from "./StatusChecker";
+export { StorageLocationsList } from "./StorageLocationsList";
+export { StorageLocationsToolbar } from "./StorageLocationsToolbar";
+export { DeleteOrEditConfirmationModal } from "./Modal";
+export { GoBack } from "./GoBack";
+export { StorageLocationItem } from "./StorageLocationItem";
