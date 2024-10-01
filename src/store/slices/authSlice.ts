@@ -43,6 +43,10 @@ export const authSlice = createReducerSlice({
       localStorage.removeItem("refreshToken");
     }),
   }),
+  selectors: {
+    selectError: (state) => state.error,
+    selectLoading: (state) => state.isLoading,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
@@ -60,3 +64,4 @@ export const authSlice = createReducerSlice({
 });
 
 export const { logout } = authSlice.actions;
+export const { selectError, selectLoading } = authSlice.selectors;

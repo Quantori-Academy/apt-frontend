@@ -1,6 +1,14 @@
 import { Login } from "@mui/icons-material";
 import { Box, Button, TextField } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import { ChangeEvent, FormEvent, useState } from "react";
+
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import {
+  loginUser,
+  selectError,
+  selectLoading,
+} from "@/store/slices/authSlice";
 
 import styles from "./loginForm.module.css";
 
@@ -10,6 +18,9 @@ interface IUserData {
 }
 
 const LoginForm: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const error = useAppSelector(selectError);
+  const isLoading = useAppSelector(selectLoading);
   const [userData, setUserData] = useState<IUserData>({
     username: "",
     password: "",
@@ -42,6 +53,7 @@ const LoginForm: React.FC = () => {
       return;
     }
     console.log(userData);
+    dispatch(loginUser(userData));
   };
   return (
     <div className={styles.container}>
@@ -70,15 +82,25 @@ const LoginForm: React.FC = () => {
           value={userData.password}
           onChange={handleChange}
         />
-        <Button
-          type="submit"
-          variant="outlined"
-          size="small"
-          sx={{ width: "auto", alignSelf: "center" }}
-        >
-          Login
-          <Login />
-        </Button>
+
+        <div className={styles.buttonContainer}>
+          {isLoading ? (
+            <div>
+              <CircularProgress size="35px" />
+            </div>
+          ) : (
+            <Button
+              type="submit"
+              variant="outlined"
+              size="small"
+              sx={{ display: "flex", gap: "3px" }}
+            >
+              <span>Login</span> <Login />
+            </Button>
+          )}
+        </div>
+
+        <div>{error}</div>
       </Box>
     </div>
   );
