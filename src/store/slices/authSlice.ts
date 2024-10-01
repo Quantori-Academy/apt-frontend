@@ -8,6 +8,7 @@ interface authSliceState {
   isLoading: boolean;
   error: string | null;
 }
+
 interface ILoginData {
   username: string;
   password: string;
