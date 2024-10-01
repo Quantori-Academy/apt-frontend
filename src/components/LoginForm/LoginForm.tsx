@@ -14,12 +14,33 @@ const LoginForm: React.FC = () => {
     username: "",
     password: "",
   });
+
+  const [requiredUsernameError, setRequiredUsernameError] =
+    useState<boolean>(false);
+  const [requiredPasswordError, setRequiredPasswordError] =
+    useState<boolean>(false);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    setRequiredUsernameError(false);
+    setRequiredPasswordError(false);
+    let hasError: boolean = false;
+    if (!userData.username) {
+      setRequiredUsernameError(true);
+      hasError = true;
+    }
+    if (!userData.password) {
+      setRequiredPasswordError(true);
+      hasError = true;
+    }
+    if (hasError) {
+      return;
+    }
     console.log(userData);
   };
   return (
@@ -30,24 +51,24 @@ const LoginForm: React.FC = () => {
         className={styles.boxContainer}
       >
         <TextField
-          label="Username"
+          error={requiredUsernameError}
+          label={`Username${requiredUsernameError ? " required" : ""}`}
           name="username"
           type="text"
           variant="outlined"
           size="small"
           value={userData.username}
           onChange={handleChange}
-          required
         />
         <TextField
-          label="Password"
+          error={requiredPasswordError}
+          label={`Password${requiredPasswordError ? " required" : ""}`}
           name="password"
           type="password"
           variant="outlined"
           size="small"
           value={userData.password}
           onChange={handleChange}
-          required
         />
         <Button
           type="submit"
