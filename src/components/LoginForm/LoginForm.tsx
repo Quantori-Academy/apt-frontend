@@ -1,5 +1,8 @@
+import { Login } from "@mui/icons-material";
 import { Box, Button, TextField } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
+
+import styles from "./loginForm.module.css";
 
 interface IUserData {
   username: string;
@@ -20,29 +23,43 @@ const LoginForm: React.FC = () => {
     console.log(userData);
   };
   return (
-    <Box component="form" onSubmit={handleSubmit}>
-      <TextField
-        label="Username"
-        name="username"
-        type="text"
-        variant="outlined"
-        value={userData.username}
-        onChange={handleChange}
-        required
-      />
-      <TextField
-        label="Password"
-        name="password"
-        type="password"
-        variant="outlined"
-        value={userData.password}
-        onChange={handleChange}
-        required
-      />
-      <Button type="submit" variant="contained" color="primary">
-        Login
-      </Button>
-    </Box>
+    <div className={styles.container}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        className={styles.boxContainer}
+      >
+        <TextField
+          label="Username"
+          name="username"
+          type="text"
+          variant="outlined"
+          size="small"
+          value={userData.username}
+          onChange={handleChange}
+          required
+        />
+        <TextField
+          label="Password"
+          name="password"
+          type="password"
+          variant="outlined"
+          size="small"
+          value={userData.password}
+          onChange={handleChange}
+          required
+        />
+        <Button
+          type="submit"
+          variant="outlined"
+          size="small"
+          sx={{ width: "auto", alignSelf: "center" }}
+        >
+          Login
+          <Login />
+        </Button>
+      </Box>
+    </div>
   );
 };
 
