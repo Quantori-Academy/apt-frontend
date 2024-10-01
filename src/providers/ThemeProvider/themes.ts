@@ -94,6 +94,7 @@ export const appTheme = createTheme({
           },
           input: {
             fontSize: "14px",
+            color: "palevioletred",
           },
           ".MuiFilledInput-root": {
             backgroundColor: "#FFFFFF",
