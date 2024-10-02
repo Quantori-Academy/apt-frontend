@@ -1,12 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { jwtDecode } from "jwt-decode";
 
 import { apiManager } from "@/api";
 
 import { createReducerSlice } from "../createReducerSlice";
 
+interface IUser {
+  id: string;
+  role: string;
+}
+
 interface authSliceState {
   isLoading: boolean;
   error: string | null;
+  user: IUser;
 }
 
 interface ILoginData {
@@ -17,6 +24,10 @@ interface ILoginData {
 const initialState: authSliceState = {
   isLoading: false,
   error: null,
+  user: {
+    id: "",
+    role: "",
+  },
 };
 
 export const loginUser = createAsyncThunk("auth/login", async (loginData: ILoginData, { rejectWithValue }) => {
@@ -24,7 +35,6 @@ export const loginUser = createAsyncThunk("auth/login", async (loginData: ILogin
     //ask
     const response = await apiManager.login(loginData);
     localStorage.setItem("accessToken", response.accessToken);
-    localStorage.setItem("refreshToken", response.refreshToken);
     return response;
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -40,7 +50,6 @@ export const authSlice = createReducerSlice({
   reducers: (create) => ({
     logout: create.reducer(() => {
       localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
     }),
   }),
   selectors: {
@@ -53,8 +62,10 @@ export const authSlice = createReducerSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(loginUser.fulfilled, (state) => {
+      .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        const decodedToken = jwtDecode<IUser>(action.payload.accessToken);
+        state.user = decodedToken;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;

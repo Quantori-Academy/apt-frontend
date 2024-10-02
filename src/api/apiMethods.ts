@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_APP_API_URL as string;
 
 const getHeaders = (customHeaders?: HeadersInit) => {
   const headers = new Headers(customHeaders);
-  const token = null;
+  const token = localStorage.getItem("accessToken");
 
   if (!headers.get("Content-Type")) {
     headers.set("Content-Type", "application/json");
