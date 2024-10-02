@@ -27,11 +27,11 @@
   font-size: 12px;
 }
 
-.passContainer {
+.passwordContainer {
   position: relative;
 }
 
-.passContainer > div {
+.passwordContainer > div {
   width: 100%;
 }
 
@@ -46,6 +46,6 @@
 }
 
 .iconButton:focus {
-  outline: none;
   box-shadow: none;
+  outline: none;
 }

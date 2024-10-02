@@ -2,42 +2,33 @@ import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
 import { apiManager } from "@/api";
+import { UserInputData } from "@/types";
+import { User } from "@/types";
 
 import { createReducerSlice } from "../createReducerSlice";
 
-interface IUser {
-  id: string;
-  role: string;
-}
-
-interface authSliceState {
+type AuthSliceState = {
   isLoading: boolean;
-  error: string | null;
-  user: IUser | null;
-}
+  errorMessage: string | null;
+  user: User | null;
+};
 
-interface ILoginData {
-  username: string;
-  password: string;
-}
-
-const initialState: authSliceState = {
+const initialState: AuthSliceState = {
   isLoading: false,
-  error: null,
+  errorMessage: null,
   user: null,
 };
 
-export const loginUser = createAsyncThunk("auth/login", async (loginData: ILoginData, { rejectWithValue }) => {
+export const loginUser = createAsyncThunk("auth/login", async (loginData: UserInputData, { rejectWithValue }) => {
   try {
-    //ask
     const response = await apiManager.login(loginData);
     localStorage.setItem("accessToken", response.accessToken);
     return response;
-  } catch (err: unknown) {
+  } catch (err) {
     if (err instanceof Error) {
       return rejectWithValue(err.message);
     }
-    return rejectWithValue("An unknown error occured");
+    return rejectWithValue("An unknown error occurred");
   }
 });
 
@@ -51,14 +42,14 @@ export const authSlice = createReducerSlice({
     }),
   }),
   selectors: {
-    selectError: (state) => state.error,
+    selectErrorMessage: (state) => state.errorMessage,
     selectLoading: (state) => state.isLoading,
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.errorMessage = null;
       })
       .addCase(
         loginUser.fulfilled,
@@ -69,16 +60,16 @@ export const authSlice = createReducerSlice({
           }>
         ) => {
           state.isLoading = false;
-          const decodedToken = jwtDecode<IUser>(action.payload.accessToken);
+          const decodedToken = jwtDecode<User>(action.payload.accessToken);
           state.user = decodedToken;
         }
       )
       .addCase(loginUser.rejected, (state, action: PayloadAction<string | unknown>) => {
         state.isLoading = false;
-        state.error = (action.payload as string) || "Unknown error!";
+        state.errorMessage = (action.payload as string) || "Unknown error!";
       });
   },
 });
 
 export const { logout } = authSlice.actions;
-export const { selectError, selectLoading } = authSlice.selectors;
+export const { selectErrorMessage, selectLoading } = authSlice.selectors;

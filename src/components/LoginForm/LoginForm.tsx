@@ -8,45 +8,37 @@ import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
   loginUser,
-  selectError,
+  selectErrorMessage,
   selectLoading,
 } from "@/store/slices/authSlice";
+import { UserInputData } from "@/types";
+import { UserInputErrors } from "@/types";
 
-import styles from "./loginForm.module.css";
-
-interface IUserData {
-  username: string;
-  password: string;
-}
-
-interface IErrors {
-  requiredUsernameError: boolean;
-  requiredPasswordError: boolean;
-}
+import styles from "./LoginForm.module.css";
 
 const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
-  const error = useAppSelector(selectError);
+  const error = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
 
-  const [userData, setUserData] = useState<IUserData>({
+  const [userData, setUserData] = useState<UserInputData>({
     username: "",
     password: "",
   });
 
-  const [requiredErrors, setRequiredErros] = useState<IErrors>({
+  const [requiredErrors, setRequiredErrors] = useState<UserInputErrors>({
     requiredUsernameError: false,
     requiredPasswordError: false,
   });
   const { requiredUsernameError, requiredPasswordError } = requiredErrors;
 
-  const [showPass, setShowPass] = useState<boolean>(false);
+  const [isPasswordShown, setPasswordIsShown] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const handlePassVisibility = () => {
     if (inputRef.current) {
       const cursorPosition = inputRef.current.selectionStart;
-      setShowPass((prev) => !prev);
+      setPasswordIsShown((prev) => !prev);
       setTimeout(() => {
         if (inputRef.current) {
           // Restore the cursor position after the re-render
@@ -57,25 +49,24 @@ const LoginForm: React.FC = () => {
     }
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setRequiredErros({
+    setRequiredErrors({
       requiredUsernameError: false,
       requiredPasswordError: false,
     });
-    let hasError: boolean = false;
+    let hasError = false;
     if (!userData.username) {
-      setRequiredErros((prev) => ({ ...prev, requiredUsernameError: true }));
+      setRequiredErrors((prev) => ({ ...prev, requiredUsernameError: true }));
       hasError = true;
     }
     if (!userData.password) {
-      setRequiredErros((prev) => ({ ...prev, requiredPasswordError: true }));
-      hasError = true;
+      setRequiredErrors((prev) => ({ ...prev, requiredPasswordError: true }));
       hasError = true;
     }
     if (hasError) {
@@ -102,12 +93,12 @@ const LoginForm: React.FC = () => {
           value={userData.username}
           onChange={handleChange}
         />
-        <div className={styles.passContainer}>
+        <div className={styles.passwordContainer}>
           <TextField
             error={requiredPasswordError}
             label={`Password${requiredPasswordError ? " required" : ""}`}
             name="password"
-            type={showPass ? "text" : "password"}
+            type={isPasswordShown ? "text" : "password"}
             variant="outlined"
             size="small"
             value={userData.password}
@@ -116,11 +107,11 @@ const LoginForm: React.FC = () => {
           />
           <button
             type="button"
-            // onMouseDown={(e) => e.preventDefault()}
+            onMouseDown={(e) => e.preventDefault()}
             onClick={handlePassVisibility}
             className={styles.iconButton}
           >
-            {showPass ? (
+            {isPasswordShown ? (
               <VisibilityOffOutlinedIcon fontSize="small" />
             ) : (
               <RemoveRedEyeOutlinedIcon fontSize="small" />
