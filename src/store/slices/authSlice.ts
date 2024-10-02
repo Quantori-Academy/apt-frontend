@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
 import { apiManager } from "@/api";
@@ -13,7 +13,7 @@ interface IUser {
 interface authSliceState {
   isLoading: boolean;
   error: string | null;
-  user: IUser;
+  user: IUser | null;
 }
 
 interface ILoginData {
@@ -24,10 +24,7 @@ interface ILoginData {
 const initialState: authSliceState = {
   isLoading: false,
   error: null,
-  user: {
-    id: "",
-    role: "",
-  },
+  user: null,
 };
 
 export const loginUser = createAsyncThunk("auth/login", async (loginData: ILoginData, { rejectWithValue }) => {
@@ -48,8 +45,9 @@ export const authSlice = createReducerSlice({
   name: "auth",
   initialState,
   reducers: (create) => ({
-    logout: create.reducer(() => {
+    logout: create.reducer((state) => {
       localStorage.removeItem("accessToken");
+      state.user = null;
     }),
   }),
   selectors: {
@@ -62,14 +60,22 @@ export const authSlice = createReducerSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(
+        loginUser.fulfilled,
+        (
+          state,
+          action: PayloadAction<{
+            accessToken: string;
+          }>
+        ) => {
+          state.isLoading = false;
+          const decodedToken = jwtDecode<IUser>(action.payload.accessToken);
+          state.user = decodedToken;
+        }
+      )
+      .addCase(loginUser.rejected, (state, action: PayloadAction<string | unknown>) => {
         state.isLoading = false;
-        const decodedToken = jwtDecode<IUser>(action.payload.accessToken);
-        state.user = decodedToken;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
+        state.error = (action.payload as string) || "Unknown error!";
       });
   },
 });
