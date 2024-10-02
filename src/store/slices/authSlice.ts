@@ -44,6 +44,7 @@ export const authSlice = createReducerSlice({
   selectors: {
     selectErrorMessage: (state) => state.errorMessage,
     selectLoading: (state) => state.isLoading,
+    selectUserRole: (state) => state.user?.role,
   },
   extraReducers: (builder) => {
     builder
@@ -72,4 +73,4 @@ export const authSlice = createReducerSlice({
 });
 
 export const { logout } = authSlice.actions;
-export const { selectErrorMessage, selectLoading } = authSlice.selectors;
+export const { selectErrorMessage, selectLoading, selectUserRole } = authSlice.selectors;

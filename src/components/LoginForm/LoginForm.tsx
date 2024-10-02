@@ -3,13 +3,15 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { Box, Button, TextField } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
   loginUser,
   selectErrorMessage,
   selectLoading,
+  selectUserRole,
 } from "@/store/slices/authSlice";
 import { UserInputData } from "@/types";
 import { UserInputErrors } from "@/types";
@@ -20,6 +22,8 @@ const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
+
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState<UserInputData>({
     username: "",
@@ -76,6 +80,30 @@ const LoginForm: React.FC = () => {
     dispatch(loginUser(userData));
   };
 
+  const userRole = useAppSelector(selectUserRole);
+  useEffect(() => {
+    if (userRole) {
+      switch (userRole) {
+        //example routes (change in the future)
+        case "admin": {
+          navigate("/admin");
+          break;
+        }
+        case "officer": {
+          navigate("/officer");
+          break;
+        }
+        case "researcher": {
+          navigate("/researcher");
+          break;
+        }
+        default: {
+          console.warn("Unknown user role:", userRole);
+        }
+      }
+    }
+  }, [userRole, navigate]);
+
   return (
     <div className={styles.container}>
       <Box
@@ -118,7 +146,7 @@ const LoginForm: React.FC = () => {
             )}
           </button>
         </div>
-        {error && <span className={styles.errorMessage}>Failed to fetch</span>}
+        {error && <span className={styles.errorMessage}>{error}</span>}
         <div className={styles.buttonContainer}>
           {isLoading ? (
             <div>
