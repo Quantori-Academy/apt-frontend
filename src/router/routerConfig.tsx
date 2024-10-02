@@ -1,6 +1,6 @@
 import { RouteProps } from "react-router-dom";
 
-import { AddUserForm, Home, UserList, Login } from "@/pages";
+import { AddUser, Home, UserList, Login } from "@/pages";
 
 export const enum AppRoutes {
   HOME = "home",
@@ -29,7 +29,7 @@ export const routerConfig: Record<AppRoutes, RouteProps> = {
   },
   [AppRoutes.ADD_USER]: {
     path: RoutePath[AppRoutes.ADD_USER],
-    element: <AddUserForm />,
+    element: <AddUser />,
   },
   [AppRoutes.USERS]: {
     path: RoutePath[AppRoutes.USERS],

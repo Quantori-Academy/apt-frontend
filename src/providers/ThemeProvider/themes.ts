@@ -88,14 +88,6 @@ export const appTheme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          "input[type='text']": {
-            height: "20px",
-            padding: "6px",
-          },
-          "input[type='password']": {
-            height: "20px",
-            padding: "6px",
-          },
           input: {
             fontSize: "14px",
           },
