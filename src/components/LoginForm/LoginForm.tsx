@@ -1,7 +1,9 @@
 import { Login } from "@mui/icons-material";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { Box, Button, TextField } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
@@ -37,6 +39,23 @@ const LoginForm: React.FC = () => {
     requiredPasswordError: false,
   });
   const { requiredUsernameError, requiredPasswordError } = requiredErrors;
+
+  const [showPass, setShowPass] = useState<boolean>(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handlePassVisibility = () => {
+    if (inputRef.current) {
+      const cursorPosition = inputRef.current.selectionStart;
+      setShowPass((prev) => !prev);
+      setTimeout(() => {
+        if (inputRef.current) {
+          // Restore the cursor position after the re-render
+          inputRef.current.setSelectionRange(cursorPosition, cursorPosition);
+          inputRef.current.focus();
+        }
+      }, 0);
+    }
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -83,16 +102,31 @@ const LoginForm: React.FC = () => {
           value={userData.username}
           onChange={handleChange}
         />
-        <TextField
-          error={requiredPasswordError}
-          label={`Password${requiredPasswordError ? " required" : ""}`}
-          name="password"
-          type="password"
-          variant="outlined"
-          size="small"
-          value={userData.password}
-          onChange={handleChange}
-        />
+        <div className={styles.passContainer}>
+          <TextField
+            error={requiredPasswordError}
+            label={`Password${requiredPasswordError ? " required" : ""}`}
+            name="password"
+            type={showPass ? "text" : "password"}
+            variant="outlined"
+            size="small"
+            value={userData.password}
+            onChange={handleChange}
+            inputRef={inputRef}
+          />
+          <button
+            type="button"
+            // onMouseDown={(e) => e.preventDefault()}
+            onClick={handlePassVisibility}
+            className={styles.iconButton}
+          >
+            {showPass ? (
+              <VisibilityOffOutlinedIcon fontSize="small" />
+            ) : (
+              <RemoveRedEyeOutlinedIcon fontSize="small" />
+            )}
+          </button>
+        </div>
         {error && <span className={styles.errorMessage}>Failed to fetch</span>}
         <div className={styles.buttonContainer}>
           {isLoading ? (

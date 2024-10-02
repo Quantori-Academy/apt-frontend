@@ -26,3 +26,26 @@
   text-align: center;
   font-size: 12px;
 }
+
+.passContainer {
+  position: relative;
+}
+
+.passContainer > div {
+  width: 100%;
+}
+
+.iconButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.iconButton:focus {
+  outline: none;
+  box-shadow: none;
+}
