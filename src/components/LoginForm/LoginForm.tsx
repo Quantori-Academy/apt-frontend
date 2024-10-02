@@ -17,19 +17,26 @@ interface IUserData {
   password: string;
 }
 
+interface IErrors {
+  requiredUsernameError: boolean;
+  requiredPasswordError: boolean;
+}
+
 const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectError);
   const isLoading = useAppSelector(selectLoading);
+
   const [userData, setUserData] = useState<IUserData>({
     username: "",
     password: "",
   });
 
-  const [requiredUsernameError, setRequiredUsernameError] =
-    useState<boolean>(false);
-  const [requiredPasswordError, setRequiredPasswordError] =
-    useState<boolean>(false);
+  const [requiredErrors, setRequiredErros] = useState<IErrors>({
+    requiredUsernameError: false,
+    requiredPasswordError: false,
+  });
+  const { requiredUsernameError, requiredPasswordError } = requiredErrors;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -38,15 +45,18 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    setRequiredUsernameError(false);
-    setRequiredPasswordError(false);
+    setRequiredErros({
+      requiredUsernameError: false,
+      requiredPasswordError: false,
+    });
     let hasError: boolean = false;
     if (!userData.username) {
-      setRequiredUsernameError(true);
+      setRequiredErros((prev) => ({ ...prev, requiredUsernameError: true }));
       hasError = true;
     }
     if (!userData.password) {
-      setRequiredPasswordError(true);
+      setRequiredErros((prev) => ({ ...prev, requiredPasswordError: true }));
+      hasError = true;
       hasError = true;
     }
     if (hasError) {
@@ -55,6 +65,7 @@ const LoginForm: React.FC = () => {
     console.log(userData);
     dispatch(loginUser(userData));
   };
+
   return (
     <div className={styles.container}>
       <Box
@@ -82,7 +93,7 @@ const LoginForm: React.FC = () => {
           value={userData.password}
           onChange={handleChange}
         />
-
+        {error && <span className={styles.errorMessage}>Failed to fetch</span>}
         <div className={styles.buttonContainer}>
           {isLoading ? (
             <div>
@@ -99,8 +110,6 @@ const LoginForm: React.FC = () => {
             </Button>
           )}
         </div>
-
-        <div>{error}</div>
       </Box>
     </div>
   );

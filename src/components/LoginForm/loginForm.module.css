@@ -20,3 +20,9 @@
   align-items: center;
   justify-content: center;
 }
+
+.errorMessage {
+  color: red;
+  text-align: center;
+  font-size: 12px;
+}
