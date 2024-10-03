@@ -24,7 +24,7 @@ export const useRoleNavigation = () => {
           break;
         }
         default: {
-          console.warn("Unknown user role:", userRole);
+          navigate("/");
         }
       }
     }
