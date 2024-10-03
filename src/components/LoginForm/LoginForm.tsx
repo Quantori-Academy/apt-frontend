@@ -1,5 +1,5 @@
 import { Login } from "@mui/icons-material";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, FormHelperText, TextField } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { useAppSelector } from "@/hooks";
@@ -39,12 +39,13 @@ const LoginForm: React.FC = () => {
       <TextField
         sx={{ width: "100%" }}
         error={requiredUsernameError}
-        label={`Username${requiredUsernameError ? " required" : ""}`}
+        label="Username"
         name="username"
         type="text"
         variant="outlined"
         size="small"
         value={userData.username}
+        helperText={requiredUsernameError ? "Username is required" : ""}
         onChange={handleChange}
       />
       <PasswordField
@@ -52,7 +53,7 @@ const LoginForm: React.FC = () => {
         onChange={handleChange}
         error={requiredPasswordError}
       />
-      {error && <span className={styles.errorMessage}>{error}</span>}
+      {error && <FormHelperText error>{error}</FormHelperText>}
       <div className={styles.buttonContainer}>
         {isLoading ? (
           <div>

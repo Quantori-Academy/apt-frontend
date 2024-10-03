@@ -22,7 +22,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     <TextField
       error={error}
       sx={{ width: "100%" }}
-      label={`Password${error ? " required" : ""}`}
+      label="Password"
       name="password"
       type={isPasswordShown ? "text" : "password"}
       variant="outlined"
@@ -30,6 +30,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
       value={value}
       onChange={onChange}
       inputRef={inputRef}
+      helperText={error ? "Password is required" : ""}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
