@@ -45,7 +45,6 @@ const LoginForm: React.FC = () => {
       setPasswordIsShown((prev) => !prev);
       setTimeout(() => {
         if (inputRef.current) {
-          // Restore the cursor position after the re-render
           inputRef.current.setSelectionRange(cursorPosition, cursorPosition);
           inputRef.current.focus();
         }
@@ -84,7 +83,6 @@ const LoginForm: React.FC = () => {
   useEffect(() => {
     if (userRole) {
       switch (userRole) {
-        //example routes (change in the future)
         case "admin": {
           navigate("/admin");
           break;
