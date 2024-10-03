@@ -1,23 +1,19 @@
 import { Login } from "@mui/icons-material";
-import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { Box, Button, TextField } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { usePasswordVisibility } from "@/hooks";
 import { useAppSelector } from "@/hooks";
 import { useLoginForm } from "@/hooks";
 import { useRoleNavigation } from "@/hooks/useRoleNavigation";
 import { selectErrorMessage, selectLoading } from "@/store/slices/authSlice";
+
+import { PasswordField } from "../PasswordField";
 
 import styles from "./LoginForm.module.css";
 
 const LoginForm: React.FC = () => {
   const error = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
-
-  const { isPasswordShown, handlePassVisibility, inputRef } =
-    usePasswordVisibility();
 
   const { userData, requiredErrors, handleChange, handleSubmit } =
     useLoginForm();
@@ -43,31 +39,11 @@ const LoginForm: React.FC = () => {
           value={userData.username}
           onChange={handleChange}
         />
-        <div className={styles.passwordContainer}>
-          <TextField
-            error={requiredPasswordError}
-            label={`Password${requiredPasswordError ? " required" : ""}`}
-            name="password"
-            type={isPasswordShown ? "text" : "password"}
-            variant="outlined"
-            size="small"
-            value={userData.password}
-            onChange={handleChange}
-            inputRef={inputRef}
-          />
-          <button
-            type="button"
-            onMouseDown={(e) => e.preventDefault()}
-            onClick={handlePassVisibility}
-            className={styles.iconButton}
-          >
-            {isPasswordShown ? (
-              <VisibilityOffOutlinedIcon fontSize="small" />
-            ) : (
-              <RemoveRedEyeOutlinedIcon fontSize="small" />
-            )}
-          </button>
-        </div>
+        <PasswordField
+          value={userData.password}
+          onChange={handleChange}
+          error={requiredPasswordError}
+        />
         {error && <span className={styles.errorMessage}>{error}</span>}
         <div className={styles.buttonContainer}>
           {isLoading ? (
