@@ -4,8 +4,6 @@ import { IconButton, InputAdornment, TextField } from "@mui/material";
 
 import { usePasswordVisibility } from "@/hooks";
 
-import styles from "./PasswordField.module.css";
-
 type PasswordFieldProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -21,37 +19,36 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     usePasswordVisibility();
 
   return (
-    <div className={styles.passwordContainer}>
-      <TextField
-        error={error}
-        label={`Password${error ? " required" : ""}`}
-        name="password"
-        type={isPasswordShown ? "text" : "password"}
-        variant="outlined"
-        size="small"
-        value={value}
-        onChange={onChange}
-        inputRef={inputRef}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={handlePassVisibility}
-                edge="end"
-                aria-label={isPasswordShown ? "Hide password" : "Show password"} // Accessibility
-              >
-                {isPasswordShown ? (
-                  <VisibilityOffOutlinedIcon />
-                ) : (
-                  <RemoveRedEyeOutlinedIcon />
-                )}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-    </div>
+    <TextField
+      error={error}
+      sx={{ width: "100%" }}
+      label={`Password${error ? " required" : ""}`}
+      name="password"
+      type={isPasswordShown ? "text" : "password"}
+      variant="outlined"
+      size="small"
+      value={value}
+      onChange={onChange}
+      inputRef={inputRef}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <IconButton
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={handlePassVisibility}
+              edge="end"
+              aria-label={isPasswordShown ? "Hide password" : "Show password"} // Accessibility
+            >
+              {isPasswordShown ? (
+                <VisibilityOffOutlinedIcon />
+              ) : (
+                <RemoveRedEyeOutlinedIcon />
+              )}
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 export default PasswordField;

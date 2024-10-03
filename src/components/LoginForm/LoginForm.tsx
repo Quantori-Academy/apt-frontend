@@ -23,46 +23,53 @@ const LoginForm: React.FC = () => {
   useRoleNavigation();
 
   return (
-    <div className={styles.container}>
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        className={styles.boxContainer}
-      >
-        <TextField
-          error={requiredUsernameError}
-          label={`Username${requiredUsernameError ? " required" : ""}`}
-          name="username"
-          type="text"
-          variant="outlined"
-          size="small"
-          value={userData.username}
-          onChange={handleChange}
-        />
-        <PasswordField
-          value={userData.password}
-          onChange={handleChange}
-          error={requiredPasswordError}
-        />
-        {error && <span className={styles.errorMessage}>{error}</span>}
-        <div className={styles.buttonContainer}>
-          {isLoading ? (
-            <div>
-              <CircularProgress size="35px" />
-            </div>
-          ) : (
-            <Button
-              type="submit"
-              variant="outlined"
-              size="small"
-              sx={{ display: "flex", gap: "3px" }}
-            >
-              <span>Login</span> <Login />
-            </Button>
-          )}
-        </div>
-      </Box>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        gap: "15px",
+        maxWidth: 300,
+        width: "100%",
+      }}
+      component="form"
+      onSubmit={handleSubmit}
+    >
+      <TextField
+        sx={{ width: "100%" }}
+        error={requiredUsernameError}
+        label={`Username${requiredUsernameError ? " required" : ""}`}
+        name="username"
+        type="text"
+        variant="outlined"
+        size="small"
+        value={userData.username}
+        onChange={handleChange}
+      />
+      <PasswordField
+        value={userData.password}
+        onChange={handleChange}
+        error={requiredPasswordError}
+      />
+      {error && <span className={styles.errorMessage}>{error}</span>}
+      <div className={styles.buttonContainer}>
+        {isLoading ? (
+          <div>
+            <CircularProgress size="35px" />
+          </div>
+        ) : (
+          <Button
+            type="submit"
+            variant="outlined"
+            size="small"
+            sx={{ display: "flex", gap: "3px" }}
+          >
+            <span>Login</span> <Login />
+          </Button>
+        )}
+      </div>
+    </Box>
   );
 };
 
