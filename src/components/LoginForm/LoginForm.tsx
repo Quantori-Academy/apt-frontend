@@ -57,7 +57,7 @@ const LoginForm: React.FC = () => {
         onChange={handleChange}
         error={requiredPasswordError}
       />
-      {error && <FormHelperText error>{error}</FormHelperText>}
+      {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
 
       {isLoading ? (
         <div>
