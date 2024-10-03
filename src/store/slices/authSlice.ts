@@ -61,6 +61,7 @@ export const authSlice = createReducerSlice({
           }>
         ) => {
           state.isLoading = false;
+          state.errorMessage = null;
           const decodedToken = jwtDecode<User>(action.payload.accessToken);
           state.user = decodedToken;
         }
