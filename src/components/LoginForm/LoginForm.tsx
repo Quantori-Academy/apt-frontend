@@ -3,104 +3,28 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { Box, Button, TextField } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import {
-  loginUser,
-  selectErrorMessage,
-  selectLoading,
-  selectUserRole,
-} from "@/store/slices/authSlice";
-import { UserInputData } from "@/types";
-import { UserInputErrors } from "@/types";
+import { usePasswordVisibility } from "@/hooks";
+import { useAppSelector } from "@/hooks";
+import { useLoginForm } from "@/hooks";
+import { useRoleNavigation } from "@/hooks/useRoleNavigation";
+import { selectErrorMessage, selectLoading } from "@/store/slices/authSlice";
 
 import styles from "./LoginForm.module.css";
 
 const LoginForm: React.FC = () => {
-  const dispatch = useAppDispatch();
   const error = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
 
-  const navigate = useNavigate();
+  const { isPasswordShown, handlePassVisibility, inputRef } =
+    usePasswordVisibility();
 
-  const [userData, setUserData] = useState<UserInputData>({
-    username: "",
-    password: "",
-  });
+  const { userData, requiredErrors, handleChange, handleSubmit } =
+    useLoginForm();
 
-  const [requiredErrors, setRequiredErrors] = useState<UserInputErrors>({
-    requiredUsernameError: false,
-    requiredPasswordError: false,
-  });
   const { requiredUsernameError, requiredPasswordError } = requiredErrors;
 
-  const [isPasswordShown, setPasswordIsShown] = useState<boolean>(false);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-  const handlePassVisibility = () => {
-    if (inputRef.current) {
-      const cursorPosition = inputRef.current.selectionStart;
-      setPasswordIsShown((prev) => !prev);
-      setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.setSelectionRange(cursorPosition, cursorPosition);
-          inputRef.current.focus();
-        }
-      }, 0);
-    }
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setRequiredErrors({
-      requiredUsernameError: false,
-      requiredPasswordError: false,
-    });
-    let hasError = false;
-    if (!userData.username) {
-      setRequiredErrors((prev) => ({ ...prev, requiredUsernameError: true }));
-      hasError = true;
-    }
-    if (!userData.password) {
-      setRequiredErrors((prev) => ({ ...prev, requiredPasswordError: true }));
-      hasError = true;
-    }
-    if (hasError) {
-      return;
-    }
-    console.log(userData);
-    dispatch(loginUser(userData));
-  };
-
-  const userRole = useAppSelector(selectUserRole);
-  useEffect(() => {
-    if (userRole) {
-      switch (userRole) {
-        case "admin": {
-          navigate("/admin");
-          break;
-        }
-        case "officer": {
-          navigate("/officer");
-          break;
-        }
-        case "researcher": {
-          navigate("/researcher");
-          break;
-        }
-        default: {
-          console.warn("Unknown user role:", userRole);
-        }
-      }
-    }
-  }, [userRole, navigate]);
+  useRoleNavigation();
 
   return (
     <div className={styles.container}>
