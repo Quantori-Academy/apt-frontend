@@ -15,8 +15,6 @@ import { selectErrorMessage, selectLoading } from "@/store/slices/authSlice";
 
 import { PasswordField } from "../PasswordField";
 
-import styles from "./LoginForm.module.css";
-
 const LoginForm: React.FC = () => {
   const error = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
@@ -51,7 +49,7 @@ const LoginForm: React.FC = () => {
         variant="outlined"
         size="small"
         value={userData.username}
-        helperText={requiredUsernameError ? "Username is required" : ""}
+        helperText={requiredUsernameError ? "Username is required!" : ""}
         onChange={handleChange}
       />
       <PasswordField
@@ -60,25 +58,24 @@ const LoginForm: React.FC = () => {
         error={requiredPasswordError}
       />
       {error && <FormHelperText error>{error}</FormHelperText>}
-      <div className={styles.buttonContainer}>
-        {isLoading ? (
-          <div>
-            <CircularProgress size="35px" />
-          </div>
-        ) : (
-          <Button
-            type="submit"
-            variant="outlined"
-            size="small"
-            sx={{ display: "flex", gap: "3px" }}
-          >
-            <Typography variant="body1" component="span">
-              Login
-            </Typography>{" "}
-            <Login />
-          </Button>
-        )}
-      </div>
+
+      {isLoading ? (
+        <div>
+          <CircularProgress size="35px" />
+        </div>
+      ) : (
+        <Button
+          type="submit"
+          variant="outlined"
+          size="small"
+          sx={{ display: "flex", gap: "3px" }}
+        >
+          <Typography variant="body1" component="span">
+            Login
+          </Typography>{" "}
+          <Login />
+        </Button>
+      )}
     </Box>
   );
 };

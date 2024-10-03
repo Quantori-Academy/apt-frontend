@@ -30,7 +30,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
       value={value}
       onChange={onChange}
       inputRef={inputRef}
-      helperText={error ? "Password is required" : ""}
+      helperText={error ? "Password is required!" : ""}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
@@ -38,7 +38,6 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
               onMouseDown={(e) => e.preventDefault()}
               onClick={handlePassVisibility}
               edge="end"
-              aria-label={isPasswordShown ? "Hide password" : "Show password"} // Accessibility
             >
               {isPasswordShown ? (
                 <VisibilityOffOutlinedIcon />
