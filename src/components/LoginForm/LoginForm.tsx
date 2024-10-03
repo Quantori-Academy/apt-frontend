@@ -12,7 +12,7 @@ import { PasswordField } from "../PasswordField";
 import styles from "./LoginForm.module.css";
 
 const LoginForm: React.FC = () => {
-  const error = useAppSelector(selectErrorMessage);
+  const errorMessage = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
 
   const { userData, requiredErrors, handleChange, handleSubmit } =
