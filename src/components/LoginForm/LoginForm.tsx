@@ -16,7 +16,7 @@ import { selectErrorMessage, selectLoading } from "@/store/slices/authSlice";
 import { PasswordField } from "../PasswordField";
 
 const LoginForm: React.FC = () => {
-  const error = useAppSelector(selectErrorMessage);
+  const errorMessage = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
 
   const { userData, requiredErrors, handleChange, handleSubmit } =
