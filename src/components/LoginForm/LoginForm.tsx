@@ -1,5 +1,11 @@
 import { Login } from "@mui/icons-material";
-import { Box, Button, FormHelperText, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormHelperText,
+  TextField,
+  Typography,
+} from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { useAppSelector } from "@/hooks";
@@ -66,7 +72,10 @@ const LoginForm: React.FC = () => {
             size="small"
             sx={{ display: "flex", gap: "3px" }}
           >
-            <span>Login</span> <Login />
+            <Typography variant="body1" component="span">
+              Login
+            </Typography>{" "}
+            <Login />
           </Button>
         )}
       </div>
