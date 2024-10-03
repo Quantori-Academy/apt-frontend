@@ -47,14 +47,14 @@ const AddUser: React.FC = () => {
     },
   });
 
-  const onSubmit = async (data: FormValues) => {
-    try {
-      await addUser(data).unwrap();
-      // TODO: show success toast
-      navigate(AppRoutes.USERS);
-    } catch (error) {
+  const onSubmit = async (formValues: FormValues) => {
+    const { error } = await addUser(formValues);
+    if (error) {
       // TODO: show error toast
       console.error(error);
+    } else {
+      // TODO: show success toast
+      navigate(AppRoutes.USERS);
     }
   };
 
