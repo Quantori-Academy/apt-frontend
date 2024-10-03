@@ -1,6 +1,6 @@
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import { TextField } from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 
 import { usePasswordVisibility } from "@/hooks";
 
@@ -32,19 +32,25 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
         value={value}
         onChange={onChange}
         inputRef={inputRef}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={handlePassVisibility}
+                edge="end"
+                aria-label={isPasswordShown ? "Hide password" : "Show password"} // Accessibility
+              >
+                {isPasswordShown ? (
+                  <VisibilityOffOutlinedIcon />
+                ) : (
+                  <RemoveRedEyeOutlinedIcon />
+                )}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
-      <button
-        type="button"
-        onMouseDown={(e) => e.preventDefault()}
-        onClick={handlePassVisibility}
-        className={styles.iconButton}
-      >
-        {isPasswordShown ? (
-          <VisibilityOffOutlinedIcon fontSize="small" />
-        ) : (
-          <RemoveRedEyeOutlinedIcon fontSize="small" />
-        )}
-      </button>
     </div>
   );
 };
