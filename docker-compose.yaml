@@ -16,7 +16,7 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     env_file:
-      - ../apt-frontend/.env
+      - path: ../apt-frontend/.env
     expose:
       - "80"
 
@@ -28,14 +28,14 @@ services:
     expose:
       - "3000"
     env_file:
-      - ../apt-backend/.env
+      - path: ../apt-backend/.env
     depends_on:
       - db
   db:
     image: postgres:15-alpine
     restart: always
     env_file:
-      - ../apt-backend/.env
+      - path: ../apt-backend/.env
     ports:
        - '5432:5432'
     volumes:
