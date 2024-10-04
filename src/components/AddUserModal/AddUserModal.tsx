@@ -16,6 +16,9 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
 
   function handleFormSubmit(status: AddUserStatus) {
     setStatus(status);
+    if (status === "success") {
+      onClose();
+    }
   }
 
   return (
@@ -33,7 +36,11 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
           <AddUserForm onFormSubmit={handleFormSubmit} />
         </Box>
       </Modal>
-      <AlertSnackbar open={Boolean(status)} severity={status}>
+      <AlertSnackbar
+        open={Boolean(status)}
+        onClose={() => setStatus(undefined)}
+        severity={status}
+      >
         {status === "error"
           ? "Unable to add a user"
           : "User added successfully"}

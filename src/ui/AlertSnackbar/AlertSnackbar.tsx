@@ -7,7 +7,7 @@ interface AlertSnackbarProps extends Omit<SnackbarProps, "children"> {
 
 function AlertSnackbar({ severity, children, ...rest }: AlertSnackbarProps) {
   return (
-    <Snackbar {...rest}>
+    <Snackbar autoHideDuration={3000} {...rest}>
       <Alert severity={severity} variant="filled" sx={{ width: "100%" }}>
         {children}
       </Alert>
