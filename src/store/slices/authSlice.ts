@@ -25,7 +25,7 @@ export const loginUser = createAsyncThunk("auth/login", async (loginData: UserIn
     localStorage.setItem("accessToken", response.accessToken);
     return response;
   } catch (err) {
-    if (err instanceof Error) {
+    if (typeof err === "object" && err !== null && "message" in err) {
       return rejectWithValue(err.message);
     }
     return rejectWithValue("An unknown error occurred");
