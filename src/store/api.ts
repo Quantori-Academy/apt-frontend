@@ -2,10 +2,12 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { prepareHeaders } from "@/api";
 
+const BASE_URL = import.meta.env.VITE_APP_API_URL as string;
+
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3010",
+    baseUrl: BASE_URL,
     prepareHeaders,
   }),
   endpoints: (builder) => ({

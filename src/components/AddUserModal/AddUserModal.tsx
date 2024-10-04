@@ -4,12 +4,12 @@ import { useState } from "react";
 import { AddUserForm, AddUserStatus } from "@/components/AddUserForm";
 import { AlertSnackbar } from "@/ui/AlertSnackbar";
 
-import style from "./addUserModal.module.css";
+import style from "./AddUserModal.module.css";
 
-interface AddUserModalProps {
+type AddUserModalProps = {
   open: boolean;
   onClose: () => void;
-}
+};
 
 const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
   const [status, setStatus] = useState<AddUserStatus>();

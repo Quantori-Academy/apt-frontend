@@ -1,10 +1,10 @@
 import { Box, Button, MenuItem, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import { UserRole } from "@/constants";
+import { userRoles } from "@/constants";
 import { useAddUserMutation } from "@/store";
 
-import style from "./addUserForm.module.css";
+import style from "./AddUserForm.module.css";
 
 type NewUserFormData = {
   username: string;
@@ -18,11 +18,11 @@ type NewUserFormData = {
 
 export type AddUserStatus = "error" | "success";
 
-interface AddUserFormProps {
+type AddUserFormProps = {
   onFormSubmit: (status: AddUserStatus) => void;
-}
+};
 
-const roles = Object.values(UserRole);
+const roles = Object.values(userRoles);
 const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
   const [addUser, { isLoading }] = useAddUserMutation();
 
@@ -39,7 +39,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
       email: "",
       password: "",
       confirmPassword: "",
-      role: UserRole.Admin,
+      role: userRoles.Admin,
     },
   });
 
@@ -121,7 +121,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
           <TextField
             select
             label="Select Role"
-            defaultValue={UserRole.Admin}
+            defaultValue={userRoles.Admin}
             {...register("role", { required: "Please select a role" })}
           >
             {roles.map((option) => (

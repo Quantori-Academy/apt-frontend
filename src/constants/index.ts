@@ -1,1 +1,1 @@
-export { UserRole, type UserRoleType } from "./UserRole";
+export { userRoles } from "./userRoles";
