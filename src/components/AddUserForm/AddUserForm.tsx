@@ -1,8 +1,7 @@
 import { Box, Button, MenuItem, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
-import { AppRoutes } from "@/router";
+import { UserRole } from "@/constants";
 import { useAddUserMutation } from "@/store";
 
 import style from "./addUserForm.module.css";
@@ -17,13 +16,15 @@ type NewUserFormData = {
   role: string;
 };
 
-// TODO: consider moving to constants
-const roles = ["Admin", "Procurement Officer", "Researcher"];
+export type AddUserStatus = "error" | "success";
 
-const AddUserForm: React.FC = () => {
+interface AddUserFormProps {
+  onFormSubmit: (status: AddUserStatus) => void;
+}
+
+const roles = Object.values(UserRole);
+const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
   const [addUser, { isLoading }] = useAddUserMutation();
-
-  const navigate = useNavigate();
 
   const {
     register,
@@ -38,19 +39,13 @@ const AddUserForm: React.FC = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      role: roles[0],
+      role: UserRole.Admin,
     },
   });
 
   const onSubmit = async (newUserFormData: NewUserFormData) => {
     const { error } = await addUser(newUserFormData);
-    if (error) {
-      // TODO: show error toast
-      console.error(error);
-    } else {
-      // TODO: show success toast
-      navigate(AppRoutes.USERS);
-    }
+    onFormSubmit(error ? "error" : "success");
   };
 
   return (
@@ -126,7 +121,7 @@ const AddUserForm: React.FC = () => {
           <TextField
             select
             label="Select Role"
-            defaultValue={roles[0]}
+            defaultValue={UserRole.Admin}
             {...register("role", { required: "Please select a role" })}
           >
             {roles.map((option) => (

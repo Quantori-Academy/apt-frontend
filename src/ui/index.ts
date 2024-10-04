@@ -1,1 +1,1 @@
-export { SnackBarWithAlert } from "./SnackBarWithAlert";
+export { AlertSnackbar } from "./AlertSnackbar";
