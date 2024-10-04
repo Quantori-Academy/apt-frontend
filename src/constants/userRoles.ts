@@ -1,7 +1,7 @@
-export enum UserRole {
-  Admin = "ADMIN",
-  ProcurementOfficer = "PROCUREMENT_OFFICER",
-  Researcher = "RESEARCHER",
-}
+export const UserRole = {
+  Admin: "Administrator",
+  ProcurementOfficer: "Procurement Officer",
+  Researcher: "Researcher",
+} as const;
 
-// const userRole: UserRole = UserRole.Admin;
+export type UserRoleType = keyof typeof UserRole;
