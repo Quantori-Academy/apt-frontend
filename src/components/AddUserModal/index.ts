@@ -1,1 +1,1 @@
-export { default as AddUserModal } from "./AddUserModal.tsx";
+export { default as AddUserModal } from "./AddUserModal";

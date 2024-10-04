@@ -1,1 +1,1 @@
-export { default as AlertSnackbar } from "./AlertSnackbar.tsx";
+export { default as AlertSnackbar } from "./AlertSnackbar";

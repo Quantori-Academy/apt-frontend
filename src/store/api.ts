@@ -1,17 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+import { prepareHeaders } from "@/api";
+
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3010",
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("accessToken");
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-
-      return headers;
-    },
+    prepareHeaders,
   }),
   endpoints: (builder) => ({
     getStatus: builder.query({
