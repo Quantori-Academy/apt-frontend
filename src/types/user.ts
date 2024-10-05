@@ -6,6 +6,8 @@ export type User = {
 export type UserInputData = {
   username: string;
   password: string;
+  email?: string;
+  confirmPassword?: string;
 };
 
 export type UserInputErrors = {

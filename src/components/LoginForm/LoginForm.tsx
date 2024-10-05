@@ -8,12 +8,11 @@ import {
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import { RevealableField } from "@/components";
 import { useAppSelector } from "@/hooks";
 import { useLoginForm } from "@/hooks";
 import { useRoleNavigation } from "@/hooks/useRoleNavigation";
 import { selectErrorMessage, selectLoading } from "@/store/slices/authSlice";
-
-import { PasswordField } from "../PasswordField";
 
 const LoginForm: React.FC = () => {
   const errorMessage = useAppSelector(selectErrorMessage);
@@ -51,7 +50,13 @@ const LoginForm: React.FC = () => {
           requiredErrors.username?.message ? "Username is required!" : ""
         }
       />
-      <PasswordField register={register} error={requiredErrors.password} />
+      <RevealableField
+        name="password"
+        label="Password"
+        register={register}
+        error={requiredErrors.password}
+        options={{ required: "Password is required!" }}
+      />
       {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
 
       {isLoading ? (

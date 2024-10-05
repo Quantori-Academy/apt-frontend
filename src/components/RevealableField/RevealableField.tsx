@@ -1,17 +1,26 @@
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
-import { FieldError, UseFormRegister } from "react-hook-form";
+import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 
 import { usePasswordVisibility } from "@/hooks";
 import { UserInputData } from "@/types";
 
-type PasswordFieldProps = {
+type RevealableFieldProps = {
+  name: keyof UserInputData;
   register: UseFormRegister<UserInputData>;
   error: FieldError | undefined;
+  label: string;
+  options: RegisterOptions<UserInputData>;
 };
 
-const PasswordField: React.FC<PasswordFieldProps> = ({ register, error }) => {
+const RevealableField: React.FC<RevealableFieldProps> = ({
+  name,
+  register,
+  error,
+  label,
+  options,
+}) => {
   const { isPasswordShown, handlePassVisibility, inputRef } =
     usePasswordVisibility();
 
@@ -19,15 +28,13 @@ const PasswordField: React.FC<PasswordFieldProps> = ({ register, error }) => {
     <TextField
       error={!!error}
       sx={{ width: "100%" }}
-      label="Password"
+      label={label}
       type={isPasswordShown ? "text" : "password"}
       variant="outlined"
       size="small"
       inputRef={inputRef}
       helperText={error?.message}
-      {...register("password", {
-        required: "Password is required!",
-      })}
+      {...register(name, options)}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
@@ -48,4 +55,5 @@ const PasswordField: React.FC<PasswordFieldProps> = ({ register, error }) => {
     />
   );
 };
-export default PasswordField;
+
+export default RevealableField;
