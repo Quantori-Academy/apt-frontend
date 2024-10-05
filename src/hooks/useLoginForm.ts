@@ -15,7 +15,6 @@ export const useLoginForm = () => {
     mode: "onBlur",
   });
   const onSubmit: SubmitHandler<UserInputData> = (userData: UserInputData) => {
-    console.log(userData);
     dispatch(loginUser(userData));
   };
 
