@@ -3,7 +3,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 
-import { usePasswordVisibility } from "@/hooks";
+import { useFieldVisibility } from "@/hooks";
 import { UserInputData } from "@/types";
 
 type RevealableFieldProps = {
@@ -21,15 +21,15 @@ const RevealableField: React.FC<RevealableFieldProps> = ({
   label,
   options,
 }) => {
-  const { isPasswordShown, handlePassVisibility, inputRef } =
-    usePasswordVisibility();
+  const { isFieldShown, toggleFieldVisibility, inputRef } =
+    useFieldVisibility();
 
   return (
     <TextField
       error={!!error}
       sx={{ width: "100%" }}
       label={label}
-      type={isPasswordShown ? "text" : "password"}
+      type={isFieldShown ? "text" : "password"}
       variant="outlined"
       size="small"
       inputRef={inputRef}
@@ -40,10 +40,10 @@ const RevealableField: React.FC<RevealableFieldProps> = ({
           <InputAdornment position="end">
             <IconButton
               onMouseDown={(e) => e.preventDefault()}
-              onClick={handlePassVisibility}
+              onClick={toggleFieldVisibility}
               edge="end"
             >
-              {isPasswordShown ? (
+              {isFieldShown ? (
                 <VisibilityOffOutlinedIcon />
               ) : (
                 <RemoveRedEyeOutlinedIcon />
