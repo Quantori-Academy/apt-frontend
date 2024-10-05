@@ -2,7 +2,7 @@ import { Box, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 
 import { AddUserForm, AddUserStatus } from "@/components/AddUserForm";
-import { AlertSnackbar } from "@/ui/AlertSnackbar";
+import { AlertSnackbar } from "@/components/AlertSnackbar";
 
 import style from "./AddUserModal.module.css";
 
