@@ -12,3 +12,8 @@ export type UserInputErrors = {
   requiredUsernameError: boolean;
   requiredPasswordError: boolean;
 };
+
+export type UserTableColumn = {
+  label: string;
+  key: string;
+};
