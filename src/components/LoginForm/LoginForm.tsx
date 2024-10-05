@@ -19,10 +19,7 @@ const LoginForm: React.FC = () => {
   const errorMessage = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
 
-  const { userData, requiredErrors, handleChange, handleSubmit } =
-    useLoginForm();
-
-  const { requiredUsernameError, requiredPasswordError } = requiredErrors;
+  const { register, onSubmit, handleSubmit, requiredErrors } = useLoginForm();
 
   useRoleNavigation();
 
@@ -38,25 +35,23 @@ const LoginForm: React.FC = () => {
         width: "100%",
       }}
       component="form"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <TextField
         sx={{ width: "100%" }}
-        error={requiredUsernameError}
+        error={!!requiredErrors.username}
         label="Username"
-        name="username"
         type="text"
         variant="outlined"
         size="small"
-        value={userData.username}
-        helperText={requiredUsernameError ? "Username is required!" : ""}
-        onChange={handleChange}
+        {...register("username", {
+          required: "Username is required!",
+        })}
+        helperText={
+          requiredErrors.username?.message ? "Username is required!" : ""
+        }
       />
-      <PasswordField
-        value={userData.password}
-        onChange={handleChange}
-        error={requiredPasswordError}
-      />
+      <PasswordField register={register} error={requiredErrors.password} />
       {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
 
       {isLoading ? (
