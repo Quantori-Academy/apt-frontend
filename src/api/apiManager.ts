@@ -1,5 +1,4 @@
-import { ApiStatus, Token } from "@/types";
-import { UserInputData } from "@/types";
+import { ApiStatus, Token, UserInputData } from "@/types";
 
 import { apiMethods } from "./apiMethods";
 import { EndPoints } from "./endPoints";
