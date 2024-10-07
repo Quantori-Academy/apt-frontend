@@ -1,4 +1,4 @@
-import { ApiStatus, Tokens } from "@/types";
+import { ApiStatus, Token } from "@/types";
 import { UserInputData } from "@/types";
 
 import { apiMethods } from "./apiMethods";
@@ -9,7 +9,7 @@ class ApiManager {
     return apiMethods.get<ApiStatus>(EndPoints.API_STATUS);
   }
   public login(credentials: UserInputData) {
-    return apiMethods.post<Tokens>(EndPoints.LOGIN, {
+    return apiMethods.post<Token>(EndPoints.LOGIN, {
       body: JSON.stringify(credentials),
     });
   }
