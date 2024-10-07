@@ -6,7 +6,7 @@ import { User, UserInputData } from "@/types";
 
 import { createReducerSlice } from "../createReducerSlice";
 
-type AuthSliceState = {
+export type AuthSliceState = {
   isLoading: boolean;
   errorMessage: string | null;
   user: User | null;
@@ -44,6 +44,7 @@ export const authSlice = createReducerSlice({
     selectErrorMessage: (state) => state.errorMessage,
     selectLoading: (state) => state.isLoading,
     selectUserRole: (state) => state.user?.role,
+    selectUserId: (state) => state.user?.id,
   },
   extraReducers: (builder) => {
     builder
@@ -73,4 +74,4 @@ export const authSlice = createReducerSlice({
 });
 
 export const { logout } = authSlice.actions;
-export const { selectErrorMessage, selectLoading, selectUserRole } = authSlice.selectors;
+export const { selectErrorMessage, selectLoading, selectUserRole, selectUserId } = authSlice.selectors;

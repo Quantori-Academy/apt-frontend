@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { prepareHeaders } from "@/api";
+import { UserDetails } from "@/types";
 
 const BASE_URL = import.meta.env.VITE_APP_API_URL as string;
 
@@ -10,17 +11,29 @@ export const api = createApi({
     baseUrl: BASE_URL,
     prepareHeaders,
   }),
+  tagTypes: ["Users"],
   endpoints: (builder) => ({
-    getStatus: builder.query({
-      query: () => "/status",
-    }),
     addUser: builder.mutation({
-      query: () => ({
+      query: (newUser) => ({
         url: "/users",
-        method: "post",
+        method: "POST",
+        body: newUser,
       }),
+    }),
+    getUserDetails: builder.query<UserDetails, string>({
+      query: (userId) => `/users/${userId}`,
+      providesTags: ["Users"],
+    }),
+
+    updateUserDetails: builder.mutation({
+      query: ({ userId, updatedUserDetails }) => ({
+        url: `/users/${userId}`,
+        method: "PUT",
+        body: updatedUserDetails,
+      }),
+      invalidatesTags: ["Users"],
     }),
   }),
 });
 
-export const { useGetStatusQuery, useAddUserMutation } = api;
+export const { useAddUserMutation, useGetUserDetailsQuery, useUpdateUserDetailsMutation } = api;
