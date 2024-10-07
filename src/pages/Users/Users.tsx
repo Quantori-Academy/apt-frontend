@@ -1,6 +1,6 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 
-import { usersApi } from "@/api/users/api";
+import { usersApi } from "@/api/users/usersApi";
 import { UsersTable } from "@/components";
 
 const Users: React.FC = () => {
