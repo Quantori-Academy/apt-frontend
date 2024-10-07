@@ -7,7 +7,6 @@ export const baseApi = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
       const dynamicHeaders = getHeaders();
-
       dynamicHeaders.forEach((value, key) => {
         headers.set(key, value);
       });

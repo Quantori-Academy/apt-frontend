@@ -1,8 +1,18 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 
+import { usersApi } from "@/api/users/api";
 import { UsersTable } from "@/components";
 
 const Users: React.FC = () => {
+  const { data: users, isLoading } = usersApi.useGetUsersQuery();
+
+  if (isLoading) {
+    return <Typography variant="h3">Loading...</Typography>;
+  }
+  if (!users) {
+    return <Typography variant="h2">No users found.</Typography>;
+  }
+
   return (
     <Container>
       <Box
@@ -16,7 +26,7 @@ const Users: React.FC = () => {
         <Typography variant="h2">Users list</Typography>
         <Button variant="outlined">Add User</Button>
       </Box>
-      <UsersTable />
+      <UsersTable users={users} />
     </Container>
   );
 };
