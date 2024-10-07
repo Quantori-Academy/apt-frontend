@@ -36,7 +36,7 @@ const users = [
     firstName: "Jesus",
     lastName: "Sanders",
     email: "charlotte45@gmail.com",
-    role: "User",
+    role: "Researcher",
     lastLogin: "2023-07-10",
   },
   {
@@ -54,7 +54,7 @@ const users = [
     firstName: "Felicia",
     lastName: "Ortiz",
     email: "tanyakemp@bruce-martinez.com",
-    role: "Moderator",
+    role: "Procurement Officer",
     lastLogin: "2024-09-23",
   },
   {
@@ -63,7 +63,7 @@ const users = [
     firstName: "Beth",
     lastName: "Kelley",
     email: "beth_kelley@example.com",
-    role: "User",
+    role: "Researcher",
     lastLogin: "2024-03-10",
   },
   {
@@ -81,7 +81,7 @@ const users = [
     firstName: "David",
     lastName: "Williams",
     email: "david.williams@example.com",
-    role: "User",
+    role: "Procurement Officer",
     lastLogin: "2023-12-05",
   },
   {
@@ -90,7 +90,7 @@ const users = [
     firstName: "Linda",
     lastName: "Smith",
     email: "linda.smith@example.com",
-    role: "Moderator",
+    role: "Researcher",
     lastLogin: "2024-07-15",
   },
   {
@@ -99,7 +99,7 @@ const users = [
     firstName: "Robert",
     lastName: "Hughes",
     email: "roberthughes@example.com",
-    role: "User",
+    role: "Admin",
     lastLogin: "2024-04-25",
   },
   {

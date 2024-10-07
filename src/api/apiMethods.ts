@@ -1,6 +1,6 @@
-const BASE_URL = import.meta.env.VITE_APP_API_URL as string;
+export const BASE_URL = import.meta.env.VITE_APP_API_URL as string;
 
-const getHeaders = (customHeaders?: HeadersInit) => {
+export const getHeaders = (customHeaders?: HeadersInit) => {
   const headers = new Headers(customHeaders);
   const token = localStorage.getItem("accessToken");
 
