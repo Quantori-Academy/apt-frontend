@@ -8,7 +8,6 @@ import { useGetUsersQuery } from "@/store/api";
 const Users: React.FC = () => {
   const { data: users, isLoading } = useGetUsersQuery();
   const [openModal, setOpenModal] = useState(false);
-  console.log(users);
   if (isLoading) {
     return <Typography variant="h3">Loading...</Typography>;
   }
