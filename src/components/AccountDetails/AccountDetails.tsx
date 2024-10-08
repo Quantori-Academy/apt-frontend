@@ -4,8 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
-import { AlertSnackbar } from "@/components";
-import { SpinnerPage } from "@/components/SpinnerPage";
+import { AlertSnackbar, LoadingSkeleton } from "@/components";
 import {
   useGetUserDetailsQuery,
   useUpdateUserDetailsMutation,
@@ -18,12 +17,15 @@ import style from "./AccountDetails.module.css";
 const AccountDetails: React.FC = () => {
   const userId = useSelector(selectUserId)!;
 
-  const { data: userDetails, isLoading: isLoadingUserDetails } =
-    useGetUserDetailsQuery(userId);
+  const {
+    data: userDetails,
+    isLoading: isLoadingUserDetails,
+    isError,
+  } = useGetUserDetailsQuery(userId);
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const [updateUserDetails, { isLoading: isUpdatingDetails, isError }] =
+  const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
 
   const {
@@ -35,8 +37,7 @@ const AccountDetails: React.FC = () => {
     values: userDetails,
   });
 
-  if (isLoadingUserDetails) return <SpinnerPage />;
-  if (isError) return <div>fail to get data</div>;
+  if (isLoadingUserDetails) return <LoadingSkeleton />;
 
   const onSubmit = async (updatedUserDetails: UserDetails) => {
     try {
@@ -63,17 +64,7 @@ const AccountDetails: React.FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        maxWidth: 600,
-        margin: "auto",
-        padding: 4,
-        borderRadius: 2,
-        boxShadow: 3,
-        mt: 8,
-        bgcolor: "white",
-      }}
-    >
+    <Box>
       <Typography variant="h5" gutterBottom>
         Account Details
       </Typography>

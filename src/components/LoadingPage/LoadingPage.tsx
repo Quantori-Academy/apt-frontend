@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const SpinnerPage: React.FC = () => {
+const LoadingPage: React.FC = () => {
   return (
     <Box
       sx={{
@@ -16,4 +16,4 @@ const SpinnerPage: React.FC = () => {
   );
 };
 
-export default SpinnerPage;
+export default LoadingPage;
