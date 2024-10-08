@@ -33,7 +33,17 @@ export const api = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+
+    updatePassword: builder.mutation({
+      query: ({ userId, updatedPassword }) => ({
+        url: `/users/${userId}/reset-password`,
+        method: "PUT",
+        body: { newPassword: updatedPassword },
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
-export const { useAddUserMutation, useGetUserDetailsQuery, useUpdateUserDetailsMutation } = api;
+export const { useAddUserMutation, useGetUserDetailsQuery, useUpdateUserDetailsMutation, useUpdatePasswordMutation } =
+  api;
