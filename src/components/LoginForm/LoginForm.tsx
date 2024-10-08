@@ -18,7 +18,7 @@ const LoginForm: React.FC = () => {
   const errorMessage = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
 
-  const { register, onSubmit, handleSubmit, requiredErrors } = useLoginForm();
+  const { register, handleSubmit, requiredErrors } = useLoginForm();
 
   useRoleNavigation();
 
@@ -34,7 +34,7 @@ const LoginForm: React.FC = () => {
         width: "100%",
       }}
       component="form"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit}
     >
       <TextField
         sx={{ width: "100%" }}

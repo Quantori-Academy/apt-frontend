@@ -18,5 +18,5 @@ export const useLoginForm = () => {
     dispatch(loginUser(userData));
   };
 
-  return { register, onSubmit, handleSubmit, requiredErrors };
+  return { register, handleSubmit: handleSubmit(onSubmit), requiredErrors };
 };
