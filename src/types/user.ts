@@ -1,6 +1,6 @@
 import { userRoles } from "@/constants";
 
-export type User = {
+export type AuthUser = {
   id: string;
   role: string;
 };
@@ -18,17 +18,19 @@ export type UserTableColumn = {
 };
 
 //I'll rename it later
-export type TUser = {
+export type UserDetails = {
   id: number;
-  email: string;
   username: string;
+  email: string;
   first_name: string;
   last_name: string;
   role: string;
+  created_at: string;
+  last_login: string;
 };
 
 export type UserTableProps = {
-  users: TUser[];
+  users: UserDetails[];
 };
 
 export type UserRole = (typeof userRoles)[keyof typeof userRoles];
