@@ -57,7 +57,9 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
           newUserFormData[key as keyof typeof newUserFormData];
       }
     }
-
+    if (dataToSend.role === "Procurement Officer") {
+      dataToSend.role = "ProcurementOfficer";
+    }
     const { error } = await addUser(dataToSend);
     onFormSubmit(error ? "error" : "success");
   };
