@@ -12,9 +12,4 @@ export type UserInputData = {
   email?: string;
 };
 
-export type UserInputErrors = {
-  requiredUsernameError: boolean;
-  requiredPasswordError: boolean;
-};
-
 export type UserRole = (typeof userRoles)[keyof typeof userRoles];
