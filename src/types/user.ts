@@ -8,11 +8,8 @@ export type User = {
 export type UserInputData = {
   username: string;
   password: string;
-};
-
-export type UserInputErrors = {
-  requiredUsernameError: boolean;
-  requiredPasswordError: boolean;
+  confirmPassword?: string;
+  email?: string;
 };
 
 export type UserRole = (typeof userRoles)[keyof typeof userRoles];

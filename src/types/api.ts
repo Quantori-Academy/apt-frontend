@@ -3,7 +3,6 @@ export type ApiStatus = {
   message: string;
 };
 
-export type Tokens = {
-  accessToken: string;
-  refreshToken: string;
+export type Token = {
+  token: string;
 };

@@ -1,4 +1,4 @@
 export const EndPoints = {
   API_STATUS: "/status",
-  LOGIN: "/login",
+  LOGIN: "/users/login",
 };
