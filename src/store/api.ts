@@ -21,7 +21,7 @@ export const api = createApi({
       }),
     }),
     getUserDetails: builder.query<UserDetails, string>({
-      query: (userId) => `/users/${userId}`,
+      query: (userId: string) => `/users/${userId}`,
       providesTags: ["Users"],
     }),
 

@@ -1,21 +1,21 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 
 import { AlertSnackbar } from "@/components";
 import { useUpdatePasswordMutation } from "@/store/api.ts";
-import { selectUserId } from "@/store/slices/authSlice.ts";
 
 import style from "./ResetPassword.module.css";
 
 type PasswordUpdate = {
   password: string;
 };
-
-const ResetPassword: React.FC = () => {
+type ResetPasswordProps = {
+  userId: string | undefined;
+};
+const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const userId = useSelector(selectUserId)!;
+
   const [updatePassword, { isError }] = useUpdatePasswordMutation();
 
   const {
@@ -30,7 +30,6 @@ const ResetPassword: React.FC = () => {
     },
   });
 
-  console.log(isError);
   const onSubmit = async (updatedPassword: PasswordUpdate) => {
     updatePassword({
       userId,

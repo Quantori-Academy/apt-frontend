@@ -2,24 +2,22 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { MouseEventHandler, useState } from "react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 
 import { AlertSnackbar, LoadingSkeleton } from "@/components";
 import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from "@/store";
-import { selectUserId } from "@/store/slices/authSlice.ts";
 import { UserBase } from "@/types";
 
 import style from "./AccountDetails.module.css";
 
 type UserDetails = Omit<UserBase, "password" | "id" | "role">;
-const AccountDetails: React.FC = () => {
-  const userId = useSelector(selectUserId)!;
-
-  const { data: userDetails, isLoading: isLoadingUserDetails } =
-    useGetUserDetailsQuery(userId);
-
+type AccountDetailsProps = {
+  userId: string | undefined;
+};
+const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
 
+  const { data: userDetails, isLoading: isLoadingUserDetails } =
+    useGetUserDetailsQuery(userId!);
   const [updateUserDetails, { isLoading: isUpdatingDetails, isError }] =
     useUpdateUserDetailsMutation();
 
