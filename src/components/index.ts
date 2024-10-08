@@ -6,4 +6,4 @@ export { RevealableField } from "./RevealableField";
 export { AddUserModal } from "./AddUserModal";
 export { AddUserForm } from "./AddUserForm";
 export { AlertSnackbar } from "./AlertSnackbar";
-
+export { LoginForm } from "./LoginForm";

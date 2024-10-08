@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "@/components";
 
 const Login: React.FC = () => {
   return (
