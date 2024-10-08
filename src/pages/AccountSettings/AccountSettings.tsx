@@ -1,6 +1,6 @@
-import { Container } from "@mui/material";
-import React from "react";
+import { Container, Divider, Typography } from "@mui/material";
 
+import { ResetPassword } from "@/components";
 import { AccountDetails } from "@/components/AccountDetails";
 
 const AccountSettings: React.FC = () => {
@@ -16,6 +16,11 @@ const AccountSettings: React.FC = () => {
         bgcolor: "white",
       }}
     >
+      <Typography variant="h5" gutterBottom>
+        Account Details
+      </Typography>
+      <ResetPassword />
+      <Divider sx={{ my: 2 }} />
       <AccountDetails />
     </Container>
   );
