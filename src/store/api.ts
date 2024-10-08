@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { prepareHeaders } from "@/api";
-
-const BASE_URL = import.meta.env.VITE_APP_API_URL as string;
+import { BASE_URL } from "@/api/apiMethods";
+import { UserDetails } from "@/types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -14,6 +14,9 @@ export const api = createApi({
     getStatus: builder.query({
       query: () => "/status",
     }),
+    getUsers: builder.query<UserDetails[], void>({
+      query: () => "/users/all",
+    }),
     addUser: builder.mutation({
       query: () => ({
         url: "/users",
@@ -23,4 +26,4 @@ export const api = createApi({
   }),
 });
 
-export const { useGetStatusQuery, useAddUserMutation } = api;
+export const { useGetStatusQuery, useAddUserMutation, useGetUsersQuery } = api;

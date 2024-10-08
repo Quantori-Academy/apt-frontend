@@ -1,10 +1,10 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 
-import { usersApi } from "@/api/users/usersApi";
 import { UsersTable } from "@/components";
+import { useGetUsersQuery } from "@/store/api";
 
 const Users: React.FC = () => {
-  const { data: users, isLoading } = usersApi.useGetUsersQuery();
+  const { data: users, isLoading } = useGetUsersQuery();
   console.log(users);
   if (isLoading) {
     return <Typography variant="h3">Loading...</Typography>;
