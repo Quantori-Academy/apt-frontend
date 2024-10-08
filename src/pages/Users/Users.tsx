@@ -5,7 +5,7 @@ import { UsersTable } from "@/components";
 
 const Users: React.FC = () => {
   const { data: users, isLoading } = usersApi.useGetUsersQuery();
-
+  console.log(users);
   if (isLoading) {
     return <Typography variant="h3">Loading...</Typography>;
   }

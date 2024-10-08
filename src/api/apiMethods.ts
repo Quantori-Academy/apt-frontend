@@ -1,7 +1,6 @@
 export const BASE_URL = import.meta.env.VITE_APP_API_URL as string;
 
-export const getHeaders = (customHeaders?: HeadersInit) => {
-  const headers = new Headers(customHeaders);
+export function prepareHeaders(headers: Headers) {
   const token = localStorage.getItem("accessToken");
 
   if (!headers.get("Content-Type")) {
@@ -13,6 +12,11 @@ export const getHeaders = (customHeaders?: HeadersInit) => {
   }
 
   return headers;
+}
+
+const getHeaders = (customHeaders?: HeadersInit) => {
+  const headers = new Headers(customHeaders);
+  return prepareHeaders(headers);
 };
 
 class ApiMethods {

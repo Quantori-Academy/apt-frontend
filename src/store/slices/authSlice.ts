@@ -2,8 +2,7 @@ import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
 import { apiManager } from "@/api";
-import { UserInputData } from "@/types";
-import { User } from "@/types";
+import { User, UserInputData } from "@/types";
 
 import { createReducerSlice } from "../createReducerSlice";
 
@@ -22,10 +21,10 @@ const initialState: AuthSliceState = {
 export const loginUser = createAsyncThunk("auth/login", async (loginData: UserInputData, { rejectWithValue }) => {
   try {
     const response = await apiManager.login(loginData);
-    localStorage.setItem("accessToken", response.accessToken);
+    localStorage.setItem("accessToken", response.token);
     return response;
   } catch (err) {
-    if (err instanceof Error) {
+    if (typeof err === "object" && err !== null && "message" in err) {
       return rejectWithValue(err.message);
     }
     return rejectWithValue("An unknown error occurred");
@@ -57,12 +56,12 @@ export const authSlice = createReducerSlice({
         (
           state,
           action: PayloadAction<{
-            accessToken: string;
+            token: string;
           }>
         ) => {
           state.isLoading = false;
           state.errorMessage = null;
-          const decodedToken = jwtDecode<User>(action.payload.accessToken);
+          const decodedToken = jwtDecode<User>(action.payload.token);
           state.user = decodedToken;
         }
       )

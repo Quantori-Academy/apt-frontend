@@ -3,15 +3,15 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit";
 
 import { baseApi } from "@/api/baseApi";
 
+// import { api } from "./api";
 import { authSlice } from "./slices/authSlice";
 import { counterSlice } from "./slices/counterSlice";
 
 const rootReducer = combineSlices(counterSlice, authSlice, baseApi);
 
-export const makeStore = (preloadedState?: Partial<RootState>) => {
+export const makeStore = () => {
   const store = configureStore({
     reducer: rootReducer,
-    preloadedState,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
   });
 

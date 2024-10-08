@@ -8,21 +8,15 @@ import {
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { useAppSelector } from "@/hooks";
-import { useLoginForm } from "@/hooks";
-import { useRoleNavigation } from "@/hooks/useRoleNavigation";
+import { RevealableField } from "@/components";
+import { useAppSelector, useLoginForm, useRoleNavigation } from "@/hooks";
 import { selectErrorMessage, selectLoading } from "@/store/slices/authSlice";
-
-import { PasswordField } from "../PasswordField";
 
 const LoginForm: React.FC = () => {
   const errorMessage = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
 
-  const { userData, requiredErrors, handleChange, handleSubmit } =
-    useLoginForm();
-
-  const { requiredUsernameError, requiredPasswordError } = requiredErrors;
+  const { register, handleSubmit, requiredErrors } = useLoginForm();
 
   useRoleNavigation();
 
@@ -42,20 +36,24 @@ const LoginForm: React.FC = () => {
     >
       <TextField
         sx={{ width: "100%" }}
-        error={requiredUsernameError}
+        error={!!requiredErrors.username}
         label="Username"
-        name="username"
         type="text"
         variant="outlined"
         size="small"
-        value={userData.username}
-        helperText={requiredUsernameError ? "Username is required!" : ""}
-        onChange={handleChange}
+        {...register("username", {
+          required: "Username is required!",
+        })}
+        helperText={
+          requiredErrors.username?.message ? "Username is required!" : ""
+        }
       />
-      <PasswordField
-        value={userData.password}
-        onChange={handleChange}
-        error={requiredPasswordError}
+      <RevealableField
+        name="password"
+        label="Password"
+        register={register}
+        error={requiredErrors.password}
+        options={{ required: "Password is required!" }}
       />
       {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
 

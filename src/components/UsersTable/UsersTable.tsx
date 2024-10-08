@@ -95,11 +95,11 @@ import { UserTableColumn, UserTableProps } from "@/types";
 // ];
 const columns: UserTableColumn[] = [
   { label: "Username", key: "username" },
-  { label: "First Name", key: "firstName" },
-  { label: "Last Name", key: "lastName" },
+  { label: "First Name", key: "first_name" },
+  { label: "Last Name", key: "last_name" },
   { label: "Email", key: "email" },
   { label: "Role", key: "role" },
-
+  { label: "Last login", key: "last_login" },
   { label: "Actions", key: "actions" },
 ];
 const UsersTable: React.FC<UserTableProps> = ({ users }) => {

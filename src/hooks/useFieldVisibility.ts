@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 
-export const usePasswordVisibility = () => {
-  const [isPasswordShown, setPasswordIsShown] = useState<boolean>(false);
+export const useFieldVisibility = () => {
+  const [isFieldShown, setFieldIsShown] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const handlePassVisibility = () => {
+  const toggleFieldVisibility = () => {
     if (inputRef.current) {
       const cursorPosition = inputRef.current.selectionStart;
-      setPasswordIsShown((prev) => !prev);
+      setFieldIsShown((prev) => !prev);
       setTimeout(() => {
         if (inputRef.current) {
           inputRef.current.setSelectionRange(cursorPosition, cursorPosition);
@@ -15,5 +15,5 @@ export const usePasswordVisibility = () => {
       }, 0);
     }
   };
-  return { isPasswordShown, handlePassVisibility, inputRef };
+  return { isFieldShown, toggleFieldVisibility, inputRef };
 };

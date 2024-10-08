@@ -1,3 +1,5 @@
+import { userRoles } from "@/constants";
+
 export type User = {
   id: string;
   role: string;
@@ -6,11 +8,8 @@ export type User = {
 export type UserInputData = {
   username: string;
   password: string;
-};
-
-export type UserInputErrors = {
-  requiredUsernameError: boolean;
-  requiredPasswordError: boolean;
+  confirmPassword?: string;
+  email?: string;
 };
 
 export type UserTableColumn = {
@@ -31,3 +30,5 @@ export type TUser = {
 export type UserTableProps = {
   users: TUser[];
 };
+
+export type UserRole = (typeof userRoles)[keyof typeof userRoles];
