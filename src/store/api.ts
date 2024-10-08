@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { prepareHeaders } from "@/api";
-import { UserDetails } from "@/types";
+import { UserBase } from "@/types";
 
 const BASE_URL = import.meta.env.VITE_APP_API_URL as string;
-
+type UserDetails = Omit<UserBase, "password" | "id">;
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({

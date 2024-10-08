@@ -5,7 +5,11 @@ interface AlertSnackbarProps extends Omit<SnackbarProps, "children"> {
   severity?: AlertColor;
 }
 
-function AlertSnackbar({ severity, children, ...rest }: AlertSnackbarProps) {
+const AlertSnackbar: React.FC<AlertSnackbarProps> = ({
+  severity,
+  children,
+  ...rest
+}) => {
   return (
     <Snackbar autoHideDuration={3000} {...rest}>
       <Alert severity={severity} variant="filled" sx={{ width: "100%" }}>
@@ -13,6 +17,6 @@ function AlertSnackbar({ severity, children, ...rest }: AlertSnackbarProps) {
       </Alert>
     </Snackbar>
   );
-}
+};
 
 export default AlertSnackbar;

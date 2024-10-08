@@ -12,4 +12,14 @@ export type UserInputData = {
   email?: string;
 };
 
+export type UserBase = {
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  email: string;
+  password: string;
+};
+
 export type UserRole = (typeof userRoles)[keyof typeof userRoles];

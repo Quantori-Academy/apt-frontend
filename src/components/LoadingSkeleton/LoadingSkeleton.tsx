@@ -1,7 +1,7 @@
 import { Box, Card, CardContent } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
 
-function LoadingSkeleton() {
+const LoadingSkeleton: React.FC = () => {
   return (
     <Card sx={{ width: 400, margin: "auto", mt: 4, p: 2 }}>
       <CardContent>
@@ -23,6 +23,6 @@ function LoadingSkeleton() {
       </CardContent>
     </Card>
   );
-}
+};
 
 export default LoadingSkeleton;

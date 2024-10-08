@@ -3,18 +3,11 @@ import { useForm } from "react-hook-form";
 
 import { userRoles } from "@/constants";
 import { useAddUserMutation } from "@/store";
+import { UserBase } from "@/types";
 
 import style from "./AddUserForm.module.css";
 
-type NewUserFormData = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  role: string;
-};
+type CreateUserFormData = Omit<UserBase, "id"> & { confirmPassword: string };
 
 export type AddUserStatus = "error" | "success";
 
@@ -31,7 +24,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<NewUserFormData>({
+  } = useForm<CreateUserFormData>({
     defaultValues: {
       username: "",
       firstName: "",
@@ -43,7 +36,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
     },
   });
 
-  const onSubmit = async (newUserFormData: NewUserFormData) => {
+  const onSubmit = async (newUserFormData: CreateUserFormData) => {
     const { error } = await addUser(newUserFormData);
     onFormSubmit(error ? "error" : "success");
   };
