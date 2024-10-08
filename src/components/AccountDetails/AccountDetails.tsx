@@ -17,15 +17,12 @@ import style from "./AccountDetails.module.css";
 const AccountDetails: React.FC = () => {
   const userId = useSelector(selectUserId)!;
 
-  const {
-    data: userDetails,
-    isLoading: isLoadingUserDetails,
-    isError,
-  } = useGetUserDetailsQuery(userId);
+  const { data: userDetails, isLoading: isLoadingUserDetails } =
+    useGetUserDetailsQuery(userId);
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const [updateUserDetails, { isLoading: isUpdatingDetails }] =
+  const [updateUserDetails, { isLoading: isUpdatingDetails, isError }] =
     useUpdateUserDetailsMutation();
 
   const {
@@ -40,15 +37,14 @@ const AccountDetails: React.FC = () => {
   if (isLoadingUserDetails) return <LoadingSkeleton />;
 
   const onSubmit = async (updatedUserDetails: UserDetails) => {
-    try {
-      const result = await updateUserDetails({
-        userId,
-        updatedUserDetails,
-      }).unwrap();
-      console.log("User data updated:", result);
+    updateUserDetails({
+      userId,
+      updatedUserDetails,
+    });
+    if (!isError) {
       setIsEditMode(false);
-    } catch (err) {
-      console.error("Failed to update user data:", err);
+    } else {
+      console.error("Failed to update user data:");
     }
   };
 
@@ -65,9 +61,6 @@ const AccountDetails: React.FC = () => {
 
   return (
     <Box>
-      <Typography variant="h5" gutterBottom>
-        Account Details
-      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
