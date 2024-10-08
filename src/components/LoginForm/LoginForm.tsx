@@ -9,9 +9,7 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { RevealableField } from "@/components";
-import { useAppSelector } from "@/hooks";
-import { useLoginForm } from "@/hooks";
-import { useRoleNavigation } from "@/hooks/useRoleNavigation";
+import { useAppSelector, useLoginForm, useRoleNavigation } from "@/hooks";
 import { selectErrorMessage, selectLoading } from "@/store/slices/authSlice";
 
 const LoginForm: React.FC = () => {
