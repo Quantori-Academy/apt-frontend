@@ -2,31 +2,32 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { MouseEventHandler, useState } from "react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 
 import { AlertSnackbar, LoadingSkeleton } from "@/components";
 import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from "@/store";
-import { selectUserId } from "@/store/slices/authSlice.ts";
 import { UserBase } from "@/types";
 
 import style from "./AccountDetails.module.css";
 
 type UserDetails = Omit<UserBase, "password" | "id" | "role">;
-const AccountDetails: React.FC = () => {
-  const userId = useSelector(selectUserId)!;
+
+type AccountDetailsProps = {
+  userId: string;
+};
+
+const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const { data: userDetails, isLoading: isLoadingUserDetails } =
-    useGetUserDetailsQuery(userId);
+    useGetUserDetailsQuery(userId!);
 
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  const [updateUserDetails, { isLoading: isUpdatingDetails, isError }] =
+  const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
 
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm({
     values: userDetails,
@@ -35,26 +36,20 @@ const AccountDetails: React.FC = () => {
   if (isLoadingUserDetails) return <LoadingSkeleton />;
 
   const onSubmit = async (updatedUserDetails: UserDetails) => {
-    updateUserDetails({
+    const { error } = await updateUserDetails({
       userId,
       updatedUserDetails,
     });
-    if (!isError) {
-      setIsEditMode(false);
+
+    if (error) {
+      setIsAlertOpen(true);
     } else {
-      console.error("Failed to update user data:");
+      setIsEditMode(false);
     }
   };
-
   const handleEditToggle: MouseEventHandler = (e) => {
     e.preventDefault();
     setIsEditMode(!isEditMode);
-
-    if (!isEditMode) {
-      Object.entries(userDetails!).forEach(([key, value]) => {
-        setValue(key as keyof UserDetails, value);
-      });
-    }
   };
 
   return (
@@ -165,8 +160,8 @@ const AccountDetails: React.FC = () => {
       </form>
       <AlertSnackbar
         severity="error"
-        open={isError}
-        onClose={() => setIsEditMode(false)}
+        open={isAlertOpen}
+        onClose={() => setIsAlertOpen(false)}
       >
         {"Fail to update user details"}
       </AlertSnackbar>

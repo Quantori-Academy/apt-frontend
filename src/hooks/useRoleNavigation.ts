@@ -7,19 +7,20 @@ import { useAppSelector } from "./useAppSelector";
 
 export const useRoleNavigation = () => {
   const userRole = useAppSelector(selectUserRole);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (userRole) {
       switch (userRole) {
-        case "admin": {
+        case "Administrator": {
           navigate("/admin");
           break;
         }
-        case "officer": {
+        case "Procurement Officer": {
           navigate("/officer");
           break;
         }
-        case "researcher": {
+        case "Researcher": {
           navigate("/researcher");
           break;
         }

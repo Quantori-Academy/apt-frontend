@@ -2,14 +2,14 @@ import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
 import { apiManager } from "@/api";
-import { User, UserInputData } from "@/types";
+import { UserAuth, UserLoginInput } from "@/types";
 
 import { createReducerSlice } from "../createReducerSlice";
 
 export type AuthSliceState = {
   isLoading: boolean;
   errorMessage: string | null;
-  user: User | null;
+  user: UserAuth | null;
 };
 
 const initialState: AuthSliceState = {
@@ -18,7 +18,7 @@ const initialState: AuthSliceState = {
   user: null,
 };
 
-export const loginUser = createAsyncThunk("auth/login", async (loginData: UserInputData, { rejectWithValue }) => {
+export const loginUser = createAsyncThunk("auth/login", async (loginData: UserLoginInput, { rejectWithValue }) => {
   try {
     const response = await apiManager.login(loginData);
     localStorage.setItem("accessToken", response.token);
@@ -62,7 +62,7 @@ export const authSlice = createReducerSlice({
         ) => {
           state.isLoading = false;
           state.errorMessage = null;
-          const decodedToken = jwtDecode<User>(action.payload.token);
+          const decodedToken = jwtDecode<UserAuth>(action.payload.token);
           state.user = decodedToken;
         }
       )

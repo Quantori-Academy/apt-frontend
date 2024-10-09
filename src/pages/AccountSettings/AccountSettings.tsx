@@ -1,9 +1,15 @@
-import { Container } from "@mui/material";
-import React from "react";
+import { Container, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { AccountDetails } from "@/components/AccountDetails";
+import { selectUserId } from "@/store/slices/authSlice.ts";
 
 const AccountSettings: React.FC = () => {
+  const ownId = useSelector(selectUserId)!;
+  const { userId } = useParams<{ userId: string }>();
+  const id = userId ?? ownId;
+
   return (
     <Container
       sx={{
@@ -16,7 +22,10 @@ const AccountSettings: React.FC = () => {
         bgcolor: "white",
       }}
     >
-      <AccountDetails />
+      <Typography variant="h5" gutterBottom>
+        Account Details
+      </Typography>
+      <AccountDetails userId={id} />
     </Container>
   );
 };
