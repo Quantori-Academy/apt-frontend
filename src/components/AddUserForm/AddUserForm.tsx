@@ -3,25 +3,10 @@ import { useForm } from "react-hook-form";
 
 import { userRoles } from "@/constants";
 import { useAddUserMutation } from "@/store";
-import { UserRegisterInput } from "@/types";
+import { UserRegisterData, UserRegisterInput } from "@/types";
 
 import style from "./AddUserForm.module.css";
 
-type NewUserFormData = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  role: string;
-};
-type DataToSend = Omit<NewUserFormData, "confirmPassword">;
-
-const keysForBackend: Record<string, string> = {
-  firstName: "first_name",
-  lastName: "last_name",
-};
 export type AddUserStatus = "error" | "success";
 
 type AddUserFormProps = {
@@ -50,18 +35,11 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
     },
   });
 
-  const onSubmit = async (newUserFormData: NewUserFormData) => {
-    const dataToSend: DataToSend = {} as DataToSend;
-    for (const key in newUserFormData) {
-      if (key !== "confirmPassword") {
-        const keyForBackend = keysForBackend[key] || key;
-        dataToSend[keyForBackend as keyof typeof dataToSend] =
-          newUserFormData[key as keyof typeof newUserFormData];
-      }
-    }
-    if (dataToSend.role === "Procurement Officer") {
-      dataToSend.role = "ProcurementOfficer";
-    }
+  const onSubmit = async (newUserFormData: UserRegisterInput) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { confirmPassword, ...rest } = newUserFormData;
+    const dataToSend: UserRegisterData = rest;
+
     const { error } = await addUser(dataToSend);
     onFormSubmit(error ? "error" : "success");
   };

@@ -21,6 +21,7 @@ export type UserTableColumn = {
   key: string;
 };
 
+// TODO. Think of backend-to-frontend object fields mapper
 export type UserBackendDetails = {
   id: number;
   username: string;
@@ -37,3 +38,5 @@ export type UserTableProps = {
 };
 
 export type UserRole = (typeof userRoles)[keyof typeof userRoles];
+
+export type UserRegisterData = Omit<UserRegisterInput, "confirmPassword">;
