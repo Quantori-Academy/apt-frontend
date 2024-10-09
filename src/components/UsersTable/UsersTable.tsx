@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import { UserTableColumn, UserTableProps } from "@/types";
 
@@ -21,8 +22,9 @@ const columns: UserTableColumn[] = [
   { label: "Actions", key: "actions" },
 ];
 const UsersTable: React.FC<UserTableProps> = ({ users }) => {
+  const navigate = useNavigate();
   const handleEdit = (userId: number) => {
-    console.log(`Edit user with id: ${userId}`);
+    navigate(`/users/${userId}`);
   };
   return (
     <TableContainer component={Paper}>
