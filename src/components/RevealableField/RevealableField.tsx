@@ -6,12 +6,17 @@ import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 import { useFieldVisibility } from "@/hooks";
 import { UserLoginInput } from "@/types";
 
+type RevealableField = UserLoginInput & {
+  currentPassword?: string;
+  confirmPassword?: string;
+};
+
 type RevealableFieldProps = {
-  name: keyof UserLoginInput;
-  register: UseFormRegister<UserLoginInput>;
+  name: keyof RevealableField;
+  register: UseFormRegister<RevealableField>;
   error: FieldError | undefined;
   label: string;
-  options: RegisterOptions<UserLoginInput>;
+  options: RegisterOptions<RevealableField>;
 };
 
 const RevealableField: React.FC<RevealableFieldProps> = ({
