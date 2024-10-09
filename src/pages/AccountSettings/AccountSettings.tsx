@@ -1,4 +1,5 @@
 import { Container, Divider, Typography } from "@mui/material";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -27,9 +28,10 @@ const AccountSettings: React.FC = () => {
       <Typography variant="h5" gutterBottom>
         Account Details
       </Typography>
-      <AccountDetails userId={id} />
-      <Divider sx={{ my: 2 }} />
+
       <ResetPassword userId={id} />
+      <Divider sx={{ my: 2 }} />
+      <AccountDetails userId={id} />
     </Container>
   );
 };

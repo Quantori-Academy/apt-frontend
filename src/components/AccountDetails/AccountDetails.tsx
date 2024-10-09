@@ -10,15 +10,18 @@ import { UserBase } from "@/types";
 import style from "./AccountDetails.module.css";
 
 type UserDetails = Omit<UserBase, "password" | "id" | "role">;
+
 type AccountDetailsProps = {
-  userId: string | undefined;
+  userId: string;
 };
+
 const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const { data: userDetails, isLoading: isLoadingUserDetails } =
     useGetUserDetailsQuery(userId!);
+
   const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
 
@@ -38,13 +41,12 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
       updatedUserDetails,
     });
 
-    if (!error) {
-      setIsEditMode(false);
-    } else {
+    if (error) {
       setIsAlertOpen(true);
+    } else {
+      setIsEditMode(false);
     }
   };
-
   const handleEditToggle: MouseEventHandler = (e) => {
     e.preventDefault();
     setIsEditMode(!isEditMode);

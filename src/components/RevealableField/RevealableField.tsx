@@ -4,14 +4,14 @@ import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 
 import { useFieldVisibility } from "@/hooks";
-import { UserInputData } from "@/types";
+import { UserLoginInput } from "@/types";
 
 type RevealableFieldProps = {
-  name: keyof UserInputData;
-  register: UseFormRegister<UserInputData>;
+  name: keyof UserLoginInput;
+  register: UseFormRegister<UserLoginInput>;
   error: FieldError | undefined;
   label: string;
-  options: RegisterOptions<UserInputData>;
+  options: RegisterOptions<UserLoginInput>;
 };
 
 const RevealableField: React.FC<RevealableFieldProps> = ({
