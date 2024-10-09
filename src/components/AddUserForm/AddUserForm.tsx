@@ -3,18 +3,9 @@ import { useForm } from "react-hook-form";
 
 import { userRoles } from "@/constants";
 import { useAddUserMutation } from "@/store";
+import { UserRegisterInput } from "@/types";
 
 import style from "./AddUserForm.module.css";
-
-type NewUserFormData = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  role: string;
-};
 
 export type AddUserStatus = "error" | "success";
 
@@ -23,6 +14,7 @@ type AddUserFormProps = {
 };
 
 const roles = Object.values(userRoles);
+
 const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
   const [addUser, { isLoading }] = useAddUserMutation();
 
@@ -31,7 +23,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<NewUserFormData>({
+  } = useForm<UserRegisterInput>({
     defaultValues: {
       username: "",
       firstName: "",
@@ -43,7 +35,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
     },
   });
 
-  const onSubmit = async (newUserFormData: NewUserFormData) => {
+  const onSubmit = async (newUserFormData: UserRegisterInput) => {
     const { error } = await addUser(newUserFormData);
     onFormSubmit(error ? "error" : "success");
   };

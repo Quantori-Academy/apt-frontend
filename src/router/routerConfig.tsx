@@ -1,18 +1,20 @@
 import { RouteProps } from "react-router-dom";
 
-import { Home, Login, UserList } from "@/pages";
+import { AccountSettings, Home, Login, UserList } from "@/pages";
 
 export const enum AppRoutes {
   HOME = "home",
   LOGIN = "login",
   NOT_FOUND = "not_found",
   USERS = "users",
+  ACCOUNT_SETTINGS = "account-settings",
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.HOME]: "/",
   [AppRoutes.LOGIN]: "/login",
   [AppRoutes.USERS]: "/users",
+  [AppRoutes.ACCOUNT_SETTINGS]: "/account-settings",
   [AppRoutes.NOT_FOUND]: "*",
 };
 
@@ -28,6 +30,10 @@ export const routerConfig: Record<AppRoutes, RouteProps> = {
   [AppRoutes.USERS]: {
     path: RoutePath[AppRoutes.USERS],
     element: <UserList />,
+  },
+  [AppRoutes.ACCOUNT_SETTINGS]: {
+    path: RoutePath[AppRoutes.ACCOUNT_SETTINGS],
+    element: <AccountSettings />,
   },
   [AppRoutes.NOT_FOUND]: {
     path: RoutePath[AppRoutes.NOT_FOUND],
