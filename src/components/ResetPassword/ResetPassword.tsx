@@ -10,9 +10,11 @@ import style from "./ResetPassword.module.css";
 type PasswordUpdate = {
   password: string;
 };
+
 type ResetPasswordProps = {
-  userId: string | undefined;
+  userId: string;
 };
+
 const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
 

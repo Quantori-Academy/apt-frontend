@@ -15,22 +15,35 @@ export const api = createApi({
   endpoints: (builder) => ({
     addUser: builder.mutation({
       query: (newUser) => ({
-        url: "/users",
+        url: "/users/create",
         method: "POST",
         body: newUser,
       }),
     }),
     getUserDetails: builder.query<UserDetails, string>({
-      query: (userId: string) => `/users/${userId}`,
+      query: (userId) => `/users/${userId}`,
+      // queryFn: () => ({
+      //   data: {
+      //     firstName: "A",
+      //     lastName: "M",
+      //     email: "a@m.c",
+      //   },
+      // }),
       providesTags: ["Users"],
     }),
 
     updateUserDetails: builder.mutation({
-      query: ({ userId, updatedUserDetails }) => ({
-        url: `/users/${userId}`,
-        method: "PUT",
-        body: updatedUserDetails,
-      }),
+      // query: ({ userId, updatedUserDetails }) => ({
+      //   url: `/users/${userId}`,
+      //   method: "PUT",
+      //   body: updatedUserDetails,
+      // }),
+      queryFn: () => {
+        return {
+          data: "asd",
+          // error: "error",
+        };
+      },
       invalidatesTags: ["Users"],
     }),
 

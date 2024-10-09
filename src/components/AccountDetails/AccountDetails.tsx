@@ -15,16 +15,16 @@ type AccountDetailsProps = {
 };
 const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const { data: userDetails, isLoading: isLoadingUserDetails } =
     useGetUserDetailsQuery(userId!);
-  const [updateUserDetails, { isLoading: isUpdatingDetails, isError }] =
+  const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
 
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm({
     values: userDetails,
@@ -33,26 +33,21 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   if (isLoadingUserDetails) return <LoadingSkeleton />;
 
   const onSubmit = async (updatedUserDetails: UserDetails) => {
-    updateUserDetails({
+    const { error } = await updateUserDetails({
       userId,
       updatedUserDetails,
     });
-    if (!isError) {
+
+    if (!error) {
       setIsEditMode(false);
     } else {
-      console.error("Failed to update user data:");
+      setIsAlertOpen(true);
     }
   };
 
   const handleEditToggle: MouseEventHandler = (e) => {
     e.preventDefault();
     setIsEditMode(!isEditMode);
-
-    if (!isEditMode) {
-      Object.entries(userDetails!).forEach(([key, value]) => {
-        setValue(key as keyof UserDetails, value);
-      });
-    }
   };
 
   return (
@@ -163,10 +158,10 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
       </form>
       <AlertSnackbar
         severity="error"
-        open={isError}
-        onClose={() => setIsEditMode(false)}
+        open={isAlertOpen}
+        onClose={() => setIsAlertOpen(false)}
       >
-        {"Fail to update user details"}
+        Fail to update user details
       </AlertSnackbar>
     </Box>
   );
