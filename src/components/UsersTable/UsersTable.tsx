@@ -38,7 +38,7 @@ const UsersTable: React.FC<UserTableProps> = ({ users }) => {
         </TableHead>
         <TableBody>
           {users.map((user) => (
-            <TableRow key={user.email}>
+            <TableRow key={user.id}>
               {/* Change to user.id once backend sends id */}
               {columns.map((column) => {
                 if (column.key !== "actions") {
