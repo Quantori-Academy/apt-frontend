@@ -2,7 +2,7 @@ import { userRoles } from "@/constants";
 
 export type AuthUser = {
   id: string;
-  role: string;
+  role: UserRole;
 };
 
 export type UserInputData = {

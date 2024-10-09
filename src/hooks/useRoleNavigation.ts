@@ -11,15 +11,15 @@ export const useRoleNavigation = () => {
   useEffect(() => {
     if (userRole) {
       switch (userRole) {
-        case "admin": {
-          navigate("/admin");
+        case "Administrator": {
+          navigate("/users");
           break;
         }
-        case "officer": {
+        case "Procurement Officer": {
           navigate("/officer");
           break;
         }
-        case "researcher": {
+        case "Researcher": {
           navigate("/researcher");
           break;
         }
