@@ -42,7 +42,7 @@ export const api = createApi({
       query: (userData) => ({
         url: "/users/create",
         method: "post",
-        body: () => {
+        body: (() => {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { firstName, lastName, ...rest } = userData;
           const result: UserFromBackend = {
@@ -50,9 +50,8 @@ export const api = createApi({
             first_name: userData.firstName,
             last_name: userData.lastName,
           };
-
           return result;
-        },
+        })(),
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
