@@ -1,6 +1,5 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { MouseEventHandler, useState } from "react";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 import { AlertSnackbar, LoadingSkeleton } from "@/components";

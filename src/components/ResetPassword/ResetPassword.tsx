@@ -1,9 +1,10 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Button, TextField } from "@mui/material";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { AlertSnackbar } from "@/components";
-import { useUpdatePasswordMutation } from "@/store/api.ts";
+import { PASSWORD_REGEX } from "@/constants";
+import { useUpdatePasswordMutation } from "@/store";
 import { UserBase } from "@/types";
 
 import style from "./ResetPassword.module.css";
@@ -45,80 +46,73 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     }
   };
 
-  const handleEditToggle = () => {
-    setIsEditMode((prev) => !prev);
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={style.inputContainer}>
-      <Grid gap={2}>
-        {isEditMode ? (
-          <Box className={style.inputBox}>
-            <TextField
-              label="Password"
-              fullWidth
-              type="password"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password need to be not less than 8 character",
-                },
-                pattern: {
-                  value: /^(?=.*[A-Z]).*$/,
-                  message:
-                    "Password must contain at least one uppercase letter",
-                },
-              })}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-            />
-            <TextField
-              label="Confirm Password"
-              fullWidth
-              type="password"
-              {...register("confirmPassword", {
-                required: "This field is required",
-                validate: (value) =>
-                  value === getValues().password || "Passwords need to match",
-              })}
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword?.message}
-            />
-          </Box>
-        ) : null}
-        {isEditMode ? (
-          <Box className={style.buttonBox}>
-            <Button
-              fullWidth
-              size="small"
-              variant="contained"
-              color="primary"
-              type="submit"
-              disabled={isLoading}
-            >
-              Save
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={() => setIsEditMode(false)}
-            >
-              Cancel
-            </Button>
-          </Box>
-        ) : (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {isEditMode ? (
+        <Box className={style.inputBox}>
+          <TextField
+            label="Password"
+            fullWidth
+            type="password"
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password need to be not less than 8 character",
+              },
+              pattern: {
+                value: PASSWORD_REGEX,
+                message: "Password must contain at least one uppercase letter",
+              },
+            })}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+          />
+          <TextField
+            label="Confirm Password"
+            fullWidth
+            type="password"
+            {...register("confirmPassword", {
+              required: "This field is required",
+              validate: (value) =>
+                value === getValues().password || "Passwords need to match",
+            })}
+            error={!!errors.confirmPassword}
+            helperText={errors.confirmPassword?.message}
+          />
+        </Box>
+      ) : null}
+      {isEditMode ? (
+        <Box className={style.buttonBox}>
           <Button
+            fullWidth
+            size="small"
             variant="contained"
             color="primary"
-            fullWidth
-            onClick={handleEditToggle}
+            type="submit"
+            disabled={isLoading}
           >
-            Reset Password
+            Save
           </Button>
-        )}
-      </Grid>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={() => setIsEditMode(false)}
+          >
+            Cancel
+          </Button>
+        </Box>
+      ) : (
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={() => setIsEditMode(true)}
+        >
+          Reset Password
+        </Button>
+      )}
 
       <AlertSnackbar
         severity={"error"}
