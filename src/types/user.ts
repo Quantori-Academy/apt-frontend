@@ -1,24 +1,27 @@
 import { userRoles } from "@/constants";
 
-export type AuthUser = {
+export type UserBase = {
   id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
   role: UserRole;
+  email: string;
+  password: string;
 };
 
-export type UserInputData = {
-  username: string;
-  password: string;
-  confirmPassword?: string;
-  email?: string;
-};
+export type UserAuth = Pick<UserBase, "id" | "role">;
+
+export type UserLoginInput = Pick<UserBase, "username" | "password">;
+
+export type UserRegisterInput = Omit<UserBase, "id"> & { confirmPassword: string };
 
 export type UserTableColumn = {
   label: string;
   key: string;
 };
 
-//I'll rename it later
-export type UserDetails = {
+export type UserBackendDetails = {
   id: number;
   username: string;
   email: string;
@@ -30,7 +33,7 @@ export type UserDetails = {
 };
 
 export type UserTableProps = {
-  users: UserDetails[];
+  users: UserBackendDetails[];
 };
 
 export type UserRole = (typeof userRoles)[keyof typeof userRoles];

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { userRoles } from "@/constants";
 import { useAddUserMutation } from "@/store";
+import { UserRegisterInput } from "@/types";
 
 import style from "./AddUserForm.module.css";
 
@@ -28,6 +29,7 @@ type AddUserFormProps = {
 };
 
 const roles = Object.values(userRoles);
+
 const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
   const [addUser, { isLoading }] = useAddUserMutation();
 
@@ -36,7 +38,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<NewUserFormData>({
+  } = useForm<UserRegisterInput>({
     defaultValues: {
       username: "",
       firstName: "",

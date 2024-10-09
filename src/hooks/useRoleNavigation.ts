@@ -7,6 +7,7 @@ import { useAppSelector } from "./useAppSelector";
 
 export const useRoleNavigation = () => {
   const userRole = useAppSelector(selectUserRole);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (userRole) {

@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { loginUser } from "@/store/slices/authSlice";
-import { UserInputData } from "@/types";
+import { UserLoginInput } from "@/types";
 
 import { useAppDispatch } from "./useAppDispatch";
 
@@ -11,10 +11,10 @@ export const useLoginForm = () => {
     register,
     handleSubmit,
     formState: { errors: requiredErrors },
-  } = useForm<UserInputData>({
+  } = useForm<UserLoginInput>({
     mode: "onBlur",
   });
-  const onSubmit: SubmitHandler<UserInputData> = (userData: UserInputData) => {
+  const onSubmit: SubmitHandler<UserLoginInput> = (userData: UserLoginInput) => {
     dispatch(loginUser(userData));
   };
 

@@ -2,7 +2,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { prepareHeaders } from "@/api";
 import { BASE_URL } from "@/api/apiMethods";
-import { UserDetails } from "@/types";
+import { UserBackendDetails } from "@/types";
+import { UserBase } from "@/types";
+
+type UserDetails = Omit<UserBase, "password" | "id">;
 
 export const api = createApi({
   reducerPath: "api",
@@ -15,7 +18,7 @@ export const api = createApi({
     getStatus: builder.query({
       query: () => "/status",
     }),
-    getUsers: builder.query<UserDetails[], void>({
+    getUsers: builder.query<UserBackendDetails[], void>({
       query: () => "/users/all",
       providesTags: (result) => {
         if (result && Array.isArray(result)) {
@@ -34,7 +37,7 @@ export const api = createApi({
         try {
           const { data: createdUser } = await queryFulfilled;
           dispatch(
-            api.util.updateQueryData("getUsers", undefined, (draft: UserDetails[]) => {
+            api.util.updateQueryData("getUsers", undefined, (draft: UserBackendDetails[]) => {
               draft.push(createdUser);
             })
           );
@@ -43,7 +46,21 @@ export const api = createApi({
         }
       },
     }),
+
+    getUserDetails: builder.query<UserDetails, string>({
+      query: (userId) => `/users/${userId}`,
+      providesTags: ["Users"],
+    }),
+
+    updateUserDetails: builder.mutation({
+      query: ({ userId, updatedUserDetails }) => ({
+        url: `/users/${userId}`,
+        method: "PUT",
+        body: updatedUserDetails,
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
-export const { useGetStatusQuery, useAddUserMutation, useGetUsersQuery } = api;
+export const { useGetUsersQuery, useAddUserMutation, useGetUserDetailsQuery, useUpdateUserDetailsMutation } = api;

@@ -2,14 +2,14 @@ import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
 import { apiManager } from "@/api";
-import { AuthUser, UserInputData } from "@/types";
+import { UserAuth, UserLoginInput } from "@/types";
 
 import { createReducerSlice } from "../createReducerSlice";
 
-type AuthSliceState = {
+export type AuthSliceState = {
   isLoading: boolean;
   errorMessage: string | null;
-  user: AuthUser | null;
+  user: UserAuth | null;
 };
 
 const initialState: AuthSliceState = {
@@ -18,7 +18,7 @@ const initialState: AuthSliceState = {
   user: null,
 };
 
-export const loginUser = createAsyncThunk("auth/login", async (loginData: UserInputData, { rejectWithValue }) => {
+export const loginUser = createAsyncThunk("auth/login", async (loginData: UserLoginInput, { rejectWithValue }) => {
   try {
     const response = await apiManager.login(loginData);
     localStorage.setItem("accessToken", response.token);
@@ -44,6 +44,7 @@ export const authSlice = createReducerSlice({
     selectErrorMessage: (state) => state.errorMessage,
     selectLoading: (state) => state.isLoading,
     selectUserRole: (state) => state.user?.role,
+    selectUserId: (state) => state.user?.id,
   },
   extraReducers: (builder) => {
     builder
@@ -61,7 +62,7 @@ export const authSlice = createReducerSlice({
         ) => {
           state.isLoading = false;
           state.errorMessage = null;
-          const decodedToken = jwtDecode<AuthUser>(action.payload.token);
+          const decodedToken = jwtDecode<UserAuth>(action.payload.token);
           state.user = decodedToken;
         }
       )
@@ -73,4 +74,4 @@ export const authSlice = createReducerSlice({
 });
 
 export const { logout } = authSlice.actions;
-export const { selectErrorMessage, selectLoading, selectUserRole } = authSlice.selectors;
+export const { selectErrorMessage, selectLoading, selectUserRole, selectUserId } = authSlice.selectors;
