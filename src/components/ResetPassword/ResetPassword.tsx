@@ -4,12 +4,11 @@ import { useForm } from "react-hook-form";
 
 import { AlertSnackbar } from "@/components";
 import { useUpdatePasswordMutation } from "@/store/api.ts";
+import { UserBase } from "@/types";
 
 import style from "./ResetPassword.module.css";
 
-type PasswordUpdate = {
-  password: string;
-};
+type PasswordUpdate = Pick<UserBase, "password">;
 
 type ResetPasswordProps = {
   userId: string;
@@ -17,8 +16,9 @@ type ResetPasswordProps = {
 
 const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  const [updatePassword, { isError }] = useUpdatePasswordMutation();
+  const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
 
   const {
     register,
@@ -33,14 +33,15 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
   });
 
   const onSubmit = async (updatedPassword: PasswordUpdate) => {
-    updatePassword({
+    const { error } = await updatePassword({
       userId,
       updatedPassword: updatedPassword.password,
     });
-    if (!isError) {
-      setIsEditMode(false);
+
+    if (error) {
+      setIsAlertOpen(true);
     } else {
-      console.error("Failed to update password:");
+      setIsEditMode(false);
     }
   };
 
@@ -94,6 +95,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
               variant="contained"
               color="primary"
               type="submit"
+              disabled={isLoading}
             >
               Save
             </Button>
@@ -120,10 +122,10 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
 
       <AlertSnackbar
         severity={"error"}
-        open={isError}
-        onClose={() => setIsEditMode(false)}
+        open={isAlertOpen}
+        onClose={() => setIsAlertOpen(false)}
       >
-        {"Failed to update password"}
+        Failed to update password
       </AlertSnackbar>
     </form>
   );
