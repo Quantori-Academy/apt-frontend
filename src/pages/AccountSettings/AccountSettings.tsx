@@ -29,9 +29,9 @@ const AccountSettings: React.FC = () => {
         Account Details
       </Typography>
 
-      <ResetPassword userId={id} />
-      <Divider sx={{ my: 2 }} />
       <AccountDetails userId={id} />
+      <Divider sx={{ my: 2 }} />
+      <ResetPassword userId={id} />
     </Container>
   );
 };

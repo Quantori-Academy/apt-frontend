@@ -19,6 +19,7 @@ export const api = createApi({
         method: "POST",
         body: newUser,
       }),
+      invalidatesTags: ["Users"],
     }),
     getUserDetails: builder.query<UserDetails, string>({
       query: (userId) => `/users/${userId}`,
