@@ -56,8 +56,21 @@ export const api = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+
+    updateRole: builder.mutation({
+      query: ({ userId, newRole }) => ({
+        url: `/users/${userId}/role/${newRole}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
-export const { useAddUserMutation, useGetUserDetailsQuery, useUpdateUserDetailsMutation, useUpdatePasswordMutation } =
-  api;
+export const {
+  useAddUserMutation,
+  useGetUserDetailsQuery,
+  useUpdateUserDetailsMutation,
+  useUpdatePasswordMutation,
+  useUpdateRoleMutation,
+} = api;

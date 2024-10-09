@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { ResetPassword } from "@/components";
+import { EditUserRole, ResetPassword } from "@/components";
 import { AccountDetails } from "@/components/AccountDetails";
 import { selectUserId } from "@/store/slices/authSlice.ts";
 
@@ -28,10 +28,11 @@ const AccountSettings: React.FC = () => {
       <Typography variant="h5" gutterBottom>
         Account Details
       </Typography>
-
-      <AccountDetails userId={id} />
-      <Divider sx={{ my: 2 }} />
       <ResetPassword userId={id} />
+      <Divider sx={{ my: 3 }} />
+      <EditUserRole userId={id} />
+      <Divider sx={{ my: 3 }} />
+      <AccountDetails userId={id} />
     </Container>
   );
 };

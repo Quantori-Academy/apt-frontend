@@ -11,3 +11,4 @@ export { AccountDetails } from "./AccountDetails";
 export { LoadingSkeleton } from "./LoadingSkeleton";
 export { LoadingPage } from "./LoadingPage";
 export { ResetPassword } from "./ResetPassword";
+export { EditUserRole } from "./EditUserRole";
