@@ -27,7 +27,7 @@ export const api = createApi({
   tagTypes: ["Users"],
   endpoints: (builder) => ({
     getUsers: builder.query<UserBackendDetails[], void>({
-      query: () => "/users/all",
+      query: () => "/users",
       providesTags: (result) => {
         if (result && Array.isArray(result)) {
           return [...result.map(({ id }) => ({ type: "Users" as const, id })), { type: "Users", id: "LIST" }];
@@ -37,7 +37,7 @@ export const api = createApi({
     }),
     addUser: builder.mutation<UserBackendDetails, UserRegisterData>({
       query: (userData) => ({
-        url: "/users/create",
+        url: "/users",
         method: "post",
         body: (() => {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
