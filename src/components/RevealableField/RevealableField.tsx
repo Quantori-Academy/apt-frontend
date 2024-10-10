@@ -6,8 +6,6 @@ import { FieldValues, Path } from "react-hook-form";
 
 import { useFieldVisibility } from "@/hooks";
 
-// import { UserLoginInput } from "@/types";
-
 type RevealableFieldProps<T extends FieldValues> = {
   name: Path<T>;
   register: UseFormRegister<T>;
