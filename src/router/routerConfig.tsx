@@ -7,7 +7,7 @@ export const enum AppRoutes {
   LOGIN = "login",
   USERS = "users",
   USER_PAGE = "user_page",
-  ACCOUNT_SETTINGS = "account-settings",
+  ACCOUNT_SETTINGS = "account_settings",
   NOT_FOUND = "not_found",
 }
 
