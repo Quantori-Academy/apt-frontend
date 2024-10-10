@@ -1,6 +1,6 @@
 import { ApiStatus, Tokens } from "@/types";
 import { UserInputData } from "@/types";
-import { StorageLocation } from "@/types";
+import { StorageRoomsBrief } from "@/types";
 
 import { apiMethods } from "./apiMethods";
 import { EndPoints } from "./endPoints";
@@ -16,23 +16,22 @@ class ApiManager {
   }
   public getStorageLocations() {
     const token = localStorage.getItem("authToken");
-    return apiMethods.get<StorageLocation[]>(EndPoints.STORAGE_LOCATIONS, {
+    return apiMethods.get<StorageRoomsBrief[]>(EndPoints.STORAGE_LOCATIONS, {
       headers: { Authorization: `Bearer ${token}` },
     });
   }
 
-  public addStorageLocation(data: { room: string; name: string }) {
+  public addStorageLocation(data: { room: string }) {
     const token = localStorage.getItem("authToken");
-    return apiMethods.post<StorageLocation>(EndPoints.STORAGE_LOCATIONS, {
+    return apiMethods.post<StorageRoomsBrief>(EndPoints.STORAGE_LOCATIONS, {
       body: JSON.stringify(data),
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     });
   }
 
-  public editStorageLocation(id: number, data: { room: string; name: string }) {
+  public editStorageLocation(id: number, roomName: string) {
     const token = localStorage.getItem("authToken");
-    return apiMethods.put<StorageLocation>(`${EndPoints.STORAGE_LOCATIONS}/${id}`, {
-      body: JSON.stringify(data),
+    return apiMethods.put<StorageRoomsBrief>(`${EndPoints.STORAGE_LOCATIONS}/${id}/${roomName}`, {
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     });
   }
