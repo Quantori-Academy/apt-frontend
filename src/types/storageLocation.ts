@@ -10,3 +10,14 @@ export interface RoomLocationBrief {
   location: string;
   place: string;
 }
+export interface RoomData {
+  storage_room: string;
+  substances: {
+    substance_id: number;
+    name: string;
+    description: string;
+    structure_smiles: string;
+    location: string;
+    place: string;
+  }[];
+}
