@@ -8,13 +8,16 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { addStorageLocation } from "@/store/slices/storageSlice";
-import { StorageLocation } from "@/types";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import {
+  addStorageLocation,
+  selectStorageError,
+  selectStorageStatus,
+} from "@/store/slices/storageSlice";
 
 interface Props {
   onCancel: () => void;
-  onAddLocation: (newLocation: StorageLocation) => void;
+  onAddLocation: (message: string) => void;
 }
 
 const AddStorageLocation: React.FC<Props> = ({ onCancel, onAddLocation }) => {
@@ -22,22 +25,22 @@ const AddStorageLocation: React.FC<Props> = ({ onCancel, onAddLocation }) => {
   const [room, setRoom] = useState("");
   const [name, setName] = useState("");
 
+  const status = useAppSelector(selectStorageStatus);
+  const error = useAppSelector(selectStorageError);
+
   const handleSaveLocation = () => {
     if (room && name) {
-      const newLocation: StorageLocation = {
-        id: Math.floor(Math.random() * 1000000),
-        room,
-        name,
-        description: "No description provided",
-      };
-
-      dispatch(addStorageLocation(newLocation));
-
-      onAddLocation(newLocation);
-
-      setRoom("");
-      setName("");
-      onCancel();
+      dispatch(addStorageLocation({ room }))
+        .unwrap()
+        .then(() => {
+          onAddLocation("Storage location added successfully!");
+          setRoom("");
+          setName("");
+          onCancel();
+        })
+        .catch((err) => {
+          console.error("Failed to add storage location:", err);
+        });
     }
   };
 
@@ -59,12 +62,18 @@ const AddStorageLocation: React.FC<Props> = ({ onCancel, onAddLocation }) => {
           onChange={(e) => setName(e.target.value)}
           margin="normal"
         />
+        {status === "loading" && <p>Saving location...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel} color="secondary">
           Cancel
         </Button>
-        <Button onClick={handleSaveLocation} color="primary">
+        <Button
+          onClick={handleSaveLocation}
+          color="primary"
+          disabled={status === "loading"}
+        >
           Save
         </Button>
       </DialogActions>
