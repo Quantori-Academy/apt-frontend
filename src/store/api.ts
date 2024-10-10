@@ -4,6 +4,8 @@ import { prepareHeaders } from "@/api";
 import { BASE_URL } from "@/api/apiMethods";
 import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData } from "@/types";
 
+import { transformUserResponse } from "./utils/transformUserResponse";
+
 // TODO. Think of backend-to-frontend object fields mapper
 // const keysForBackend: Pick<UserRegisterInput, "firstName" | "lastName"> = {
 //   firstName: "first_name",
@@ -28,19 +30,7 @@ export const api = createApi({
   endpoints: (builder) => ({
     getUsers: builder.query<UserFrontendDetails[], void>({
       query: () => "/users/all",
-      transformResponse: (response: UserBackendDetails[]) => {
-        const transformedResponse = response.map((user) => ({
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          firstName: user.first_name,
-          lastName: user.last_name,
-          role: user.role,
-          createdAt: user.created_at,
-          lastLogin: user.last_login,
-        }));
-        return transformedResponse;
-      },
+      transformResponse: (response: UserBackendDetails[]) => response.map(transformUserResponse),
       providesTags: (result) => {
         if (result && Array.isArray(result)) {
           return [...result.map(({ id }) => ({ type: "Users" as const, id })), { type: "Users", id: "LIST" }];
@@ -68,17 +58,7 @@ export const api = createApi({
           const { data: createdUser } = await queryFulfilled;
           dispatch(
             api.util.updateQueryData("getUsers", undefined, (draft: UserFrontendDetails[]) => {
-              const transformedUser: UserFrontendDetails = {
-                id: createdUser.id,
-                username: createdUser.username,
-                email: createdUser.email,
-                firstName: createdUser.first_name,
-                lastName: createdUser.last_name,
-                role: createdUser.role,
-                createdAt: createdUser.created_at,
-                lastLogin: createdUser.last_login,
-              };
-              draft.push(transformedUser);
+              draft.push(transformUserResponse(createdUser));
             })
           );
         } catch (err) {
