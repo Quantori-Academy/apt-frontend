@@ -47,6 +47,7 @@ export const routerConfig: Record<AppRoutes, AppRoutesProps> = {
   [AppRoutes.ACCOUNT_SETTINGS]: {
     path: RoutePath[AppRoutes.ACCOUNT_SETTINGS],
     element: <AccountSettings />,
+    roles: ["Administrator", "Procurement Officer", "Researcher"],
   },
   [AppRoutes.NOT_FOUND]: {
     path: RoutePath[AppRoutes.NOT_FOUND],
