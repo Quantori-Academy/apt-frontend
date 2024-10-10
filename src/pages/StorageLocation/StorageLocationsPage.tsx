@@ -1,117 +1,76 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import AddStorageLocation from "@/components/StorageLocation/AddStorageLocation";
 import StorageLocationList from "@/components/StorageLocation/StorageLocationList";
-import { StorageLocation } from "@/types";
-
-const generateFakeStorageLocations = (count: number) => {
-  return Array.from({ length: count }, (_, index) => ({
-    id: index + 1,
-    name: `Location ${Math.ceil((index + 1) / 3)}`,
-    room: `Room ${index + 1}`,
-    description: `Description for Location ${index + 1}`,
-  }));
-};
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import {
+  fetchStorageLocations,
+  selectStorageError,
+  selectStorageLocations,
+  selectStorageStatus,
+} from "@/store/slices/storageSlice";
 
 const StorageLocationPage: React.FC = () => {
-  const [locations, setLocations] = useState<StorageLocation[]>([]);
-  const [showAddForm, setShowAddForm] = useState(false);
+  const dispatch = useAppDispatch();
+  const storageLocations = useSelector(selectStorageLocations);
+  const status = useSelector(selectStorageStatus);
+  const error = useSelector(selectStorageError);
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const fakeData = generateFakeStorageLocations(10);
-    setLocations(fakeData);
-  }, []);
+    dispatch(fetchStorageLocations());
+  }, [dispatch]);
 
-  const groupLocationsByName = () => {
-    return locations.reduce(
-      (grouped, location) => {
-        if (!grouped[location.name]) {
-          grouped[location.name] = [];
-        }
-        grouped[location.name].push(location);
-        return grouped;
-      },
-      {} as Record<string, StorageLocation[]>
-    );
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
   };
 
-  const handleEdit = (
-    id: number,
-    data: { room: string; name: string; description: string }
-  ) => {
-    console.log("Editing Location:", id, data);
-    setLocations((prevLocations) =>
-      prevLocations.map((location) =>
-        location.id === id ? { ...location, ...data } : location
-      )
-    );
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
   };
 
-  const handleDelete = (id: number) => {
-    console.log("Deleting Location:", id);
-    setLocations((prevLocations) =>
-      prevLocations.filter((location) => location.id !== id)
-    );
+  const handleAddLocation = (message: string) => {
+    setMessage(message);
+    setOpenDialog(false);
   };
-
-  const handleAddLocation = (newLocation: StorageLocation) => {
-    console.log("Adding New Location:", newLocation);
-    setLocations((prevLocations) => [...prevLocations, newLocation]);
-    setShowAddForm(false);
-  };
-
-  const handleCancelAddForm = () => {
-    setShowAddForm(false);
-  };
-
-  const groupedLocations = groupLocationsByName();
 
   return (
-    <Container>
+    <Box sx={{ padding: 2 }}>
       <Typography variant="h4" gutterBottom>
-        Manage Storage Locations
+        Storage Locations
       </Typography>
 
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={3}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleOpenDialog}
+        sx={{ marginBottom: 2 }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setShowAddForm(true)}
-        >
-          Add New Storage Location
-        </Button>
-      </Box>
+        Add Storage Location
+      </Button>
 
-      {showAddForm && (
-        <AddStorageLocation
-          onAddLocation={handleAddLocation}
-          onCancel={handleCancelAddForm}
-        />
+      {message && <Typography color="success.main">{message}</Typography>}
+
+      {status === "loading" && <CircularProgress />}
+      {status === "failed" && (
+        <Typography color="error">Error: {error}</Typography>
       )}
 
-      <Grid container spacing={3}>
-        {Object.entries(groupedLocations).map(
-          ([locationName, locationLocations]) => (
-            <Grid item xs={12} key={locationName}>
-              <Typography variant="h5" gutterBottom>
-                {locationName}
-              </Typography>
-              <StorageLocationList
-                locations={locationLocations}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            </Grid>
-          )
-        )}
-      </Grid>
-    </Container>
+      {status === "succeeded" && (
+        <StorageLocationList locations={storageLocations} />
+      )}
+
+      {openDialog && (
+        <AddStorageLocation
+          onCancel={handleCloseDialog}
+          onAddLocation={handleAddLocation}
+        />
+      )}
+    </Box>
   );
 };
 
