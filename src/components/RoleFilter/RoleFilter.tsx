@@ -4,7 +4,7 @@ import { userRoles } from "@/constants";
 import { RoleFilterState } from "@/pages/Users/Users";
 
 type RoleFilterProps = {
-  roleFilter: string;
+  roleFilter: RoleFilterState;
   setRoleFilter: React.Dispatch<React.SetStateAction<RoleFilterState>>;
 };
 
