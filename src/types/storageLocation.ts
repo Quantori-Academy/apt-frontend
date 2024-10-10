@@ -1,6 +1,12 @@
-export interface StorageLocation {
+export interface StorageRoomsBrief {
   id: number;
-  room: string;
-  name: string;
-  description: string;
+  storage_room: string;
+  locations: RoomLocationBrief[];
+  total_substances: number;
+}
+
+export interface RoomLocationBrief {
+  id: number;
+  location: string;
+  place: string;
 }
