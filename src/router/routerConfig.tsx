@@ -1,16 +1,19 @@
 import { RouteProps } from "react-router-dom";
 
-import { Home, Login } from "@/pages";
+import { Home, Login, StorageLocationPage } from "@/pages";
 
 export const enum AppRoutes {
   HOME = "home",
   LOGIN = "login",
+  STORAGE_LOCATIONS = "storage_locations",
+
   NOT_FOUND = "not_found",
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.HOME]: "/",
   [AppRoutes.LOGIN]: "/login",
+  [AppRoutes.STORAGE_LOCATIONS]: "/storage-locations",
   [AppRoutes.NOT_FOUND]: "*",
 };
 
@@ -22,6 +25,10 @@ export const routerConfig: Record<AppRoutes, RouteProps> = {
   [AppRoutes.LOGIN]: {
     path: RoutePath[AppRoutes.LOGIN],
     element: <Login />,
+  },
+  [AppRoutes.STORAGE_LOCATIONS]: {
+    path: RoutePath[AppRoutes.STORAGE_LOCATIONS],
+    element: <StorageLocationPage />,
   },
   [AppRoutes.NOT_FOUND]: {
     path: RoutePath[AppRoutes.NOT_FOUND],
