@@ -29,7 +29,7 @@ export const api = createApi({
   tagTypes: ["Users"],
   endpoints: (builder) => ({
     getUsers: builder.query<UserFrontendDetails[], void>({
-      query: () => "/users/all",
+      query: () => "/users",
       transformResponse: (response: UserBackendDetails[]) => response.map(transformUserResponse),
       providesTags: (result) => {
         if (result && Array.isArray(result)) {
@@ -40,7 +40,7 @@ export const api = createApi({
     }),
     addUser: builder.mutation<UserBackendDetails, UserRegisterData>({
       query: (userData) => ({
-        url: "/users/create",
+        url: "/users",
         method: "post",
         body: (() => {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
