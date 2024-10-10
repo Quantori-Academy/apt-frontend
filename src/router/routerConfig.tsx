@@ -1,6 +1,7 @@
 import { RouteProps } from "react-router-dom";
 
 import { AccountSettings, Home, Login, UserPage, Users } from "@/pages";
+import { UserRole } from "@/types";
 
 export const enum AppRoutes {
   HOME = "home",
@@ -20,7 +21,11 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.NOT_FOUND]: "*",
 };
 
-export const routerConfig: Record<AppRoutes, RouteProps> = {
+type AppRoutesProps = RouteProps & {
+  roles?: UserRole[];
+};
+
+export const routerConfig: Record<AppRoutes, AppRoutesProps> = {
   [AppRoutes.HOME]: {
     path: RoutePath[AppRoutes.HOME],
     element: <Home />,
@@ -32,10 +37,12 @@ export const routerConfig: Record<AppRoutes, RouteProps> = {
   [AppRoutes.USERS]: {
     path: RoutePath[AppRoutes.USERS],
     element: <Users />,
+    roles: ["Administrator"],
   },
   [AppRoutes.USER_PAGE]: {
     path: RoutePath[AppRoutes.USER_PAGE],
     element: <UserPage />,
+    roles: ["Administrator"],
   },
   [AppRoutes.ACCOUNT_SETTINGS]: {
     path: RoutePath[AppRoutes.ACCOUNT_SETTINGS],
