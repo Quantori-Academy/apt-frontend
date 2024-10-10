@@ -12,8 +12,7 @@ import { useSelector } from "react-redux";
 
 import { AlertSnackbar, LoadingSkeleton } from "@/components";
 import { userRoles } from "@/constants";
-import { useGetUserDetailsQuery } from "@/store";
-import { useUpdateRoleMutation } from "@/store/api.ts";
+import { useGetUserDetailsQuery, useUpdateRoleMutation } from "@/store";
 import { selectUserRole } from "@/store/slices/authSlice.ts";
 import { UserRole } from "@/types";
 
@@ -32,8 +31,6 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const userRole = useSelector(selectUserRole);
 
-  const roles = Object.values(userRoles);
-
   const { data: userDetails, isLoading: isLoadingUserDetails } =
     useGetUserDetailsQuery(userId);
 
@@ -47,7 +44,7 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
 
   if (isLoadingUserDetails) return <LoadingSkeleton />;
 
-  const onSubmit = async (updatedRole: UserRoleUpdate) => {
+  const onSubmit = async ({ role: updatedRole }: UserRoleUpdate) => {
     const { error } = await updateRole({
       userId,
       updatedRole,
@@ -58,10 +55,6 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
     } else {
       setIsEditMode(false);
     }
-  };
-
-  const handleEditToggle = () => {
-    setIsEditMode((prev) => !prev);
   };
 
   return (
@@ -83,9 +76,9 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
               defaultValue={userRoles.Admin}
               {...register("role", { required: "Please select a role" })}
             >
-              {roles.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
+              {Object.entries(userRoles).map(([roleValue, role]) => (
+                <MenuItem key={roleValue} value={roleValue}>
+                  {role}
                 </MenuItem>
               ))}
             </TextField>
@@ -123,7 +116,7 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
               variant="contained"
               color="primary"
               fullWidth
-              onClick={handleEditToggle}
+              onClick={() => setIsEditMode(true)}
             >
               Edit Role
             </Button>
