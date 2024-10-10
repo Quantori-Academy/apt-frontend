@@ -1,8 +1,7 @@
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { PageLoader } from "@/components";
-import { ProtectedRoute } from "@/components";
+import { PageLoader, ProtectedRoute } from "@/components";
 
 import { routerConfig } from "./routerConfig";
 

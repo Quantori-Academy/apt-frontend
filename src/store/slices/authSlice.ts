@@ -2,8 +2,7 @@ import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
 import { apiManager } from "@/api";
-import { UserAuth, UserLoginInput } from "@/types";
-import { Token } from "@/types";
+import { Token, UserAuth, UserLoginInput } from "@/types";
 
 import { createReducerSlice } from "../createReducerSlice";
 
