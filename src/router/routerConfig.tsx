@@ -5,15 +5,14 @@ import { Home, Login, StorageLocationPage } from "@/pages";
 export const enum AppRoutes {
   HOME = "home",
   LOGIN = "login",
-  STORAGE_LOCATIONS = "storage_locations",
-
+  STORAGE_LOCATIONS = "storage",
   NOT_FOUND = "not_found",
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.HOME]: "/",
   [AppRoutes.LOGIN]: "/login",
-  [AppRoutes.STORAGE_LOCATIONS]: "/storage-locations",
+  [AppRoutes.STORAGE_LOCATIONS]: "/storage",
   [AppRoutes.NOT_FOUND]: "*",
 };
 
