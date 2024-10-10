@@ -69,6 +69,14 @@ export const api = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+
+    deleteUser: builder.mutation({
+      query: (userId) => ({
+        url: `users/${userId}/delete`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
@@ -78,4 +86,5 @@ export const {
   useUpdateUserDetailsMutation,
   useResetPasswordMutation,
   useUpdateRoleMutation,
+  useDeleteUserMutation,
 } = api;

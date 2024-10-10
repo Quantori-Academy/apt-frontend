@@ -2,7 +2,12 @@ import { Container, Divider, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { AccountDetails, EditUserRole, ResetPassword } from "@/components";
+import {
+  AccountDetails,
+  DeleteUser,
+  EditUserRole,
+  ResetPassword,
+} from "@/components";
 import { selectUserId } from "@/store";
 
 const AccountSettings: React.FC = () => {
@@ -31,6 +36,7 @@ const AccountSettings: React.FC = () => {
       <EditUserRole userId={id} />
       <Divider sx={{ my: 3 }} />
       <AccountDetails userId={id} />
+      <DeleteUser userId={id} />
     </Container>
   );
 };
