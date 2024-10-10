@@ -23,19 +23,17 @@ interface Props {
 const AddStorageLocation: React.FC<Props> = ({ onCancel, onAddLocation }) => {
   const dispatch = useAppDispatch();
   const [room, setRoom] = useState("");
-  const [name, setName] = useState("");
 
   const status = useAppSelector(selectStorageStatus);
   const error = useAppSelector(selectStorageError);
 
   const handleSaveLocation = () => {
-    if (room && name) {
+    if (room) {
       dispatch(addStorageLocation({ room }))
         .unwrap()
         .then(() => {
           onAddLocation("Storage location added successfully!");
           setRoom("");
-          setName("");
           onCancel();
         })
         .catch((err) => {
@@ -53,13 +51,6 @@ const AddStorageLocation: React.FC<Props> = ({ onCancel, onAddLocation }) => {
           fullWidth
           value={room}
           onChange={(e) => setRoom(e.target.value)}
-          margin="normal"
-        />
-        <TextField
-          placeholder="Name"
-          fullWidth
-          value={name}
-          onChange={(e) => setName(e.target.value)}
           margin="normal"
         />
         {status === "loading" && <p>Saving location...</p>}

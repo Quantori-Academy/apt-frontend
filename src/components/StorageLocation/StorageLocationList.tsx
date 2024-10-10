@@ -8,7 +8,6 @@ import {
   ListItem,
   ListItemText,
   TextField,
-  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 
@@ -26,7 +25,9 @@ interface Props {
 const StorageLocationList: React.FC<Props> = ({ locations }) => {
   const dispatch = useAppDispatch();
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [editValues, setEditValues] = useState({ storageRoom: "" });
+  const [editValues, setEditValues] = useState({
+    storageRoom: "",
+  });
 
   const handleEdit = (id: number, storageRoom: string) => {
     setEditingId(id);
@@ -45,15 +46,22 @@ const StorageLocationList: React.FC<Props> = ({ locations }) => {
   return (
     <Box>
       <List>
-        {locations.map((storageRoom) => (
+        {locations.map((location) => (
           <ListItem
-            key={storageRoom.id}
+            key={location.id}
             alignItems="flex-start"
-            sx={{ padding: 1, flexDirection: "column" }}
+            sx={{ padding: 1 }}
           >
-            {editingId === storageRoom.id ? (
+            {editingId === location.id ? (
               <Box
-                sx={{ display: "flex", flexDirection: "column", width: "100%" }}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  padding: 2,
+                  backgroundColor: "#f9f9f9",
+                  borderRadius: "8px",
+                }}
               >
                 <TextField
                   label="Storage Room"
@@ -67,12 +75,20 @@ const StorageLocationList: React.FC<Props> = ({ locations }) => {
                   variant="outlined"
                   fullWidth
                   margin="normal"
+                  multiline
+                  minRows={2}
+                  sx={{
+                    fontSize: "1.1rem",
+                  }}
                 />
-                <Box sx={{ display: "flex", gap: 1 }}>
+                <Box
+                  sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}
+                >
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => handleSave(storageRoom.id)}
+                    onClick={() => handleSave(location.id)}
+                    sx={{ fontSize: "0.9rem", padding: "10px 20px" }}
                   >
                     Save
                   </Button>
@@ -80,57 +96,37 @@ const StorageLocationList: React.FC<Props> = ({ locations }) => {
                     variant="outlined"
                     color="secondary"
                     onClick={() => setEditingId(null)}
+                    sx={{ fontSize: "0.9rem", padding: "10px 20px" }}
                   >
                     Cancel
                   </Button>
                 </Box>
               </Box>
             ) : (
-              <Box sx={{ width: "100%" }}>
-                {/* Display Storage Room details */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography variant="h6">
-                    {storageRoom.storage_room}
-                  </Typography>
-                  <Typography variant="body2">
-                    Total Substances: {storageRoom.total_substances}
-                  </Typography>
-                  <Box>
-                    <IconButton
-                      color="primary"
-                      onClick={() =>
-                        handleEdit(storageRoom.id, storageRoom.storage_room)
-                      }
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      color="error"
-                      onClick={() => handleDelete(storageRoom.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <ListItemText primary={location.storage_room} />
+                <Box>
+                  <IconButton
+                    color="primary"
+                    onClick={() =>
+                      handleEdit(location.id, location.storage_room)
+                    }
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    color="error"
+                    onClick={() => handleDelete(location.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </Box>
-
-                {/* Display the nested locations */}
-                <List sx={{ marginLeft: 2 }}>
-                  {storageRoom.locations.map((location) => (
-                    <ListItem key={location.id}>
-                      <ListItemText
-                        primary={`Location: ${location.location}`}
-                        secondary={`Place: ${location.place}`}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
               </Box>
             )}
           </ListItem>
