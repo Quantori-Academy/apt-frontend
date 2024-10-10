@@ -53,7 +53,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {isEditMode ? (
           <Box className={style.inputBox}>
-            <RevealableField<ResetPasswordFields>
+            <RevealableField
               name="password"
               label="Password"
               register={register}
@@ -71,7 +71,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
                 },
               }}
             />
-            <RevealableField<ResetPasswordFields>
+            <RevealableField
               name="confirmPassword"
               label="Confirm Password"
               register={register}
