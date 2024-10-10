@@ -1,8 +1,11 @@
 import { Container } from "@mui/material";
 
 import { LoginForm } from "@/components";
+import { useRoleNavigation } from "@/hooks";
 
 const Login: React.FC = () => {
+  useRoleNavigation();
+
   return (
     <Container
       maxWidth="sm"
