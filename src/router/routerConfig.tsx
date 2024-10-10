@@ -1,6 +1,6 @@
 import { RouteProps } from "react-router-dom";
 
-import { AccountSettings, Home, Login, UserPage, Users } from "@/pages";
+import { AccountSettings, Home, Login, Users } from "@/pages";
 
 export const enum AppRoutes {
   HOME = "home",
@@ -35,7 +35,7 @@ export const routerConfig: Record<AppRoutes, RouteProps> = {
   },
   [AppRoutes.USER_PAGE]: {
     path: RoutePath[AppRoutes.USER_PAGE],
-    element: <UserPage />,
+    element: <AccountSettings />,
   },
   [AppRoutes.ACCOUNT_SETTINGS]: {
     path: RoutePath[AppRoutes.ACCOUNT_SETTINGS],
