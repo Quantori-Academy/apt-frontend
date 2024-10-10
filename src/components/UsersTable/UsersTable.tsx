@@ -10,7 +10,16 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import { UserTableColumn, UserTableProps } from "@/types";
+import { UserBackendDetails } from "@/types";
+
+type UserTableColumn = {
+  label: string;
+  key: string;
+};
+
+type UserTableProps = {
+  users: UserBackendDetails[];
+};
 
 const columns: UserTableColumn[] = [
   { label: "Username", key: "username" },
