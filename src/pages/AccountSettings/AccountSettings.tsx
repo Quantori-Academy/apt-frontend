@@ -9,7 +9,7 @@ const AccountSettings: React.FC = () => {
   const ownId = useSelector(selectUserId)!;
   const { userId } = useParams<{ userId: string }>();
 
-  const id = ownId ?? userId;
+  const id = userId ?? ownId;
 
   return (
     <Container
