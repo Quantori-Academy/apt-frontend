@@ -46,7 +46,7 @@ export const api = createApi({
 
     updateUserDetails: builder.mutation({
       query: (updatedUserDetails) => ({
-        url: `/users/profile`,
+        url: `/users`,
         method: "PUT",
         body: {
           username: updatedUserDetails.username,

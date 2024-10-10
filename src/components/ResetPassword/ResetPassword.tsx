@@ -27,6 +27,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<ResetPasswordFields>({
     values: {
@@ -46,6 +47,11 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     } else {
       setIsEditMode(false);
     }
+  };
+
+  const handleCancel = () => {
+    setIsEditMode(false);
+    reset();
   };
 
   return (
@@ -101,7 +107,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={() => setIsEditMode(false)}
+              onClick={handleCancel}
             >
               Cancel
             </Button>
