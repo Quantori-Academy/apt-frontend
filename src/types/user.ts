@@ -32,6 +32,7 @@ export type UserFrontendDetails = Omit<UserBase, "password" | "id" | "role"> & {
   createdAt: string;
   lastLogin: string;
 };
+
 export type UserRole = (typeof userRoles)[keyof typeof userRoles];
 
 export type UserRegisterData = Omit<UserRegisterInput, "confirmPassword">;
