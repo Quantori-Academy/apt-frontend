@@ -26,9 +26,6 @@ export const api = createApi({
   }),
   tagTypes: ["Users"],
   endpoints: (builder) => ({
-    getStatus: builder.query({
-      query: () => "/status",
-    }),
     getUsers: builder.query<UserBackendDetails[], void>({
       query: () => "/users/all",
       providesTags: (result) => {
@@ -80,7 +77,22 @@ export const api = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+
+    resetPassword: builder.mutation({
+      query: ({ userId, resetedPassword }) => ({
+        url: `/users/${userId}/reset-password`,
+        method: "PUT",
+        body: { newPassword: resetedPassword },
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useAddUserMutation, useGetUserDetailsQuery, useUpdateUserDetailsMutation } = api;
+export const {
+  useGetUsersQuery,
+  useAddUserMutation,
+  useGetUserDetailsQuery,
+  useUpdateUserDetailsMutation,
+  useResetPasswordMutation,
+} = api;

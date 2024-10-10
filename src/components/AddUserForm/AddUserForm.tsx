@@ -1,7 +1,7 @@
 import { Box, Button, MenuItem, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import { userRoles } from "@/constants";
+import { PASSWORD_REGEX, userRoles } from "@/constants";
 import { useAddUserMutation } from "@/store";
 import { UserRegisterData, UserRegisterInput } from "@/types";
 
@@ -96,7 +96,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
                 message: "Password need to be not less than 8 character",
               },
               pattern: {
-                value: /^(?=.*[A-Z]).*$/,
+                value: PASSWORD_REGEX,
                 message: "Password must contain at least one uppercase letter",
               },
             })}

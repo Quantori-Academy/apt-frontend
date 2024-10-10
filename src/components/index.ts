@@ -13,3 +13,4 @@ export { LoadingSkeleton } from "./LoadingSkeleton";
 export { LoadingPage } from "./LoadingPage";
 export { SearchBar } from "./SearchBar";
 export { RoleFilter } from "./RoleFilter";
+export { ResetPassword } from "./ResetPassword";
