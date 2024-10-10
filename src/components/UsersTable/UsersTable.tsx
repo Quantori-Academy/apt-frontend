@@ -34,7 +34,7 @@ const columns: UserTableColumn[] = [
 const UsersTable: React.FC<UserTableProps> = ({ users }) => {
   const navigate = useNavigate();
 
-  const handleEdit = (userId: number) => {
+  const handleEdit = (userId: string) => {
     navigate(`/users/${userId}`);
   };
 
