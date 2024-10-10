@@ -46,7 +46,7 @@ const StorageLocationList: React.FC<Props> = ({ locations }) => {
   };
 
   const handleLocationClick = (storageRoomId: number) => {
-    navigate(`/storage-room-details/${storageRoomId}`);
+    navigate(`/storage/:/${storageRoomId}`);
   };
 
   return (

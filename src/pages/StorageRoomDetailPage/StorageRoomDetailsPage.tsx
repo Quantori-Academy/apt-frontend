@@ -11,8 +11,6 @@ import {
   selectStorageStatus,
 } from "@/store/slices/storageSlice";
 
-// Import selectors and actions
-
 const StorageRoomDetailsPage = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const dispatch = useDispatch<AppDispatch>();
