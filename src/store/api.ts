@@ -4,7 +4,9 @@ import { prepareHeaders } from "@/api";
 import { UserBase } from "@/types";
 
 const BASE_URL = import.meta.env.VITE_APP_API_URL as string;
+
 type UserDetails = Omit<UserBase, "password" | "id">;
+
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
@@ -15,10 +17,11 @@ export const api = createApi({
   endpoints: (builder) => ({
     addUser: builder.mutation({
       query: (newUser) => ({
-        url: "/users",
+        url: "/users/create",
         method: "POST",
         body: newUser,
       }),
+      invalidatesTags: ["Users"],
     }),
     getUserDetails: builder.query<UserDetails, string>({
       query: (userId) => `/users/${userId}`,
@@ -33,7 +36,17 @@ export const api = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+
+    resetPassword: builder.mutation({
+      query: ({ userId, resetedPassword }) => ({
+        url: `/users/${userId}/reset-password`,
+        method: "PUT",
+        body: { newPassword: resetedPassword },
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
-export const { useAddUserMutation, useGetUserDetailsQuery, useUpdateUserDetailsMutation } = api;
+export const { useAddUserMutation, useGetUserDetailsQuery, useUpdateUserDetailsMutation, useResetPasswordMutation } =
+  api;

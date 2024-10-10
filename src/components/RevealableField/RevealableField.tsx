@@ -2,30 +2,25 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
+import { FieldValues, Path } from "react-hook-form";
 
 import { useFieldVisibility } from "@/hooks";
-import { UserLoginInput } from "@/types";
 
-type RevealableField = UserLoginInput & {
-  currentPassword?: string;
-  confirmPassword?: string;
-};
-
-type RevealableFieldProps = {
-  name: keyof RevealableField;
-  register: UseFormRegister<RevealableField>;
+type RevealableFieldProps<T extends FieldValues> = {
+  name: Path<T>;
+  register: UseFormRegister<T>;
   error: FieldError | undefined;
   label: string;
-  options: RegisterOptions<RevealableField>;
+  options: RegisterOptions<T>;
 };
 
-const RevealableField: React.FC<RevealableFieldProps> = ({
+const RevealableField = <T extends FieldValues>({
   name,
   register,
   error,
   label,
   options,
-}) => {
+}: RevealableFieldProps<T>) => {
   const { isFieldShown, toggleFieldVisibility, inputRef } =
     useFieldVisibility();
 

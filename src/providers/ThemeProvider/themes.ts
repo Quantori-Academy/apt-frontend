@@ -20,7 +20,6 @@ export const appTheme = createTheme({
       styleOverrides: {
         root: {
           border: "1px solid #C6CED8",
-          borderRadius: "22px",
           padding: "10px 20px",
           fontWeight: 700,
           fontSize: "16px",

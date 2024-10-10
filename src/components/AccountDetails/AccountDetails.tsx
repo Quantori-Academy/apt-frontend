@@ -1,6 +1,5 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { MouseEventHandler, useState } from "react";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 import { AlertSnackbar, LoadingSkeleton } from "@/components";
@@ -163,7 +162,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
         open={isAlertOpen}
         onClose={() => setIsAlertOpen(false)}
       >
-        {"Fail to update user details"}
+        Fail to update user details
       </AlertSnackbar>
     </Box>
   );
