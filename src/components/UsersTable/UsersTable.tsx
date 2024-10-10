@@ -30,11 +30,14 @@ const columns: UserTableColumn[] = [
   { label: "Last login", key: "last_login" },
   { label: "Actions", key: "actions" },
 ];
+
 const UsersTable: React.FC<UserTableProps> = ({ users }) => {
   const navigate = useNavigate();
+
   const handleEdit = (userId: number) => {
     navigate(`/users/${userId}`);
   };
+
   return (
     <TableContainer component={Paper}>
       <Table>

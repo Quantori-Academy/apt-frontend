@@ -5,6 +5,7 @@ type SearchBarProps = {
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 };
+
 const SearchBar: React.FC<SearchBarProps> = ({
   searchQuery,
   setSearchQuery,
