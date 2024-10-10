@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import {
@@ -25,6 +26,8 @@ interface Props {
 
 const StorageLocationList: React.FC<Props> = ({ locations }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editValues, setEditValues] = useState({ storageRoom: "" });
 
@@ -40,6 +43,10 @@ const StorageLocationList: React.FC<Props> = ({ locations }) => {
 
   const handleDelete = (id: number) => {
     dispatch(deleteStorageLocation(id));
+  };
+
+  const handleLocationClick = (storageRoomId: number) => {
+    navigate(`/storage-room-details/${storageRoomId}`);
   };
 
   return (
@@ -95,7 +102,11 @@ const StorageLocationList: React.FC<Props> = ({ locations }) => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography variant="h6">
+                  <Typography
+                    variant="h6"
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => handleLocationClick(storageRoom.id)}
+                  >
                     {storageRoom.storage_room}
                   </Typography>
                   <Typography variant="body2">
@@ -119,7 +130,6 @@ const StorageLocationList: React.FC<Props> = ({ locations }) => {
                   </Box>
                 </Box>
 
-                {/* Display the nested locations */}
                 <List sx={{ marginLeft: 2 }}>
                   {storageRoom.locations.map((location) => (
                     <ListItem key={location.id}>
