@@ -16,39 +16,26 @@ import {
   deleteStorageLocation,
   editStorageLocation,
 } from "@/store/slices/storageSlice";
-import { StorageLocation } from "@/types";
+import { StorageRoomsBrief } from "@/types";
 
 interface Props {
-  locations: StorageLocation[];
-  onEdit: (
-    id: number,
-    data: { room: string; name: string; description: string }
-  ) => void;
-  onDelete: (id: number) => void;
+  locations: StorageRoomsBrief[];
 }
 
 const StorageLocationList: React.FC<Props> = ({ locations }) => {
   const dispatch = useAppDispatch();
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editValues, setEditValues] = useState({
-    room: "",
-    name: "",
-    description: "",
+    storageRoom: "",
   });
 
-  const handleEdit = (
-    id: number,
-    room: string,
-    name: string,
-    description: string
-  ) => {
+  const handleEdit = (id: number, storageRoom: string) => {
     setEditingId(id);
-    console.log(id);
-    setEditValues({ room, name, description });
+    setEditValues({ storageRoom });
   };
 
   const handleSave = (id: number) => {
-    dispatch(editStorageLocation({ id, data: editValues }));
+    dispatch(editStorageLocation({ id, roomName: editValues.storageRoom }));
     setEditingId(null);
   };
 
@@ -60,47 +47,29 @@ const StorageLocationList: React.FC<Props> = ({ locations }) => {
     <Box>
       <List>
         {locations.map((location) => (
-          <ListItem key={location.id} alignItems="flex-start">
+          <ListItem
+            key={location.id}
+            alignItems="flex-start"
+            sx={{ padding: 1 }}
+          >
             {editingId === location.id ? (
               <Box
                 sx={{ display: "flex", flexDirection: "column", width: "100%" }}
               >
                 <TextField
-                  label="Room"
-                  value={editValues.room}
-                  onChange={(e) =>
-                    setEditValues({ ...editValues, room: e.target.value })
-                  }
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                />
-                <TextField
-                  label="Name"
-                  value={editValues.name}
-                  onChange={(e) =>
-                    setEditValues({ ...editValues, name: e.target.value })
-                  }
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                />
-                <TextField
-                  label="Description"
-                  value={editValues.description}
+                  label="Storage Room"
+                  value={editValues.storageRoom}
                   onChange={(e) =>
                     setEditValues({
                       ...editValues,
-                      description: e.target.value,
+                      storageRoom: e.target.value,
                     })
                   }
                   variant="outlined"
                   fullWidth
                   margin="normal"
-                  multiline
-                  rows={4}
                 />
-                <Box sx={{ display: "flex", gap: "10px" }}>
+                <Box sx={{ display: "flex", gap: 1 }}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -125,20 +94,12 @@ const StorageLocationList: React.FC<Props> = ({ locations }) => {
                   width: "100%",
                 }}
               >
-                <ListItemText
-                  primary={`${location.room} - ${location.name}`}
-                  secondary={location.description}
-                />
+                <ListItemText primary={location.storage_room} />
                 <Box>
                   <IconButton
                     color="primary"
                     onClick={() =>
-                      handleEdit(
-                        location.id,
-                        location.room,
-                        location.name,
-                        location.description
-                      )
+                      handleEdit(location.id, location.storage_room)
                     }
                   >
                     <EditIcon />
