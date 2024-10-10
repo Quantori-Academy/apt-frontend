@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 
 import { apiManager } from "@/api";
 import { UserAuth, UserLoginInput } from "@/types";
+import { Token } from "@/types";
 
 import { createReducerSlice } from "../createReducerSlice";
 
@@ -35,6 +36,9 @@ export const authSlice = createReducerSlice({
   name: "auth",
   initialState,
   reducers: (create) => ({
+    setUser: create.reducer((state, action: PayloadAction<Token>) => {
+      state.user = jwtDecode<UserAuth>(action.payload.token);
+    }),
     logout: create.reducer((state) => {
       localStorage.removeItem("accessToken");
       state.user = null;
@@ -52,20 +56,11 @@ export const authSlice = createReducerSlice({
         state.isLoading = true;
         state.errorMessage = null;
       })
-      .addCase(
-        loginUser.fulfilled,
-        (
-          state,
-          action: PayloadAction<{
-            token: string;
-          }>
-        ) => {
-          state.isLoading = false;
-          state.errorMessage = null;
-          const decodedToken = jwtDecode<UserAuth>(action.payload.token);
-          state.user = decodedToken;
-        }
-      )
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<Token>) => {
+        state.isLoading = false;
+        state.errorMessage = null;
+        state.user = jwtDecode<UserAuth>(action.payload.token);
+      })
       .addCase(loginUser.rejected, (state, action: PayloadAction<string | unknown>) => {
         state.isLoading = false;
         state.errorMessage = (action.payload as string) || "Unknown error!";
@@ -73,5 +68,5 @@ export const authSlice = createReducerSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setUser } = authSlice.actions;
 export const { selectErrorMessage, selectLoading, selectUserRole, selectUserId } = authSlice.selectors;
