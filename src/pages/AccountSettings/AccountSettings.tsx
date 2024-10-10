@@ -1,5 +1,4 @@
 import { Container, Divider, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import {
@@ -8,18 +7,27 @@ import {
   EditUserRole,
   ResetPassword,
 } from "@/components";
-import { selectUserId } from "@/store";
+import { getCurrentUserFromToken } from "@/utils";
 
 const AccountSettings: React.FC = () => {
-  const ownId = useSelector(selectUserId)!;
   const { userId } = useParams<{ userId: string }>();
+  const currentUser = getCurrentUserFromToken();
 
-  const id = userId ?? ownId;
+  if (!currentUser) {
+    return null;
+  }
+
+  const { id: currentUserId, role: currentUserRole } = currentUser;
+  const id = userId || currentUserId;
 
   return (
     <Container
       sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
         maxWidth: 600,
+        width: 600,
         margin: "auto",
         padding: 4,
         borderRadius: 2,
@@ -28,15 +36,23 @@ const AccountSettings: React.FC = () => {
         bgcolor: "white",
       }}
     >
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom margin={3}>
         Account Details
       </Typography>
       <ResetPassword userId={id} />
       <Divider sx={{ my: 3 }} />
-      <EditUserRole userId={id} />
+      <EditUserRole
+        userId={id}
+        currentUserId={currentUserId}
+        currentUserRole={currentUserRole}
+      />
       <Divider sx={{ my: 3 }} />
       <AccountDetails userId={id} />
-      <DeleteUser userId={id} />
+      <DeleteUser
+        userId={id}
+        currentUserId={currentUserId}
+        currentUserRole={currentUserRole}
+      />
     </Container>
   );
 };

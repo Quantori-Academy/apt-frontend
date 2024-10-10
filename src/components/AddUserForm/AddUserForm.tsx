@@ -31,7 +31,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
       email: "",
       password: "",
       confirmPassword: "",
-      role: userRoles.Admin,
+      role: userRoles.Administrator,
     },
   });
 
@@ -113,7 +113,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
           <TextField
             select
             label="Select Role"
-            defaultValue={userRoles.Admin}
+            defaultValue={userRoles.Administrator}
             {...register("role", { required: "Please select a role" })}
           >
             {roles.map((option) => (

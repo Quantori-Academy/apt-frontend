@@ -1,1 +1,1 @@
-export { getUserFromToken } from "./getUserFromToken.ts";
+export { getCurrentUserFromToken } from "./getCurrentUserFromToken";

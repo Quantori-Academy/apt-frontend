@@ -8,7 +8,7 @@ type UserTokenDetail = {
   username: string;
 };
 
-export function getUserFromToken(): UserTokenDetail | null {
+export function getCurrentUserFromToken(): UserTokenDetail | null {
   const token = localStorage.getItem("accessToken");
   if (!token) {
     return null;

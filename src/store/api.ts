@@ -45,19 +45,28 @@ export const api = createApi({
     }),
 
     updateUserDetails: builder.mutation({
-      query: ({ userId, updatedUserDetails }) => ({
-        url: `/users/${userId}`,
+      query: (updatedUserDetails) => ({
+        url: `/users/profile`,
         method: "PUT",
-        body: updatedUserDetails,
+        body: {
+          username: updatedUserDetails.username,
+          first_name: updatedUserDetails.firstName,
+          last_name: updatedUserDetails.lastName,
+          email: updatedUserDetails.email,
+        },
+        headers: {
+          id: updatedUserDetails.id,
+          role: updatedUserDetails.role,
+        },
       }),
       invalidatesTags: ["Users"],
     }),
 
     resetPassword: builder.mutation({
-      query: ({ userId, resetedPassword }) => ({
+      query: ({ userId, newPassword }) => ({
         url: `/users/${userId}/reset-password`,
         method: "PUT",
-        body: { newPassword: resetedPassword },
+        body: { newPassword },
       }),
       invalidatesTags: ["Users"],
     }),

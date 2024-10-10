@@ -8,28 +8,29 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 
 import { AlertSnackbar, LoadingSkeleton } from "@/components";
 import { userRoles } from "@/constants";
 import { useGetUserDetailsQuery, useUpdateRoleMutation } from "@/store";
-import { selectUserRole } from "@/store/slices/authSlice.ts";
 import { UserRole } from "@/types";
-
-import style from "@/components/ResetPassword/ResetPassword.module.css";
 
 type EditUserRoleProps = {
   userId: string;
+  currentUserId: string;
+  currentUserRole: UserRole;
 };
 
 type UserRoleUpdate = {
   role?: UserRole;
 };
 
-const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
+const EditUserRole: React.FC<EditUserRoleProps> = ({
+  userId,
+  currentUserId,
+  currentUserRole,
+}) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const userRole = useSelector(selectUserRole);
 
   const { data: userDetails, isLoading: isLoadingUserDetails } =
     useGetUserDetailsQuery(userId);
@@ -59,7 +60,7 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
 
   return (
     <Container>
-      {userRole !== "Administrator" ? (
+      {currentUserRole !== "Administrator" || userId === currentUserId ? (
         <Box>
           <Typography variant="subtitle1" fontWeight="bold">
             User Role:
@@ -73,11 +74,11 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
               label="User Roles"
               fullWidth
               select
-              defaultValue={userRoles.Admin}
+              defaultValue={userRoles.Administrator}
               {...register("role", { required: "Please select a role" })}
             >
-              {Object.entries(userRoles).map(([roleValue, role]) => (
-                <MenuItem key={roleValue} value={roleValue}>
+              {Object.values(userRoles).map((role) => (
+                <MenuItem key={role} value={role}>
                   {role}
                 </MenuItem>
               ))}
@@ -91,7 +92,7 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
             </Box>
           )}
           {isEditMode ? (
-            <Box className={style.buttonBox}>
+            <Box display="flex" gap={2} marginTop={2}>
               <Button
                 fullWidth
                 size="small"

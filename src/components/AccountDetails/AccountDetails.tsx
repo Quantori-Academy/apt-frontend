@@ -1,4 +1,11 @@
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { MouseEventHandler, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -35,10 +42,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   if (isLoadingUserDetails) return <LoadingSkeleton />;
 
   const onSubmit = async (updatedUserDetails: UserDetails) => {
-    const { error } = await updateUserDetails({
-      userId,
-      updatedUserDetails,
-    });
+    const { error } = await updateUserDetails(updatedUserDetails);
 
     if (error) {
       setIsAlertOpen(true);
@@ -52,7 +56,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   };
 
   return (
-    <Box>
+    <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -164,7 +168,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
       >
         Fail to update user details
       </AlertSnackbar>
-    </Box>
+    </Container>
   );
 };
 export default AccountDetails;

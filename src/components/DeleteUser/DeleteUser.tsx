@@ -1,18 +1,27 @@
-import { Button } from "@mui/material";
+import { Box, Button, Container, Modal, Typography } from "@mui/material";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { AlertSnackbar } from "@/components";
-import { selectUserRole, useDeleteUserMutation } from "@/store";
+import { useDeleteUserMutation } from "@/store";
+import { UserRole } from "@/types";
+
+import style from "./DeleteUser.module.css";
 
 type DeleteUserProps = {
   userId: string;
+  currentUserId: string;
+  currentUserRole: UserRole;
 };
 
-const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
+const DeleteUser: React.FC<DeleteUserProps> = ({
+  userId,
+  currentUserRole,
+  currentUserId,
+}) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const userRole = useSelector(selectUserRole);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
   const navigate = useNavigate();
 
@@ -26,19 +35,47 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
     }
   };
 
-  if (userRole !== "Administrator") return null;
+  if (currentUserRole !== "Administrator" || currentUserId === userId) {
+    return null;
+  }
 
   return (
-    <>
+    <Container>
       <Button
         color="primary"
         fullWidth
         type="button"
-        onClick={() => handleDeleteUser}
+        onClick={() => setIsOpenModal(true)}
         disabled={isDeleting}
       >
         Delete User
       </Button>
+
+      <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)}>
+        <Box className={style.modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Are you sure you want to delete this user?
+          </Typography>
+          <Box marginTop={3} display="flex" justifyContent="flex-end" gap={3}>
+            <Button
+              sx={{
+                color: "white",
+                bgcolor: "red",
+                "&:hover": {
+                  color: "white",
+                  backgroundColor: "#e30000",
+                },
+              }}
+              variant="contained"
+              onClick={handleDeleteUser}
+              disabled={isDeleting}
+            >
+              Delete
+            </Button>
+            <Button onClick={() => setIsOpenModal(false)}>Cancel</Button>
+          </Box>
+        </Box>
+      </Modal>
       <AlertSnackbar
         severity={"error"}
         open={isAlertOpen}
@@ -46,7 +83,7 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
       >
         Fail To Delete User
       </AlertSnackbar>
-    </>
+    </Container>
   );
 };
 

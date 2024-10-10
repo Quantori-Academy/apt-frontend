@@ -35,10 +35,10 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     },
   });
 
-  const onSubmit = async (resetedPassword: ResetPasswordFields) => {
+  const onSubmit = async (formData: ResetPasswordFields) => {
     const { error } = await resetPassword({
       userId,
-      updatedPassword: resetedPassword.password,
+      newPassword: formData.password,
     });
 
     if (error) {
