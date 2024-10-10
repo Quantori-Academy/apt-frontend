@@ -2,16 +2,18 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { apiManager } from "@/api/apiManager";
 import { RootState } from "@/store";
-import { StorageRoomsBrief } from "@/types";
+import { RoomData, StorageRoomsBrief } from "@/types";
 
 interface StorageState {
   storageLocations: StorageRoomsBrief[];
+  storageRoomDetails: RoomData | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
 const initialState: StorageState = {
   storageLocations: [],
+  storageRoomDetails: null,
   status: "idle",
   error: null,
 };
@@ -56,13 +58,23 @@ export const editStorageLocation = createAsyncThunk(
   }
 );
 
-// Delete a storage location
 export const deleteStorageLocation = createAsyncThunk<number, number>(
   "storage/deleteStorageLocation",
   async (id: number, { rejectWithValue }) => {
     try {
       await apiManager.deleteStorageLocation(id);
       return id;
+    } catch (error: unknown) {
+      return rejectWithValue(getErrorMessage(error));
+    }
+  }
+);
+
+export const getStorageRoomDetails = createAsyncThunk<RoomData, number, { rejectValue: string }>(
+  "storage/getStorageRoomDetails",
+  async (roomId, { rejectWithValue }) => {
+    try {
+      return await apiManager.getStorageRoomDetails(roomId);
     } catch (error: unknown) {
       return rejectWithValue(getErrorMessage(error));
     }
@@ -124,11 +136,24 @@ export const storageSlice = createSlice({
       state.status = "failed";
       state.error = action.payload as string;
     });
+
+    builder.addCase(getStorageRoomDetails.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(getStorageRoomDetails.fulfilled, (state, action: PayloadAction<RoomData>) => {
+      state.status = "succeeded";
+      state.storageRoomDetails = action.payload;
+    });
+    builder.addCase(getStorageRoomDetails.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.payload as string;
+    });
   },
 });
 
 export const selectStorageLocations = (state: RootState) => state.storage.storageLocations;
 export const selectStorageStatus = (state: RootState) => state.storage.status;
 export const selectStorageError = (state: RootState) => state.storage.error;
+export const selectStorageRoomDetails = (state: RootState) => state.storage.storageRoomDetails;
 
 export default storageSlice.reducer;

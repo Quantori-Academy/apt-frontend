@@ -1,6 +1,6 @@
 import { ApiStatus, Tokens } from "@/types";
 import { UserInputData } from "@/types";
-import { StorageRoomsBrief } from "@/types";
+import { RoomData, StorageRoomsBrief } from "@/types";
 
 import { apiMethods } from "./apiMethods";
 import { EndPoints } from "./endPoints";
@@ -39,6 +39,12 @@ class ApiManager {
   public deleteStorageLocation(id: number) {
     const token = localStorage.getItem("authToken");
     return apiMethods.delete(`${EndPoints.STORAGE_LOCATIONS}/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+  public getStorageRoomDetails(roomId: number) {
+    const token = localStorage.getItem("authToken");
+    return apiMethods.get<RoomData>(`${EndPoints.STORAGE_LOCATIONS}/${roomId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
   }
