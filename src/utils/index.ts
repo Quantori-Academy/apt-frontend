@@ -1,1 +1,0 @@
-export { getCurrentUserFromToken } from "./getCurrentUserFromToken";
