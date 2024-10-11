@@ -1,10 +1,13 @@
 import {
+  Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   TextField,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 
@@ -53,8 +56,14 @@ const AddStorageLocation: React.FC<Props> = ({ onCancel, onAddLocation }) => {
           onChange={(e) => setRoom(e.target.value)}
           margin="normal"
         />
-        {status === "loading" && <p>Saving location...</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {status === "loading" && (
+          <Box
+            sx={{ display: "flex", justifyContent: "center", paddingTop: 2 }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
+        {error && <Typography color="error">{error}</Typography>}
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel} color="secondary">

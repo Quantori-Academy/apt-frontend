@@ -38,6 +38,10 @@ const StorageLocationPage: React.FC = () => {
     setOpenDialog(false);
   };
 
+  console.log("status:", status);
+  console.log("storageLocations:", storageLocations);
+  console.log("error:", error);
+
   return (
     <Box sx={{ padding: 2 }}>
       <Typography variant="h4" gutterBottom>
@@ -55,9 +59,23 @@ const StorageLocationPage: React.FC = () => {
 
       {message && <Typography color="success.main">{message}</Typography>}
 
-      {status === "loading" && <CircularProgress />}
+      {status === "loading" && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
+
       {status === "failed" && (
-        <Typography color="error">Error: {error}</Typography>
+        <Typography color="error" align="center">
+          Error: {error}
+        </Typography>
       )}
 
       {status === "succeeded" && (
