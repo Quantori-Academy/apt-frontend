@@ -8,6 +8,7 @@ const BASE_URL = import.meta.env.VITE_APP_API_URL as string;
 type UserDetails = Omit<UserBase, "password" | "id">;
 
 type UserDetailsResponse = {
+  id: string;
   first_name: string;
   last_name: string;
   email: string;
@@ -25,7 +26,7 @@ export const api = createApi({
   endpoints: (builder) => ({
     addUser: builder.mutation({
       query: (newUser) => ({
-        url: "/users/create",
+        url: "/users",
         method: "POST",
         body: newUser,
       }),
@@ -35,6 +36,7 @@ export const api = createApi({
     getUserDetails: builder.query<UserDetails, string>({
       query: (userId) => `/users/${userId}`,
       transformResponse: (baseQueryReturnValue: UserDetailsResponse) => ({
+        id: baseQueryReturnValue.id,
         firstName: baseQueryReturnValue.first_name,
         lastName: baseQueryReturnValue.last_name,
         email: baseQueryReturnValue.email,
@@ -45,8 +47,8 @@ export const api = createApi({
     }),
 
     updateUserDetails: builder.mutation({
-      query: (updatedUserDetails) => ({
-        url: `/users`,
+      query: ({ updatedUserDetails }) => ({
+        url: `/users/${updatedUserDetails.id}`,
         method: "PUT",
         body: {
           username: updatedUserDetails.username,
@@ -54,34 +56,31 @@ export const api = createApi({
           last_name: updatedUserDetails.lastName,
           email: updatedUserDetails.email,
         },
-        headers: {
-          id: updatedUserDetails.id,
-          role: updatedUserDetails.role,
-        },
       }),
       invalidatesTags: ["Users"],
     }),
 
     resetPassword: builder.mutation({
       query: ({ userId, newPassword }) => ({
-        url: `/users/${userId}/reset-password`,
+        url: `/users/${userId}`,
         method: "PUT",
-        body: { newPassword },
+        body: { new_password: newPassword },
       }),
       invalidatesTags: ["Users"],
     }),
 
     updateRole: builder.mutation({
       query: ({ userId, updatedRole }) => ({
-        url: `/users/${userId}/role/${updatedRole}`,
+        url: `/users/${userId}`,
         method: "PUT",
+        body: { role: updatedRole },
       }),
       invalidatesTags: ["Users"],
     }),
 
     deleteUser: builder.mutation({
       query: (userId) => ({
-        url: `users/${userId}/delete`,
+        url: `users/${userId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Users"],

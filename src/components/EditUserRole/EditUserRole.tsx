@@ -122,16 +122,15 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
               Edit Role
             </Button>
           )}
-
-          <AlertSnackbar
-            severity={"error"}
-            open={isAlertOpen}
-            onClose={() => setIsAlertOpen(false)}
-          >
-            Failed To Update Role
-          </AlertSnackbar>
         </form>
       )}
+      <AlertSnackbar
+        severity={"error"}
+        open={isAlertOpen}
+        onClose={() => setIsAlertOpen(false)}
+      >
+        Failed To Update Role
+      </AlertSnackbar>
     </Container>
   );
 };
