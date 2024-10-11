@@ -1,9 +1,9 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 
+import { api } from "./api";
 import { authSlice } from "./slices/authSlice";
 import { counterSlice } from "./slices/counterSlice";
-import { api } from "./api";
 
 const rootReducer = combineSlices(counterSlice, authSlice, api);
 

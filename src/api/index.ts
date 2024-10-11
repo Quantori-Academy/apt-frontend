@@ -1,2 +1,2 @@
 export { apiManager } from "./apiManager";
-export { prepareHeaders } from "./apiMethods";
+export { prepareHeaders, BASE_URL } from "./apiMethods";

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { PASSWORD_REGEX, userRoles } from "@/constants";
 import { useAddUserMutation } from "@/store";
-import { UserRegisterInput } from "@/types";
+import { UserRegisterData, UserRegisterInput } from "@/types";
 
 import style from "./AddUserForm.module.css";
 
@@ -36,7 +36,11 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
   });
 
   const onSubmit = async (newUserFormData: UserRegisterInput) => {
-    const { error } = await addUser(newUserFormData);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { confirmPassword, ...rest } = newUserFormData;
+    const dataToSend: UserRegisterData = rest;
+
+    const { error } = await addUser(dataToSend);
     onFormSubmit(error ? "error" : "success");
   };
 
