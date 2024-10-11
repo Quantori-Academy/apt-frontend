@@ -7,18 +7,17 @@ import {
   EditUserRole,
   ResetPassword,
 } from "@/components";
-import { getCurrentUserFromToken } from "@/utils";
+import { useAppSelector } from "@/hooks";
+import { selectUserId, selectUserRole } from "@/store";
 
 const AccountSettings: React.FC = () => {
-  const { userId } = useParams<{ userId: string }>();
-  const currentUser = getCurrentUserFromToken();
+  const { id } = useParams<{ id: string }>();
+  const currentUserId = useAppSelector(selectUserId);
+  const currentUserRole = useAppSelector(selectUserRole);
 
-  if (!currentUser) {
-    return null;
-  }
+  if (!currentUserId || !currentUserRole) return null;
 
-  const { id: currentUserId, role: currentUserRole } = currentUser;
-  const id = userId || currentUserId;
+  const currentId = (id || currentUserId)!;
 
   return (
     <Container
@@ -39,17 +38,17 @@ const AccountSettings: React.FC = () => {
       <Typography variant="h5" gutterBottom margin={3}>
         Account Details
       </Typography>
-      <ResetPassword userId={id} />
+      <ResetPassword userId={currentId} />
       <Divider sx={{ my: 3 }} />
       <EditUserRole
-        userId={id}
+        userId={currentId}
         currentUserId={currentUserId}
         currentUserRole={currentUserRole}
       />
       <Divider sx={{ my: 3 }} />
-      <AccountDetails userId={id} />
+      <AccountDetails userId={currentId} />
       <DeleteUser
-        userId={id}
+        userId={currentId}
         currentUserId={currentUserId}
         currentUserRole={currentUserRole}
       />
