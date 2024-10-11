@@ -41,9 +41,7 @@ const Users: React.FC = () => {
         <Button onClick={() => setOpenModal(true)} variant="outlined">
           Add User
         </Button>
-        {openModal && (
-          <AddUserModal open={openModal} onClose={() => setOpenModal(false)} />
-        )}
+        <AddUserModal open={openModal} onClose={() => setOpenModal(false)} />
       </Box>
       <Box
         sx={{

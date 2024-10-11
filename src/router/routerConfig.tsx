@@ -1,6 +1,6 @@
 import { RouteProps } from "react-router-dom";
 
-import { AccountSettings, Home, Login, UserPage, Users } from "@/pages";
+import { AccountSettings, Home, Login, Users } from "@/pages";
 import { UserRole } from "@/types";
 
 export const enum AppRoutes {
@@ -8,7 +8,7 @@ export const enum AppRoutes {
   LOGIN = "login",
   USERS = "users",
   USER_PAGE = "user_page",
-  ACCOUNT_SETTINGS = "account-settings",
+  ACCOUNT_SETTINGS = "account_settings",
   NOT_FOUND = "not_found",
 }
 
@@ -16,7 +16,7 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.HOME]: "/",
   [AppRoutes.LOGIN]: "/login",
   [AppRoutes.USERS]: "/users",
-  [AppRoutes.USER_PAGE]: "users/:id",
+  [AppRoutes.USER_PAGE]: "/users/:id",
   [AppRoutes.ACCOUNT_SETTINGS]: "/account-settings",
   [AppRoutes.NOT_FOUND]: "*",
 };
@@ -41,7 +41,7 @@ export const routerConfig: Record<AppRoutes, AppRoutesProps> = {
   },
   [AppRoutes.USER_PAGE]: {
     path: RoutePath[AppRoutes.USER_PAGE],
-    element: <UserPage />,
+    element: <AccountSettings />,
     roles: ["Administrator"],
   },
   [AppRoutes.ACCOUNT_SETTINGS]: {

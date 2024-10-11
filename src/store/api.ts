@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { prepareHeaders } from "@/api";
 import { BASE_URL } from "@/api/apiMethods";
-import { UserBackendDetails, UserBase, UserRegisterData } from "@/types";
+import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData } from "@/types";
+
+import { transformUserResponse } from "./utils/transformUserResponse";
 
 // TODO. Think of backend-to-frontend object fields mapper
 // const keysForBackend: Pick<UserRegisterInput, "firstName" | "lastName"> = {
@@ -26,8 +28,9 @@ export const api = createApi({
   }),
   tagTypes: ["Users"],
   endpoints: (builder) => ({
-    getUsers: builder.query<UserBackendDetails[], void>({
+    getUsers: builder.query<UserFrontendDetails[], void>({
       query: () => "/users",
+      transformResponse: (response: UserBackendDetails[]) => response.map(transformUserResponse),
       providesTags: (result) => {
         if (result && Array.isArray(result)) {
           return [...result.map(({ id }) => ({ type: "Users" as const, id })), { type: "Users", id: "LIST" }];
@@ -54,8 +57,8 @@ export const api = createApi({
         try {
           const { data: createdUser } = await queryFulfilled;
           dispatch(
-            api.util.updateQueryData("getUsers", undefined, (draft: UserBackendDetails[]) => {
-              draft.push(createdUser);
+            api.util.updateQueryData("getUsers", undefined, (draft: UserFrontendDetails[]) => {
+              draft.push(transformUserResponse(createdUser));
             })
           );
         } catch (err) {

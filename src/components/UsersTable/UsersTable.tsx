@@ -10,22 +10,34 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import { UserTableColumn, UserTableProps } from "@/types";
+import { UserFrontendDetails } from "@/types";
+
+type UserTableColumn = {
+  label: string;
+  key: string;
+};
+
+type UserTableProps = {
+  users: UserFrontendDetails[];
+};
 
 const columns: UserTableColumn[] = [
   { label: "Username", key: "username" },
-  { label: "First Name", key: "first_name" },
-  { label: "Last Name", key: "last_name" },
+  { label: "First Name", key: "firstName" },
+  { label: "Last Name", key: "lastName" },
   { label: "Email", key: "email" },
   { label: "Role", key: "role" },
-  { label: "Last login", key: "last_login" },
+  { label: "Last login", key: "lastLogin" },
   { label: "Actions", key: "actions" },
 ];
+
 const UsersTable: React.FC<UserTableProps> = ({ users }) => {
   const navigate = useNavigate();
-  const handleEdit = (userId: number) => {
+
+  const handleEdit = (userId: string) => {
     navigate(`/users/${userId}`);
   };
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -39,7 +51,6 @@ const UsersTable: React.FC<UserTableProps> = ({ users }) => {
         <TableBody>
           {users.map((user) => (
             <TableRow key={user.id}>
-              {/* Change to user.id once backend sends id */}
               {columns.map((column) => {
                 if (column.key !== "actions") {
                   return (

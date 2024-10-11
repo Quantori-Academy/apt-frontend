@@ -4,7 +4,7 @@ import { userRoles } from "@/constants";
 import { RoleFilterState } from "@/pages/Users/Users";
 
 type RoleFilterProps = {
-  roleFilter: string;
+  roleFilter: RoleFilterState;
   setRoleFilter: React.Dispatch<React.SetStateAction<RoleFilterState>>;
 };
 
@@ -12,7 +12,8 @@ const RoleFilter: React.FC<RoleFilterProps> = ({
   roleFilter,
   setRoleFilter,
 }) => {
-  const roles = ["All", ...Object.values(userRoles)];
+  const roles: RoleFilterState[] = ["All", ...Object.values(userRoles)];
+
   return (
     <FormControl fullWidth size="medium" variant="outlined">
       <InputLabel sx={{ height: "auto" }} id="selectRole">

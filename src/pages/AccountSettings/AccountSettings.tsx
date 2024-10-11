@@ -7,9 +7,9 @@ import { selectUserId } from "@/store";
 
 const AccountSettings: React.FC = () => {
   const ownId = useSelector(selectUserId)!;
-  const { userId } = useParams<{ userId: string }>();
+  const { id } = useParams<{ id: string }>();
 
-  const id = userId ?? ownId;
+  const currentId = id ?? ownId;
 
   return (
     <Container
@@ -27,9 +27,9 @@ const AccountSettings: React.FC = () => {
         Account Details
       </Typography>
 
-      <AccountDetails userId={id} />
+      <AccountDetails userId={currentId} />
       <Divider sx={{ my: 2 }} />
-      <ResetPassword userId={id} />
+      <ResetPassword userId={currentId} />
     </Container>
   );
 };
