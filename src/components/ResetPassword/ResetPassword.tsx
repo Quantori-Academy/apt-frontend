@@ -27,6 +27,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<ResetPasswordFields>({
     values: {
@@ -35,10 +36,10 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     },
   });
 
-  const onSubmit = async (resetedPassword: ResetPasswordFields) => {
+  const onSubmit = async (formData: ResetPasswordFields) => {
     const { error } = await resetPassword({
       userId,
-      updatedPassword: resetedPassword.password,
+      newPassword: formData.password,
     });
 
     if (error) {
@@ -46,6 +47,11 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     } else {
       setIsEditMode(false);
     }
+  };
+
+  const handleCancel = () => {
+    setIsEditMode(false);
+    reset();
   };
 
   return (
@@ -101,7 +107,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={() => setIsEditMode(false)}
+              onClick={handleCancel}
             >
               Cancel
             </Button>
