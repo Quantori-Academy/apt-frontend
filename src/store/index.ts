@@ -6,7 +6,9 @@ export {
   useAddUserMutation,
   useGetUserDetailsQuery,
   useUpdateUserDetailsMutation,
+  useUpdateRoleMutation,
   useResetPasswordMutation,
+  useDeleteUserMutation,
 } from "./api";
 
 export { loginUser, logout, selectUserRole, selectUserId, selectLoading, selectErrorMessage } from "./slices/authSlice";

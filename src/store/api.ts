@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { prepareHeaders } from "@/api";
 import { BASE_URL } from "@/api/apiMethods";
-import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData } from "@/types";
+import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData, UserRole } from "@/types";
 
 import { transformUserResponse } from "./utils/transformUserResponse";
 
@@ -18,6 +18,15 @@ type UserDetails = Omit<UserBase, "password" | "id">;
 type UserFromBackend = Omit<UserRegisterData, "firstName" | "lastName"> & {
   first_name: string;
   last_name: string;
+};
+
+type UserDetailsResponse = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  username: string;
+  role: UserRole;
 };
 
 export const api = createApi({
@@ -69,23 +78,53 @@ export const api = createApi({
 
     getUserDetails: builder.query<UserDetails, string>({
       query: (userId) => `/users/${userId}`,
+      transformResponse: (baseQueryReturnValue: UserDetailsResponse) => ({
+        id: baseQueryReturnValue.id,
+        firstName: baseQueryReturnValue.first_name,
+        lastName: baseQueryReturnValue.last_name,
+        email: baseQueryReturnValue.email,
+        username: baseQueryReturnValue.username,
+        role: baseQueryReturnValue.role,
+      }),
       providesTags: ["Users"],
     }),
 
     updateUserDetails: builder.mutation({
-      query: ({ userId, updatedUserDetails }) => ({
-        url: `/users/${userId}`,
+      query: ({ updatedUserDetails }) => ({
+        url: `/users/${updatedUserDetails.id}`,
         method: "PUT",
-        body: updatedUserDetails,
+        body: {
+          username: updatedUserDetails.username,
+          first_name: updatedUserDetails.firstName,
+          last_name: updatedUserDetails.lastName,
+          email: updatedUserDetails.email,
+        },
       }),
       invalidatesTags: ["Users"],
     }),
 
     resetPassword: builder.mutation({
-      query: ({ userId, resetedPassword }) => ({
-        url: `/users/${userId}/reset-password`,
+      query: ({ userId, newPassword }) => ({
+        url: `/users/${userId}`,
         method: "PUT",
-        body: { newPassword: resetedPassword },
+        body: { new_password: newPassword },
+      }),
+      invalidatesTags: ["Users"],
+    }),
+
+    updateRole: builder.mutation({
+      query: ({ userId, updatedRole }) => ({
+        url: `/users/${userId}`,
+        method: "PUT",
+        body: { role: updatedRole },
+      }),
+      invalidatesTags: ["Users"],
+    }),
+
+    deleteUser: builder.mutation({
+      query: (userId) => ({
+        url: `users/${userId}`,
+        method: "DELETE",
       }),
       invalidatesTags: ["Users"],
     }),
@@ -93,6 +132,8 @@ export const api = createApi({
 });
 
 export const {
+  useUpdateRoleMutation,
+  useDeleteUserMutation,
   useGetUsersQuery,
   useAddUserMutation,
   useGetUserDetailsQuery,
