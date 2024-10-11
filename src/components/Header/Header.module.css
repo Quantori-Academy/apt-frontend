@@ -1,0 +1,14 @@
+.navLink {
+  padding: 0 16px;
+  height: 100%;
+  font-size: 20px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+.activeNavLink {
+  color: red;
+}
