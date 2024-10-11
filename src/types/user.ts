@@ -16,7 +16,6 @@ export type UserLoginInput = Pick<UserBase, "username" | "password">;
 
 export type UserRegisterInput = Omit<UserBase, "id"> & { confirmPassword: string };
 
-// TODO. Think of backend-to-frontend object fields mapper
 export type UserBackendDetails = Omit<UserBase, "firstName" | "lastName" | "password"> & {
   first_name: string;
   last_name: string;
@@ -25,7 +24,6 @@ export type UserBackendDetails = Omit<UserBase, "firstName" | "lastName" | "pass
 };
 
 export type UserFrontendDetails = Omit<UserBase, "password"> & {
-  // You can also map the `UserRole` enum to strings if needed
   createdAt: string;
   lastLogin: string;
 };

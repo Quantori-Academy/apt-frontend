@@ -16,6 +16,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   roles = [],
 }) => {
   const currentRole = useAppSelector(selectUserRole);
+
   if (!currentRole) {
     return <Navigate to="/login" />;
   }
@@ -23,6 +24,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (roles.includes(currentRole)) {
     return element;
   }
+
   return <Navigate to="/" />;
 };
 

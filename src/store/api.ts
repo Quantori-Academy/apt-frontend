@@ -38,6 +38,7 @@ export const api = createApi({
         return [{ type: "Users", id: "LIST" }];
       },
     }),
+
     addUser: builder.mutation<UserBackendDetails, UserRegisterData>({
       query: (userData) => ({
         url: "/users",

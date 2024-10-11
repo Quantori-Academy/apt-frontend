@@ -43,12 +43,14 @@ export const authSlice = createReducerSlice({
       state.user = null;
     }),
   }),
+
   selectors: {
     selectErrorMessage: (state) => state.errorMessage,
     selectLoading: (state) => state.isLoading,
     selectUserRole: (state) => state.user?.role,
     selectUserId: (state) => state.user?.id,
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
