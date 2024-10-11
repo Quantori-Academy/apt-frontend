@@ -1,3 +1,4 @@
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -25,18 +26,59 @@ const StorageRoomDetailsPage = () => {
     }
   }, [dispatch, roomId]);
 
-  if (status === "loading") return <div>Loading...</div>;
-  if (status === "failed") return <div>{error}</div>;
+  if (status === "loading")
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
 
-  if (!storageRoomDetails) return <div>No details available</div>;
+  if (status === "failed")
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography variant="h6" color="error">
+          {error}
+        </Typography>
+      </Box>
+    );
+
+  if (!storageRoomDetails)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography variant="h6">No details available.</Typography>
+      </Box>
+    );
 
   const { storage_room, substances } = storageRoomDetails;
 
   return (
-    <StorageRoomDetails
-      roomName={storage_room || "Unknown"}
-      substances={substances || []}
-    />
+    <Box sx={{ padding: 3 }}>
+      <StorageRoomDetails
+        roomName={storage_room || "Unknown"}
+        substances={substances || []}
+      />
+    </Box>
   );
 };
 

@@ -19,18 +19,39 @@ const StorageRoomDetails = ({
   substances,
 }: StorageRoomDetailsProps) => {
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h4">{roomName} - Storage Room Details</Typography>
+    <Box sx={{ padding: 3, backgroundColor: "#f5f5f5", borderRadius: 2 }}>
+      <Typography variant="h4" gutterBottom>
+        {roomName} - Storage Room Details
+      </Typography>
       <List sx={{ marginTop: 2 }}>
         {substances.map((substance) => (
-          <ListItem key={substance.substance_id}>
+          <ListItem
+            key={substance.substance_id}
+            sx={{ alignItems: "flex-start", paddingY: 2 }}
+          >
             <ListItemText
-              primary={`Reagent: ${substance.name}`}
-              secondary={`Description: ${substance.description}`}
+              primary={
+                <Typography variant="h6">{`Reagent: ${substance.name}`}</Typography>
+              }
+              secondary={
+                <>
+                  <Typography variant="body2" color="textSecondary">
+                    {`Description: ${substance.description}`}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {`Location: ${substance.location}`}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {`Place: ${substance.place}`}
+                  </Typography>
+                </>
+              }
             />
-            <Typography variant="body2">{`Structure: ${substance.structure_smiles}`}</Typography>
-            <Typography variant="body2">{`Location: ${substance.location}`}</Typography>
-            <Typography variant="body2">{`Place: ${substance.place}`}</Typography>
+            <Box sx={{ marginLeft: "auto", textAlign: "right" }}>
+              <Typography variant="caption" color="textSecondary">
+                {`Structure: ${substance.structure_smiles}`}
+              </Typography>
+            </Box>
           </ListItem>
         ))}
       </List>
