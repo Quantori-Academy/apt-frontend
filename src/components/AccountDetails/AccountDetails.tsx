@@ -15,6 +15,7 @@ import { UserBase } from "@/types";
 
 import style from "./AccountDetails.module.css";
 
+// TODO. Get rid of doubles
 type UserDetails = Omit<UserBase, "password" | "id" | "role">;
 
 type AccountDetailsProps = {

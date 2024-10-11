@@ -13,7 +13,7 @@ export const useRoleNavigation = () => {
     if (userRole) {
       switch (userRole) {
         case "Administrator": {
-          navigate("/admin");
+          navigate("/users");
           break;
         }
         case "Procurement Officer": {
