@@ -38,7 +38,9 @@ const AccountSettings: React.FC = () => {
       <Typography variant="h5" gutterBottom margin={3}>
         Account Details
       </Typography>
-      <ResetPassword userId={currentId} />
+      {currentUserRole === "Administrator" && (
+        <ResetPassword userId={currentId} />
+      )}
       <Divider sx={{ my: 3 }} />
       <EditUserRole
         userId={currentId}
