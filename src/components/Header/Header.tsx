@@ -1,6 +1,7 @@
 import {
   AppBar,
   Avatar,
+  Box,
   Button,
   Container,
   IconButton,
@@ -9,13 +10,15 @@ import {
 import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 
-import { useAppSelector } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
+import { logout } from "@/store";
 
 import styles from "./Header.module.css";
 
 const Header: React.FC = () => {
   const role = useAppSelector(selectUserRole);
+  const dispatch = useAppDispatch();
 
   let content: ReactNode = null;
 
@@ -37,18 +40,27 @@ const Header: React.FC = () => {
           <Avatar sx={{ width: 50, height: 50 }} />
         </IconButton>
         {/* I'll add role-based navbar object with paths and links in the future */}
-        {role === "Administrator" && (
-          <NavLink
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.navLink} ${styles.activeNavLink}`
-                : styles.navLink
-            }
-            to="/users"
-          >
-            Staff
-          </NavLink>
-        )}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          {role === "Administrator" && (
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.navLink} ${styles.activeNavLink}`
+                  : styles.navLink
+              }
+              to="/users"
+            >
+              Staff
+            </NavLink>
+          )}
+          <Button onClick={() => dispatch(logout())}>Logout</Button>
+        </Box>
       </>
     );
   }
