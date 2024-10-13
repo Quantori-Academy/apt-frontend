@@ -96,7 +96,6 @@ export const api = createApi({
           url: `/users/${updatedUserDetails.id}`,
           method: "PUT",
           body: {
-            username: updatedUserDetails.username,
             first_name: updatedUserDetails.firstName,
             last_name: updatedUserDetails.lastName,
             email: updatedUserDetails.email,
