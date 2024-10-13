@@ -10,7 +10,7 @@ type ProtectedRouteProps = {
   roles?: UserRole[];
 };
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   element,
   roles = [],
 }) => {
@@ -34,5 +34,3 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   return null;
 };
-
-export default ProtectedRoute;

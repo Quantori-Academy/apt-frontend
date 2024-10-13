@@ -1,8 +1,9 @@
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { PageLoader, ProtectedRoute } from "@/components";
+import { PageLoader } from "@/components";
 
+import { ProtectedRoute } from "./ProtectedRoute";
 import { routerConfig } from "./routerConfig";
 
 const AppRouter = () => {

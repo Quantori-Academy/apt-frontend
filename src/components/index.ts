@@ -14,7 +14,6 @@ export { LoadingPage } from "./LoadingPage";
 export { SearchBar } from "./SearchBar";
 export { RoleFilter } from "./RoleFilter";
 export { ResetPassword } from "./ResetPassword";
-export { ProtectedRoute } from "./ProtectedRoute";
 export { Header } from "./Header";
 export { EditUserRole } from "./EditUserRole";
 export { DeleteUser } from "./DeleteUser";
