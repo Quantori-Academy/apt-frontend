@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+import { useAppSelector } from "@/hooks";
+import { selectUserId } from "@/store";
 import { UserFrontendDetails } from "@/types";
 
 type UserTableColumn = {
@@ -34,8 +36,14 @@ const columns: UserTableColumn[] = [
 const UsersTable: React.FC<UserTableProps> = ({ users }) => {
   const navigate = useNavigate();
 
+  const currentId = useAppSelector(selectUserId);
+
   const handleEdit = (userId: string) => {
-    navigate(`/users/${userId}`);
+    if (userId === currentId) {
+      navigate("/account-settings");
+    } else {
+      navigate(`/users/${userId}`);
+    }
   };
 
   return (
