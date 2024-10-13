@@ -36,6 +36,7 @@ const Header: React.FC = () => {
         >
           <Avatar sx={{ width: 50, height: 50 }} />
         </IconButton>
+        {/* I'll add role-based navbar object with paths and links in the future */}
         {role === "Administrator" && (
           <NavLink
             className={({ isActive }) =>
