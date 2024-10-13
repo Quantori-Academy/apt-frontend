@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, IconButton } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
+import { userRoles } from "@/constants";
 import { useAppDispatch } from "@/hooks";
 import { logout } from "@/store";
 import { UserRole } from "@/types";
@@ -30,7 +31,7 @@ const LoggedInNav: React.FC<LoggedInNavProps> = ({ role }) => {
           width: "100%",
         }}
       >
-        {role === "Administrator" && (
+        {role === userRoles.Administrator && (
           <NavLink
             className={({ isActive }) =>
               isActive
