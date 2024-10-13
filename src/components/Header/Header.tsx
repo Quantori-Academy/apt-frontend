@@ -34,7 +34,7 @@ const Header: React.FC = () => {
           component={NavLink}
           to="/account-settings"
         >
-          <Avatar />
+          <Avatar sx={{ width: 50, height: 50 }} />
         </IconButton>
         {role === "Administrator" && (
           <NavLink
@@ -53,7 +53,7 @@ const Header: React.FC = () => {
   }
 
   return (
-    <AppBar position="static" sx={{ height: "70px" }}>
+    <AppBar position="static" sx={{ height: "75px" }}>
       <Container sx={{ height: "100%" }}>
         <Toolbar
           sx={{
