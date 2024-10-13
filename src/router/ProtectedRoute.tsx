@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import React, { ReactNode, useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
@@ -16,6 +16,14 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 }) => {
   const currentRole = useAppSelector(selectUserRole);
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentRole && !roles.includes(currentRole)) {
+      navigate(-1);
+    }
+  }, [navigate, currentRole, roles]);
+
   if (!currentRole) {
     return <Navigate to="/login" />;
   }
@@ -24,7 +32,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return element;
   }
 
-  return <Navigate to="/" />;
+  return null;
 };
 
 export default ProtectedRoute;
