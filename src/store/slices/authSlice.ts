@@ -9,13 +9,18 @@ import { createReducerSlice } from "../createReducerSlice";
 export type AuthSliceState = {
   isLoading: boolean;
   errorMessage: string | null;
+  isAuthenticated: boolean;
   user: UserAuth | null;
 };
+
+const token = localStorage.getItem("accessToken");
+const user = token ? jwtDecode<UserAuth>(token) : null;
 
 const initialState: AuthSliceState = {
   isLoading: false,
   errorMessage: null,
-  user: null,
+  isAuthenticated: !!user,
+  user: user,
 };
 
 export const loginUser = createAsyncThunk("auth/login", async (loginData: UserLoginInput, { rejectWithValue }) => {
@@ -35,11 +40,9 @@ export const authSlice = createReducerSlice({
   name: "auth",
   initialState,
   reducers: (create) => ({
-    setUser: create.reducer((state, action: PayloadAction<Token>) => {
-      state.user = jwtDecode<UserAuth>(action.payload.token);
-    }),
     logout: create.reducer((state) => {
       localStorage.removeItem("accessToken");
+      state.isAuthenticated = false;
       state.user = null;
     }),
   }),
@@ -49,6 +52,7 @@ export const authSlice = createReducerSlice({
     selectLoading: (state) => state.isLoading,
     selectUserRole: (state) => state.user?.role,
     selectUserId: (state) => state.user?.id,
+    selectUserIsAuthenticated: (state) => state.isAuthenticated,
   },
 
   extraReducers: (builder) => {
@@ -61,6 +65,7 @@ export const authSlice = createReducerSlice({
         state.isLoading = false;
         state.errorMessage = null;
         state.user = jwtDecode<UserAuth>(action.payload.token);
+        state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action: PayloadAction<string | unknown>) => {
         state.isLoading = false;
@@ -69,5 +74,6 @@ export const authSlice = createReducerSlice({
   },
 });
 
-export const { logout, setUser } = authSlice.actions;
-export const { selectErrorMessage, selectLoading, selectUserRole, selectUserId } = authSlice.selectors;
+export const { logout } = authSlice.actions;
+export const { selectErrorMessage, selectLoading, selectUserRole, selectUserId, selectUserIsAuthenticated } =
+  authSlice.selectors;
