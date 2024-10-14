@@ -1,27 +1,30 @@
-import { RouteProps } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 
-import { Home, Login } from "@/pages";
+import { Login } from "@/pages";
+
+import { loginLoader } from "./utils/loginLoader";
 
 export const enum AppPublicRoutes {
-  HOME = "home",
+  ROOT_REDIRECT = "root_redirect",
   LOGIN = "login",
   NOT_FOUND = "not_found",
 }
 
 export const RoutePublicPath: Record<AppPublicRoutes, string> = {
-  [AppPublicRoutes.HOME]: "/",
+  [AppPublicRoutes.ROOT_REDIRECT]: "/",
   [AppPublicRoutes.LOGIN]: "/login",
   [AppPublicRoutes.NOT_FOUND]: "*",
 };
 
-export const publicRoutesRouterConfig: Record<AppPublicRoutes, RouteProps> = {
-  [AppPublicRoutes.HOME]: {
-    path: RoutePublicPath[AppPublicRoutes.HOME],
-    element: <Home />,
+export const publicRoutesRouterConfig: Record<AppPublicRoutes, RouteObject> = {
+  [AppPublicRoutes.ROOT_REDIRECT]: {
+    path: RoutePublicPath[AppPublicRoutes.ROOT_REDIRECT],
+    element: <Navigate to="/dashboard" />,
   },
   [AppPublicRoutes.LOGIN]: {
     path: RoutePublicPath[AppPublicRoutes.LOGIN],
     element: <Login />,
+    loader: loginLoader,
   },
   [AppPublicRoutes.NOT_FOUND]: {
     path: RoutePublicPath[AppPublicRoutes.NOT_FOUND],
