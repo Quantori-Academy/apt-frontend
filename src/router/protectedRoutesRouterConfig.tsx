@@ -7,6 +7,7 @@ import { UserRole } from "@/types";
 type AppRoutesProps = RouteProps & {
   roles?: UserRole[];
 };
+
 export const enum AppProtectedRoutes {
   USERS = "users",
   USER_PAGE = "user_page",

@@ -6,4 +6,5 @@ const LoggedOutNav: React.FC = () => (
     Login
   </Button>
 );
+
 export default LoggedOutNav;

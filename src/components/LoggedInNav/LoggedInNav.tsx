@@ -11,8 +11,10 @@ import styles from "./LoggedInNav.module.css";
 type LoggedInNavProps = {
   role: UserRole;
 };
+
 const LoggedInNav: React.FC<LoggedInNavProps> = ({ role }) => {
   const dispatch = useAppDispatch();
+
   return (
     <>
       <IconButton
