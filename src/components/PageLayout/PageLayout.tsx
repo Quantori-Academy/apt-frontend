@@ -1,25 +1,16 @@
 import { Container } from "@mui/material";
-import type { PropsWithChildren } from "react";
-
-import { useToken } from "@/hooks";
+import { Outlet } from "react-router-dom";
 
 import { Header } from "../Header";
-import { LoadingPage } from "../LoadingPage";
 
 import styles from "./index.module.css";
 
-const PageLayout: React.FC<PropsWithChildren> = ({ children }) => {
-  const isLoading = useToken();
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
+const PageLayout: React.FC = () => {
   return (
     <>
       <Header />
       <main className={styles.pageLayout}>
-        <Container>{children}</Container>
+        <Container>{<Outlet />}</Container>
       </main>
     </>
   );
