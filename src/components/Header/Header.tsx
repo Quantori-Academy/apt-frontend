@@ -4,7 +4,7 @@ import { useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
 
 import { LoggedInNav } from "../LoggedInNav";
-import { LoggedOutNav } from "../LoggedOutNav";
+import { LoginButton } from "../LoginButton";
 
 const Header: React.FC = () => {
   const role = useAppSelector(selectUserRole);
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
           }}
           variant="dense"
         >
-          {!role ? <LoggedOutNav /> : <LoggedInNav role={role} />}
+          {!role ? <LoginButton /> : <LoggedInNav role={role} />}
         </Toolbar>
       </Container>
     </AppBar>
