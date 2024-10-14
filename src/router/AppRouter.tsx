@@ -4,20 +4,26 @@ import { Route, Routes } from "react-router-dom";
 import { PageLoader } from "@/components";
 
 import { ProtectedRoute } from "./ProtectedRoute";
-import { routerConfig } from "./routerConfig";
+import { protectedRoutesRouterConfig } from "./protectedRoutesRouterConfig";
+import { publicRoutesRouterConfig } from "./publicRoutesRouterConfig";
 
 const AppRouter = () => {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        {Object.values(routerConfig).map(({ path, element, roles }) => {
-          const routeElement = roles ? (
-            <ProtectedRoute element={element} roles={roles} />
-          ) : (
-            element
-          );
-          return <Route key={path} path={path} element={routeElement} />;
-        })}
+        {Object.values(publicRoutesRouterConfig).map(({ path, element }) => (
+          <Route key={path} path={path} element={element} />
+        ))}
+
+        {Object.values(protectedRoutesRouterConfig).map(
+          ({ path, element, roles }) => (
+            <Route
+              key={path}
+              path={path}
+              element={<ProtectedRoute element={element} roles={roles} />}
+            />
+          )
+        )}
       </Routes>
     </Suspense>
   );
