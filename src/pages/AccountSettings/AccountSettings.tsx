@@ -13,12 +13,12 @@ import { selectUserId, selectUserRole } from "@/store";
 
 const AccountSettings: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const currentUserId = useAppSelector(selectUserId);
-  const currentUserRole = useAppSelector(selectUserRole);
+  const loggedInUserId = useAppSelector(selectUserId);
+  const loggedInUserRole = useAppSelector(selectUserRole);
 
-  if (!currentUserId || !currentUserRole) return null;
+  if (!loggedInUserId || !loggedInUserRole) return null;
 
-  const currentId = (id || currentUserId)!;
+  const choosenId = (id || loggedInUserId)!;
 
   return (
     <Container
@@ -39,21 +39,21 @@ const AccountSettings: React.FC = () => {
       <Typography variant="h5" gutterBottom margin={3}>
         Account Details
       </Typography>
-      {currentUserRole === userRoles.Administrator && (
-        <ResetPassword userId={currentId} />
+      {loggedInUserRole === userRoles.Administrator && (
+        <ResetPassword userId={choosenId} />
       )}
       <Divider sx={{ my: 3 }} />
       <EditUserRole
-        userId={currentId}
-        currentUserId={currentUserId}
-        currentUserRole={currentUserRole}
+        userId={choosenId}
+        currentUserId={loggedInUserRole}
+        currentUserRole={loggedInUserRole}
       />
       <Divider sx={{ my: 3 }} />
-      <AccountDetails userId={currentId} />
+      <AccountDetails userId={choosenId} />
       <DeleteUser
-        userId={currentId}
-        currentUserId={currentUserId}
-        currentUserRole={currentUserRole}
+        userId={choosenId}
+        currentUserId={loggedInUserRole}
+        currentUserRole={loggedInUserRole}
       />
     </Container>
   );

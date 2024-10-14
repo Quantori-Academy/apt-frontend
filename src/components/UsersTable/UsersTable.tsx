@@ -36,13 +36,13 @@ const columns: UserTableColumn[] = [
 const UsersTable: React.FC<UserTableProps> = ({ users }) => {
   const navigate = useNavigate();
 
-  const currentId = useAppSelector(selectUserId);
+  const loggedInUserId = useAppSelector(selectUserId);
 
-  const handleEdit = (userId: string) => {
-    if (userId === currentId) {
+  const handleEdit = (selectedUserIdFromTable: string) => {
+    if (selectedUserIdFromTable === loggedInUserId) {
       navigate("/account-settings");
     } else {
-      navigate(`/users/${userId}`);
+      navigate(`/users/${selectedUserIdFromTable}`);
     }
   };
 
