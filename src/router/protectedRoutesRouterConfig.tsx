@@ -1,5 +1,6 @@
 import { RouteProps } from "react-router-dom";
 
+import { userRoles } from "@/constants";
 import { AccountSettings, Users } from "@/pages";
 import { UserRole } from "@/types";
 
@@ -25,16 +26,16 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.USERS]: {
     path: RouteProtectedPath[AppProtectedRoutes.USERS],
     element: <Users />,
-    roles: ["Administrator"],
+    roles: [userRoles.Administrator],
   },
   [AppProtectedRoutes.USER_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.USER_PAGE],
     element: <AccountSettings />,
-    roles: ["Administrator"],
+    roles: [userRoles.Administrator],
   },
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: {
     path: RouteProtectedPath[AppProtectedRoutes.ACCOUNT_SETTINGS],
     element: <AccountSettings />,
-    roles: ["Administrator", "Procurement Officer", "Researcher"],
+    roles: Object.values(userRoles),
   },
 };
