@@ -30,6 +30,7 @@ const LoggedInNav: React.FC<LoggedInNavProps> = ({ role }) => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
           width: "100%",
         }}
       >
