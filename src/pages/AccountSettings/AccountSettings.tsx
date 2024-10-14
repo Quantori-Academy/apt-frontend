@@ -7,6 +7,7 @@ import {
   EditUserRole,
   ResetPassword,
 } from "@/components";
+import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
 import { selectUserId, selectUserRole } from "@/store";
 
@@ -38,7 +39,7 @@ const AccountSettings: React.FC = () => {
       <Typography variant="h5" gutterBottom margin={3}>
         Account Details
       </Typography>
-      {currentUserRole === "Administrator" && (
+      {currentUserRole === userRoles.Administrator && (
         <ResetPassword userId={currentId} />
       )}
       <Divider sx={{ my: 3 }} />
