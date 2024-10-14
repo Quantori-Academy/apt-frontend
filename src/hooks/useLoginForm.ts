@@ -20,6 +20,7 @@ export const useLoginForm = () => {
 
   const onSubmit: SubmitHandler<UserLoginInput> = async (userData: UserLoginInput) => {
     const result = await dispatch(loginUser(userData));
+
     if (loginUser.fulfilled.match(result)) {
       navigate("/dashboard");
     }
