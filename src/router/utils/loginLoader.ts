@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 
-import { AppProtectedRoutes, RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { selectUserIsAuthenticated, store } from "@/store";
 
 export const loginLoader = () => {
@@ -9,7 +9,7 @@ export const loginLoader = () => {
   const isAuthenticated = selectUserIsAuthenticated(state);
 
   if (isAuthenticated) {
-    return redirect(RouteProtectedPath[AppProtectedRoutes.DASHBOARD]);
+    return redirect(RouteProtectedPath.dashboard);
   }
 
   return null;
