@@ -10,7 +10,9 @@ const PageLayout: React.FC = () => {
     <>
       <Header />
       <main className={styles.pageLayout}>
-        <Container>{<Outlet />}</Container>
+        <Container sx={{ height: "100%" }}>
+          <Outlet />
+        </Container>
       </main>
     </>
   );
