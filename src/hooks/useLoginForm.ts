@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { AppProtectedRoutes, RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { loginUser } from "@/store/slices/authSlice";
 import { UserLoginInput } from "@/types";
 
@@ -23,7 +23,7 @@ export const useLoginForm = () => {
     const result = await dispatch(loginUser(userData));
 
     if (loginUser.fulfilled.match(result)) {
-      navigate(RouteProtectedPath[AppProtectedRoutes.DASHBOARD]);
+      navigate(RouteProtectedPath.dashboard);
     }
   };
 

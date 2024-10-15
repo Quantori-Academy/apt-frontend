@@ -1,9 +1,11 @@
-import React, { ReactNode, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import React, { ReactNode } from "react";
+import { Navigate } from "react-router-dom";
 
 import { useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
 import { UserRole } from "@/types";
+
+import { RoutePublicPath } from "./publicRoutesRouterConfig";
 
 type ProtectedRouteProps = {
   element: ReactNode;
@@ -16,21 +18,13 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 }) => {
   const currentRole = useAppSelector(selectUserRole);
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (currentRole && !roles.includes(currentRole)) {
-      navigate(-1);
-    }
-  }, [navigate, currentRole, roles]);
-
   if (!currentRole) {
-    return <Navigate to="/login" />;
+    return <Navigate to={RoutePublicPath.login} />;
   }
-
+  if (currentRole && !roles.includes(currentRole)) {
+    return <Navigate to="/404" />;
+  }
   if (roles.includes(currentRole)) {
     return element;
   }
-
-  return null;
 };

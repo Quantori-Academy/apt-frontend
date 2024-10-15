@@ -3,10 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import { userRoles } from "@/constants";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import {
-  AppProtectedRoutes,
-  RouteProtectedPath,
-} from "@/router/protectedRoutesRouterConfig";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { logout, selectUserRole } from "@/store";
 
 import styles from "./NavigationAuth.module.css";
@@ -20,7 +17,7 @@ const NavigationAuth: React.FC = () => {
         color="inherit"
         sx={{ p: 0, mr: 2 }}
         component={NavLink}
-        to={RouteProtectedPath[AppProtectedRoutes.ACCOUNT_SETTINGS]}
+        to={RouteProtectedPath.account_settings}
       >
         <Avatar sx={{ width: 50, height: 50 }} />
       </IconButton>
@@ -39,7 +36,7 @@ const NavigationAuth: React.FC = () => {
               ? `${styles.navLink} ${styles.activeNavLink}`
               : styles.navLink
           }
-          to={RouteProtectedPath[AppProtectedRoutes.DASHBOARD]}
+          to={RouteProtectedPath.dashboard}
         >
           Dashboard
         </NavLink>
@@ -50,7 +47,7 @@ const NavigationAuth: React.FC = () => {
                 ? `${styles.navLink} ${styles.activeNavLink}`
                 : styles.navLink
             }
-            to={RouteProtectedPath[AppProtectedRoutes.USERS]}
+            to={RouteProtectedPath.users}
           >
             Staff
           </NavLink>
