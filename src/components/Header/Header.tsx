@@ -10,7 +10,7 @@ const Header: React.FC = () => {
   const role = useAppSelector(selectUserRole);
 
   return (
-    <AppBar position="static" sx={{ height: "75px" }}>
+    <AppBar position="sticky" sx={{ height: "75px" }}>
       <Container sx={{ height: "100%" }}>
         <Toolbar
           sx={{
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
           }}
           variant="dense"
         >
-          {!role ? <LoginButton /> : <LoggedInNav role={role} />}
+          {role ? <LoggedInNav role={role} /> : <LoginButton />}
         </Toolbar>
       </Container>
     </AppBar>
