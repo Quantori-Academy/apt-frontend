@@ -1,13 +1,20 @@
 import { Container } from "@mui/material";
-import type { PropsWithChildren } from "react";
+import { Outlet } from "react-router-dom";
+
+import { Header } from "../Header";
 
 import styles from "./index.module.css";
 
-const PageLayout: React.FC<PropsWithChildren> = ({ children }) => {
+const PageLayout: React.FC = () => {
   return (
-    <main className={styles.pageLayout}>
-      <Container>{children}</Container>
-    </main>
+    <>
+      <Header />
+      <main className={styles.pageLayout}>
+        <Container sx={{ height: "100%" }}>
+          <Outlet />
+        </Container>
+      </main>
+    </>
   );
 };
 

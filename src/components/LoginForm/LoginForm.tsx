@@ -9,7 +9,7 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { RevealableField } from "@/components";
-import { useAppSelector, useLoginForm, useRoleNavigation } from "@/hooks";
+import { useAppSelector, useLoginForm } from "@/hooks";
 import { selectErrorMessage, selectLoading } from "@/store/slices/authSlice";
 
 const LoginForm: React.FC = () => {
@@ -17,8 +17,6 @@ const LoginForm: React.FC = () => {
   const isLoading = useAppSelector(selectLoading);
 
   const { register, handleSubmit, requiredErrors } = useLoginForm();
-
-  useRoleNavigation();
 
   return (
     <Box

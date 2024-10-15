@@ -47,6 +47,7 @@ export const api = createApi({
         return [{ type: "Users", id: "LIST" }];
       },
     }),
+
     addUser: builder.mutation<UserBackendDetails, UserRegisterData>({
       query: (userData) => ({
         url: "/users",
@@ -90,16 +91,17 @@ export const api = createApi({
     }),
 
     updateUserDetails: builder.mutation({
-      query: ({ updatedUserDetails }) => ({
-        url: `/users/${updatedUserDetails.id}`,
-        method: "PUT",
-        body: {
-          username: updatedUserDetails.username,
-          first_name: updatedUserDetails.firstName,
-          last_name: updatedUserDetails.lastName,
-          email: updatedUserDetails.email,
-        },
-      }),
+      query: (updatedUserDetails) => {
+        return {
+          url: `/users/${updatedUserDetails.id}`,
+          method: "PUT",
+          body: {
+            first_name: updatedUserDetails.firstName,
+            last_name: updatedUserDetails.lastName,
+            email: updatedUserDetails.email,
+          },
+        };
+      },
       invalidatesTags: ["Users"],
     }),
 

@@ -10,6 +10,12 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+import { useAppSelector } from "@/hooks";
+import {
+  AppProtectedRoutes,
+  RouteProtectedPath,
+} from "@/router/protectedRoutesRouterConfig";
+import { selectUserId } from "@/store";
 import { UserFrontendDetails } from "@/types";
 
 type UserTableColumn = {
@@ -34,8 +40,16 @@ const columns: UserTableColumn[] = [
 const UsersTable: React.FC<UserTableProps> = ({ users }) => {
   const navigate = useNavigate();
 
-  const handleEdit = (userId: string) => {
-    navigate(`/users/${userId}`);
+  const loggedInUserId = useAppSelector(selectUserId);
+
+  const handleEdit = (selectedUserIdFromTable: string) => {
+    if (selectedUserIdFromTable === loggedInUserId) {
+      navigate(RouteProtectedPath[AppProtectedRoutes.ACCOUNT_SETTINGS]);
+    } else {
+      navigate(
+        `${RouteProtectedPath[AppProtectedRoutes.USERS]}/${selectedUserIdFromTable}`
+      );
+    }
   };
 
   return (

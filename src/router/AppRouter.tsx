@@ -1,20 +1,31 @@
-import { Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import { PageLoader } from "@/components";
+import { PageLayout, PageLoader } from "@/components";
 
-import { routerConfig } from "./routerConfig";
+import { ProtectedRoute } from "./ProtectedRoute";
+import { protectedRoutesRouterConfig } from "./protectedRoutesRouterConfig";
+import { publicRoutesRouterConfig } from "./publicRoutesRouterConfig";
 
-const AppRouter = () => {
-  return (
-    <Suspense fallback={<PageLoader />}>
-      <Routes>
-        {Object.values(routerConfig).map(({ path, element }) => (
-          <Route key={path} path={path} element={element} />
-        ))}
-      </Routes>
-    </Suspense>
-  );
-};
+const routes = [
+  {
+    element: <PageLayout />,
+    children: [
+      ...Object.values(publicRoutesRouterConfig),
+
+      ...Object.values(protectedRoutesRouterConfig).map(
+        ({ path, element, roles }) => ({
+          path,
+          element: <ProtectedRoute element={element} roles={roles} />,
+        })
+      ),
+    ],
+  },
+];
+
+const router = createBrowserRouter(routes);
+
+const AppRouter = () => (
+  <RouterProvider router={router} fallbackElement={<PageLoader />} />
+);
 
 export default AppRouter;

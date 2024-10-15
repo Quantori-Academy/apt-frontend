@@ -11,4 +11,12 @@ export {
   useDeleteUserMutation,
 } from "./api";
 
-export { loginUser, logout, selectUserRole, selectUserId, selectLoading, selectErrorMessage } from "./slices/authSlice";
+export {
+  loginUser,
+  logout,
+  selectUserRole,
+  selectUserId,
+  selectLoading,
+  selectErrorMessage,
+  selectUserIsAuthenticated,
+} from "./slices/authSlice";
