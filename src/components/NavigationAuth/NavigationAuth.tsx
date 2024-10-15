@@ -2,26 +2,25 @@ import { Avatar, Box, Button, IconButton } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
 import { userRoles } from "@/constants";
-import { useAppDispatch } from "@/hooks";
-import { logout } from "@/store";
-import { UserRole } from "@/types";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import {
+  AppProtectedRoutes,
+  RouteProtectedPath,
+} from "@/router/protectedRoutesRouterConfig";
+import { logout, selectUserRole } from "@/store";
 
-import styles from "./LoggedInNav.module.css";
+import styles from "./NavigationAuth.module.css";
 
-type LoggedInNavProps = {
-  role: UserRole;
-};
-
-const LoggedInNav: React.FC<LoggedInNavProps> = ({ role }) => {
+const NavigationAuth: React.FC = () => {
   const dispatch = useAppDispatch();
-
+  const role = useAppSelector(selectUserRole);
   return (
     <>
       <IconButton
         color="inherit"
         sx={{ p: 0, mr: 2 }}
         component={NavLink}
-        to="/account-settings"
+        to={RouteProtectedPath[AppProtectedRoutes.ACCOUNT_SETTINGS]}
       >
         <Avatar sx={{ width: 50, height: 50 }} />
       </IconButton>
@@ -34,6 +33,16 @@ const LoggedInNav: React.FC<LoggedInNavProps> = ({ role }) => {
           width: "100%",
         }}
       >
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? `${styles.navLink} ${styles.activeNavLink}`
+              : styles.navLink
+          }
+          to={RouteProtectedPath[AppProtectedRoutes.DASHBOARD]}
+        >
+          Dashboard
+        </NavLink>
         {role === userRoles.Administrator && (
           <NavLink
             className={({ isActive }) =>
@@ -41,7 +50,7 @@ const LoggedInNav: React.FC<LoggedInNavProps> = ({ role }) => {
                 ? `${styles.navLink} ${styles.activeNavLink}`
                 : styles.navLink
             }
-            to="/users"
+            to={RouteProtectedPath[AppProtectedRoutes.USERS]}
           >
             Staff
           </NavLink>
@@ -52,4 +61,4 @@ const LoggedInNav: React.FC<LoggedInNavProps> = ({ role }) => {
   );
 };
 
-export default LoggedInNav;
+export default NavigationAuth;

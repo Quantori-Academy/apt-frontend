@@ -1,13 +1,13 @@
 import { AppBar, Container, Toolbar } from "@mui/material";
 
 import { useAppSelector } from "@/hooks";
-import { selectUserRole } from "@/store";
+import { selectUserIsAuthenticated } from "@/store";
 
-import { LoggedInNav } from "../LoggedInNav";
-import { LoginButton } from "../LoginButton";
+import { NavigationAuth } from "../NavigationAuth";
+import { NavigationUnauth } from "../NavigationUnauth";
 
 const Header: React.FC = () => {
-  const role = useAppSelector(selectUserRole);
+  const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
 
   return (
     <AppBar position="sticky" sx={{ height: "75px" }}>
@@ -15,12 +15,12 @@ const Header: React.FC = () => {
         <Toolbar
           sx={{
             height: "100%",
-            justifyContent: !role ? "flex-end" : "",
+            justifyContent: isAuthenticated ? "" : "flex-end",
             alignItems: "center",
           }}
           variant="dense"
         >
-          {role ? <LoggedInNav role={role} /> : <LoginButton />}
+          {isAuthenticated ? <NavigationAuth /> : <NavigationUnauth />}
         </Toolbar>
       </Container>
     </AppBar>
