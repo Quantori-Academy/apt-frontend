@@ -1,7 +1,7 @@
 import { RouteObject } from "react-router-dom";
 
 import { userRoles } from "@/constants";
-import { AccountSettings, Dashboard, Users } from "@/pages";
+import { AccountSettings, Dashboard, ReagentPage, Users } from "@/pages";
 import { UserRole } from "@/types";
 
 type AppRoutesProps = RouteObject & {
@@ -13,6 +13,7 @@ export const enum AppProtectedRoutes {
   USER_PAGE = "user_page",
   ACCOUNT_SETTINGS = "account_settings",
   DASHBOARD = "dashboard",
+  REAGENT_PAGE = "reagent_page",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -20,6 +21,8 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.USER_PAGE]: "/users/:id",
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: "/account-settings",
   [AppProtectedRoutes.DASHBOARD]: "/dashboard",
+
+  [AppProtectedRoutes.REAGENT_PAGE]: "/reagent",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -39,6 +42,11 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: {
     path: RouteProtectedPath[AppProtectedRoutes.ACCOUNT_SETTINGS],
     element: <AccountSettings />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.REAGENT_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_PAGE],
+    element: <ReagentPage />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.DASHBOARD]: {
