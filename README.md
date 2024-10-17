@@ -149,7 +149,7 @@ graph LR;
 ```
 - **Business Entities Diagram**: Represents the core business entities and their relationships within the system.
 ```mermaid
-flowchart LR
+flowchart TD
     RR[Reagent Request]
     O[Order]
     R[Reagents]
@@ -176,9 +176,9 @@ S --> | Stored in | SL
 ADM --> | Manages | SL
 
 
-classDef green fill:#90EE90;
-classDef yellow fill:#FFFF99;
-classDef grey fill:#ccc;
+classDef green fill:#166e07, color:#ffffff;
+classDef yellow fill:#fcca03, color:#ffffff;
+classDef grey fill:#575757, color:#ffffff;
 
 class U,ADM,RSR,PRCR,SL green;
 class R,S yellow;
