@@ -19,3 +19,5 @@ export { EditUserRole } from "./EditUserRole";
 export { DeleteUser } from "./DeleteUser";
 export { SmilesImage } from "./SmilesImage";
 export { DeleteModal } from "./DeleteModal";
+export { ActionButtons } from "./ActionButtons";
+export { DetailItem } from "./DetailItem";
