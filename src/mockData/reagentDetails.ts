@@ -1,6 +1,6 @@
 import { Reagent } from "@/types";
 
-export const reagent: Reagent = {
+export const reagentDetails: Reagent = {
   reagentID: "R-00123",
   name: "Acetone",
   category: "Organic Solvent",
