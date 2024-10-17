@@ -2,42 +2,91 @@ import { Delete as DeleteIcon } from "@mui/icons-material";
 import {
   Alert,
   Box,
+  Button,
   Card,
   CardContent,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   Grid,
   IconButton,
   List,
   ListItem,
   ListItemText,
+  MenuItem,
   Paper,
   Snackbar,
+  TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
   useDeleteStorageLocationMutation,
   useGetStorageLocationDetailQuery,
+  useGetStorageRoomsQuery,
+  useMoveSubstanceMutation,
 } from "@/store/storageApi.ts";
 
 const StorageLocationDetail: React.FC = () => {
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
 
+  const { data: rooms, isLoading: isRoomsLoading } = useGetStorageRoomsQuery();
+
+  const [modalIsOpened, setModalIsOpened] = useState(false);
+
+  const [selectedSubstanceId, setSelectedSubstanceId] = useState<number | null>(
+    null
+  );
+
+  const [selectedRoom, setSelectedRoom] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+
+  const roomToMove = rooms?.find((room) => room.room === selectedRoom);
+
+  const handleRoomChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedRoom(event.target.value);
+  };
+
+  const handleLocationChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedLocation(event.target.value);
+  };
+
+  const [moveSubstance] = useMoveSubstanceMutation();
+
   const {
     data: locationDetails,
     error,
     isLoading,
   } = useGetStorageLocationDetailQuery(Number(locationId));
+
   const [deleteStorageLocation, { isLoading: isDeleting }] =
     useDeleteStorageLocationMutation();
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [successMessage, setSuccessMessage] = React.useState<string | null>(
     null
   );
+
+  const handleAgreeClick = () => {
+    setModalIsOpened(false);
+    const locationToMove = roomToMove?.locations.find(
+      (location) => location.location_name === selectedLocation
+    );
+
+    moveSubstance({
+      old_room_id: locationDetails?.room_id as number,
+      old_location_id: locationDetails?.location_id as number,
+      substance_id: selectedSubstanceId as number,
+      new_room_id: roomToMove?.id as number,
+      new_location_id: locationToMove?.location_id as number,
+    });
+  };
 
   const handleDelete = async () => {
     if (locationDetails?.substances.length === 0) {
@@ -60,7 +109,7 @@ const StorageLocationDetail: React.FC = () => {
     setSuccessMessage(null);
   };
 
-  if (isLoading || isDeleting) {
+  if (isLoading || isDeleting || isRoomsLoading) {
     return (
       <Box
         display="flex"
@@ -181,7 +230,15 @@ const StorageLocationDetail: React.FC = () => {
             {locationDetails.substances.length > 0 ? (
               <List sx={{ maxHeight: "300px", overflowY: "auto", padding: 0 }}>
                 {locationDetails.substances.map((substance) => (
-                  <ListItem key={substance.substance_id} divider>
+                  <ListItem
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                    key={substance.substance_id}
+                    divider
+                  >
                     <ListItemText
                       primary={
                         <Typography variant="body1" sx={{ fontWeight: 500 }}>
@@ -201,6 +258,15 @@ const StorageLocationDetail: React.FC = () => {
                         </>
                       }
                     />
+                    <Button
+                      onClick={() => {
+                        setSelectedRoom("");
+                        setModalIsOpened(true);
+                        setSelectedSubstanceId(substance.substance_id);
+                      }}
+                    >
+                      Change Location
+                    </Button>
                   </ListItem>
                 ))}
               </List>
@@ -211,28 +277,72 @@ const StorageLocationDetail: React.FC = () => {
         </Grid>
       </Grid>
 
-      <Snackbar
-        open={!!errorMessage}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      <Dialog
+        open={modalIsOpened}
+        onClose={() => setModalIsOpened(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <Alert onClose={handleCloseSnackbar} severity="error">
-          {errorMessage}
-        </Alert>
-      </Snackbar>
+        <DialogTitle id="alert-dialog-title">
+          {"Change location of this reagent?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <TextField
+              sx={{ marginBottom: "15px" }}
+              label="Rooms"
+              fullWidth
+              select
+              value={selectedRoom}
+              onChange={handleRoomChange}
+            >
+              {rooms?.map((room) => (
+                <MenuItem key={room.id} value={room.room}>
+                  {room.room}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              sx={{ marginBottom: "15px" }}
+              label="Location"
+              fullWidth
+              select
+              value={selectedLocation}
+              onChange={handleLocationChange}
+            >
+              {roomToMove?.locations.map((location) => (
+                <MenuItem
+                  key={location.location_id}
+                  value={location.location_name}
+                >
+                  {location.location_name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setModalIsOpened(false)}>Disagree</Button>
+          <Button onClick={handleAgreeClick} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Snackbar
-        open={!!successMessage}
-        autoHideDuration={4000}
+        open={!!errorMessage || !!successMessage}
+        autoHideDuration={3000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleCloseSnackbar} severity="success">
-          {successMessage}
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={errorMessage ? "error" : "success"}
+        >
+          {errorMessage || successMessage}
         </Alert>
       </Snackbar>
     </Box>
   );
 };
+
 export default StorageLocationDetail;

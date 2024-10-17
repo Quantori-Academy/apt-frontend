@@ -21,7 +21,7 @@ export const storageApi = createApi({
   endpoints: (builder) => ({
     getStorageRooms: builder.query<StorageRoomsBrief[], void>({
       query: () => "/storage",
-      providesTags: () => [{ type: "StorageRooms", id: "LIST" }],
+      providesTags: ["StorageRooms"],
     }),
 
     getStorageLocationDetail: builder.query<RoomData, number>({
@@ -82,6 +82,7 @@ export const storageApi = createApi({
           new_location_id,
         },
       }),
+      invalidatesTags: ["StorageRooms"],
     }),
   }),
 });
