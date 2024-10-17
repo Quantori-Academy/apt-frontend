@@ -51,7 +51,9 @@ This project utilizes the following tools and libraries:
 
 Refer to the `diagrams/` folder for visual representations of the project. Diagrams include:
 
-- **Role-Based Permissions**: Displays what each user role (Administrator, Procurement Officer, Researcher) can do in relation to user management, reagent management, and other features.
+- **Role-Based Permissions**: The following diagram illustrates the key features of the system based on different user roles. Each role is assigned specific responsibilities across various management areas such as User Management, Storage Management, Reagent Request Management, Order Management, and Reagents and Samples Management.
+
+```mermaid
 %%{init: { "themeVariables": { "fontSize": "16px", "nodeFontWeight": "bold" }}}%%
 graph LR;
     %% Priorities
@@ -144,4 +146,5 @@ graph LR;
     classDef must fill:brown,stroke:#000,color:white,stroke-width:2px;
     classDef should fill:#F39C12,stroke:#c4c4c4,color:black,stroke-width:2px;
     classDef could fill:#2ECC71,stroke:#ccc,color:white,stroke-width:2px;
+```
 - **Business Entities Diagram**: Represents the core business entities and their relationships within the system.
