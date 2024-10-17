@@ -52,5 +52,96 @@ This project utilizes the following tools and libraries:
 Refer to the `diagrams/` folder for visual representations of the project. Diagrams include:
 
 - **Role-Based Permissions**: Displays what each user role (Administrator, Procurement Officer, Researcher) can do in relation to user management, reagent management, and other features.
-- **Database Diagram**: Visualizes the database structure and relationships between entities.
+%%{init: { "themeVariables": { "fontSize": "16px", "nodeFontWeight": "bold" }}}%%
+graph LR;
+    %% Priorities
+    %% MH[Must have]
+    %% SH[Should have]
+    %% CH[Could have]
+
+    %% User Authentication
+    Authentication{{Authentication}} --> User
+    User((Any Role)) -->Login(Login)
+    %% User --> ResetPass(Reset password)
+
+
+    %% User Management
+    UM{{User Management}} --> AdminUM
+    UM --> UserUM
+    AdminUM((Admin)) -->UsersList(See users list)
+    AdminUM --> CreateUsers(Add users)
+    AdminUM --> ChangeUserInfo(Change profile info)
+    AdminUM --> DeleteUsers(Delete users)
+    UserUM((Any Role)) --> SeeAndEditUM(See and edit own profile )
+
+
+    %% Storage Management
+    SM{{Storage Management}} --> AdminSM((Admin))
+    SM-->UserSM
+    AdminSM --> AddSM(Add storage location)
+    AdminSM --> EditSM(Edit storage location)
+    AdminSM -->DeleteSM(Delete storage location)
+    UserSM((Any Role)) --> ViewSMContent(View the reagents of each storage location)
+    SM -->UserSMResOfficer
+    UserSMResOfficer((Any Role)) --> MoveSMItems(Move items between storage locations)
+
+    %% Reagent Request Management
+    RRM{{Reagent Request Management}} --> ResearcherRRM((Researcher))
+    ResearcherRRM --> CreateRequestRRM(Create a new reagent request)
+    ResearcherRRM --> StatusRequestRRM(See his reagent request status)
+    RRM --> OfficerRRM((Procurement officer))
+    OfficerRRM --> ConsolidateRRM(Consolidate the requests and create orders to purchase the reagents)
+    OfficerRRM --> ViewRRM(View all reagent requests)
+    OfficerRRM --> ManageRRM(Decline requests with a comment)
+
+    %% Order Management
+    OM{{Order Management}} --> OfficerOM((Procurement officer))
+    OfficerOM-->ViewOrdersRRM(View existing orders)
+    OfficerOM-->EditOrderRRM(Edit existing orders)
+    OfficerOM-->AllocateRRM(Allocates ordered reagents to their designated storage locations)
+    OfficerOM-->MarkRRM(Mark an order as completed when the reagents have been received and stored)
+
+    %% Reagents and samples management
+    RSM{{Reagents and samples management}} --> UserRSMQ((Any Role))
+    UserRSMQ --> SeeReagentsSamples(See reagents and samples list)
+    UserRSMQ --> AddReagentsSamples(Add reagents in the system)
+    UserRSMQ --> EditReagentsSamples(Edit reagents in the system)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    %% Applying role class
+    class AdminUM,AdminSM admin;
+    class OfficerRRM,OfficerOM officer;
+    class ResearcherRRM researcher;
+    class User,UserUM,UserSM,UserRSM,UserSMResOfficer,UserRSMQ user;
+
+    %% Applying priority class
+    class Login,CreateUsers,UsersList,SeeAndEditUM,ChangeUserInfo,MH,DeleteUsers,AddSM,EditSM,DeleteSM,ViewSMContent,MoveSMItems,CreateRequestRRM,StatusRequestRRM,ConsolidateRRM,AllocateRRM,ManageRRM,ViewRRM,ViewOrdersRRM,EditOrderRRM,MarkRRM,SeeReagentsSamples,AddReagentsSamples,EditReagentsSamples must;
+    class ResetPassUM,SH should;
+    class ResetPass,CH could;
+
+    %% Define the role class
+    classDef user fill:#3498DB,stroke:#ccc,color:white,stroke-width:2px;
+    classDef admin fill:#2C3E50 ,color:white,stroke:#ccc,stroke-width:2px;
+    classDef officer fill:#F1C40F,color:white,stroke:#ccc,stroke-width:2px;
+    classDef researcher fill:#8E44AD,color:white,stroke:#ccc,stroke-width:2px;
+
+    %% Define the priority class
+    classDef must fill:brown,stroke:#000,color:white,stroke-width:2px;
+    classDef should fill:#F39C12,stroke:#c4c4c4,color:black,stroke-width:2px;
+    classDef could fill:#2ECC71,stroke:#ccc,color:white,stroke-width:2px;
 - **Business Entities Diagram**: Represents the core business entities and their relationships within the system.
