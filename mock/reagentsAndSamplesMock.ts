@@ -1,4 +1,6 @@
-export const reagentsAndSamplesMock = [
+import { ReagentDetails } from "@/types";
+
+export const reagentsAndSamplesMock: Array<ReagentDetails> = [
   {
     name: "Acetone",
     category: "Reagent",

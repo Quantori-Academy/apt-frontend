@@ -1,6 +1,8 @@
+export type ReagentCategory = "Reagent" | "Sample";
+
 export type ReagentDetails = {
   name: string;
-  category: string;
+  category: ReagentCategory;
   structure: string;
   description: string;
   quantityLeft: string;
