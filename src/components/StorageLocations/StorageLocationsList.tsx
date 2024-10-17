@@ -64,12 +64,26 @@ const StorageLocationsList: React.FC = () => {
 
   const handleEditSubmit = async () => {
     if (roomIdToEdit !== null) {
-      await updateStorageRoom({
-        roomId: roomIdToEdit,
-        room: roomName,
-        description: roomDescription,
-      });
-      setEditDialogOpen(false);
+      try {
+        await updateStorageRoom({
+          roomId: roomIdToEdit,
+          room: roomName,
+          description: roomDescription,
+        }).unwrap();
+
+        if (data) {
+          data.map((room) =>
+            room.id === roomIdToEdit
+              ? { ...room, room: roomName, description: roomDescription }
+              : room
+          );
+          reFetch();
+        }
+
+        setEditDialogOpen(false);
+      } catch (error) {
+        console.error("Error updating storage room:", error);
+      }
     }
   };
 
