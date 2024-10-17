@@ -51,7 +51,9 @@ This project utilizes the following tools and libraries:
 
 Refer to the `diagrams/` folder for visual representations of the project. Diagrams include:
 
-- **Role-Based Permissions**: Displays what each user role (Administrator, Procurement Officer, Researcher) can do in relation to user management, reagent management, and other features.
+- **Role-Based Permissions**: The following diagram illustrates the key features of the system based on different user roles. Each role is assigned specific responsibilities across various management areas such as User Management, Storage Management, Reagent Request Management, Order Management, and Reagents and Samples Management.
+
+```mermaid
 %%{init: { "themeVariables": { "fontSize": "16px", "nodeFontWeight": "bold" }}}%%
 graph LR;
     %% Priorities
@@ -144,4 +146,41 @@ graph LR;
     classDef must fill:brown,stroke:#000,color:white,stroke-width:2px;
     classDef should fill:#F39C12,stroke:#c4c4c4,color:black,stroke-width:2px;
     classDef could fill:#2ECC71,stroke:#ccc,color:white,stroke-width:2px;
+```
 - **Business Entities Diagram**: Represents the core business entities and their relationships within the system.
+```mermaid
+flowchart LR
+    RR[Reagent Request]
+    O[Order]
+    R[Reagents]
+    S[Samples]
+    SL[Storage location]
+
+    U[Users]
+    ADM[Administrator]
+    RSR[Researcher]
+    PRCR[Procurement Officer]
+
+
+U o--o| Managed by | ADM
+U o--o RSR
+U o--o PRCR
+RSR --> | Creates | RR
+PRCR --> | Creates| O
+RR --> | Approved | O
+O --> | Received | R
+R --> | Used to create | S
+RSR --> | Creates | S
+R --> | Stored in | SL
+S --> | Stored in | SL
+ADM --> | Manages | SL
+
+
+classDef green fill:#90EE90;
+classDef yellow fill:#FFFF99;
+classDef grey fill:#ccc;
+
+class U,ADM,RSR,PRCR,SL green;
+class R,S yellow;
+class RR,O grey;
+```
