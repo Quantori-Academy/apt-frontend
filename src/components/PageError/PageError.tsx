@@ -3,7 +3,8 @@ import { Typography } from "@mui/material";
 type ErrorPageProps = {
   pageName: string;
 };
-const ErrorPage: React.FC<ErrorPageProps> = ({ pageName }) => {
+
+const PageError: React.FC<ErrorPageProps> = ({ pageName }) => {
   return (
     <Typography
       sx={{
@@ -18,4 +19,4 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ pageName }) => {
   );
 };
 
-export default ErrorPage;
+export default PageError;

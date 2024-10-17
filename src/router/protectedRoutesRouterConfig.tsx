@@ -10,10 +10,10 @@ type AppRoutesProps = RouteObject & {
 
 export const enum AppProtectedRoutes {
   USERS = "users",
-  USER_PAGE = "user_page",
-  ACCOUNT_SETTINGS = "account_settings",
+  USER_PAGE = "userPage",
+  ACCOUNT_SETTINGS = "accountSettings",
   DASHBOARD = "dashboard",
-  REAGENT_SAMPLE_LIST = "reagent-sample-list",
+  REAGENT_SAMPLE_LIST = "reagentSampleList",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {

@@ -8,3 +8,6 @@ export type ReagentDetails = {
   quantityLeft: string;
   storageLocation: string;
 };
+
+export type SortDirection = "asc" | "desc";
+export type SortColumn = "name" | "category";

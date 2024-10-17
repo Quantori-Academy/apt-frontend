@@ -13,13 +13,13 @@ export type AuthSliceState = {
   user: UserAuth | null;
 };
 
-function decodeUser(token: string): UserAuth | null {
+const decodeUser = (token: string): UserAuth | null => {
   try {
     return jwtDecode<UserAuth>(token);
   } catch {
     return null;
   }
-}
+};
 
 const token = localStorage.getItem("accessToken");
 const user = token ? decodeUser(token) : null;

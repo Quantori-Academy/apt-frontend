@@ -1,41 +1,23 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import DescriptionIcon from "@mui/icons-material/Description";
-import EditIcon from "@mui/icons-material/Edit";
-import {
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Pagination,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableSortLabel,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Pagination, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 
 import { PageLoader } from "@/components";
-import { ErrorPage } from "@/components/ErrorPage";
+import { PageError } from "@/components/PageError";
 import { useGetReagentSampleListQuery } from "@/store";
-import { ReagentDetails } from "@/types";
+import { ReagentDetails, SortColumn, SortDirection } from "@/types";
+
+import ReagentSampleTable from "../../components/ReagentSampleTable/ReagentSampleTable.tsx";
 
 import style from "./ReagentSampleList.module.css";
 
 const PAGE_SIZE = 5;
-type SortDirection = "asc" | "desc";
-type SortColumn = "name" | "category";
 
-function getListData(
+const getListData = (
   allItems: Array<ReagentDetails>,
   page: number,
   sortColumn: SortColumn,
   sortDirection: SortDirection
-) {
+) => {
   const sorted = allItems.toSorted((a, b) => {
     const order = a[sortColumn].localeCompare(b[sortColumn]);
     return sortDirection === "asc" ? order : -1 * order;
@@ -46,7 +28,7 @@ function getListData(
   return {
     visibleItems: paginated,
   };
-}
+};
 
 const ReagentSampleList: React.FC = () => {
   const {
@@ -59,11 +41,12 @@ const ReagentSampleList: React.FC = () => {
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
 
+  const totalPages = Math.ceil(reagents.length / PAGE_SIZE);
+
   const { visibleItems } = useMemo(
     () => getListData(reagents, page, sortColumn, sortDirection),
     [reagents, page, sortColumn, sortDirection]
   );
-  const totalPages = Math.ceil(reagents.length / PAGE_SIZE);
 
   const handleSortChange = (property: SortColumn) => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
@@ -76,7 +59,7 @@ const ReagentSampleList: React.FC = () => {
   }
 
   if (isError) {
-    return <ErrorPage pageName="Reagents and Samples" />;
+    return <PageError pageName="Reagents and Samples" />;
   }
 
   return (
@@ -92,72 +75,12 @@ const ReagentSampleList: React.FC = () => {
           Add Sample
         </Button>
       </Box>
-      <TableContainer component={Paper}>
-        <Box
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-          marginRight={2}
-        ></Box>
-
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <TableSortLabel
-                  active={sortColumn === "name"}
-                  direction={sortDirection}
-                  onClick={() => handleSortChange("name")}
-                >
-                  Name
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={sortColumn === "category"}
-                  direction={sortDirection}
-                  onClick={() => handleSortChange("category")}
-                >
-                  Category
-                </TableSortLabel>
-              </TableCell>
-              <TableCell align="right">Structure</TableCell>
-              <TableCell align="right">Description</TableCell>
-              <TableCell align="right">Quantity Left</TableCell>
-              <TableCell align="right">Storage Location</TableCell>
-              <TableCell align="right">Action Buttons</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {visibleItems.map((reagent) => (
-              <TableRow
-                key={reagent.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {reagent.name}
-                </TableCell>
-                <TableCell align="right">{reagent.category}</TableCell>
-                <TableCell align="right">{reagent.structure}</TableCell>
-                <TableCell align="right">{reagent.description}</TableCell>
-                <TableCell align="right">{reagent.quantityLeft}</TableCell>
-                <TableCell align="right">{reagent.storageLocation}</TableCell>
-                <TableCell align="right" sx={{ display: "flex" }}>
-                  <IconButton>
-                    <DeleteIcon />
-                  </IconButton>
-                  <IconButton>
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton>
-                    <DescriptionIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <ReagentSampleTable
+        sortColumn={sortColumn}
+        sortDirection={sortDirection}
+        onSortChange={handleSortChange}
+        visibleItems={visibleItems}
+      />
       <Box className={style.pagination}>
         <Pagination
           count={totalPages}

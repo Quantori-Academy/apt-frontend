@@ -17,7 +17,7 @@ const NavigationAuth: React.FC = () => {
         color="inherit"
         sx={{ p: 0, mr: 2 }}
         component={NavLink}
-        to={RouteProtectedPath.account_settings}
+        to={RouteProtectedPath.accountSettings}
       >
         <Avatar sx={{ width: 50, height: 50 }} />
       </IconButton>
