@@ -8,10 +8,12 @@ import styles from "./SmilesImage.module.css";
 type SmilesImageProps = {
   smiles: string;
 };
+
 const options = {
   width: 185,
   height: 185,
 };
+
 const SmilesImage: React.FC<SmilesImageProps> = ({ smiles }) => {
   const drawer = new SmilesDrawer.SvgDrawer(options);
 
