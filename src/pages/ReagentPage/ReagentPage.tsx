@@ -10,11 +10,25 @@ import {
   Link,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 
-import { SmilesImage } from "@/components";
+import { DeleteModal, SmilesImage } from "@/components";
 import { reagent } from "@/mockData/reagent";
 
 const ReagentPage = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setModalIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalIsOpen(false);
+  };
+  const handleDelete = () => {
+    console.log("delete");
+    setModalIsOpen(false);
+  };
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Card sx={{ background: "#0080800f" }}>
@@ -89,6 +103,7 @@ const ReagentPage = () => {
                 variant="outlined"
                 color="error"
                 startIcon={<DeleteIcon />}
+                onClick={handleOpen}
               >
                 Delete
               </Button>
@@ -96,6 +111,13 @@ const ReagentPage = () => {
           </Grid>
         </CardContent>
       </Card>
+      <DeleteModal
+        open={modalIsOpen}
+        modalTitle=""
+        modalText="Are you sure you want to delete this reagent?"
+        onClose={handleClose}
+        onDelete={handleDelete}
+      />
     </Container>
   );
 };

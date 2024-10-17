@@ -18,3 +18,4 @@ export { Header } from "./Header";
 export { EditUserRole } from "./EditUserRole";
 export { DeleteUser } from "./DeleteUser";
 export { SmilesImage } from "./SmilesImage";
+export { DeleteModal } from "./DeleteModal";
