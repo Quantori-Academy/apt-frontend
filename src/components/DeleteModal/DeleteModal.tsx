@@ -14,6 +14,7 @@ type DeleteModalProps = {
   onClose: () => void;
   onDelete: () => void;
 };
+
 const DeleteModal: React.FC<DeleteModalProps> = ({
   open,
   onClose,
