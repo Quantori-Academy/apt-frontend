@@ -12,22 +12,7 @@ import {
 } from "@mui/material";
 
 import { SmilesImage } from "@/components";
-
-const reagent = {
-  reagentID: "R-00123",
-  name: "Acetone",
-  category: "Organic Solvent",
-  description:
-    "A colorless, volatile liquid used as a solvent and for chemical reactions.",
-  structure: "CN1C=NC2=C1C(=O)N(C(=O)N2C)C",
-  CASNumber: "67-64-1",
-  producer: "Sigma-Aldrich",
-  catalogID: "A-12345",
-  catalogLink: "https://www.sigmaaldrich.com/catalog/product/sigma/acsgrade",
-  units: "Bottle 500 ml",
-  pricePerUnit: 50.0,
-  quantity: 10,
-};
+import { reagent } from "@/mockData/reagent";
 
 const ReagentPage = () => {
   return (
@@ -58,6 +43,7 @@ const ReagentPage = () => {
               <Typography>
                 <strong>Catalog ID:</strong> {reagent.catalogID}
               </Typography>
+
               <Link
                 href={reagent.catalogLink}
                 target="_blank"
@@ -67,6 +53,9 @@ const ReagentPage = () => {
               >
                 <LinkIcon sx={{ mr: 1 }} /> Catalog Link
               </Link>
+              <Typography>
+                <strong>Storage location:</strong> {reagent.storageLocation}
+              </Typography>
               <Typography>
                 <strong>Units:</strong> {reagent.units}
               </Typography>
