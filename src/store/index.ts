@@ -9,7 +9,7 @@ export {
   useUpdateRoleMutation,
   useResetPasswordMutation,
   useDeleteUserMutation,
-} from "./api";
+} from "./usersApi";
 
 export {
   loginUser,
