@@ -27,8 +27,8 @@ jobs:
             # - name: Run lint
             #   run: npm run lint
 
-            # - name: Run tests
-            #   run: npm run test
+            - name: Run tests
+              run: npm run test
 
             - name: Run build
               run: pnpm run build
@@ -72,7 +72,7 @@ jobs:
             key: ${{secrets.SSH_KEY}}
             script: |
               cd ~/apt-backend
-              sudo docker compose down 
+              sudo docker compose down
               cd ~/apt-frontend
               sudo docker compose down
               sudo docker compose build
