@@ -27,9 +27,21 @@ import { ReagentDetails } from "@/types";
 import style from "./ReagentSampleList.module.css";
 
 const PAGE_SIZE = 5;
+type SortDirection = "asc" | "desc";
+type SortColumn = "name" | "category";
 
-function getListData(allItems: Array<ReagentDetails>, page: number) {
-  const paginated = allItems.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+function getListData(
+  allItems: Array<ReagentDetails>,
+  page: number,
+  sortColumn: SortColumn,
+  sortDirection: SortDirection
+) {
+  const sorted = allItems.toSorted((a, b) => {
+    const order = a[sortColumn].localeCompare(b[sortColumn]);
+    return sortDirection === "asc" ? order : -1 * order;
+  });
+
+  const paginated = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return {
     visibleItems: paginated,
@@ -44,12 +56,20 @@ const ReagentSampleList: React.FC = () => {
   } = useGetReagentSampleListQuery();
 
   const [page, setPage] = useState(1);
+  const [sortColumn, setSortColumn] = useState<SortColumn>("name");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
 
   const { visibleItems } = useMemo(
-    () => getListData(reagents, page),
-    [reagents, page]
+    () => getListData(reagents, page, sortColumn, sortDirection),
+    [reagents, page, sortColumn, sortDirection]
   );
   const totalPages = Math.ceil(reagents.length / PAGE_SIZE);
+
+  const handleSortChange = (property: SortColumn) => {
+    const isAsc = sortColumn !== property || sortDirection === "desc";
+    setSortDirection(isAsc ? "asc" : "desc");
+    setSortColumn(property);
+  };
 
   if (isLoading) {
     return <PageLoader />;
@@ -84,10 +104,22 @@ const ReagentSampleList: React.FC = () => {
           <TableHead>
             <TableRow>
               <TableCell>
-                <TableSortLabel>Name</TableSortLabel>
+                <TableSortLabel
+                  active={sortColumn === "name"}
+                  direction={sortDirection}
+                  onClick={() => handleSortChange("name")}
+                >
+                  Name
+                </TableSortLabel>
               </TableCell>
               <TableCell>
-                <TableSortLabel>Category</TableSortLabel>
+                <TableSortLabel
+                  active={sortColumn === "category"}
+                  direction={sortDirection}
+                  onClick={() => handleSortChange("category")}
+                >
+                  Category
+                </TableSortLabel>
               </TableCell>
               <TableCell align="right">Structure</TableCell>
               <TableCell align="right">Description</TableCell>
