@@ -13,8 +13,16 @@ export type AuthSliceState = {
   user: UserAuth | null;
 };
 
+function decodeUser(token: string): UserAuth | null {
+  try {
+    return jwtDecode<UserAuth>(token);
+  } catch {
+    return null;
+  }
+}
+
 const token = localStorage.getItem("accessToken");
-const user = token ? jwtDecode<UserAuth>(token) : null;
+const user = token ? decodeUser(token) : null;
 
 const initialState: AuthSliceState = {
   isLoading: false,
@@ -64,7 +72,7 @@ export const authSlice = createReducerSlice({
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<Token>) => {
         state.isLoading = false;
         state.errorMessage = null;
-        state.user = jwtDecode<UserAuth>(action.payload.token);
+        state.user = decodeUser(action.payload.token);
         state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action: PayloadAction<string | unknown>) => {

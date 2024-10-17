@@ -9,7 +9,7 @@ import {
 import { MouseEventHandler, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AlertSnackbar, LoadingSkeleton } from "@/components";
+import { AlertSnackbar, PageLoader } from "@/components";
 import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from "@/store";
 import { UserBase } from "@/types";
 
@@ -40,7 +40,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
     values: userDetails,
   });
 
-  if (isLoadingUserDetails) return <LoadingSkeleton />;
+  if (isLoadingUserDetails) return <PageLoader />;
 
   const onSubmit = async (updatedUserDetails: UserDetails) => {
     const { error } = await updateUserDetails(updatedUserDetails);
