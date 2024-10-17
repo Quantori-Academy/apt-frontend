@@ -60,7 +60,6 @@ export const storageApi = createApi({
       invalidatesTags: [{ type: "StorageRooms", id: "LIST" }],
     }),
 
-    // New moveSubstance mutation
     moveSubstance: builder.mutation<
       void,
       {
