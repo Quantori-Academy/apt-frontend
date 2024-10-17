@@ -49,9 +49,7 @@ This project utilizes the following tools and libraries:
 
 ## Diagrams
 
-Refer to the `diagrams/` folder for visual representations of the project. Diagrams include:
-
-- **Role-Based Permissions**: The following diagram illustrates the key features of the system based on different user roles. Each role is assigned specific responsibilities across various management areas such as User Management, Storage Management, Reagent Request Management, Order Management, and Reagents and Samples Management.
+- **Role-Based Permissions**: Illustrates the key features of the system based on different user roles. Each role is assigned specific responsibilities across various management areas such as User Management, Storage Management, Reagent Request Management, Order Management, and Reagents and Samples Management.
 
 ```mermaid
 %%{init: { "themeVariables": { "fontSize": "16px", "nodeFontWeight": "bold" }}}%%
@@ -147,7 +145,10 @@ graph LR;
     classDef should fill:#F39C12,stroke:#c4c4c4,color:black,stroke-width:2px;
     classDef could fill:#2ECC71,stroke:#ccc,color:white,stroke-width:2px;
 ```
+
+
 - **Business Entities Diagram**: Represents the core business entities and their relationships within the system.
+
 ```mermaid
 flowchart TD
     RR[Reagent Request]
@@ -184,3 +185,64 @@ class U,ADM,RSR,PRCR,SL green;
 class R,S yellow;
 class RR,O grey;
 ```
+
+
+- **Database Diagram**: Illustrates the key entities and relationships in our database.
+
+```mermaid
+erDiagram
+
+
+    reagents {
+        int id
+        varchar name
+        text description
+        text structure_smiles
+    }
+
+    storage {
+        int id
+        varchar room
+        text description
+    }
+
+    storage_location {
+        int id
+        int room_id
+        varchar location
+    }
+
+    storage_content {
+        int id
+        int room_id
+        int location_id
+        int substance_id
+    }
+
+    users {
+        int id
+        varchar username
+        varchar first_name
+        varchar last_name
+        varchar email
+        char password_hash
+        role role
+        timestamp created_at
+        timestamptz last_login
+    }
+
+
+    role {
+        type Administrator
+        type ProcurementOfficer
+        type Researcher
+    }
+
+    storage ||--o{ storage_location : has
+    storage_content ||--o{ storage_location : references
+    storage_content ||--o{ reagents : contains
+    storage ||--o{ storage_content : "stores in"
+    users }o--|| role : has
+    users }o--|| storage : "has access to"
+```
+
