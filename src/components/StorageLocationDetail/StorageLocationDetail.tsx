@@ -304,7 +304,7 @@ const StorageLocationDetail: React.FC = () => {
             </TextField>
             {selectedRoom && (
               <TextField
-                sx={{ marginBottom: "15px" }}
+                sx={{ marginTop: "25px" }}
                 label="Location"
                 fullWidth
                 select
