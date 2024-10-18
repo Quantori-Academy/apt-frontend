@@ -25,7 +25,9 @@ type AccountDetailsProps = {
 const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-
+  const [isErrorAlert, setIsErrorAlert] = useState<"success" | "error">(
+    "success"
+  );
   const {
     data: userDetails,
     isLoading: isLoadingUserDetails,
@@ -50,9 +52,11 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const onSubmit = async (updatedUserDetails: UserDetails) => {
     const { error } = await updateUserDetails(updatedUserDetails);
 
+    setIsAlertOpen(true);
     if (error) {
-      setIsAlertOpen(true);
+      setIsErrorAlert("error");
     } else {
+      setIsErrorAlert("success");
       setIsEditMode(false);
     }
   };
@@ -168,11 +172,13 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
         </Grid>
       </form>
       <AlertSnackbar
-        severity="error"
+        severity={isErrorAlert}
         open={isAlertOpen}
         onClose={() => setIsAlertOpen(false)}
       >
-        Fail to update user details
+        {isErrorAlert === "error"
+          ? "Fail to update user details"
+          : "Updated successfully"}
       </AlertSnackbar>
     </Container>
   );

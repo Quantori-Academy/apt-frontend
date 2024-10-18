@@ -31,7 +31,9 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
 }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-
+  const [isErrorAlert, setIsErrorAlert] = useState<"success" | "error">(
+    "success"
+  );
   const {
     data: userDetails,
     isLoading: isLoadingUserDetails,
@@ -67,9 +69,11 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
       updatedRole,
     });
 
+    setIsAlertOpen(true);
     if (error) {
-      setIsAlertOpen(true);
+      setIsErrorAlert("error");
     } else {
+      setIsErrorAlert("success");
       setIsEditMode(false);
     }
   };
@@ -141,11 +145,13 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
         </form>
       )}
       <AlertSnackbar
-        severity={"error"}
+        severity={isErrorAlert}
         open={isAlertOpen}
         onClose={() => setIsAlertOpen(false)}
       >
-        Failed To Update Role
+        {isErrorAlert === "error"
+          ? "Fail to update user details"
+          : "Updated successfully"}
       </AlertSnackbar>
     </Container>
   );

@@ -20,6 +20,9 @@ type ResetPasswordProps = {
 const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isErrorAlert, setIsErrorAlert] = useState<"success" | "error">(
+    "success"
+  );
   const { isError } = useGetUserDetailsQuery(userId);
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
@@ -42,9 +45,11 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
       newPassword: formData.password,
     });
 
+    setIsAlertOpen(true);
     if (error) {
-      setIsAlertOpen(true);
+      setIsErrorAlert("error");
     } else {
+      setIsErrorAlert("success");
       setIsEditMode(false);
     }
   };
@@ -132,11 +137,13 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
         )}
       </form>
       <AlertSnackbar
-        severity={"error"}
+        severity={isErrorAlert}
         open={isAlertOpen}
         onClose={() => setIsAlertOpen(false)}
       >
-        Failed to update password
+        {isErrorAlert === "error"
+          ? "Fail to update user details"
+          : "Updated successfully"}
       </AlertSnackbar>
     </Container>
   );
