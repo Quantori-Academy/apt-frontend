@@ -9,7 +9,9 @@ export {
   useUpdateRoleMutation,
   useResetPasswordMutation,
   useDeleteUserMutation,
-} from "./api";
+} from "./usersApi";
+
+export { useGetReagentSampleListQuery } from "./reagentSampleApi";
 
 export {
   loginUser,

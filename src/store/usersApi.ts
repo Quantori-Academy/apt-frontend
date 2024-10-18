@@ -29,8 +29,8 @@ type UserDetailsResponse = {
   role: UserRole;
 };
 
-export const api = createApi({
-  reducerPath: "api",
+export const usersApi = createApi({
+  reducerPath: "UsersApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders,
@@ -67,7 +67,7 @@ export const api = createApi({
         try {
           const { data: createdUser } = await queryFulfilled;
           dispatch(
-            api.util.updateQueryData("getUsers", undefined, (draft: UserFrontendDetails[]) => {
+            usersApi.util.updateQueryData("getUsers", undefined, (draft: UserFrontendDetails[]) => {
               draft.push(transformUserResponse(createdUser));
             })
           );
@@ -141,4 +141,4 @@ export const {
   useGetUserDetailsQuery,
   useUpdateUserDetailsMutation,
   useResetPasswordMutation,
-} = api;
+} = usersApi;

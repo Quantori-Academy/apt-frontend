@@ -7,7 +7,7 @@ import { loginLoader } from "./utils/loginLoader";
 export const enum AppPublicRoutes {
   HOME = "home",
   LOGIN = "login",
-  NOT_FOUND = "not_found",
+  NOT_FOUND = "notFound",
 }
 
 export const RoutePublicPath: Record<AppPublicRoutes, string> = {

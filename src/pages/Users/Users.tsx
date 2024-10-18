@@ -2,7 +2,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 
 import { AddUserModal, RoleFilter, SearchBar, UsersTable } from "@/components";
-import { useGetUsersQuery } from "@/store/api";
+import { useGetUsersQuery } from "@/store";
 import { UserRole } from "@/types";
 import { getFilteredUsers } from "@/utils/getFilteredUsers";
 
