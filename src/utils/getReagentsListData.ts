@@ -1,15 +1,14 @@
 import { FilterOption } from "@/components/CategoryFilter/CategoryFilter";
 import { ReagentDetails, SortColumn, SortDirection } from "@/types";
 
-export const PAGE_SIZE = 5;
-
 export const getListData = (
   allItems: Array<ReagentDetails>,
   filter: FilterOption,
   sortColumn: SortColumn,
   sortDirection: SortDirection,
   page: number,
-  searchQuery: string
+  searchQuery: string,
+  pageSize: number
 ) => {
   const filtered = filter === "All" ? allItems : allItems.filter((item) => item.category === filter);
 
@@ -23,8 +22,8 @@ export const getListData = (
   );
 
   const paginated = searchResult
-    ? searchResult.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
-    : sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+    ? searchResult.slice((page - 1) * pageSize, page * pageSize)
+    : sorted.slice((page - 1) * pageSize, page * pageSize);
 
   return {
     visibleItems: paginated,

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AddUserModal, RoleFilter, SearchBar, UsersTable } from "@/components";
 import { useGetUsersQuery } from "@/store";
 import { UserRole } from "@/types";
-import { getFilteredUsers } from "@/utils/getFilteredUsers";
+import { getFilteredUsers } from "@/utils";
 
 export type RoleFilterState = UserRole | "All";
 

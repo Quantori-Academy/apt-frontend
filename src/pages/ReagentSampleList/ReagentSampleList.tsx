@@ -7,10 +7,11 @@ import { FilterOption } from "@/components/CategoryFilter/CategoryFilter.tsx";
 import { PageError } from "@/components/PageError";
 import { useGetReagentSampleListQuery } from "@/store";
 import { SortColumn, SortDirection } from "@/types";
-import { PAGE_SIZE, getListData } from "@/utils";
+import { getListData } from "@/utils";
 
 import style from "./ReagentSampleList.module.css";
 
+const PAGE_SIZE = 5;
 const ReagentSampleList: React.FC = () => {
   const {
     data: reagents = [],
@@ -38,7 +39,8 @@ const ReagentSampleList: React.FC = () => {
         sortColumn,
         sortDirection,
         page,
-        searchQuery
+        searchQuery,
+        PAGE_SIZE
       ),
     [filter, reagents, sortColumn, sortDirection, page, searchQuery]
   );
