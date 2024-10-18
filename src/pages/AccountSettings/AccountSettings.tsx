@@ -45,14 +45,14 @@ const AccountSettings: React.FC = () => {
       <Divider sx={{ my: 3 }} />
       <EditUserRole
         userId={choosenId}
-        currentUserId={loggedInUserRole}
+        currentUserId={loggedInUserId}
         currentUserRole={loggedInUserRole}
       />
       <Divider sx={{ my: 3 }} />
       <AccountDetails userId={choosenId} />
       <DeleteUser
         userId={choosenId}
-        currentUserId={loggedInUserRole}
+        currentUserId={loggedInUserId}
         currentUserRole={loggedInUserRole}
       />
     </Container>
