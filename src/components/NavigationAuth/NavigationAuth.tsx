@@ -41,16 +41,28 @@ const NavigationAuth: React.FC = () => {
           Dashboard
         </NavLink>
         {role === userRoles.Administrator && (
-          <NavLink
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.navLink} ${styles.activeNavLink}`
-                : styles.navLink
-            }
-            to={RouteProtectedPath.users}
-          >
-            Staff
-          </NavLink>
+          <Box>
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.navLink} ${styles.activeNavLink}`
+                  : styles.navLink
+              }
+              to={RouteProtectedPath.users}
+            >
+              Staff
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.navLink} ${styles.activeNavLink}`
+                  : styles.navLink
+              }
+              to={RouteProtectedPath.storage}
+            >
+              Storage
+            </NavLink>
+          </Box>
         )}
         <Button onClick={() => dispatch(logout())}>Logout</Button>
       </Box>
