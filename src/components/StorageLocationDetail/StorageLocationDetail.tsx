@@ -284,13 +284,12 @@ const StorageLocationDetail: React.FC = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
+        <DialogTitle id="alert-dialog-title" sx={{ paddingBottom: "5px" }}>
           {"Change location of this reagent?"}
         </DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ paddingTop: "10px !important" }}>
           <DialogContentText id="alert-dialog-description">
             <TextField
-              sx={{ marginBottom: "15px" }}
               label="Rooms"
               fullWidth
               select
@@ -303,34 +302,36 @@ const StorageLocationDetail: React.FC = () => {
                 </MenuItem>
               ))}
             </TextField>
-            <TextField
-              sx={{ marginBottom: "15px" }}
-              label="Location"
-              fullWidth
-              select
-              value={selectedLocation}
-              onChange={handleLocationChange}
-            >
-              {roomToMove?.locations
-                .filter(
-                  (location) =>
-                    location.location_name !== locationDetails.location_name
-                )
-                .map((location) => (
-                  <MenuItem
-                    key={location.location_id}
-                    value={location.location_name}
-                  >
-                    {location.location_name}
-                  </MenuItem>
-                ))}
-            </TextField>
+            {selectedRoom && (
+              <TextField
+                sx={{ marginBottom: "15px" }}
+                label="Location"
+                fullWidth
+                select
+                value={selectedLocation}
+                onChange={handleLocationChange}
+              >
+                {roomToMove?.locations
+                  .filter(
+                    (location) =>
+                      location.location_name !== locationDetails.location_name
+                  )
+                  .map((location) => (
+                    <MenuItem
+                      key={location.location_id}
+                      value={location.location_name}
+                    >
+                      {location.location_name}
+                    </MenuItem>
+                  ))}
+              </TextField>
+            )}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setModalIsOpened(false)}>Disagree</Button>
+          <Button onClick={() => setModalIsOpened(false)}>Cancel</Button>
           <Button onClick={handleAgreeClick} autoFocus>
-            Agree
+            Change
           </Button>
         </DialogActions>
       </Dialog>
