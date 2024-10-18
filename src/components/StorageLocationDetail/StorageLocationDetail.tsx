@@ -68,6 +68,7 @@ const StorageLocationDetail: React.FC = () => {
 
   const [deleteStorageLocation, { isLoading: isDeleting }] =
     useDeleteStorageLocationMutation();
+
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [successMessage, setSuccessMessage] = React.useState<string | null>(
     null
@@ -310,14 +311,19 @@ const StorageLocationDetail: React.FC = () => {
               value={selectedLocation}
               onChange={handleLocationChange}
             >
-              {roomToMove?.locations.map((location) => (
-                <MenuItem
-                  key={location.location_id}
-                  value={location.location_name}
-                >
-                  {location.location_name}
-                </MenuItem>
-              ))}
+              {roomToMove?.locations
+                .filter(
+                  (location) =>
+                    location.location_name !== locationDetails.location_name
+                )
+                .map((location) => (
+                  <MenuItem
+                    key={location.location_id}
+                    value={location.location_name}
+                  >
+                    {location.location_name}
+                  </MenuItem>
+                ))}
             </TextField>
           </DialogContentText>
         </DialogContent>
