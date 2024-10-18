@@ -10,7 +10,7 @@ const Header: React.FC = () => {
   const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
 
   return (
-    <AppBar position="sticky" sx={{ height: "75px" }}>
+    <AppBar position="sticky" color="inherit" sx={{ height: "75px" }}>
       <Container sx={{ height: "100%" }}>
         <Toolbar
           sx={{
