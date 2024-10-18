@@ -41,7 +41,7 @@ const NavigationAuth: React.FC = () => {
           Dashboard
         </NavLink>
         {role === userRoles.Administrator && (
-          <Box>
+          <Box sx={{ display: "flex" }}>
             <NavLink
               className={({ isActive }) =>
                 isActive
