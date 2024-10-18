@@ -21,11 +21,12 @@ const NavigationAuth: React.FC = () => {
       >
         <Avatar sx={{ width: 50, height: 50 }} />
       </IconButton>
+
       {/* I'll add role-based navbar object with paths and links in the future */}
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          gap: "3px",
           alignItems: "center",
           width: "100%",
         }}
@@ -49,11 +50,11 @@ const NavigationAuth: React.FC = () => {
             }
             to={RouteProtectedPath.users}
           >
-            Staff
+            Users
           </NavLink>
         )}
-        <Button onClick={() => dispatch(logout())}>Logout</Button>
       </Box>
+      <Button onClick={() => dispatch(logout())}>Logout</Button>
     </>
   );
 };

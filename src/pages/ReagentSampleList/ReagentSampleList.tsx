@@ -1,12 +1,12 @@
 import { Box, Button, Container, Pagination, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 
-import { PageLoader } from "@/components";
+import { PageLoader, ReagentSampleTable } from "@/components";
+import { CategoryFilter } from "@/components/CategoryFilter";
+import { FilterOption } from "@/components/CategoryFilter/CategoryFilter.tsx";
 import { PageError } from "@/components/PageError";
 import { useGetReagentSampleListQuery } from "@/store";
 import { ReagentDetails, SortColumn, SortDirection } from "@/types";
-
-import ReagentSampleTable from "../../components/ReagentSampleTable/ReagentSampleTable.tsx";
 
 import style from "./ReagentSampleList.module.css";
 
@@ -14,11 +14,17 @@ const PAGE_SIZE = 5;
 
 const getListData = (
   allItems: Array<ReagentDetails>,
-  page: number,
+  filter: FilterOption,
   sortColumn: SortColumn,
-  sortDirection: SortDirection
+  sortDirection: SortDirection,
+  page: number
 ) => {
-  const sorted = allItems.toSorted((a, b) => {
+  const filtered =
+    filter === "All"
+      ? allItems
+      : allItems.filter((item) => item.category === filter);
+
+  const sorted = filtered.toSorted((a, b) => {
     const order = a[sortColumn].localeCompare(b[sortColumn]);
     return sortDirection === "asc" ? order : -1 * order;
   });
@@ -27,6 +33,7 @@ const getListData = (
 
   return {
     visibleItems: paginated,
+    filteredItemsCount: filtered.length,
   };
 };
 
@@ -40,13 +47,14 @@ const ReagentSampleList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const [filter, setFilter] = useState<FilterOption>("All");
 
-  const totalPages = Math.ceil(reagents.length / PAGE_SIZE);
-
-  const { visibleItems } = useMemo(
-    () => getListData(reagents, page, sortColumn, sortDirection),
-    [reagents, page, sortColumn, sortDirection]
+  const { visibleItems, filteredItemsCount } = useMemo(
+    () => getListData(reagents, filter, sortColumn, sortDirection, page),
+    [filter, reagents, sortColumn, sortDirection, page]
   );
+
+  const totalPages = Math.ceil(filteredItemsCount / PAGE_SIZE);
 
   const handleSortChange = (property: SortColumn) => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
@@ -74,6 +82,13 @@ const ReagentSampleList: React.FC = () => {
         <Button variant="contained" color="primary">
           Add Sample
         </Button>
+      </Box>
+      <Box display="flex" gap={2} marginBottom={2}>
+        <CategoryFilter
+          filter={filter}
+          setFilter={setFilter}
+          setPage={setPage}
+        />
       </Box>
       <ReagentSampleTable
         sortColumn={sortColumn}
