@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AlertSnackbar, LoadingSkeleton } from "@/components";
+import { AlertSnackbar, PageLoader } from "@/components";
 import { userRoles } from "@/constants";
 import { useGetUserDetailsQuery, useUpdateRoleMutation } from "@/store";
 import { UserRole } from "@/types";
@@ -43,7 +43,7 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
     },
   });
 
-  if (isLoadingUserDetails) return <LoadingSkeleton />;
+  if (isLoadingUserDetails) return <PageLoader />;
 
   const onSubmit = async ({ role: updatedRole }: UserRoleUpdate) => {
     const { error } = await updateRole({

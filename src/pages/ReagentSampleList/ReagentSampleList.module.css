@@ -1,0 +1,15 @@
+.pagination {
+  width: 100%;
+  margin: 20px 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonBox {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}

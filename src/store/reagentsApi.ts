@@ -1,9 +1,17 @@
-import { reagentDetails } from "@/mockData/reagentDetails";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+import { BASE_URL, prepareHeaders } from "@/api";
 import { Reagent } from "@/types";
 
-import { baseApi } from "./baseApi";
+import { reagentDetails } from "../../mock";
 
-export const reagentsApi = baseApi.injectEndpoints({
+export const reagentsApi = createApi({
+  reducerPath: "reagentsApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    prepareHeaders,
+  }),
+  tagTypes: ["Reagents"],
   endpoints: (builder) => ({
     getReagentDetails: builder.query<Reagent, string>({
       // query: (reagentId) => `/reagents/${reagentId}`,
@@ -24,6 +32,5 @@ export const reagentsApi = baseApi.injectEndpoints({
       invalidatesTags: ["Reagents"],
     }),
   }),
-  overrideExisting: true,
 });
 export const { useGetReagentDetailsQuery, useDeleteReagentMutation } = reagentsApi;

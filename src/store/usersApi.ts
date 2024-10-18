@@ -1,8 +1,18 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+import { prepareHeaders } from "@/api";
+import { BASE_URL } from "@/api/apiMethods";
 import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData, UserRole } from "@/types";
 
-import { baseApi } from "./baseApi";
 import { transformUserResponse } from "./utils/transformUserResponse";
 
+// TODO. Think of backend-to-frontend object fields mapper
+// const keysForBackend: Pick<UserRegisterInput, "firstName" | "lastName"> = {
+//   firstName: "first_name",
+//   lastName: "last_name",
+// };
+
+// TODO. Get rid of doubles. Maybe use UserBackendDetails?
 type UserDetails = Omit<UserBase, "password" | "id">;
 
 type UserFromBackend = Omit<UserRegisterData, "firstName" | "lastName"> & {
@@ -19,7 +29,13 @@ type UserDetailsResponse = {
   role: UserRole;
 };
 
-export const usersApi = baseApi.injectEndpoints({
+export const usersApi = createApi({
+  reducerPath: "UsersApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    prepareHeaders,
+  }),
+  tagTypes: ["Users"],
   endpoints: (builder) => ({
     getUsers: builder.query<UserFrontendDetails[], void>({
       query: () => "/users",
@@ -115,7 +131,6 @@ export const usersApi = baseApi.injectEndpoints({
       invalidatesTags: ["Users"],
     }),
   }),
-  overrideExisting: true,
 });
 
 export const {

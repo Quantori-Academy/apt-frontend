@@ -11,7 +11,8 @@ export {
   useDeleteUserMutation,
 } from "./usersApi";
 
-export { useGetReagentDetailsQuery, useDeleteReagentMutation } from "./reagentsApi";
+export { useGetReagentDetailsQuery, useDeleteReagentMutation, reagentsApi } from "./reagentsApi";
+export { useGetReagentSampleListQuery } from "./reagentSampleApi";
 
 export {
   loginUser,
