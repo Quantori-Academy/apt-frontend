@@ -30,18 +30,18 @@ const NavigationAuth: React.FC = () => {
           width: "100%",
         }}
       >
-        <NavLink
-          className={({ isActive }) =>
-            isActive
-              ? `${styles.navLink} ${styles.activeNavLink}`
-              : styles.navLink
-          }
-          to={RouteProtectedPath.dashboard}
-        >
-          Dashboard
-        </NavLink>
-        {role === userRoles.Administrator && (
-          <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex" }}>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.navLink} ${styles.activeNavLink}`
+                : styles.navLink
+            }
+            to={RouteProtectedPath.dashboard}
+          >
+            Dashboard
+          </NavLink>
+          {role === userRoles.Administrator && (
             <NavLink
               className={({ isActive }) =>
                 isActive
@@ -52,18 +52,18 @@ const NavigationAuth: React.FC = () => {
             >
               Staff
             </NavLink>
-            <NavLink
-              className={({ isActive }) =>
-                isActive
-                  ? `${styles.navLink} ${styles.activeNavLink}`
-                  : styles.navLink
-              }
-              to={RouteProtectedPath.storage}
-            >
-              Storage
-            </NavLink>
-          </Box>
-        )}
+          )}
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.navLink} ${styles.activeNavLink}`
+                : styles.navLink
+            }
+            to={RouteProtectedPath.storage}
+          >
+            Storage
+          </NavLink>
+        </Box>
         <Button onClick={() => dispatch(logout())}>Logout</Button>
       </Box>
     </>
