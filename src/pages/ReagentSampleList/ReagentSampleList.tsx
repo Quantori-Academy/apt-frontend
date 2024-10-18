@@ -54,7 +54,9 @@ const ReagentSampleList: React.FC = () => {
   }
 
   if (isError) {
-    return <PageError pageName="Reagents and Samples" />;
+    return (
+      <PageError text="Faild to load Reagents and Sample page, Please try later" />
+    );
   }
 
   return (

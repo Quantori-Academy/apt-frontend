@@ -5,13 +5,19 @@ import {
   AccountDetails,
   DeleteUser,
   EditUserRole,
+  PageLoader,
   ResetPassword,
 } from "@/components";
+import { PageError } from "@/components/PageError";
+import { useGetUserDetailsQuery } from "@/store";
 
 const UserDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
+  const { isError, isLoading } = useGetUserDetailsQuery(id!);
   if (!id) return null;
+  if (isLoading) return <PageLoader />;
+  if (isError) return <PageError text="No user found with the specified ID" />;
 
   return (
     <Container
