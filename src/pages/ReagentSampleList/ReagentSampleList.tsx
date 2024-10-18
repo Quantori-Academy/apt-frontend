@@ -6,45 +6,10 @@ import { CategoryFilter } from "@/components/CategoryFilter";
 import { FilterOption } from "@/components/CategoryFilter/CategoryFilter.tsx";
 import { PageError } from "@/components/PageError";
 import { useGetReagentSampleListQuery } from "@/store";
-import { ReagentDetails, SortColumn, SortDirection } from "@/types";
+import { SortColumn, SortDirection } from "@/types";
+import { PAGE_SIZE, getListData } from "@/utils";
 
 import style from "./ReagentSampleList.module.css";
-
-const PAGE_SIZE = 5;
-
-const getListData = (
-  allItems: Array<ReagentDetails>,
-  filter: FilterOption,
-  sortColumn: SortColumn,
-  sortDirection: SortDirection,
-  page: number,
-  searchQuery: string
-) => {
-  const filtered =
-    filter === "All"
-      ? allItems
-      : allItems.filter((item) => item.category === filter);
-
-  const sorted = filtered.toSorted((a, b) => {
-    const order = a[sortColumn].localeCompare(b[sortColumn]);
-    return sortDirection === "asc" ? order : -1 * order;
-  });
-  const searchResult = sorted.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchQuery) ||
-      item.structure.toLowerCase().includes(searchQuery)
-  );
-
-  const paginated = searchResult
-    ? searchResult.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
-    : sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-
-  return {
-    visibleItems: paginated,
-    filteredItemsCount: filtered.length,
-    searchResultCount: searchResult.length,
-  };
-};
 
 const ReagentSampleList: React.FC = () => {
   const {
@@ -64,6 +29,7 @@ const ReagentSampleList: React.FC = () => {
     setSortDirection(isAsc ? "asc" : "desc");
     setSortColumn(property);
   };
+
   const { visibleItems, filteredItemsCount, searchResultCount } = useMemo(
     () =>
       getListData(
