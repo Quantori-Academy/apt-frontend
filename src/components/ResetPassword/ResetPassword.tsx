@@ -1,10 +1,10 @@
-import { Box, Button, Container } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { AlertSnackbar, RevealableField } from "@/components";
 import { PASSWORD_REGEX } from "@/constants";
-import { useResetPasswordMutation } from "@/store";
+import { useGetUserDetailsQuery, useResetPasswordMutation } from "@/store";
 
 import style from "./ResetPassword.module.css";
 
@@ -20,7 +20,7 @@ type ResetPasswordProps = {
 const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-
+  const { isError } = useGetUserDetailsQuery(userId);
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   const {
@@ -53,9 +53,17 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     setIsEditMode(false);
     reset();
   };
-
+  if (isError) return null;
   return (
     <Container>
+      <Typography
+        sx={{ textAlign: "center", marginBottom: "25px" }}
+        variant="h5"
+        gutterBottom
+        margin={3}
+      >
+        Account Details
+      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         {isEditMode ? (
           <Box className={style.inputBox}>
@@ -119,7 +127,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
             fullWidth
             onClick={() => setIsEditMode(true)}
           >
-            Reset Password
+            Change Password
           </Button>
         )}
       </form>

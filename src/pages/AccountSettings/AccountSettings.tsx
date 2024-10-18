@@ -1,4 +1,4 @@
-import { Container, Divider, Typography } from "@mui/material";
+import { Container, Divider } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import {
@@ -15,6 +15,22 @@ const AccountSettings: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const loggedInUserId = useAppSelector(selectUserId);
   const loggedInUserRole = useAppSelector(selectUserRole);
+  //Ask Anahit(Fast Fix, ask Anahit after Demo)
+
+  // if (isError) {
+  //   return (
+  //     <Box
+  //       sx={{
+  //         display: "flex",
+  //         alignItems: "center",
+  //         justifyContent: "center",
+  //         height: "100%",
+  //       }}
+  //     >
+  //       <Typography variant="h2">User not found!</Typography>
+  //     </Box>
+  //   );
+  // }
 
   if (!loggedInUserId || !loggedInUserRole) return null;
 
@@ -36,9 +52,6 @@ const AccountSettings: React.FC = () => {
         bgcolor: "white",
       }}
     >
-      <Typography variant="h5" gutterBottom margin={3}>
-        Account Details
-      </Typography>
       {loggedInUserRole === userRoles.Administrator && (
         <ResetPassword userId={choosenId} />
       )}

@@ -26,8 +26,11 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  const { data: userDetails, isLoading: isLoadingUserDetails } =
-    useGetUserDetailsQuery(userId!);
+  const {
+    data: userDetails,
+    isLoading: isLoadingUserDetails,
+    isError,
+  } = useGetUserDetailsQuery(userId!);
 
   const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
@@ -39,7 +42,9 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   } = useForm({
     values: userDetails,
   });
-
+  if (isError) {
+    return null;
+  }
   if (isLoadingUserDetails) return <LoadingSkeleton />;
 
   const onSubmit = async (updatedUserDetails: UserDetails) => {

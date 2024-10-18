@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AlertSnackbar } from "@/components";
-import { useDeleteUserMutation } from "@/store";
+import { useDeleteUserMutation, useGetUserDetailsQuery } from "@/store";
 import { UserRole } from "@/types";
 
 import style from "./DeleteUser.module.css";
@@ -24,7 +24,7 @@ const DeleteUser: React.FC<DeleteUserProps> = ({
 
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
   const navigate = useNavigate();
-
+  const { isError } = useGetUserDetailsQuery(userId);
   const handleDeleteUser = async () => {
     const { error } = await deleteUser(userId);
 
@@ -35,7 +35,11 @@ const DeleteUser: React.FC<DeleteUserProps> = ({
     }
   };
 
-  if (currentUserRole !== "Administrator" || currentUserId === userId) {
+  if (
+    currentUserRole !== "Administrator" ||
+    currentUserId === userId ||
+    isError
+  ) {
     return null;
   }
 

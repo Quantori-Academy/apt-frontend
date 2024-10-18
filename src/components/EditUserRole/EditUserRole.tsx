@@ -32,8 +32,11 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  const { data: userDetails, isLoading: isLoadingUserDetails } =
-    useGetUserDetailsQuery(userId);
+  const {
+    data: userDetails,
+    isLoading: isLoadingUserDetails,
+    isError,
+  } = useGetUserDetailsQuery(userId);
 
   const [updateRole, { isLoading: isUpdatingRole }] = useUpdateRoleMutation();
 
@@ -42,7 +45,20 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
       role: userDetails?.role,
     },
   });
-
+  if (isError) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
+        <Typography variant="h2">User not found!</Typography>
+      </Box>
+    );
+  }
   if (isLoadingUserDetails) return <LoadingSkeleton />;
 
   const onSubmit = async ({ role: updatedRole }: UserRoleUpdate) => {
