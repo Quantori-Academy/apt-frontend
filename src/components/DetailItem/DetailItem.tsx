@@ -8,7 +8,7 @@ type DetailItemProps = {
 const DetailItem: React.FC<DetailItemProps> = ({ label, value }) => (
   <Typography>
     <Typography component="span" fontWeight="bold" marginRight={1}>
-      {label}:{""}
+      {label}:
     </Typography>
     {value}
   </Typography>
