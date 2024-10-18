@@ -18,6 +18,7 @@ import {
   PageLoader,
   SmilesImage,
 } from "@/components";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { useDeleteReagentMutation, useGetReagentDetailsQuery } from "@/store";
 import { Reagent } from "@/types";
 
@@ -79,8 +80,7 @@ const ReagentPage = () => {
 
       setSnackbarSeverity("success");
 
-      //I will change this to a constant value once Anahit adds it.
-      navigate("/reagent-sample-list");
+      navigate(RouteProtectedPath.reagentSampleList);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_) {
