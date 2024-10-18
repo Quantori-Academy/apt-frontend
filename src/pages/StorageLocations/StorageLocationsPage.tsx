@@ -1,6 +1,6 @@
 import React from "react";
 
-import StorageLocationsList from "@/components/StorageLocations/StorageLocationsList";
+import { StorageLocationsList } from "@/components";
 
 const StoragePage: React.FC = () => {
   return (

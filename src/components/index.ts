@@ -17,3 +17,5 @@ export { ResetPassword } from "./ResetPassword";
 export { Header } from "./Header";
 export { EditUserRole } from "./EditUserRole";
 export { DeleteUser } from "./DeleteUser";
+export { StorageLocationsList } from "./StorageLocations";
+export { StorageLocationDetail } from "./StorageLocationDetail";
