@@ -14,6 +14,9 @@ export const appTheme = createTheme({
     primary: {
       main: "#2977FF",
     },
+    secondary: {
+      main: "#9fa8da",
+    },
   },
   components: {
     MuiButton: {
