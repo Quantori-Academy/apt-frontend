@@ -9,29 +9,29 @@ import {
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AlertSnackbar, PageLoader } from "@/components";
+import { PageLoader } from "@/components";
 import { userRoles } from "@/constants";
-import { useGetUserDetailsQuery, useUpdateRoleMutation } from "@/store";
+import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import {
+  selectUserId,
+  useGetUserDetailsQuery,
+  useUpdateRoleMutation,
+} from "@/store";
 import { UserRole } from "@/types";
 
 type EditUserRoleProps = {
   userId: string;
-  currentUserId: string;
-  currentUserRole: UserRole;
 };
 
 type UserRoleUpdate = {
   role?: UserRole;
 };
 
-const EditUserRole: React.FC<EditUserRoleProps> = ({
-  userId,
-  currentUserId,
-  currentUserRole,
-}) => {
+const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  // const [isAlertOpen, setIsAlertOpen] = useState(false);
 
+  const currentUserId = useAppSelector(selectUserId);
   const { data: userDetails, isLoading: isLoadingUserDetails } =
     useGetUserDetailsQuery(userId);
 
@@ -43,6 +43,12 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
     },
   });
 
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar({
+    isOpen: false,
+    severity: "success",
+    text: "",
+  });
+
   if (isLoadingUserDetails) return <PageLoader />;
 
   const onSubmit = async ({ role: updatedRole }: UserRoleUpdate) => {
@@ -52,15 +58,16 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
     });
 
     if (error) {
-      setIsAlertOpen(true);
+      openSnackbar("error", "Failed to change role!");
     } else {
+      openSnackbar("success", "Role has changed successfully!");
       setIsEditMode(false);
     }
   };
 
   return (
     <Container>
-      {currentUserRole !== "Administrator" || userId === currentUserId ? (
+      {userId === currentUserId ? (
         <Box>
           <Typography variant="subtitle1" fontWeight="bold">
             User Role:
@@ -124,13 +131,8 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
           )}
         </form>
       )}
-      <AlertSnackbar
-        severity={"error"}
-        open={isAlertOpen}
-        onClose={() => setIsAlertOpen(false)}
-      >
-        Failed To Update Role
-      </AlertSnackbar>
+
+      {SnackbarComponent()}
     </Container>
   );
 };

@@ -1,8 +1,7 @@
 import { Box, Modal, Typography } from "@mui/material";
-import { useState } from "react";
 
 import { AddUserForm, AddUserStatus } from "@/components/AddUserForm";
-import { AlertSnackbar } from "@/components/AlertSnackbar";
+import { useAlertSnackbar } from "@/hooks";
 
 import style from "./AddUserModal.module.css";
 
@@ -12,12 +11,18 @@ type AddUserModalProps = {
 };
 
 const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
-  const [status, setStatus] = useState<AddUserStatus>();
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar({
+    isOpen: false,
+    severity: "success",
+    text: "",
+  });
 
   function handleFormSubmit(status: AddUserStatus) {
-    setStatus(status);
     if (status === "success") {
+      openSnackbar("success", "User added successfully!");
       onClose();
+    } else {
+      openSnackbar("error", "Failed to add user!");
     }
   }
 
@@ -36,15 +41,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
           <AddUserForm onFormSubmit={handleFormSubmit} />
         </Box>
       </Modal>
-      <AlertSnackbar
-        open={Boolean(status)}
-        onClose={() => setStatus(undefined)}
-        severity={status}
-      >
-        {status === "error"
-          ? "Unable to add a user"
-          : "User added successfully"}
-      </AlertSnackbar>
+      {SnackbarComponent()}
     </>
   );
 };

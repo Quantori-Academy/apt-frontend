@@ -2,6 +2,7 @@ import { RouteObject } from "react-router-dom";
 
 import { userRoles } from "@/constants";
 import { AccountSettings, Dashboard, ReagentSampleList, Users } from "@/pages";
+import { UserDetails } from "@/pages/UserDetails";
 import { UserRole } from "@/types";
 
 type AppRoutesProps = RouteObject & {
@@ -35,7 +36,7 @@ export const protectedRoutesRouterConfig: Record<
   },
   [AppProtectedRoutes.USER_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.USER_PAGE],
-    element: <AccountSettings />,
+    element: <UserDetails />,
     roles: [userRoles.Administrator],
   },
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: {

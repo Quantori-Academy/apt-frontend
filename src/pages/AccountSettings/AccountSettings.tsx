@@ -1,24 +1,14 @@
 import { Container, Divider, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
 
-import {
-  AccountDetails,
-  DeleteUser,
-  EditUserRole,
-  ResetPassword,
-} from "@/components";
-import { userRoles } from "@/constants";
+import { AccountDetails } from "@/components";
 import { useAppSelector } from "@/hooks";
 import { selectUserId, selectUserRole } from "@/store";
 
 const AccountSettings: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const loggedInUserId = useAppSelector(selectUserId);
-  const loggedInUserRole = useAppSelector(selectUserRole);
+  const userId = useAppSelector(selectUserId);
+  const userRole = useAppSelector(selectUserRole);
 
-  if (!loggedInUserId || !loggedInUserRole) return null;
-
-  const choosenId = (id || loggedInUserId)!;
+  if (!userId || !userRole) return null;
 
   return (
     <Container
@@ -36,25 +26,14 @@ const AccountSettings: React.FC = () => {
         bgcolor: "white",
       }}
     >
-      <Typography variant="h5" gutterBottom margin={3}>
+      <Typography variant="h4" gutterBottom margin={3}>
         Account Details
       </Typography>
-      {loggedInUserRole === userRoles.Administrator && (
-        <ResetPassword userId={choosenId} />
-      )}
+      <Typography variant="h6" gutterBottom marginX={3}>
+        User Role: {userRole}
+      </Typography>
       <Divider sx={{ my: 3 }} />
-      <EditUserRole
-        userId={choosenId}
-        currentUserId={loggedInUserRole}
-        currentUserRole={loggedInUserRole}
-      />
-      <Divider sx={{ my: 3 }} />
-      <AccountDetails userId={choosenId} />
-      <DeleteUser
-        userId={choosenId}
-        currentUserId={loggedInUserRole}
-        currentUserRole={loggedInUserRole}
-      />
+      <AccountDetails userId={userId} />
     </Container>
   );
 };

@@ -6,7 +6,6 @@ export { UsersTable } from "./UsersTable";
 export { RevealableField } from "./RevealableField";
 export { AddUserModal } from "./AddUserModal";
 export { AddUserForm } from "./AddUserForm";
-export { AlertSnackbar } from "./AlertSnackbar";
 export { LoginForm } from "./LoginForm";
 export { AccountDetails } from "./AccountDetails";
 export { SearchBar } from "./SearchBar";

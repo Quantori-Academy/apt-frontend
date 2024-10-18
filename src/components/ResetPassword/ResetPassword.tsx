@@ -2,8 +2,9 @@ import { Box, Button, Container } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AlertSnackbar, RevealableField } from "@/components";
+import { RevealableField } from "@/components";
 import { PASSWORD_REGEX } from "@/constants";
+import { useAlertSnackbar } from "@/hooks";
 import { useResetPasswordMutation } from "@/store";
 
 import style from "./ResetPassword.module.css";
@@ -19,7 +20,6 @@ type ResetPasswordProps = {
 
 const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
@@ -35,6 +35,11 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
       confirmPassword: "",
     },
   });
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar({
+    isOpen: false,
+    severity: "success",
+    text: "",
+  });
 
   const onSubmit = async (formData: ResetPasswordFields) => {
     const { error } = await resetPassword({
@@ -43,8 +48,9 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     });
 
     if (error) {
-      setIsAlertOpen(true);
+      openSnackbar("error", "Failed to change password");
     } else {
+      openSnackbar("success", "Password changed successfully");
       setIsEditMode(false);
     }
   };
@@ -123,13 +129,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
           </Button>
         )}
       </form>
-      <AlertSnackbar
-        severity={"error"}
-        open={isAlertOpen}
-        onClose={() => setIsAlertOpen(false)}
-      >
-        Failed to update password
-      </AlertSnackbar>
+      {SnackbarComponent()}
     </Container>
   );
 };

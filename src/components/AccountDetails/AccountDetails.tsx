@@ -9,7 +9,8 @@ import {
 import { MouseEventHandler, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AlertSnackbar, PageLoader } from "@/components";
+import { PageLoader } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
 import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from "@/store";
 import { UserBase } from "@/types";
 
@@ -24,7 +25,6 @@ type AccountDetailsProps = {
 
 const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const { data: userDetails, isLoading: isLoadingUserDetails } =
     useGetUserDetailsQuery(userId!);
@@ -32,6 +32,11 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
 
+  const { SnackbarComponent, openSnackbar } = useAlertSnackbar({
+    isOpen: false,
+    text: "",
+    severity: "success",
+  });
   const {
     register,
     handleSubmit,
@@ -46,8 +51,9 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
     const { error } = await updateUserDetails(updatedUserDetails);
 
     if (error) {
-      setIsAlertOpen(true);
+      openSnackbar("error", "Failed to update details!");
     } else {
+      openSnackbar("success", "Details updated successfully!");
       setIsEditMode(false);
     }
   };
@@ -162,13 +168,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
           </Grid>
         </Grid>
       </form>
-      <AlertSnackbar
-        severity="error"
-        open={isAlertOpen}
-        onClose={() => setIsAlertOpen(false)}
-      >
-        Fail to update user details
-      </AlertSnackbar>
+      {SnackbarComponent()}
     </Container>
   );
 };

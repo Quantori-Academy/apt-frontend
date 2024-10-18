@@ -2,40 +2,39 @@ import { Box, Button, Container, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { AlertSnackbar } from "@/components";
-import { useDeleteUserMutation } from "@/store";
-import { UserRole } from "@/types";
+import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import { selectUserId, useDeleteUserMutation } from "@/store";
 
 import style from "./DeleteUser.module.css";
 
 type DeleteUserProps = {
   userId: string;
-  currentUserId: string;
-  currentUserRole: UserRole;
 };
 
-const DeleteUser: React.FC<DeleteUserProps> = ({
-  userId,
-  currentUserRole,
-  currentUserId,
-}) => {
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
   const navigate = useNavigate();
+  const currentUserId = useAppSelector(selectUserId);
 
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar({
+    isOpen: false,
+    severity: "success",
+    text: "",
+  });
   const handleDeleteUser = async () => {
     const { error } = await deleteUser(userId);
 
     if (error) {
-      setIsAlertOpen(true);
+      openSnackbar("error", "Failed to delete user!");
     } else {
+      openSnackbar("success", "User deleted successfully!");
       navigate("/users");
     }
   };
 
-  if (currentUserRole !== "Administrator" || currentUserId === userId) {
+  if (currentUserId === userId) {
     return null;
   }
 
@@ -76,13 +75,7 @@ const DeleteUser: React.FC<DeleteUserProps> = ({
           </Box>
         </Box>
       </Modal>
-      <AlertSnackbar
-        severity={"error"}
-        open={isAlertOpen}
-        onClose={() => setIsAlertOpen(false)}
-      >
-        Fail To Delete User
-      </AlertSnackbar>
+      {SnackbarComponent()}
     </Container>
   );
 };
