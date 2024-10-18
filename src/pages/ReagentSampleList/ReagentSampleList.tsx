@@ -1,42 +1,17 @@
 import { Box, Button, Container, Pagination, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 
-import { PageLoader, ReagentSampleTable } from "@/components";
+import { PageLoader, ReagentSampleTable, SearchBar } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { FilterOption } from "@/components/CategoryFilter/CategoryFilter.tsx";
 import { PageError } from "@/components/PageError";
 import { useGetReagentSampleListQuery } from "@/store";
-import { ReagentDetails, SortColumn, SortDirection } from "@/types";
+import { SortColumn, SortDirection } from "@/types";
+import { getListData } from "@/utils";
 
 import style from "./ReagentSampleList.module.css";
 
 const PAGE_SIZE = 5;
-
-const getListData = (
-  allItems: Array<ReagentDetails>,
-  filter: FilterOption,
-  sortColumn: SortColumn,
-  sortDirection: SortDirection,
-  page: number
-) => {
-  const filtered =
-    filter === "All"
-      ? allItems
-      : allItems.filter((item) => item.category === filter);
-
-  const sorted = filtered.toSorted((a, b) => {
-    const order = a[sortColumn].localeCompare(b[sortColumn]);
-    return sortDirection === "asc" ? order : -1 * order;
-  });
-
-  const paginated = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-
-  return {
-    visibleItems: paginated,
-    filteredItemsCount: filtered.length,
-  };
-};
-
 const ReagentSampleList: React.FC = () => {
   const {
     data: reagents = [],
@@ -48,19 +23,31 @@ const ReagentSampleList: React.FC = () => {
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [filter, setFilter] = useState<FilterOption>("All");
-
-  const { visibleItems, filteredItemsCount } = useMemo(
-    () => getListData(reagents, filter, sortColumn, sortDirection, page),
-    [filter, reagents, sortColumn, sortDirection, page]
-  );
-
-  const totalPages = Math.ceil(filteredItemsCount / PAGE_SIZE);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSortChange = (property: SortColumn) => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
     setSortDirection(isAsc ? "asc" : "desc");
     setSortColumn(property);
   };
+
+  const { visibleItems, filteredItemsCount, searchResultCount } = useMemo(
+    () =>
+      getListData(
+        reagents,
+        filter,
+        sortColumn,
+        sortDirection,
+        page,
+        searchQuery,
+        PAGE_SIZE
+      ),
+    [filter, reagents, sortColumn, sortDirection, page, searchQuery]
+  );
+
+  const totalPages = searchResultCount
+    ? Math.ceil(searchResultCount / PAGE_SIZE)
+    : Math.ceil(filteredItemsCount / PAGE_SIZE);
 
   if (isLoading) {
     return <PageLoader />;
@@ -89,6 +76,7 @@ const ReagentSampleList: React.FC = () => {
           setFilter={setFilter}
           setPage={setPage}
         />
+        <SearchBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
       </Box>
       <ReagentSampleTable
         sortColumn={sortColumn}
