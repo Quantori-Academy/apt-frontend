@@ -330,7 +330,11 @@ const StorageLocationDetail: React.FC = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setModalIsOpened(false)}>Cancel</Button>
-          <Button onClick={handleAgreeClick} autoFocus>
+          <Button
+            disabled={!selectedLocation}
+            onClick={handleAgreeClick}
+            autoFocus
+          >
             Change
           </Button>
         </DialogActions>
