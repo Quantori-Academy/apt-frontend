@@ -23,6 +23,7 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
     severity: "success",
     text: "",
   });
+
   const handleDeleteUser = async () => {
     const { error } = await deleteUser(userId);
 

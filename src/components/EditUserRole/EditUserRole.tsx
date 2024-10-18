@@ -29,7 +29,6 @@ type UserRoleUpdate = {
 
 const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  // const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const currentUserId = useAppSelector(selectUserId);
   const { data: userDetails, isLoading: isLoadingUserDetails } =

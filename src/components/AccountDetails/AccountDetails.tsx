@@ -37,6 +37,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
     text: "",
     severity: "success",
   });
+
   const {
     register,
     handleSubmit,
@@ -57,6 +58,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
       setIsEditMode(false);
     }
   };
+
   const handleEditToggle: MouseEventHandler = (e) => {
     e.preventDefault();
     setIsEditMode(!isEditMode);
