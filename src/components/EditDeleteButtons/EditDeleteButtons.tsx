@@ -2,12 +2,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, Grid } from "@mui/material";
 
-type ActionButtonsProps = {
+type EditDeleteButtonsProps = {
   onEdit?: () => void;
   onDelete: () => void;
 };
 
-const ActionButtons: React.FC<ActionButtonsProps> = ({ onDelete }) => {
+const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({ onDelete }) => {
   return (
     <Grid container spacing={2} sx={{ mt: 4 }}>
       <Grid item>
@@ -28,4 +28,4 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ onDelete }) => {
     </Grid>
   );
 };
-export default ActionButtons;
+export default EditDeleteButtons;
