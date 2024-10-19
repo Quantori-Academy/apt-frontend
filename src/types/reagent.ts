@@ -1,3 +1,10 @@
+export type StorageLocation = {
+  roomId: string;
+  roomName: string;
+  locationId: string;
+  locationName: string;
+};
+
 export type Reagent = {
   reagentID: string;
   name: string;
@@ -8,7 +15,7 @@ export type Reagent = {
   producer: string;
   catalogID: string;
   catalogLink: string;
-  storageLocation: string;
+  storageLocation: StorageLocation;
   units: string;
   pricePerUnit: number;
   quantity: number;
