@@ -1,7 +1,13 @@
 import { RouteObject } from "react-router-dom";
 
 import { userRoles } from "@/constants";
-import { AccountSettings, Dashboard, ReagentSampleList, Users } from "@/pages";
+import {
+  AccountSettings,
+  Dashboard,
+  ReagentPage,
+  ReagentSampleList,
+  Users,
+} from "@/pages";
 import { UserRole } from "@/types";
 
 type AppRoutesProps = RouteObject & {
@@ -14,6 +20,7 @@ export const enum AppProtectedRoutes {
   ACCOUNT_SETTINGS = "accountSettings",
   DASHBOARD = "dashboard",
   REAGENT_SAMPLE_LIST = "reagentSampleList",
+  REAGENT_PAGE = "reagentPage",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -22,6 +29,7 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: "/account-settings",
   [AppProtectedRoutes.DASHBOARD]: "/dashboard",
   [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: "/reagent-sample-list",
+  [AppProtectedRoutes.REAGENT_PAGE]: "/reagent-sample-list/reagent/:id",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -46,7 +54,12 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_SAMPLE_LIST],
     element: <ReagentSampleList />,
-    roles: [userRoles.Administrator],
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.REAGENT_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_PAGE],
+    element: <ReagentPage />,
+    roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.DASHBOARD]: {
     path: RouteProtectedPath[AppProtectedRoutes.DASHBOARD],
