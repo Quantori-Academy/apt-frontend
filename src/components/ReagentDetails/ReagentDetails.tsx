@@ -26,12 +26,14 @@ const reagentDetailsRows: ReagentDetailRow[] = [
 
 type ReagentDetailsProps = {
   reagentDetails: Reagent;
-  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   reagentDetails,
-  setModalIsOpen,
+  setDeleteModalIsOpen,
+  setIsEditing,
 }) => {
   return (
     <Card sx={{ background: "#0080800f" }}>
@@ -42,13 +44,25 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            {reagentDetailsRows.map(({ label, key }) => (
-              <DetailItem
-                key={label}
-                label={label}
-                value={reagentDetails[key]}
-              />
-            ))}
+            {reagentDetailsRows.map(({ label, key }) =>
+              key !== "storageLocation" ? (
+                <DetailItem
+                  key={label}
+                  label={label}
+                  value={reagentDetails[key]}
+                />
+              ) : (
+                <DetailItem
+                  key={label}
+                  label={label}
+                  value={
+                    reagentDetails[key].roomName +
+                    ", " +
+                    reagentDetails[key].locationName
+                  }
+                />
+              )
+            )}
             <Link
               href={reagentDetails.catalogLink}
               target="_blank"
@@ -65,7 +79,10 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
           </Grid>
         </Grid>
         <DetailItem label="Description" value={reagentDetails.description} />
-        <EditDeleteButtons onDelete={() => setModalIsOpen(true)} />
+        <EditDeleteButtons
+          onDelete={() => setDeleteModalIsOpen(true)}
+          onEdit={() => setIsEditing(true)}
+        />
       </CardContent>
     </Card>
   );

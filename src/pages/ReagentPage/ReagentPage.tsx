@@ -7,6 +7,7 @@ import {
   ConfirmRemoving,
   PageLoader,
   ReagentDetails,
+  ReagentEditForm,
 } from "@/components";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { useDeleteReagentMutation, useGetReagentDetailsQuery } from "@/store";
@@ -22,13 +23,14 @@ const ReagentPage = () => {
 
   const navigate = useNavigate();
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
 
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
     "success"
   );
 
+  const [isEditing, setIsEditing] = useState(false);
   if (isLoading) {
     return <PageLoader />;
   }
@@ -55,7 +57,7 @@ const ReagentPage = () => {
     } finally {
       setIsSnackbarOpen(true);
 
-      setModalIsOpen(false);
+      setDeleteModalIsOpen(false);
     }
   };
 
@@ -63,13 +65,21 @@ const ReagentPage = () => {
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <ReagentDetails
         reagentDetails={reagentDetails}
-        setModalIsOpen={setModalIsOpen}
+        setDeleteModalIsOpen={setDeleteModalIsOpen}
+        setIsEditing={setIsEditing}
       />
+      {isEditing && (
+        <ReagentEditForm
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          reagentDetails={reagentDetails}
+        />
+      )}
       <ConfirmRemoving
-        open={modalIsOpen}
+        open={deleteModalIsOpen}
         modalTitle=""
         modalText="Are you sure you want to delete this reagent?"
-        onClose={() => setModalIsOpen(false)}
+        onClose={() => setDeleteModalIsOpen(false)}
         onDelete={handleDelete}
       />
       <AlertSnackbar
