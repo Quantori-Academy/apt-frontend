@@ -101,7 +101,12 @@ export const reagentDetails: Reagent = {
   producer: "Sigma-Aldrich",
   catalogID: "A-12345",
   catalogLink: "https://www.sigmaaldrich.com/catalog/product/sigma/acsgrade",
-  storageLocation: "Room 3, shelf 3",
+  storageLocation: {
+    roomId: "1",
+    roomName: "Room 11",
+    locationId: "1",
+    locationName: "Location 1",
+  },
   units: "Bottle 500 ml",
   pricePerUnit: 50.0,
   quantity: 10,
