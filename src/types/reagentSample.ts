@@ -9,7 +9,7 @@ export type ReagentDetails = {
   storageLocation: string;
   isExpired: boolean;
 };
-
+export type CategoryFilterOption = ReagentCategory | "All";
 export type SortDirection = "asc" | "desc";
 export type SortColumn = "name" | "category";
 export type ExpiredFilter = "All" | "Expired";

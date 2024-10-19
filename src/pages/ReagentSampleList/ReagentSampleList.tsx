@@ -11,10 +11,14 @@ import React, { useMemo, useState } from "react";
 
 import { PageLoader, ReagentSampleTable, SearchBar } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
-import { FilterOption } from "@/components/CategoryFilter/CategoryFilter.tsx";
 import { PageError } from "@/components/PageError";
 import { useGetReagentSampleListQuery } from "@/store";
-import { ExpiredFilter, SortColumn, SortDirection } from "@/types";
+import {
+  CategoryFilterOption,
+  ExpiredFilter,
+  SortColumn,
+  SortDirection,
+} from "@/types";
 import { getListData } from "@/utils";
 
 import style from "./ReagentSampleList.module.css";
@@ -31,7 +35,8 @@ const ReagentSampleList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-  const [filter, setFilter] = useState<FilterOption>("All");
+  const [categoryFilter, setCategoryFilter] =
+    useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
 
@@ -43,18 +48,18 @@ const ReagentSampleList: React.FC = () => {
 
   const { visibleItems, totalPages } = useMemo(
     () =>
-      getListData(
-        reagents,
-        filter,
+      getListData({
+        items: reagents,
+        categoryFilter,
         sortColumn,
         sortDirection,
         page,
         searchQuery,
         expiredFilter,
-        PAGE_SIZE
-      ),
+        pageSize: PAGE_SIZE,
+      }),
     [
-      filter,
+      categoryFilter,
       reagents,
       sortColumn,
       sortDirection,
@@ -89,8 +94,8 @@ const ReagentSampleList: React.FC = () => {
       </Box>
       <Box display="flex" gap={2} marginBottom={2}>
         <CategoryFilter
-          filter={filter}
-          setFilter={setFilter}
+          filter={categoryFilter}
+          setFilter={setCategoryFilter}
           setPage={setPage}
         />
         <SearchBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
