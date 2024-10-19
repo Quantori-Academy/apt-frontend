@@ -42,11 +42,7 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
     },
   });
 
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar({
-    isOpen: false,
-    severity: "success",
-    text: "",
-  });
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
   if (isLoadingUserDetails) return <PageLoader />;
 

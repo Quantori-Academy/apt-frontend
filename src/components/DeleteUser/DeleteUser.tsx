@@ -18,11 +18,7 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
   const navigate = useNavigate();
   const currentUserId = useAppSelector(selectUserId);
 
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar({
-    isOpen: false,
-    severity: "success",
-    text: "",
-  });
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
   const handleDeleteUser = async () => {
     const { error } = await deleteUser(userId);

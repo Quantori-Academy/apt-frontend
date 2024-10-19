@@ -35,11 +35,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
       confirmPassword: "",
     },
   });
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar({
-    isOpen: false,
-    severity: "success",
-    text: "",
-  });
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
   const onSubmit = async (formData: ResetPasswordFields) => {
     const { error } = await resetPassword({
