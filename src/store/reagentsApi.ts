@@ -12,6 +12,7 @@ export const reagentsApi = createApi({
     prepareHeaders,
   }),
   tagTypes: ["Reagents"],
+
   endpoints: (builder) => ({
     getReagentDetails: builder.query<FrontEndReagent, string>({
       query: (reagentId) => `/substances/reagents/${reagentId}`,
@@ -22,7 +23,7 @@ export const reagentsApi = createApi({
     deleteReagent: builder.mutation({
       query: (reagentId) => {
         return {
-          url: `/substances/reagents/${reagentId}`,
+          url: `/substances/${reagentId}`,
           method: "DELETE",
         };
       },
