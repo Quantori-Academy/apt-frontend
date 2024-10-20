@@ -2,9 +2,9 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
 
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
-import { Reagent } from "@/types";
+import { FrontEndReagent, FrontRoomData } from "@/types";
 
-type ReagentKey = keyof Reagent;
+type ReagentKey = keyof FrontEndReagent;
 
 type ReagentDetailRow = {
   label: string;
@@ -12,28 +12,30 @@ type ReagentDetailRow = {
 };
 
 const reagentDetailsRows: ReagentDetailRow[] = [
-  { label: "Reagent ID", key: "reagentID" },
+  { label: "Reagent ID", key: "substanceId" },
   { label: "Name", key: "name" },
   { label: "Category", key: "category" },
   { label: "CAS Number", key: "CASNumber" },
   { label: "Producer", key: "producer" },
-  { label: "Storage location", key: "storageLocation" },
-  { label: "Units", key: "units" },
+  { label: "Storage location", key: "locationId" },
+  { label: "Units", key: "unit" },
   { label: "Price per unit", key: "pricePerUnit" },
-  { label: "Quantity", key: "quantity" },
+  { label: "Quantity left", key: "totalQuantityLeft" },
   { label: "Catalog ID", key: "catalogID" },
 ];
 
 type ReagentDetailsProps = {
-  reagentDetails: Reagent;
+  reagentDetails: FrontEndReagent;
   setDeleteModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  reagentLocationDetails: FrontRoomData;
 };
 
 const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   reagentDetails,
   setDeleteModalIsOpen,
   setIsEditing,
+  reagentLocationDetails,
 }) => {
   return (
     <Card sx={{ background: "#0080800f" }}>
@@ -45,7 +47,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             {reagentDetailsRows.map(({ label, key }) =>
-              key !== "storageLocation" ? (
+              key !== "locationId" ? (
                 <DetailItem
                   key={label}
                   label={label}
@@ -56,9 +58,9 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
                   key={label}
                   label={label}
                   value={
-                    reagentDetails[key].roomName +
+                    reagentLocationDetails.roomName +
                     ", " +
-                    reagentDetails[key].locationName
+                    reagentLocationDetails.locationName
                   }
                 />
               )
