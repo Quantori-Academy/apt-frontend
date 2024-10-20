@@ -1,20 +1,21 @@
 import { Typography } from "@mui/material";
 
 type ErrorPageProps = {
-  pageName: string;
+  text: string;
 };
 
-const PageError: React.FC<ErrorPageProps> = ({ pageName }) => {
+const PageError: React.FC<ErrorPageProps> = ({ text }) => {
   return (
     <Typography
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "100%",
       }}
+      variant="h5"
     >
-      Failed to load {pageName}. Please try again later.
+      {text}
     </Typography>
   );
 };

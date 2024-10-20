@@ -3,12 +3,12 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
-  AlertSnackbar,
   ConfirmRemoving,
   PageLoader,
   ReagentDetails,
   ReagentEditForm,
 } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import {
   useDeleteReagentMutation,
@@ -17,10 +17,7 @@ import {
 } from "@/store";
 
 const ReagentPage = () => {
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
-    "success"
-  );
+  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -56,14 +53,12 @@ const ReagentPage = () => {
     try {
       await deleteReagent(reagentId).unwrap();
 
-      setSnackbarSeverity("success");
+      openSnackbar("success", "Reagent deleted successfully!");
 
       navigate(RouteProtectedPath.reagentSampleList);
     } catch {
-      setSnackbarSeverity("error");
+      openSnackbar("error", "Failed to delete reagent!");
     } finally {
-      setIsSnackbarOpen(true);
-
       setDeleteModalIsOpen(false);
     }
   };
@@ -91,15 +86,8 @@ const ReagentPage = () => {
         onClose={() => setDeleteModalIsOpen(false)}
         onDelete={handleDelete}
       />
-      <AlertSnackbar
-        severity={snackbarSeverity}
-        open={isSnackbarOpen}
-        onClose={() => setIsSnackbarOpen(false)}
-      >
-        {snackbarSeverity === "success"
-          ? "Reagent deleted successfully!"
-          : "Failed to delete reagent!"}
-      </AlertSnackbar>
+
+      {SnackbarComponent()}
     </Container>
   );
 };

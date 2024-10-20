@@ -1,17 +1,30 @@
-import { Box, Button, Container, Pagination, Typography } from "@mui/material";
-import { useMemo, useState } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Pagination,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
+import React, { useMemo, useState } from "react";
 
 import { PageLoader, ReagentSampleTable, SearchBar } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
-import { FilterOption } from "@/components/CategoryFilter/CategoryFilter.tsx";
 import { PageError } from "@/components/PageError";
 import { useGetReagentSampleListQuery } from "@/store";
-import { SortColumn, SortDirection } from "@/types";
+import {
+  CategoryFilterOption,
+  ExpiredFilter,
+  SortColumn,
+  SortDirection,
+} from "@/types";
 import { getListData } from "@/utils";
 
 import style from "./ReagentSampleList.module.css";
 
 const PAGE_SIZE = 5;
+
 const ReagentSampleList: React.FC = () => {
   const {
     data: reagents = [],
@@ -22,8 +35,10 @@ const ReagentSampleList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-  const [filter, setFilter] = useState<FilterOption>("All");
+  const [categoryFilter, setCategoryFilter] =
+    useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
 
   const handleSortChange = (property: SortColumn) => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
@@ -31,30 +46,37 @@ const ReagentSampleList: React.FC = () => {
     setSortColumn(property);
   };
 
-  const { visibleItems, filteredItemsCount, searchResultCount } = useMemo(
+  const { visibleItems, totalPages } = useMemo(
     () =>
-      getListData(
-        reagents,
-        filter,
+      getListData({
+        items: reagents,
+        categoryFilter,
         sortColumn,
         sortDirection,
         page,
         searchQuery,
-        PAGE_SIZE
-      ),
-    [filter, reagents, sortColumn, sortDirection, page, searchQuery]
+        expiredFilter,
+        pageSize: PAGE_SIZE,
+      }),
+    [
+      categoryFilter,
+      reagents,
+      sortColumn,
+      sortDirection,
+      page,
+      searchQuery,
+      expiredFilter,
+    ]
   );
-
-  const totalPages = searchResultCount
-    ? Math.ceil(searchResultCount / PAGE_SIZE)
-    : Math.ceil(filteredItemsCount / PAGE_SIZE);
 
   if (isLoading) {
     return <PageLoader />;
   }
 
   if (isError) {
-    return <PageError pageName="Reagents and Samples" />;
+    return (
+      <PageError text="Faild to load Reagents and Sample page, Please try later" />
+    );
   }
 
   return (
@@ -72,11 +94,22 @@ const ReagentSampleList: React.FC = () => {
       </Box>
       <Box display="flex" gap={2} marginBottom={2}>
         <CategoryFilter
-          filter={filter}
-          setFilter={setFilter}
+          filter={categoryFilter}
+          setFilter={setCategoryFilter}
           setPage={setPage}
         />
         <SearchBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
+        <ToggleButtonGroup
+          color="primary"
+          value={expiredFilter}
+          exclusive
+          onChange={(_event: React.MouseEvent<HTMLElement>, value) =>
+            setExpiredFilter(value)
+          }
+        >
+          <ToggleButton value="All">All</ToggleButton>
+          <ToggleButton value="Expired">Expired</ToggleButton>
+        </ToggleButtonGroup>
       </Box>
       <ReagentSampleTable
         sortColumn={sortColumn}

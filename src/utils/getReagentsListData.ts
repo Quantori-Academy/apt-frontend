@@ -1,33 +1,58 @@
-import { FilterOption } from "@/components/CategoryFilter/CategoryFilter";
-import { ReagentDetails, SortColumn, SortDirection } from "@/types";
+import { CategoryFilterOption, ExpiredFilter, ReagentDetails, SortColumn, SortDirection } from "@/types";
 
-export const getListData = (
-  allItems: Array<ReagentDetails>,
-  filter: FilterOption,
-  sortColumn: SortColumn,
-  sortDirection: SortDirection,
-  page: number,
+type GetListDataOptions = {
+  items: Array<ReagentDetails>;
+  searchQuery: string;
+  categoryFilter: CategoryFilterOption;
+  expiredFilter: ExpiredFilter;
+  sortColumn: SortColumn;
+  sortDirection: SortDirection;
+  page: number;
+  pageSize: number;
+};
+
+export const getListData = ({
+  expiredFilter,
+  categoryFilter,
+  searchQuery,
+  pageSize,
+  page,
+  sortDirection,
+  sortColumn,
+  items,
+}: GetListDataOptions) => {
+  const filtered = filterListData(items, categoryFilter, searchQuery, expiredFilter);
+  const sorted = sortListData(filtered, sortColumn, sortDirection);
+  const paginated = paginateListData(sorted, page, pageSize);
+
+  const totalPages = Math.ceil(sorted.length / pageSize);
+
+  return { visibleItems: paginated, totalPages };
+};
+
+const filterListData = (
+  items: Array<ReagentDetails>,
+  categoryFilter: CategoryFilterOption,
   searchQuery: string,
-  pageSize: number
+  expiredFilter: ExpiredFilter
 ) => {
-  const filtered = filter === "All" ? allItems : allItems.filter((item) => item.category === filter);
+  return items.filter((item) => {
+    const satisfiesExpired = expiredFilter === "All" || item.isExpired;
+    const satisfiesCategory = categoryFilter === "All" || item.category === categoryFilter;
+    const satisfiesSearch =
+      item.name.toLowerCase().includes(searchQuery) || item.structure.toLowerCase().includes(searchQuery);
 
-  const sorted = filtered.toSorted((a, b) => {
+    return satisfiesExpired && satisfiesCategory && satisfiesSearch;
+  });
+};
+
+const sortListData = (items: Array<ReagentDetails>, sortColumn: SortColumn, sortDirection: SortDirection) => {
+  return items.toSorted((a, b) => {
     const order = a[sortColumn].localeCompare(b[sortColumn]);
     return sortDirection === "asc" ? order : -1 * order;
   });
+};
 
-  const searchResult = sorted.filter(
-    (item) => item.name.toLowerCase().includes(searchQuery) || item.structure.toLowerCase().includes(searchQuery)
-  );
-
-  const paginated = searchResult
-    ? searchResult.slice((page - 1) * pageSize, page * pageSize)
-    : sorted.slice((page - 1) * pageSize, page * pageSize);
-
-  return {
-    visibleItems: paginated,
-    filteredItemsCount: filtered.length,
-    searchResultCount: searchResult.length,
-  };
+const paginateListData = (items: Array<ReagentDetails>, page: number, pageSize: number) => {
+  return items.slice((page - 1) * pageSize, page * pageSize);
 };
