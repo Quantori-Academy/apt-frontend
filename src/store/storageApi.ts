@@ -10,11 +10,13 @@ export const storageApi = createApi({
     baseUrl: BASE_URL,
     prepareHeaders,
   }),
+
   tagTypes: ["StorageRooms"],
   endpoints: (builder) => ({
     getStorageRooms: builder.query<StorageRoomsBrief[], void>({
       query: () => "/storage",
       providesTags: ["StorageRooms"],
+      //add transformResponse
     }),
   }),
 });

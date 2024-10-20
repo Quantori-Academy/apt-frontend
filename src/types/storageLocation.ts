@@ -1,5 +1,5 @@
 export type StorageRoomsBrief = {
-  id: number;
+  id: string;
   room: string;
   description: string;
   locations: RoomLocationBrief[];
@@ -7,6 +7,6 @@ export type StorageRoomsBrief = {
 };
 
 export type RoomLocationBrief = {
-  location_id: number;
+  location_id: string;
   location_name: string;
 };
