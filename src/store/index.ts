@@ -11,10 +11,16 @@ export {
   useDeleteUserMutation,
 } from "./usersApi";
 
-export { useGetReagentDetailsQuery, useDeleteReagentMutation, reagentsApi } from "./reagentsApi";
+export {
+  useGetReagentDetailsQuery,
+  useDeleteReagentMutation,
+  useUpdateReagentMutation,
+  reagentsApi,
+} from "./reagentsApi";
+
 export { useGetReagentSampleListQuery } from "./reagentSampleApi";
 
-export { useGetStorageRoomsQuery } from "./storageApi";
+export { useGetStorageRoomsQuery, useGetStorageLocationDetailQuery } from "./storageApi";
 
 export {
   loginUser,

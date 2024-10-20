@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL } from "@/api/apiMethods";
 import { prepareHeaders } from "@/api/apiMethods";
-import { StorageRoomsBrief } from "@/types";
+import { BackRoomData, BackStorageRoomsBrief, FrontRoomData, FrontStorageRoomsBrief } from "@/types";
+
+import { transformStorageLocationResponse, transformStorageRoomsResponse } from "./utils/transformStorageResponse";
 
 export const storageApi = createApi({
   reducerPath: "storageApi",
@@ -13,12 +15,17 @@ export const storageApi = createApi({
 
   tagTypes: ["StorageRooms"],
   endpoints: (builder) => ({
-    getStorageRooms: builder.query<StorageRoomsBrief[], void>({
+    getStorageRooms: builder.query<FrontStorageRoomsBrief[], void>({
       query: () => "/storage",
+      transformResponse: (response: BackStorageRoomsBrief[]) => response.map(transformStorageRoomsResponse),
       providesTags: ["StorageRooms"],
-      //add transformResponse
+    }),
+    getStorageLocationDetail: builder.query<FrontRoomData, number>({
+      query: (locationId) => `/storage/${locationId}`,
+      transformResponse: (response: BackRoomData) => transformStorageLocationResponse(response),
+      providesTags: (_, __, locationId) => [{ type: "StorageRooms", id: locationId }],
     }),
   }),
 });
 
-export const { useGetStorageRoomsQuery } = storageApi;
+export const { useGetStorageRoomsQuery, useGetStorageLocationDetailQuery } = storageApi;
