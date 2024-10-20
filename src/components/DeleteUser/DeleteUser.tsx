@@ -2,7 +2,6 @@ import { Button, Container } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// import style from "./DeleteUser.module.css";
 import { ConfirmRemoving } from "@/components";
 import { useAlertSnackbar, useAppSelector } from "@/hooks";
 import { selectUserId, useDeleteUserMutation } from "@/store";

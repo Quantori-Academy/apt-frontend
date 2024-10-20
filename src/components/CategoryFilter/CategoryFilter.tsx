@@ -1,14 +1,12 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-import { ReagentCategory } from "@/types";
+import { CategoryFilterOption } from "@/types";
 
-export type FilterOption = ReagentCategory | "All";
-
-const filterOptions: Array<FilterOption> = ["Reagent", "Sample", "All"];
+const filterOptions: Array<CategoryFilterOption> = ["Reagent", "Sample", "All"];
 
 type FilterReagentsProps = {
-  filter: FilterOption;
-  setFilter: (filter: FilterOption) => void;
+  filter: CategoryFilterOption;
+  setFilter: (filter: CategoryFilterOption) => void;
   setPage: (page: number) => void;
 };
 const CategoryFilter: React.FC<FilterReagentsProps> = ({
@@ -27,7 +25,7 @@ const CategoryFilter: React.FC<FilterReagentsProps> = ({
         value={filter}
         label="Category"
         onChange={(e) => {
-          setFilter(e.target.value as FilterOption);
+          setFilter(e.target.value as CategoryFilterOption);
           setPage(1);
         }}
       >
