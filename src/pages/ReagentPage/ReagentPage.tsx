@@ -10,32 +10,39 @@ import {
   ReagentEditForm,
 } from "@/components";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import { useDeleteReagentMutation, useGetReagentDetailsQuery } from "@/store";
+import {
+  useDeleteReagentMutation,
+  useGetReagentDetailsQuery,
+  useGetStorageLocationDetailQuery,
+} from "@/store";
 
 const ReagentPage = () => {
-  const { id: reagentId } = useParams<{ id: string }>();
-
-  const { data: reagentDetails, isLoading } = useGetReagentDetailsQuery(
-    reagentId!
-  );
-
-  const [deleteReagent] = useDeleteReagentMutation();
-
-  const navigate = useNavigate();
-
-  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">(
     "success"
   );
 
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  if (isLoading) {
+
+  const { id: reagentId } = useParams<{ id: string }>();
+  const { data: reagentDetails, isLoading: isReagentLoading } =
+    useGetReagentDetailsQuery(reagentId!);
+
+  const { data: reagentLocationDetails, isLoading: isReagentLocationLoading } =
+    useGetStorageLocationDetailQuery(reagentDetails?.locationId as number, {
+      skip: !reagentDetails?.locationId,
+    });
+
+  const navigate = useNavigate();
+
+  const [deleteReagent] = useDeleteReagentMutation();
+
+  if (isReagentLoading || isReagentLocationLoading) {
     return <PageLoader />;
   }
 
-  if (!reagentDetails) {
+  if (!reagentDetails || !reagentLocationDetails) {
     return (
       <Container maxWidth="md" sx={{ mt: 4 }}>
         <Typography variant="h6" color="error">
@@ -67,12 +74,14 @@ const ReagentPage = () => {
         reagentDetails={reagentDetails}
         setDeleteModalIsOpen={setDeleteModalIsOpen}
         setIsEditing={setIsEditing}
+        reagentLocationDetails={reagentLocationDetails}
       />
       {isEditing && (
         <ReagentEditForm
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           reagentDetails={reagentDetails}
+          reagentLocationDetails={reagentLocationDetails}
         />
       )}
       <ConfirmRemoving
