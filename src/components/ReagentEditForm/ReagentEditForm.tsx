@@ -7,9 +7,11 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import { PageLoader } from "@/components";
 import { useLocationQuantityDetails } from "@/hooks";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import {
   useDeleteReagentMutation,
   useGetStorageRoomsQuery,
@@ -36,6 +38,8 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
 
   const [deleteReagent] = useDeleteReagentMutation();
 
+  const navigate = useNavigate();
+
   const {
     selectedRoom,
     setSelectedRoom,
@@ -53,6 +57,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
     try {
       if (quantityLeft === "0") {
         await deleteReagent(reagentDetails.substanceId).unwrap();
+        navigate(RouteProtectedPath.reagentSampleList);
       } else {
         await updateReagent({
           id: reagentDetails.substanceId,
