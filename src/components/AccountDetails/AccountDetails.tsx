@@ -32,11 +32,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
 
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar({
-    isOpen: false,
-    text: "",
-    severity: "success",
-  });
+  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const {
     register,

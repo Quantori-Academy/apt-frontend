@@ -11,11 +11,7 @@ type AddUserModalProps = {
 };
 
 const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar({
-    isOpen: false,
-    severity: "success",
-    text: "",
-  });
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
   function handleFormSubmit(status: AddUserStatus) {
     if (status === "success") {

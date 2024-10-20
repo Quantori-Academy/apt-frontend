@@ -9,11 +9,20 @@ type SnackbarState = {
   text: string;
 };
 
-export const useAlertSnackbar = (initialState: SnackbarState) => {
+const defaultInitialState: SnackbarState = {
+  isOpen: false,
+  severity: "success",
+  text: "",
+};
+
+export const useAlertSnackbar = (
+  initialState: SnackbarState = defaultInitialState
+) => {
+  const { isOpen, severity, text } = initialState;
   const [snackbarState, setSnackbarState] = useState<SnackbarState>({
-    isOpen: initialState.isOpen,
-    severity: initialState.severity,
-    text: initialState.text,
+    isOpen,
+    severity,
+    text,
   });
 
   const openSnackbar = (severity: Severity, text: string) => {
