@@ -31,13 +31,28 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
     >
       <DialogTitle id="alert-dialog-title">{modalTitle}</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText
+          id="alert-dialog-description"
+          sx={{ fontSize: "18px" }}
+        >
           {modalText}
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ margin: "20px" }}>
         <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={onDelete} variant="outlined" color="error" autoFocus>
+        <Button
+          onClick={onDelete}
+          variant="outlined"
+          sx={{
+            color: "white",
+            bgcolor: "red",
+            "&:hover": {
+              color: "white",
+              backgroundColor: "#e30000",
+            },
+          }}
+          autoFocus
+        >
           Agree
         </Button>
       </DialogActions>
