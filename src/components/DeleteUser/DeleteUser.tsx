@@ -53,25 +53,6 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
         onClose={() => setIsOpenModal(false)}
         onDelete={handleDeleteUser}
       />
-
-      {/*/!*<Modal open={isOpenModal} onClose={() => setIsOpenModal(false)}>*!/*/}
-      {/*  <Box className={style.modalStyle}>*/}
-      {/*    <Typography id="modal-modal-title" variant="h6" component="h2">*/}
-      {/*      Are you sure you want to delete this user?*/}
-      {/*    </Typography>*/}
-      {/*    <Box marginTop={3} display="flex" justifyContent="flex-end" gap={3}>*/}
-      {/*      <Button*/}
-      {/*
-      {/*        variant="contained"*/}
-      {/*        onClick={handleDeleteUser}*/}
-      {/*        disabled={isDeleting}*/}
-      {/*      >*/}
-      {/*        Delete*/}
-      {/*      </Button>*/}
-      {/*      <Button onClick={() => setIsOpenModal(false)}>Cancel</Button>*/}
-      {/*    </Box>*/}
-      {/*  </Box>*/}
-      {/*</Modal>*/}
       {SnackbarComponent()}
     </Container>
   );
