@@ -6,6 +6,7 @@ import {
   Dashboard,
   ReagentPage,
   ReagentSampleList,
+  UserDetails,
   Users,
 } from "@/pages";
 import { UserRole } from "@/types";
@@ -43,7 +44,7 @@ export const protectedRoutesRouterConfig: Record<
   },
   [AppProtectedRoutes.USER_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.USER_PAGE],
-    element: <AccountSettings />,
+    element: <UserDetails />,
     roles: [userRoles.Administrator],
   },
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: {
