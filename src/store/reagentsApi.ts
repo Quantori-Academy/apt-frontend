@@ -5,6 +5,13 @@ import { BackEndReagent, FrontEndReagent } from "@/types";
 
 import { transformReagentResponse } from "./utils/transformReagentResponse";
 
+type MutationReagentResponse = {
+  status: number;
+  data: {
+    message: string;
+  };
+};
+
 export const reagentsApi = createApi({
   reducerPath: "reagentsApi",
   baseQuery: fetchBaseQuery({
@@ -20,7 +27,7 @@ export const reagentsApi = createApi({
       providesTags: ["Reagents"],
     }),
 
-    deleteReagent: builder.mutation({
+    deleteReagent: builder.mutation<MutationReagentResponse, string>({
       query: (reagentId) => {
         return {
           url: `/substances/${reagentId}`,
