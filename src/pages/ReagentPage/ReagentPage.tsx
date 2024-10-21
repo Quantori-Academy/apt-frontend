@@ -35,6 +35,8 @@ const ReagentPage = () => {
 
   const [deleteReagent] = useDeleteReagentMutation();
 
+  if (!reagentId) return null;
+
   if (isReagentLoading || isReagentLocationLoading) {
     return <PageLoader />;
   }
