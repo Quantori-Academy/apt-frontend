@@ -6,6 +6,7 @@ import {
   Dashboard,
   ReagentPage,
   ReagentSampleList,
+  SamplePage,
   UserDetails,
   Users,
 } from "@/pages";
@@ -22,6 +23,7 @@ export const enum AppProtectedRoutes {
   DASHBOARD = "dashboard",
   REAGENT_SAMPLE_LIST = "reagentSampleList",
   REAGENT_PAGE = "reagentPage",
+  SAMPLE_PAGE = "samplePage",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -31,6 +33,7 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.DASHBOARD]: "/dashboard",
   [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: "/reagent-sample-list",
   [AppProtectedRoutes.REAGENT_PAGE]: "/reagent-sample-list/reagent/:id",
+  [AppProtectedRoutes.SAMPLE_PAGE]: "/reagent-sample-list/sample/:id",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -60,6 +63,11 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.REAGENT_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_PAGE],
     element: <ReagentPage />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.SAMPLE_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_PAGE],
+    element: <SamplePage />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.DASHBOARD]: {

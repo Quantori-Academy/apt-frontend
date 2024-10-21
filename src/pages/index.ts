@@ -6,3 +6,4 @@ export { Home } from "./Home";
 export { ReagentPage } from "./ReagentPage";
 export { ReagentSampleList } from "./ReagentSampleList";
 export { UserDetails } from "./UserDetails";
+export { SamplePage } from "./SamplePage";
