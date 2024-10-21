@@ -18,6 +18,8 @@ export {
   reagentsApi,
 } from "./reagentsApi";
 
+export { useGetSampleDetailsQuery } from "./sampleApi";
+
 export { useGetReagentSampleListQuery } from "./reagentSampleApi";
 
 export { useGetStorageRoomsQuery, useGetStorageLocationDetailQuery } from "./storageApi";

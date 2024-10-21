@@ -3,12 +3,21 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit";
 
 import { reagentSampleApi } from "./reagentSampleApi";
 import { reagentsApi } from "./reagentsApi";
+import { sampleApi } from "./sampleApi";
 import { authSlice } from "./slices/authSlice";
 import { counterSlice } from "./slices/counterSlice";
 import { storageApi } from "./storageApi";
 import { usersApi } from "./usersApi";
 
-const rootReducer = combineSlices(counterSlice, authSlice, usersApi, reagentSampleApi, reagentsApi, storageApi);
+const rootReducer = combineSlices(
+  counterSlice,
+  authSlice,
+  usersApi,
+  reagentSampleApi,
+  reagentsApi,
+  storageApi,
+  sampleApi
+);
 
 export const makeStore = () => {
   const store = configureStore({
@@ -18,7 +27,8 @@ export const makeStore = () => {
         usersApi.middleware,
         reagentSampleApi.middleware,
         reagentsApi.middleware,
-        storageApi.middleware
+        storageApi.middleware,
+        sampleApi.middleware
       ),
   });
 

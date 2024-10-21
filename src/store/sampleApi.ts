@@ -20,3 +20,5 @@ export const sampleApi = createApi({
     }),
   }),
 });
+
+export const { useGetSampleDetailsQuery } = sampleApi;
