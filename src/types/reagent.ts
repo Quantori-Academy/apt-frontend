@@ -1,17 +1,17 @@
 export type FrontEndReagent = {
   substanceId: number;
   name: string;
-  category: string;
-  CASNumber: string;
-  producer: string;
-  locationId: number;
-  unit: string;
-  pricePerUnit: string;
-  totalQuantityLeft: number;
-  catalogID: number;
-  catalogLink: string;
   description: string;
   structure: string;
+  category: string;
+  totalQuantityLeft: number;
+  unit: string;
+  pricePerUnit: string;
+  locationId: number;
+  catalogID: number;
+  producer: string;
+  CASNumber: string;
+  catalogLink: string;
 };
 
 export type BackEndReagent = Omit<
