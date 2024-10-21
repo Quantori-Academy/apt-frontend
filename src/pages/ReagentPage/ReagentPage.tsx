@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -8,6 +8,7 @@ import {
   ReagentDetails,
   ReagentEditForm,
 } from "@/components";
+import { PageError } from "@/components/PageError";
 import { useAlertSnackbar } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import {
@@ -41,11 +42,9 @@ const ReagentPage = () => {
 
   if (!reagentDetails || !reagentLocationDetails) {
     return (
-      <Container maxWidth="md" sx={{ mt: 4 }}>
-        <Typography variant="h6" color="error">
-          Failed to load reagent details. Please try again later.
-        </Typography>
-      </Container>
+      <PageError
+        text={"Failed to load reagent details. Please try again later."}
+      />
     );
   }
 
@@ -57,7 +56,6 @@ const ReagentPage = () => {
 
       navigate(RouteProtectedPath.reagentSampleList);
     } catch (err) {
-      console.log(err);
       if (typeof err === "object" && err !== null && "data" in err) {
         const errorMessage = (err as { data: { message: string } }).data
           .message;
