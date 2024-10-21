@@ -5,7 +5,7 @@ import { FrontEndReagent, FrontRoomData, FrontRoomLocationBrief, FrontStorageRoo
 export const useLocationQuantityDetails = (
   reagentDetails: FrontEndReagent,
   reagentLocationDetails: FrontRoomData,
-  rooms: FrontStorageRoomsBrief[] | undefined
+  rooms?: FrontStorageRoomsBrief[]
 ) => {
   const [selectedRoom, setSelectedRoom] = useState<FrontStorageRoomsBrief | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<FrontRoomLocationBrief | null>(null);
