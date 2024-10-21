@@ -1,6 +1,6 @@
-import { BackRoomData, BackStorageRoomsBrief, FrontRoomData, FrontStorageRoomsBrief } from "@/types";
+import { BackEndRoomData, BackEndStorageRoomsBrief, RoomData, StorageRoomsBrief } from "@/types";
 
-export const transformStorageRoomsResponse = (room: BackStorageRoomsBrief): FrontStorageRoomsBrief => ({
+export const transformStorageRoomsResponse = (room: BackEndStorageRoomsBrief): StorageRoomsBrief => ({
   id: room.id,
   room: room.room,
   description: room.description,
@@ -11,7 +11,7 @@ export const transformStorageRoomsResponse = (room: BackStorageRoomsBrief): Fron
   totalSubstances: room.total_substances,
 });
 
-export const transformStorageLocationResponse = (location: BackRoomData): FrontRoomData => ({
+export const transformStorageLocationResponse = (location: BackEndRoomData): RoomData => ({
   roomId: location.room_id,
   locationId: location.location_id,
   roomName: location.room_name,

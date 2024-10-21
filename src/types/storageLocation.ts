@@ -1,50 +1,50 @@
-export type FrontStorageRoomsBrief = {
+export type StorageRoomsBrief = {
   id: number;
   room: string;
   description: string;
-  locations: FrontRoomLocationBrief[];
+  locations: RoomLocationBrief[];
   totalSubstances: number;
 };
 
-export type FrontRoomLocationBrief = {
+export type RoomLocationBrief = {
   locationId: number;
   locationName: string;
 };
 
-export type BackRoomLocationBrief = {
+export type BackEndRoomLocationBrief = {
   location_id: number;
   location_name: string;
 };
 
-export type BackStorageRoomsBrief = Omit<FrontStorageRoomsBrief, "locations" | "totalSubstances"> & {
-  locations: BackRoomLocationBrief[];
+export type BackEndStorageRoomsBrief = Omit<StorageRoomsBrief, "locations" | "totalSubstances"> & {
+  locations: BackEndRoomLocationBrief[];
   total_substances: number;
 };
 
-export type FrontRoomData = {
+export type RoomData = {
   roomId: number;
   locationId: number;
   roomName: string;
   locationName: string;
-  substances: FrontSubstance[];
+  substances: Substance[];
 };
 
-export type FrontSubstance = {
+export type Substance = {
   substanceId: number;
   name: string;
   description: string;
   structureSmiles: string;
 };
 
-export type BackRoomData = {
+export type BackEndRoomData = {
   room_id: number;
   location_id: number;
   room_name: string;
   location_name: string;
-  substances: BackSubstance[];
+  substances: BackEndSubstance[];
 };
 
-export type BackSubstance = {
+export type BackEndSubstance = {
   substance_id: number;
   name: string;
   description: string;

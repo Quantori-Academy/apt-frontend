@@ -1,6 +1,6 @@
-import { BackEndReagent, FrontEndReagent } from "@/types";
+import { BackEndReagent, Reagent } from "@/types";
 
-export const transformReagentResponse = (reagent: BackEndReagent): FrontEndReagent => ({
+export const transformReagentResponse = (reagent: BackEndReagent): Reagent => ({
   substanceId: reagent.substance_id,
   name: reagent.name,
   description: reagent.description,

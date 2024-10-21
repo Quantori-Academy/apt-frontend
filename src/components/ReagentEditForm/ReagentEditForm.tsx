@@ -17,13 +17,13 @@ import {
   useGetStorageRoomsQuery,
   useUpdateReagentMutation,
 } from "@/store";
-import { FrontEndReagent, FrontRoomData } from "@/types";
+import { Reagent, RoomData } from "@/types";
 
 type ReagentEditFormProps = {
   isEditing: boolean;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  reagentDetails: FrontEndReagent;
-  reagentLocationDetails: FrontRoomData;
+  reagentDetails: Reagent;
+  reagentLocationDetails: RoomData;
 };
 
 const ReagentEditForm: React.FC<ReagentEditFormProps> = ({

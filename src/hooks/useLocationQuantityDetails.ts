@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 
-import { FrontEndReagent, FrontRoomData, FrontRoomLocationBrief, FrontStorageRoomsBrief } from "@/types";
+import { Reagent, RoomData, RoomLocationBrief, StorageRoomsBrief } from "@/types";
 
 export const useLocationQuantityDetails = (
-  reagentDetails: FrontEndReagent,
-  reagentLocationDetails: FrontRoomData,
-  rooms: FrontStorageRoomsBrief[] | undefined
+  reagentDetails: Reagent,
+  reagentLocationDetails: RoomData,
+  rooms: StorageRoomsBrief[] | undefined
 ) => {
-  const [selectedRoom, setSelectedRoom] = useState<FrontStorageRoomsBrief | null>(null);
-  const [selectedLocation, setSelectedLocation] = useState<FrontRoomLocationBrief | null>(null);
+  const [selectedRoom, setSelectedRoom] = useState<StorageRoomsBrief | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<RoomLocationBrief | null>(null);
 
   const [quantityLeft, setQuantityLeft] = useState("");
   useEffect(() => {
