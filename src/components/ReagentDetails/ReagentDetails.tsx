@@ -57,7 +57,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
                 <DetailItem
                   key={label}
                   label={label}
-                  value={`${reagentLocationDetails.roomName}, reagentLocationDetails.locationName`}
+                  value={`${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`}
                 />
               )
             )}
