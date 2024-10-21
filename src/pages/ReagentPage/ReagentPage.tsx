@@ -56,8 +56,15 @@ const ReagentPage = () => {
       openSnackbar("success", "Reagent deleted successfully!");
 
       navigate(RouteProtectedPath.reagentSampleList);
-    } catch {
-      openSnackbar("error", "Failed to delete reagent!");
+    } catch (err) {
+      console.log(err);
+      if (typeof err === "object" && err !== null && "data" in err) {
+        const errorMessage = (err as { data: { message: string } }).data
+          .message;
+        openSnackbar("error", errorMessage);
+      } else {
+        openSnackbar("error", "An unexpected error occurred");
+      }
     } finally {
       setDeleteModalIsOpen(false);
     }
