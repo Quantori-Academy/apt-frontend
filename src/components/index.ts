@@ -21,3 +21,4 @@ export { DetailItem } from "./DetailItem";
 export { ReagentSampleTable } from "./ReagentSampleTable";
 export { ReagentDetails } from "./ReagentDetails";
 export { ReagentEditForm } from "./ReagentEditForm";
+export { SampleDetails } from "./SampleDetails";
