@@ -43,4 +43,5 @@ export const reagentsApi = createApi({
     }),
   }),
 });
+
 export const { useGetReagentDetailsQuery, useDeleteReagentMutation, useUpdateReagentMutation } = reagentsApi;
