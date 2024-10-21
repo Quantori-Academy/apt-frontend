@@ -79,7 +79,13 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
   return (
     <Dialog open={isEditing} onClose={() => setIsEditing(false)} maxWidth="sm">
       <DialogTitle>Edit Reagent</DialogTitle>
-      <DialogContent sx={{ paddingTop: "10px !important" }}>
+      <DialogContent
+        sx={{
+          "&.MuiDialogContent-root": {
+            paddingTop: "10px",
+          },
+        }}
+      >
         <TextField
           label="Quantity Left"
           variant="outlined"
