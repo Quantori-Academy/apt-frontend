@@ -3,4 +3,6 @@ export { Users } from "./Users";
 export { AccountSettings } from "./AccountSettings";
 export { Dashboard } from "./Dashboard";
 export { Home } from "./Home";
+export { ReagentPage } from "./ReagentPage";
 export { ReagentSampleList } from "./ReagentSampleList";
+export { UserDetails } from "./UserDetails";

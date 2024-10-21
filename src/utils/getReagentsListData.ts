@@ -1,0 +1,58 @@
+import { CategoryFilterOption, ExpiredFilter, ReagentDetails, SortColumn, SortDirection } from "@/types";
+
+type GetListDataOptions = {
+  items: Array<ReagentDetails>;
+  searchQuery: string;
+  categoryFilter: CategoryFilterOption;
+  expiredFilter: ExpiredFilter;
+  sortColumn: SortColumn;
+  sortDirection: SortDirection;
+  page: number;
+  pageSize: number;
+};
+
+export const getListData = ({
+  expiredFilter,
+  categoryFilter,
+  searchQuery,
+  pageSize,
+  page,
+  sortDirection,
+  sortColumn,
+  items,
+}: GetListDataOptions) => {
+  const filtered = filterListData(items, categoryFilter, searchQuery, expiredFilter);
+  const sorted = sortListData(filtered, sortColumn, sortDirection);
+  const paginated = paginateListData(sorted, page, pageSize);
+
+  const totalPages = Math.ceil(sorted.length / pageSize);
+
+  return { visibleItems: paginated, totalPages };
+};
+
+const filterListData = (
+  items: Array<ReagentDetails>,
+  categoryFilter: CategoryFilterOption,
+  searchQuery: string,
+  expiredFilter: ExpiredFilter
+) => {
+  return items.filter((item) => {
+    const satisfiesExpired = expiredFilter === "All" || item.isExpired;
+    const satisfiesCategory = categoryFilter === "All" || item.category === categoryFilter;
+    const satisfiesSearch =
+      item.name.toLowerCase().includes(searchQuery) || item.structure.toLowerCase().includes(searchQuery);
+
+    return satisfiesExpired && satisfiesCategory && satisfiesSearch;
+  });
+};
+
+const sortListData = (items: Array<ReagentDetails>, sortColumn: SortColumn, sortDirection: SortDirection) => {
+  return items.toSorted((a, b) => {
+    const order = a[sortColumn].localeCompare(b[sortColumn]);
+    return sortDirection === "asc" ? order : -1 * order;
+  });
+};
+
+const paginateListData = (items: Array<ReagentDetails>, page: number, pageSize: number) => {
+  return items.slice((page - 1) * pageSize, page * pageSize);
+};

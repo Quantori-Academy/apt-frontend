@@ -1,4 +1,4 @@
-import { ReagentDetails } from "@/types";
+import { Reagent, ReagentDetails } from "@/types";
 
 export const reagentsAndSamplesMock: Array<ReagentDetails> = [
   {
@@ -8,6 +8,7 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Colorless, flammable solvent used in cleaning and degreasing",
     quantityLeft: "500 mL",
     storageLocation: "Shelf A2",
+    isExpired: false,
   },
   {
     name: "Ethanol",
@@ -16,6 +17,7 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Colorless liquid used as a solvent and disinfectant",
     quantityLeft: "1 L",
     storageLocation: "Shelf B1",
+    isExpired: false,
   },
   {
     name: "Benzene",
@@ -24,6 +26,7 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Colorless, flammable liquid used in chemical synthesis",
     quantityLeft: "300 mL",
     storageLocation: "Shelf C3",
+    isExpired: false,
   },
   {
     name: "Methanol",
@@ -32,6 +35,7 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Colorless, toxic liquid used as an industrial solvent",
     quantityLeft: "750 mL",
     storageLocation: "Shelf A1",
+    isExpired: true,
   },
   {
     name: "Toluene",
@@ -40,6 +44,7 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Clear, colorless liquid used as a solvent and paint thinner",
     quantityLeft: "900 mL",
     storageLocation: "Shelf D2",
+    isExpired: true,
   },
   {
     name: "Chloroform",
@@ -48,6 +53,7 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Heavy, colorless liquid used as a solvent and anesthetic",
     quantityLeft: "200 mL",
     storageLocation: "Shelf B2",
+    isExpired: true,
   },
   {
     name: "Hexane",
@@ -56,6 +62,7 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Colorless liquid used as a solvent in industrial processes",
     quantityLeft: "600 mL",
     storageLocation: "Shelf C1",
+    isExpired: false,
   },
   {
     name: "Diethyl Ether",
@@ -64,6 +71,7 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Highly flammable liquid used as a solvent and anesthetic",
     quantityLeft: "250 mL",
     storageLocation: "Shelf A3",
+    isExpired: false,
   },
   {
     name: "Formaldehyde",
@@ -72,6 +80,7 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Colorless gas in solution, used in disinfectants and preservatives",
     quantityLeft: "400 mL",
     storageLocation: "Shelf E1",
+    isExpired: false,
   },
   {
     name: "Acetic Acid",
@@ -80,6 +89,7 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Clear, corrosive liquid used as a solvent and in food production",
     quantityLeft: "700 mL",
     storageLocation: "Shelf D1",
+    isExpired: false,
   },
   {
     name: "Ammonia",
@@ -88,5 +98,22 @@ export const reagentsAndSamplesMock: Array<ReagentDetails> = [
     description: "Colorless gas in solution, used in cleaning products and fertilizers",
     quantityLeft: "500 mL",
     storageLocation: "Shelf F3",
+    isExpired: false,
   },
 ];
+
+export const reagentDetails: Reagent = {
+  reagentID: "R-00123",
+  name: "Acetone",
+  category: "Organic Solvent",
+  description: "A colorless, volatile liquid used as a solvent and for chemical reactions.",
+  structure: "CN1C=NC2=C1C(=O)N(C(=O)N2C)C",
+  CASNumber: "67-64-1",
+  producer: "Sigma-Aldrich",
+  catalogID: "A-12345",
+  catalogLink: "https://www.sigmaaldrich.com/catalog/product/sigma/acsgrade",
+  storageLocation: "Room 3, shelf 3",
+  units: "Bottle 500 ml",
+  pricePerUnit: 50.0,
+  quantity: 10,
+};
