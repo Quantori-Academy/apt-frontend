@@ -9,8 +9,8 @@ export const useLocationQuantityDetails = (
 ) => {
   const [selectedRoom, setSelectedRoom] = useState<FrontStorageRoomsBrief | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<FrontRoomLocationBrief | null>(null);
-
   const [quantityLeft, setQuantityLeft] = useState("");
+
   useEffect(() => {
     if (reagentDetails && rooms?.length) {
       const currentRoom = rooms.find((room) => room.id === reagentLocationDetails.roomId);
