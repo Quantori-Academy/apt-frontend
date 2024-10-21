@@ -14,7 +14,7 @@ export type Reagent = {
   structure: string;
 };
 
-export type BackEndReagent = Omit<
+export type BackendReagent = Omit<
   Reagent,
   "substanceId" | "CASNumber" | "catalogID" | "catalogLink" | "totalQuantityLeft" | "pricePerUnit" | "locationId"
 > & {

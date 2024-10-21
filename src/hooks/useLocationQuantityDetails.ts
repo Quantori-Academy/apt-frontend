@@ -5,12 +5,12 @@ import { Reagent, RoomData, RoomLocationBrief, StorageRoomsBrief } from "@/types
 export const useLocationQuantityDetails = (
   reagentDetails: Reagent,
   reagentLocationDetails: RoomData,
-  rooms: StorageRoomsBrief[] | undefined
+  rooms?: StorageRoomsBrief[]
 ) => {
   const [selectedRoom, setSelectedRoom] = useState<StorageRoomsBrief | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<RoomLocationBrief | null>(null);
-
   const [quantityLeft, setQuantityLeft] = useState("");
+
   useEffect(() => {
     if (reagentDetails && rooms?.length) {
       const currentRoom = rooms.find((room) => room.id === reagentLocationDetails.roomId);

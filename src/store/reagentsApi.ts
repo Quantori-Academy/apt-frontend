@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { BackEndReagent, Reagent } from "@/types";
+import { BackendReagent, Reagent } from "@/types";
 
 import { transformReagentResponse } from "./utils/transformReagentResponse";
 
@@ -23,7 +23,7 @@ export const reagentsApi = createApi({
   endpoints: (builder) => ({
     getReagentDetails: builder.query<Reagent, string>({
       query: (reagentId) => `/substances/reagents/${reagentId}`,
-      transformResponse: (response: BackEndReagent) => transformReagentResponse(response),
+      transformResponse: (response: BackendReagent) => transformReagentResponse(response),
       providesTags: ["Reagents"],
     }),
 
@@ -50,4 +50,5 @@ export const reagentsApi = createApi({
     }),
   }),
 });
+
 export const { useGetReagentDetailsQuery, useDeleteReagentMutation, useUpdateReagentMutation } = reagentsApi;

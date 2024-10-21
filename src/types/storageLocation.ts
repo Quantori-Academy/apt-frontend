@@ -11,13 +11,13 @@ export type RoomLocationBrief = {
   locationName: string;
 };
 
-export type BackEndRoomLocationBrief = {
+export type BackendRoomLocationBrief = {
   location_id: number;
   location_name: string;
 };
 
-export type BackEndStorageRoomsBrief = Omit<StorageRoomsBrief, "locations" | "totalSubstances"> & {
-  locations: BackEndRoomLocationBrief[];
+export type BackendStorageRoomsBrief = Omit<StorageRoomsBrief, "locations" | "totalSubstances"> & {
+  locations: BackendRoomLocationBrief[];
   total_substances: number;
 };
 
@@ -36,15 +36,15 @@ export type Substance = {
   structureSmiles: string;
 };
 
-export type BackEndRoomData = {
+export type BackendRoomData = {
   room_id: number;
   location_id: number;
   room_name: string;
   location_name: string;
-  substances: BackEndSubstance[];
+  substances: BackendSubstance[];
 };
 
-export type BackEndSubstance = {
+export type BackendSubstance = {
   substance_id: number;
   name: string;
   description: string;
