@@ -16,7 +16,7 @@ import {
   useGetStorageLocationDetailQuery,
 } from "@/store";
 
-const ReagentPage = () => {
+const ReagentPage: React.FC = () => {
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
