@@ -6,6 +6,8 @@ import { useAppSelector } from "@/hooks";
 import { RoutePublicPath } from "@/router/publicRoutesRouterConfig.tsx";
 import { selectUserIsAuthenticated } from "@/store";
 
+import { Logo } from "../Logo";
+
 type HeaderProps = {
   onClick: (event: React.MouseEvent<HTMLElement>) => void | null;
 };
@@ -19,23 +21,24 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
       color={"secondary"}
       sx={{
         zIndex: 2,
-        paddingRight: "24px",
+        paddingX: "24px",
         paddingY: "12px",
         width: "100%",
         display: "flex",
         flexDirection: "row",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
         gap: "5px",
         alignItems: "center",
       }}
     >
+      <Logo />
       {isAuthenticated ? (
         <IconButton
           color="inherit"
           sx={{ p: 0, mr: 2 }}
           onClick={(e) => onClick(e)}
         >
-          <Avatar sx={{ width: 30, height: 30 }} />
+          <Avatar sx={{ width: 40, height: 40 }} />
         </IconButton>
       ) : (
         <Button component={NavLink} to={RoutePublicPath.login}>
