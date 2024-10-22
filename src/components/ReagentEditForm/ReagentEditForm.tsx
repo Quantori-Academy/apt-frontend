@@ -16,25 +16,31 @@ import {
   useDeleteReagentMutation,
   useGetStorageRoomsQuery,
   useUpdateReagentMutation,
+  useUpdateSampleMutation,
 } from "@/store";
-import { Reagent, RoomData } from "@/types";
+import { Reagent, RoomData, Sample } from "@/types";
+
+import { SubstanceType } from "../SubstanceDetails/SubstanceDetails";
 
 type ReagentEditFormProps = {
+  substanceType: SubstanceType;
   isEditing: boolean;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  reagentDetails: Reagent;
-  reagentLocationDetails: RoomData;
+  substanceDetails: Reagent | Sample;
+  substanceLocationDetails: RoomData;
 };
 
 const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
   isEditing,
   setIsEditing,
-  reagentDetails,
-  reagentLocationDetails,
+  substanceDetails,
+  substanceLocationDetails,
+  substanceType,
 }) => {
   const { data: rooms, isLoading } = useGetStorageRoomsQuery();
 
   const [updateReagent] = useUpdateReagentMutation();
+  const [updateSample] = useUpdateSampleMutation();
 
   const [deleteReagent] = useDeleteReagentMutation();
 
@@ -47,7 +53,11 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
     setSelectedLocation,
     quantityLeft,
     setQuantityLeft,
-  } = useLocationQuantityDetails(reagentDetails, reagentLocationDetails, rooms);
+  } = useLocationQuantityDetails(
+    substanceDetails,
+    substanceLocationDetails,
+    rooms
+  );
 
   if (isLoading) {
     return <PageLoader />;
@@ -56,11 +66,20 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
   const handleSubmit = async () => {
     try {
       if (quantityLeft === "0") {
-        await deleteReagent(reagentDetails.substanceId).unwrap();
+        await deleteReagent(substanceDetails.substanceId).unwrap();
         navigate(RouteProtectedPath.reagentSampleList);
-      } else {
+      } else if (substanceType === "reagent") {
         await updateReagent({
-          id: reagentDetails.substanceId,
+          id: substanceDetails.substanceId,
+          quantity: quantityLeft,
+          storageLocation: {
+            roomId: selectedRoom?.id,
+            locationId: selectedLocation?.locationId,
+          },
+        }).unwrap();
+      } else {
+        await updateSample({
+          id: substanceDetails.substanceId,
           quantity: quantityLeft,
           storageLocation: {
             roomId: selectedRoom?.id,
@@ -105,7 +124,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
           options={rooms || []}
           getOptionLabel={(option) =>
             option.room +
-            (option.id === reagentLocationDetails.roomId ? " (current)" : "")
+            (option.id === substanceLocationDetails.roomId ? " (current)" : "")
           }
           value={selectedRoom}
           onChange={(_, newRoom) => {
@@ -122,7 +141,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
             options={availableLocations}
             getOptionLabel={(option) =>
               option.locationName +
-              (option.locationId === reagentLocationDetails.locationId
+              (option.locationId === substanceLocationDetails.locationId
                 ? " (current)"
                 : "")
             }
