@@ -1,50 +1,24 @@
-import { Container } from "@mui/material";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import {
-  ConfirmRemoving,
-  PageError,
-  PageLoader,
-  ReagentDetails,
-  ReagentEditForm,
-} from "@/components";
-import { useAlertSnackbar } from "@/hooks";
+import { PageError, PageLoader, SubstanceDetails } from "@/components";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import {
-  useDeleteReagentMutation,
-  useGetReagentDetailsQuery,
-  useGetStorageLocationDetailQuery,
-} from "@/store";
+import { useGetReagentDetailsQuery } from "@/store";
 
 const ReagentPage: React.FC = () => {
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
-
-  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-
   const { id: reagentId } = useParams<{ id: string }>();
+
   const {
     data: reagentDetails,
     isError,
     isLoading: isReagentLoading,
   } = useGetReagentDetailsQuery(reagentId ? reagentId : skipToken);
 
-  const { data: reagentLocationDetails, isLoading: isReagentLocationLoading } =
-    useGetStorageLocationDetailQuery(
-      reagentDetails ? reagentDetails.locationId : skipToken
-    );
-
-  const navigate = useNavigate();
-
-  const [deleteReagent] = useDeleteReagentMutation();
-
-  if (isReagentLoading || isReagentLocationLoading) {
+  if (isReagentLoading) {
     return <PageLoader />;
   }
 
-  if (!reagentDetails || !reagentLocationDetails || !reagentId || isError) {
+  if (!reagentDetails || !reagentId || isError) {
     return (
       <PageError
         text={"Failed to load reagent details. Please try again later."}
@@ -52,52 +26,13 @@ const ReagentPage: React.FC = () => {
     );
   }
 
-  const handleDelete = async () => {
-    try {
-      await deleteReagent(reagentId).unwrap();
-
-      openSnackbar("success", "Reagent deleted successfully!");
-
-      navigate(RouteProtectedPath.reagentSampleList);
-    } catch (err) {
-      if (typeof err === "object" && err !== null && "data" in err) {
-        const errorMessage = (err as { data: { message: string } }).data
-          .message;
-        openSnackbar("error", errorMessage);
-      } else {
-        openSnackbar("error", "An unexpected error occurred");
-      }
-    } finally {
-      setDeleteModalIsOpen(false);
-    }
-  };
-
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <ReagentDetails
-        reagentDetails={reagentDetails}
-        setDeleteModalIsOpen={setDeleteModalIsOpen}
-        setIsEditing={setIsEditing}
-        reagentLocationDetails={reagentLocationDetails}
-      />
-      {isEditing && (
-        <ReagentEditForm
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          reagentDetails={reagentDetails}
-          reagentLocationDetails={reagentLocationDetails}
-        />
-      )}
-      <ConfirmRemoving
-        open={deleteModalIsOpen}
-        modalTitle=""
-        modalText="Are you sure you want to delete this reagent?"
-        onClose={() => setDeleteModalIsOpen(false)}
-        onDelete={handleDelete}
-      />
-
-      {SnackbarComponent()}
-    </Container>
+    <SubstanceDetails
+      substanceType="reagent"
+      substanceId={reagentId}
+      substanceDetails={reagentDetails}
+      redirectPath={RouteProtectedPath.reagentPage}
+    />
   );
 };
 
