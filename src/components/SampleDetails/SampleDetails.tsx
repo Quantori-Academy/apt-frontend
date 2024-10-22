@@ -2,7 +2,7 @@ import { Card, CardContent, Grid, Typography } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import { DetailItem, SmilesImage } from "@/components";
+import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { RoomData, Sample } from "@/types";
 
@@ -27,11 +27,15 @@ const sampleDetailsRows: ReagentDetailRow[] = [
 type SampleDetailsProps = {
   sampleDetails: Sample;
   sampleLocationDetails: RoomData;
+  setDeleteModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const SampleDetails: React.FC<SampleDetailsProps> = ({
   sampleDetails,
   sampleLocationDetails,
+  setDeleteModalIsOpen,
+  setIsEditing,
 }) => {
   return (
     <Card sx={{ background: "#0080800f" }}>
@@ -93,10 +97,10 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
           </Grid>
         </Grid>
         <DetailItem label="Description" value={sampleDetails.description} />
-        {/* <EditDeleteButtons
+        <EditDeleteButtons
           onDelete={() => setDeleteModalIsOpen(true)}
           onEdit={() => setIsEditing(true)}
-        /> */}
+        />
       </CardContent>
     </Card>
   );
