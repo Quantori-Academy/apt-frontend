@@ -1,4 +1,5 @@
 import { Container, Typography } from "@mui/material";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -16,7 +17,7 @@ import {
   useGetStorageLocationDetailQuery,
 } from "@/store";
 
-const ReagentPage = () => {
+const ReagentPage: React.FC = () => {
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
@@ -24,12 +25,12 @@ const ReagentPage = () => {
 
   const { id: reagentId } = useParams<{ id: string }>();
   const { data: reagentDetails, isLoading: isReagentLoading } =
-    useGetReagentDetailsQuery(reagentId!);
+    useGetReagentDetailsQuery(reagentId ? reagentId : skipToken);
 
   const { data: reagentLocationDetails, isLoading: isReagentLocationLoading } =
-    useGetStorageLocationDetailQuery(reagentDetails?.locationId as number, {
-      skip: !reagentDetails?.locationId,
-    });
+    useGetStorageLocationDetailQuery(
+      reagentDetails ? reagentDetails.locationId : skipToken
+    );
 
   const navigate = useNavigate();
 
