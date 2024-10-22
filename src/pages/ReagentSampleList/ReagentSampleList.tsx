@@ -8,10 +8,15 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { PageLoader, ReagentSampleTable, SearchBar } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { PageError } from "@/components/PageError";
+import {
+  AppProtectedRoutes,
+  RouteProtectedPath,
+} from "@/router/protectedRoutesRouterConfig.tsx";
 import { useGetReagentSampleListQuery } from "@/store";
 import {
   CategoryFilterOption,
@@ -39,6 +44,7 @@ const ReagentSampleList: React.FC = () => {
     useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
+  const navigate = useNavigate();
 
   const handleSortChange = (property: SortColumn) => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
@@ -85,10 +91,22 @@ const ReagentSampleList: React.FC = () => {
         Reagents And Samples
       </Typography>
       <Box className={style.buttonBox}>
-        <Button variant="contained" color="primary">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() =>
+            navigate(RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_FORM])
+          }
+        >
           Add Reagent
         </Button>
-        <Button variant="contained" color="primary">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() =>
+            navigate(RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_FORM])
+          }
+        >
           Add Sample
         </Button>
       </Box>
