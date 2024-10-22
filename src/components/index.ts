@@ -18,5 +18,5 @@ export { SmilesImage } from "./SmilesImage";
 export { ConfirmRemoving } from "./ConfirmRemoving";
 export { EditDeleteButtons } from "./EditDeleteButtons";
 export { DetailItem } from "./DetailItem";
-export { ReagentSampleTable } from "./ReagentSampleTable";
+export { SubstancesTable } from "./SubstancesTable";
 export { ReagentDetails } from "./ReagentDetails";

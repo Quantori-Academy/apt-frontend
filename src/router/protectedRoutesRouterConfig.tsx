@@ -5,7 +5,7 @@ import {
   AccountSettings,
   Dashboard,
   ReagentPage,
-  ReagentSampleList,
+  SubstancesList,
   UserDetails,
   Users,
 } from "@/pages";
@@ -20,7 +20,7 @@ export const enum AppProtectedRoutes {
   USER_PAGE = "userPage",
   ACCOUNT_SETTINGS = "accountSettings",
   DASHBOARD = "dashboard",
-  REAGENT_SAMPLE_LIST = "reagentSampleList",
+  SUBSTANCES = "substances",
   REAGENT_PAGE = "reagentPage",
 }
 
@@ -29,7 +29,7 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.USER_PAGE]: "/users/:id",
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: "/account-settings",
   [AppProtectedRoutes.DASHBOARD]: "/dashboard",
-  [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: "/reagent-sample-list",
+  [AppProtectedRoutes.SUBSTANCES]: "/substances",
   [AppProtectedRoutes.REAGENT_PAGE]: "/reagent-sample-list/reagent/:id",
 };
 
@@ -52,9 +52,9 @@ export const protectedRoutesRouterConfig: Record<
     element: <AccountSettings />,
     roles: Object.values(userRoles),
   },
-  [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: {
-    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_SAMPLE_LIST],
-    element: <ReagentSampleList />,
+  [AppProtectedRoutes.SUBSTANCES]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SUBSTANCES],
+    element: <SubstancesList />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.REAGENT_PAGE]: {
