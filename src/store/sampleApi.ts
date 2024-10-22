@@ -27,7 +27,18 @@ export const sampleApi = createApi({
       },
       invalidatesTags: ["Samples"],
     }),
+    updateSample: builder.mutation({
+      query: (updatedSampleDetails) => ({
+        url: `/substances/reagents/${updatedSampleDetails.id}`,
+        method: "PUT",
+        body: {
+          quantity_left: updatedSampleDetails.quantity,
+          storage_location: updatedSampleDetails.storageLocation,
+        },
+      }),
+      invalidatesTags: ["Samples"],
+    }),
   }),
 });
 
-export const { useGetSampleDetailsQuery, useDeleteSampleMutation } = sampleApi;
+export const { useGetSampleDetailsQuery, useDeleteSampleMutation, useUpdateSampleMutation } = sampleApi;
