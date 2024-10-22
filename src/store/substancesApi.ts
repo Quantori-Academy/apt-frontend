@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { transformSubstanceList } from "@/store/utils/transformSubstanceList.ts";
+import { SubstancesResponse, transformSubstanceList } from "@/store/utils/transformSubstanceList.ts";
 import { Reagent, SubstancesDetails } from "@/types";
 
-import { reagentDetails, substancesObj } from "../../mock";
+import { reagentDetails } from "../../mock";
 
 export const substancesApi = createApi({
   reducerPath: "reagentsApi",
@@ -14,6 +14,13 @@ export const substancesApi = createApi({
   }),
   tagTypes: ["Substances"],
   endpoints: (builder) => ({
+    getSubstances: builder.query<Array<SubstancesDetails>, void>({
+      query: () => "/substances",
+      transformResponse(baseQueryReturnValue: SubstancesResponse) {
+        return transformSubstanceList(baseQueryReturnValue);
+      },
+      providesTags: ["Substances"],
+    }),
     getReagentDetails: builder.query<Reagent, string>({
       // query: (reagentId) => `/reagents/${reagentId}`,
       queryFn: async () => {
@@ -31,12 +38,6 @@ export const substancesApi = createApi({
         method: "DELETE",
       }),
       invalidatesTags: ["Substances"],
-    }),
-    getSubstances: builder.query<Array<SubstancesDetails>, void>({
-      queryFn: async () => {
-        return { data: transformSubstanceList(substancesObj) };
-      },
-      providesTags: ["Substances"],
     }),
   }),
 });
