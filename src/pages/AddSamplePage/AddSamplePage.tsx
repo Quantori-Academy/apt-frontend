@@ -1,3 +1,4 @@
+import { Alert, Snackbar } from "@mui/material";
 import React, { useState } from "react";
 
 import { AddSampleForm } from "@/components/AddSampleForm";
@@ -29,12 +30,14 @@ const AddSamplePage: React.FC = () => {
     { id: 3, label: "Location 3" },
   ];
 
-  const [createSample, { isLoading, isSuccess }] = useCreateSampleMutation();
+  const [createSample, { isLoading }] = useCreateSampleMutation();
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
+  const [severity, setSeverity] = useState<"success" | "error">("success");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(e.target.value);
-
     setSampleData((prevData) => ({
       ...prevData,
       [name]:
@@ -69,10 +72,23 @@ const AddSamplePage: React.FC = () => {
     e.preventDefault();
     try {
       await createSample(sampleData).unwrap();
-      console.log("Sample added successfully.");
+      setSnackbarMessage("Sample added successfully!");
+      setSeverity("success");
+      setOpenSnackbar(true);
+
+      setTimeout(() => {
+        setOpenSnackbar(false);
+      }, 3000);
     } catch (err) {
       console.error("Error adding sample:", err);
+      setSnackbarMessage("Error adding sample.");
+      setSeverity("error");
+      setOpenSnackbar(true);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -87,7 +103,20 @@ const AddSamplePage: React.FC = () => {
         locationOptions={locationOptions}
       />
       {isLoading && <p>Loading...</p>}
-      {isSuccess && <p>Sample added successfully!</p>}
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

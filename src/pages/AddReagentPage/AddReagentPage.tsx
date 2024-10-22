@@ -1,3 +1,4 @@
+import { Alert, Snackbar } from "@mui/material";
 import React, { useState } from "react";
 
 import { AddReagentForm } from "@/components/AddReagentForm";
@@ -28,6 +29,10 @@ const AddReagentPage: React.FC = () => {
 
   const [createReagent] = useCreateReagentMutation();
 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
+  const [severity, setSeverity] = useState<"success" | "error">("success");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReagentData({
       ...reagentData,
@@ -48,11 +53,24 @@ const AddReagentPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createReagent(reagentData);
-      console.log("Reagent added successfully.");
+      await createReagent(reagentData).unwrap();
+      setSnackbarMessage("Reagent added successfully!");
+      setSeverity("success");
+      setOpenSnackbar(true);
+
+      setTimeout(() => {
+        setOpenSnackbar(false);
+      }, 3000);
     } catch (error) {
-      console.error(error);
+      console.error("Error adding reagent:", error);
+      setSnackbarMessage("Error adding reagent.");
+      setSeverity("error");
+      setOpenSnackbar(true);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -64,6 +82,20 @@ const AddReagentPage: React.FC = () => {
         handleLocationChange={handleLocationChange}
         locationOptions={locationOptions}
       />
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
