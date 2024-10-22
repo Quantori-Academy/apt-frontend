@@ -5,15 +5,21 @@ import { reagentSampleApi } from "./reagentSampleApi";
 import { reagentsApi } from "./reagentsApi";
 import { authSlice } from "./slices/authSlice";
 import { counterSlice } from "./slices/counterSlice";
+import { storageApi } from "./storageApi";
 import { usersApi } from "./usersApi";
 
-const rootReducer = combineSlices(counterSlice, authSlice, usersApi, reagentSampleApi, reagentsApi);
+const rootReducer = combineSlices(counterSlice, authSlice, usersApi, reagentSampleApi, reagentsApi, storageApi);
 
 export const makeStore = () => {
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(usersApi.middleware, reagentSampleApi.middleware, reagentsApi.middleware),
+      getDefaultMiddleware().concat(
+        usersApi.middleware,
+        reagentSampleApi.middleware,
+        reagentsApi.middleware,
+        storageApi.middleware
+      ),
   });
 
   return store;
