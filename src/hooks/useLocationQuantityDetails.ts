@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { Reagent, RoomData, RoomLocationBrief, StorageRoomsBrief } from "@/types";
+import { Reagent, RoomData, RoomLocationBrief, Sample, StorageRoomsBrief } from "@/types";
 
 export const useLocationQuantityDetails = (
-  reagentDetails: Reagent,
-  reagentLocationDetails: RoomData,
+  substanceDetails: Reagent | Sample,
+  substanceLocationDetails: RoomData,
   rooms?: StorageRoomsBrief[]
 ) => {
   const [selectedRoom, setSelectedRoom] = useState<StorageRoomsBrief | null>(null);
@@ -12,22 +12,22 @@ export const useLocationQuantityDetails = (
   const [quantityLeft, setQuantityLeft] = useState("");
 
   useEffect(() => {
-    if (reagentDetails && rooms?.length) {
-      const currentRoom = rooms.find((room) => room.id === reagentLocationDetails.roomId);
+    if (substanceDetails && rooms?.length) {
+      const currentRoom = rooms.find((room) => room.id === substanceLocationDetails.roomId);
       setSelectedRoom(currentRoom || null);
 
       if (currentRoom) {
         const currentLocation = currentRoom.locations.find(
-          (location) => location.locationId === reagentLocationDetails.locationId
+          (location) => location.locationId === substanceLocationDetails.locationId
         );
         setSelectedLocation(currentLocation || null);
       }
     }
 
-    if (reagentDetails && reagentDetails.totalQuantityLeft !== undefined) {
-      setQuantityLeft(String(reagentDetails.totalQuantityLeft));
+    if (substanceDetails && substanceDetails.totalQuantityLeft !== undefined) {
+      setQuantityLeft(String(substanceDetails.totalQuantityLeft));
     }
-  }, [reagentDetails, reagentLocationDetails, rooms]);
+  }, [substanceDetails, substanceLocationDetails, rooms]);
 
   return { selectedRoom, setSelectedRoom, selectedLocation, setSelectedLocation, quantityLeft, setQuantityLeft };
 };
