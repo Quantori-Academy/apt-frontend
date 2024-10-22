@@ -21,7 +21,7 @@ const SamplePage: React.FC = () => {
   if (!sampleDetails || !sampleId || isError) {
     return (
       <PageError
-        text={"Failed to load reagent details. Please try again later."}
+        text={"Failed to load sample details. Please try again later."}
       />
     );
   }

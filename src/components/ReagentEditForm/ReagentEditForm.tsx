@@ -89,7 +89,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
       }
       setIsEditing(false);
     } catch (err) {
-      console.error("Failed to update reagent: ", err);
+      console.error(`Failed to update ${substanceType}: `, err);
     }
   };
 
@@ -97,7 +97,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
 
   return (
     <Dialog open={isEditing} onClose={() => setIsEditing(false)} maxWidth="sm">
-      <DialogTitle>Edit Reagent</DialogTitle>
+      <DialogTitle>Edit {substanceType}</DialogTitle>
       <DialogContent
         sx={{
           "&.MuiDialogContent-root": {
@@ -115,7 +115,8 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
           fullWidth
           error={quantityLeft === "0"}
           helperText={
-            quantityLeft === "0" && "Reagent will be deleted, if quantity is 0"
+            quantityLeft === "0" &&
+            `${substanceType} will be deleted, if quantity is 0`
           }
           sx={{ marginBottom: "20px" }}
         />

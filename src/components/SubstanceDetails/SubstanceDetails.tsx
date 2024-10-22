@@ -58,7 +58,7 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
   if (!substanceLocationDetails) {
     return (
       <PageError
-        text={"Failed to load reagent details. Please try again later."}
+        text={`Failed to load ${substanceType} details. Please try again later.`}
       />
     );
   }
@@ -67,7 +67,7 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
     try {
       await deleteSubstance(substanceId).unwrap();
 
-      openSnackbar("success", "Reagent deleted successfully!");
+      openSnackbar("success", `${substanceType} deleted successfully!`);
 
       navigate(redirectPath);
     } catch (err) {
@@ -112,7 +112,7 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
       <ConfirmRemoving
         open={deleteModalIsOpen}
         modalTitle=""
-        modalText="Are you sure you want to delete this reagent?"
+        modalText={`Are you sure you want to delete this ${substanceType}?`}
         onClose={() => setDeleteModalIsOpen(false)}
         onDelete={handleDelete}
       />
