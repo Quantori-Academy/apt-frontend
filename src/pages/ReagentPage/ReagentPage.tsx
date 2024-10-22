@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ConfirmRemoving, PageLoader, ReagentDetails } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import { useDeleteReagentMutation, useGetReagentDetailsQuery } from "@/store";
+import { useDeleteSubstanceMutation, useGetReagentDetailsQuery } from "@/store";
 
 const ReagentPage = () => {
   const { id: reagentId } = useParams<{ id: string }>();
@@ -14,7 +14,7 @@ const ReagentPage = () => {
     reagentId!
   );
 
-  const [deleteReagent] = useDeleteReagentMutation();
+  const [deleteReagent] = useDeleteSubstanceMutation();
 
   const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ const ReagentPage = () => {
 
       openSnackbar("success", "Reagent deleted successfully!");
 
-      navigate(RouteProtectedPath.reagentSampleList);
+      navigate(RouteProtectedPath.substances);
     } catch {
       openSnackbar("error", "Failed to delete reagent!");
     } finally {
