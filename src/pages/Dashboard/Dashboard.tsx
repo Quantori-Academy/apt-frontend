@@ -60,7 +60,7 @@ const Dashboard = () => {
       <Container
         sx={{
           display: "flex",
-          justifyContent: "space-around",
+          gap: "10px",
           alignItems: "center",
           marginTop: 4,
         }}
