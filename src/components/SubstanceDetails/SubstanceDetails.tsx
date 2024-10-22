@@ -18,18 +18,18 @@ import {
 } from "@/store";
 import { Reagent, Sample } from "@/types";
 
-export type Substance = Reagent | Sample;
+type Substance = Reagent | Sample;
 
 export type SubstanceType = "reagent" | "sample";
 
-type SubstanceDetailsPageProps = {
+type SubstanceDetailsProps = {
   substanceType: SubstanceType;
   substanceId: string;
   substanceDetails: Substance;
   redirectPath: string;
 };
 
-const SubstanceDetailsPage: React.FC<SubstanceDetailsPageProps> = ({
+const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
   substanceType,
   substanceDetails,
   substanceId,
@@ -122,4 +122,4 @@ const SubstanceDetailsPage: React.FC<SubstanceDetailsPageProps> = ({
   );
 };
 
-export default SubstanceDetailsPage;
+export default SubstanceDetails;
