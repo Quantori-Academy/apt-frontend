@@ -17,13 +17,13 @@ import {
   useGetStorageRoomsQuery,
   useUpdateReagentMutation,
 } from "@/store";
-import { FrontEndReagent, FrontRoomData } from "@/types";
+import { Reagent, RoomData } from "@/types";
 
 type ReagentEditFormProps = {
   isEditing: boolean;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  reagentDetails: FrontEndReagent;
-  reagentLocationDetails: FrontRoomData;
+  reagentDetails: Reagent;
+  reagentLocationDetails: RoomData;
 };
 
 const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
@@ -79,7 +79,13 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
   return (
     <Dialog open={isEditing} onClose={() => setIsEditing(false)} maxWidth="sm">
       <DialogTitle>Edit Reagent</DialogTitle>
-      <DialogContent sx={{ paddingTop: "10px !important" }}>
+      <DialogContent
+        sx={{
+          "&.MuiDialogContent-root": {
+            paddingTop: "10px",
+          },
+        }}
+      >
         <TextField
           label="Quantity Left"
           variant="outlined"
@@ -144,4 +150,5 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
     </Dialog>
   );
 };
+
 export default ReagentEditForm;

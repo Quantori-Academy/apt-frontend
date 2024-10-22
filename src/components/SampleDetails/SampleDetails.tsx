@@ -4,9 +4,9 @@ import { NavLink } from "react-router-dom";
 
 import { DetailItem, SmilesImage } from "@/components";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import { FrontEndSample, FrontRoomData } from "@/types";
+import { RoomData, Sample } from "@/types";
 
-type SampleKey = keyof FrontEndSample;
+type SampleKey = keyof Sample;
 
 type ReagentDetailRow = {
   label: string;
@@ -25,8 +25,8 @@ const sampleDetailsRows: ReagentDetailRow[] = [
 ];
 
 type SampleDetailsProps = {
-  sampleDetails: FrontEndSample;
-  sampleLocationDetails: FrontRoomData;
+  sampleDetails: Sample;
+  sampleLocationDetails: RoomData;
 };
 
 const SampleDetails: React.FC<SampleDetailsProps> = ({

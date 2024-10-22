@@ -1,9 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { BackEndReagent, FrontEndReagent } from "@/types";
+import { BackendReagent, Reagent } from "@/types";
 
-import { transformReagentResponse } from "./utils/transformReagentResponse";
+import { transformReagentResponse } from "./utils";
+
+type MutationReagentResponse = {
+  status: number;
+  data: {
+    message: string;
+  };
+};
 
 export const reagentsApi = createApi({
   reducerPath: "reagentsApi",
@@ -14,13 +21,13 @@ export const reagentsApi = createApi({
   tagTypes: ["Reagents"],
 
   endpoints: (builder) => ({
-    getReagentDetails: builder.query<FrontEndReagent, string>({
+    getReagentDetails: builder.query<Reagent, string>({
       query: (reagentId) => `/substances/reagents/${reagentId}`,
-      transformResponse: (response: BackEndReagent) => transformReagentResponse(response),
+      transformResponse: (response: BackendReagent) => transformReagentResponse(response),
       providesTags: ["Reagents"],
     }),
 
-    deleteReagent: builder.mutation({
+    deleteReagent: builder.mutation<MutationReagentResponse, string>({
       query: (reagentId) => {
         return {
           url: `/substances/${reagentId}`,
@@ -43,4 +50,5 @@ export const reagentsApi = createApi({
     }),
   }),
 });
+
 export const { useGetReagentDetailsQuery, useDeleteReagentMutation, useUpdateReagentMutation } = reagentsApi;

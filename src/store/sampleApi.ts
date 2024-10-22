@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { BackEndSample, FrontEndSample } from "@/types/sample";
+import { BackendSample, Sample } from "@/types";
 
-import { transformSampleResponse } from "./utils/transformSampleResponse";
+import { transformSampleResponse } from "./utils";
 
 export const sampleApi = createApi({
   reducerPath: "sampleApi",
@@ -13,9 +13,9 @@ export const sampleApi = createApi({
   }),
   tagTypes: ["Samples"],
   endpoints: (builder) => ({
-    getSampleDetails: builder.query<FrontEndSample, string>({
+    getSampleDetails: builder.query<Sample, string>({
       query: (sampleId) => `/substances/samples/${sampleId}`,
-      transformResponse: (response: BackEndSample) => transformSampleResponse(response),
+      transformResponse: (response: BackendSample) => transformSampleResponse(response),
       providesTags: ["Samples"],
     }),
   }),

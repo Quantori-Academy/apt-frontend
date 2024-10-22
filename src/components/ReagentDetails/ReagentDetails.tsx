@@ -2,9 +2,9 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
 
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
-import { FrontEndReagent, FrontRoomData } from "@/types";
+import { Reagent, RoomData } from "@/types";
 
-type ReagentKey = keyof FrontEndReagent;
+type ReagentKey = keyof Reagent;
 
 type ReagentDetailRow = {
   label: string;
@@ -25,10 +25,10 @@ const reagentDetailsRows: ReagentDetailRow[] = [
 ];
 
 type ReagentDetailsProps = {
-  reagentDetails: FrontEndReagent;
+  reagentDetails: Reagent;
   setDeleteModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  reagentLocationDetails: FrontRoomData;
+  reagentLocationDetails: RoomData;
 };
 
 const ReagentDetails: React.FC<ReagentDetailsProps> = ({
@@ -57,11 +57,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
                 <DetailItem
                   key={label}
                   label={label}
-                  value={
-                    reagentLocationDetails.roomName +
-                    ", " +
-                    reagentLocationDetails.locationName
-                  }
+                  value={`${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`}
                 />
               )
             )}
@@ -89,4 +85,5 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
     </Card>
   );
 };
+
 export default ReagentDetails;

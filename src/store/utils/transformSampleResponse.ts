@@ -1,6 +1,6 @@
-import { BackEndSample, FrontEndSample } from "@/types/sample";
+import { BackendSample, Sample } from "@/types/sample";
 
-export const transformSampleResponse = (sample: BackEndSample): FrontEndSample => ({
+export const transformSampleResponse = (sample: BackendSample): Sample => ({
   substanceId: sample.substance_id,
   name: sample.name,
   description: sample.description,

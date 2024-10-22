@@ -1,14 +1,15 @@
 import { Container } from "@mui/material";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
   ConfirmRemoving,
+  PageError,
   PageLoader,
   ReagentDetails,
   ReagentEditForm,
 } from "@/components";
-import { PageError } from "@/components/PageError";
 import { useAlertSnackbar } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import {
@@ -17,7 +18,7 @@ import {
   useGetStorageLocationDetailQuery,
 } from "@/store";
 
-const ReagentPage = () => {
+const ReagentPage: React.FC = () => {
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
@@ -25,16 +26,18 @@ const ReagentPage = () => {
 
   const { id: reagentId } = useParams<{ id: string }>();
   const { data: reagentDetails, isLoading: isReagentLoading } =
-    useGetReagentDetailsQuery(reagentId!);
+    useGetReagentDetailsQuery(reagentId ? reagentId : skipToken);
 
   const { data: reagentLocationDetails, isLoading: isReagentLocationLoading } =
-    useGetStorageLocationDetailQuery(reagentDetails?.locationId as number, {
-      skip: !reagentDetails?.locationId,
-    });
+    useGetStorageLocationDetailQuery(
+      reagentDetails ? reagentDetails.locationId : skipToken
+    );
 
   const navigate = useNavigate();
 
   const [deleteReagent] = useDeleteReagentMutation();
+
+  if (!reagentId) return null;
 
   if (isReagentLoading || isReagentLocationLoading) {
     return <PageLoader />;
