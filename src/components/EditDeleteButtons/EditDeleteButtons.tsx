@@ -3,15 +3,23 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Button, Grid } from "@mui/material";
 
 type EditDeleteButtonsProps = {
-  onEdit?: () => void;
+  onEdit: () => void;
   onDelete: () => void;
 };
 
-const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({ onDelete }) => {
+const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
+  onDelete,
+  onEdit,
+}) => {
   return (
     <Grid container spacing={2} sx={{ mt: 4 }}>
       <Grid item>
-        <Button variant="contained" color="primary" startIcon={<EditIcon />}>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<EditIcon />}
+          onClick={onEdit}
+        >
           Edit
         </Button>
       </Grid>

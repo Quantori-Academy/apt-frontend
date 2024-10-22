@@ -15,13 +15,12 @@ const options = {
 };
 
 const SmilesImage: React.FC<SmilesImageProps> = ({ smiles }) => {
-  const drawer = new SmilesDrawer.SvgDrawer(options);
-
   useEffect(() => {
+    const drawer = new SmilesDrawer.SvgDrawer(options);
     SmilesDrawer.parse(smiles, function (tree: unknown) {
       drawer.draw(tree, "structure-svg", "light");
     });
-  }, []);
+  }, [smiles]);
 
   return (
     <Box

@@ -38,7 +38,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const navigate = useNavigate();
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     const { error } = await deleteSubstance(id);
 
     if (error) {

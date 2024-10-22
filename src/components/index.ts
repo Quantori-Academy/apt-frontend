@@ -20,3 +20,4 @@ export { EditDeleteButtons } from "./EditDeleteButtons";
 export { DetailItem } from "./DetailItem";
 export { SubstancesTable } from "./SubstancesTable";
 export { ReagentDetails } from "./ReagentDetails";
+export { ReagentEditForm } from "./ReagentEditForm";

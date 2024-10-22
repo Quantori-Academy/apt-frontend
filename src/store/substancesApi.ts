@@ -1,10 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
+import { transformReagentResponse } from "@/store/utils/transformReagentResponse.ts";
 import { SubstancesResponse, transformSubstanceList } from "@/store/utils/transformSubstanceList.ts";
-import { Reagent, SubstancesDetails } from "@/types";
+import { SubstancesDetails } from "@/types";
+import { BackendReagent, Reagent } from "@/types/reagent.ts";
 
-import { reagentDetails } from "../../mock";
+type MutationSubstanceResponse = {
+  status: number;
+  data: {
+    message: string;
+  };
+};
 
 export const substancesApi = createApi({
   reducerPath: "reagentsApi",
@@ -21,24 +28,34 @@ export const substancesApi = createApi({
       },
       providesTags: ["Substances"],
     }),
-    getReagentDetails: builder.query<Reagent, string>({
-      // query: (reagentId) => `/reagents/${reagentId}`,
-      queryFn: async () => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve({ data: reagentDetails });
-          }, 100);
-        });
-      },
-      providesTags: ["Substances"],
-    }),
-    deleteSubstance: builder.mutation({
+    deleteSubstance: builder.mutation<MutationSubstanceResponse, string>({
       query: (substanceId) => ({
         url: `substances/${substanceId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Substances"],
     }),
+    getReagentDetails: builder.query<Reagent, string>({
+      query: (reagentId) => `/substances/reagents/${reagentId}`,
+      transformResponse: (response: BackendReagent) => transformReagentResponse(response),
+      providesTags: ["Substances"],
+    }),
+    updateReagent: builder.mutation({
+      query: (updatedReagentDetails) => ({
+        url: `/substances/reagents/${updatedReagentDetails.id}`,
+        method: "PUT",
+        body: {
+          quantity_left: updatedReagentDetails.quantity,
+          storage_location: updatedReagentDetails.storageLocation,
+        },
+      }),
+      invalidatesTags: ["Substances"],
+    }),
   }),
 });
-export const { useGetReagentDetailsQuery, useDeleteSubstanceMutation, useGetSubstancesQuery } = substancesApi;
+export const {
+  useGetReagentDetailsQuery,
+  useDeleteSubstanceMutation,
+  useGetSubstancesQuery,
+  useUpdateReagentMutation,
+} = substancesApi;

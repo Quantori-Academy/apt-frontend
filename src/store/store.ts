@@ -3,15 +3,17 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit";
 
 import { authSlice } from "./slices/authSlice";
 import { counterSlice } from "./slices/counterSlice";
+import { storageApi } from "./storageApi";
 import { substancesApi } from "./substancesApi.ts";
 import { usersApi } from "./usersApi";
 
-const rootReducer = combineSlices(counterSlice, authSlice, usersApi, substancesApi);
+const rootReducer = combineSlices(counterSlice, authSlice, storageApi, usersApi, substancesApi);
 
 export const makeStore = () => {
   const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(usersApi.middleware, substancesApi.middleware),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(usersApi.middleware, storageApi.middleware, substancesApi.middleware),
   });
 
   return store;

@@ -11,7 +11,14 @@ export {
   useDeleteUserMutation,
 } from "./usersApi";
 
-export { useGetReagentDetailsQuery, useDeleteSubstanceMutation, substancesApi } from "./substancesApi.ts";
+export {
+  useGetReagentDetailsQuery,
+  useUpdateReagentMutation,
+  useDeleteSubstanceMutation,
+  substancesApi,
+} from "./substancesApi.ts";
+
+export { useGetStorageRoomsQuery, useGetStorageLocationDetailQuery } from "./storageApi";
 
 export {
   loginUser,

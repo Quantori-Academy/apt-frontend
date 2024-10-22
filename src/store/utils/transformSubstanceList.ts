@@ -8,7 +8,7 @@ type LocationResponse = {
 };
 
 export type SubstanceItemResponse = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   structure: string;
