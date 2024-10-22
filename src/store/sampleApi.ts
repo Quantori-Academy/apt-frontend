@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { BackendSample, Sample } from "@/types";
+import { BackendSample, MutationSubstanceResponse, Sample } from "@/types";
 
 import { transformSampleResponse } from "./utils";
 
@@ -18,7 +18,16 @@ export const sampleApi = createApi({
       transformResponse: (response: BackendSample) => transformSampleResponse(response),
       providesTags: ["Samples"],
     }),
+    deleteSample: builder.mutation<MutationSubstanceResponse, string>({
+      query: (sampleId) => {
+        return {
+          url: `/substances/${sampleId}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["Samples"],
+    }),
   }),
 });
 
-export const { useGetSampleDetailsQuery } = sampleApi;
+export const { useGetSampleDetailsQuery, useDeleteSampleMutation } = sampleApi;

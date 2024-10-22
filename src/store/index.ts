@@ -18,7 +18,7 @@ export {
   reagentsApi,
 } from "./reagentsApi";
 
-export { useGetSampleDetailsQuery } from "./sampleApi";
+export { useGetSampleDetailsQuery, useDeleteSampleMutation } from "./sampleApi";
 
 export { useGetReagentSampleListQuery } from "./reagentSampleApi";
 
