@@ -25,8 +25,11 @@ const ReagentPage: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const { id: reagentId } = useParams<{ id: string }>();
-  const { data: reagentDetails, isLoading: isReagentLoading } =
-    useGetReagentDetailsQuery(reagentId ? reagentId : skipToken);
+  const {
+    data: reagentDetails,
+    isError,
+    isLoading: isReagentLoading,
+  } = useGetReagentDetailsQuery(reagentId ? reagentId : skipToken);
 
   const { data: reagentLocationDetails, isLoading: isReagentLocationLoading } =
     useGetStorageLocationDetailQuery(
@@ -37,13 +40,11 @@ const ReagentPage: React.FC = () => {
 
   const [deleteReagent] = useDeleteReagentMutation();
 
-  if (!reagentId) return null;
-
   if (isReagentLoading || isReagentLocationLoading) {
     return <PageLoader />;
   }
 
-  if (!reagentDetails || !reagentLocationDetails) {
+  if (!reagentDetails || !reagentLocationDetails || !reagentId || isError) {
     return (
       <PageError
         text={"Failed to load reagent details. Please try again later."}
