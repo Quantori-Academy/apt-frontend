@@ -15,7 +15,7 @@ export const appTheme = createTheme({
       main: "#2977FF",
     },
     secondary: {
-      main: "#9fa8da",
+      main: "#00695c",
     },
   },
   components: {

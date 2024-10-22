@@ -1,3 +1,4 @@
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import Logout from "@mui/icons-material/Logout";
 import Settings from "@mui/icons-material/Settings";
 import { Menu, Typography } from "@mui/material";
@@ -73,6 +74,14 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
         </Typography>
 
         <Divider />
+        <Link to="/dashboard" className={style.link}>
+          <MenuItem onClick={onClose}>
+            <ListItemIcon>
+              <DashboardIcon fontSize="small" />
+            </ListItemIcon>
+            Dashboard
+          </MenuItem>
+        </Link>
         <Link to="/account-settings" className={style.link}>
           <MenuItem onClick={onClose}>
             <ListItemIcon>

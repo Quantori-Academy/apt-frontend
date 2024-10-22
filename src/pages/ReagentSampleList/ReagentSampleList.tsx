@@ -11,6 +11,7 @@ import React, { useMemo, useState } from "react";
 
 import { PageLoader, ReagentSampleTable, SearchBar } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { PageError } from "@/components/PageError";
 import { useGetReagentSampleListQuery } from "@/store";
 import {
@@ -81,6 +82,7 @@ const ReagentSampleList: React.FC = () => {
 
   return (
     <Container>
+      <DashboardBreadcrumbs route={"substances"} />
       <Typography variant="h4" sx={{ mb: 2 }}>
         Reagents And Samples
       </Typography>

@@ -4,7 +4,6 @@ import { Outlet } from "react-router-dom";
 
 import { Header } from "@/components";
 import AccountMenu from "@/components/AccountMenu/AccountMenu.tsx";
-import { Sidebar } from "@/components/Sidebar";
 import { useAppSelector } from "@/hooks";
 import { selectUserIsAuthenticated } from "@/store";
 
@@ -38,23 +37,17 @@ const AppLayout = () => {
     );
   }
   return (
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateColumns: "16rem 1fr",
-        gridTemplateRows: "auto 1fr",
-      }}
-    >
+    <Box>
       <Header onClick={handleClick} />
       <AccountMenu anchorEl={anchorEl} open={open} onClose={handleClose} />
 
-      <Sidebar />
       <Container>
         <Paper
           sx={{
             marginTop: "75px",
             padding: "30px",
             width: "100%",
+            height: "100vh",
           }}
         >
           <Outlet />
