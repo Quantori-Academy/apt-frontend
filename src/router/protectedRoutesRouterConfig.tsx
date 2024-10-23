@@ -4,8 +4,11 @@ import { userRoles } from "@/constants";
 import {
   AccountSettings,
   Dashboard,
+  ReagentPage,
   StorageLocationDetailPage,
   StorageLocationPage,
+  SubstancesList,
+  UserDetails,
   Users,
 } from "@/pages";
 import { UserRole } from "@/types";
@@ -16,11 +19,13 @@ type AppRoutesProps = RouteObject & {
 
 export const enum AppProtectedRoutes {
   USERS = "users",
-  USER_PAGE = "user_page",
-  ACCOUNT_SETTINGS = "account_settings",
-  STORAGE_LOCATIONS = "storage",
-  STORAGE_LOCATION_DETAIL = "storage_detail",
+  USER_PAGE = "userPage",
+  ACCOUNT_SETTINGS = "accountSettings",
   DASHBOARD = "dashboard",
+  SUBSTANCES = "substances",
+  REAGENT_PAGE = "reagentPage",
+  STORAGE_LOCATIONS = "storage",
+  STORAGE_LOCATION_DETAIL = "storageDetail",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -30,6 +35,8 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.STORAGE_LOCATIONS]: "/storage",
   [AppProtectedRoutes.STORAGE_LOCATION_DETAIL]: "/storage/:locationId",
   [AppProtectedRoutes.DASHBOARD]: "/dashboard",
+  [AppProtectedRoutes.SUBSTANCES]: "/substances",
+  [AppProtectedRoutes.REAGENT_PAGE]: "/reagent-sample-list/reagent/:id",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -43,7 +50,7 @@ export const protectedRoutesRouterConfig: Record<
   },
   [AppProtectedRoutes.USER_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.USER_PAGE],
-    element: <AccountSettings />,
+    element: <UserDetails />,
     roles: [userRoles.Administrator],
   },
   [AppProtectedRoutes.STORAGE_LOCATIONS]: {
@@ -59,6 +66,16 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: {
     path: RouteProtectedPath[AppProtectedRoutes.ACCOUNT_SETTINGS],
     element: <AccountSettings />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.SUBSTANCES]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SUBSTANCES],
+    element: <SubstancesList />,
+    roles: [userRoles.Administrator, userRoles.Researcher],
+  },
+  [AppProtectedRoutes.REAGENT_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_PAGE],
+    element: <ReagentPage />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.DASHBOARD]: {

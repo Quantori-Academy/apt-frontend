@@ -5,3 +5,6 @@ export { Dashboard } from "./Dashboard";
 export { Home } from "./Home";
 export { StorageLocationPage } from "./StorageLocations";
 export { StorageLocationDetailPage } from "./StorageLocationDetail";
+export { ReagentPage } from "./ReagentPage";
+export { SubstancesList } from "./SubstancesList";
+export { UserDetails } from "./UserDetails";

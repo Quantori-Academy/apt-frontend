@@ -9,36 +9,30 @@ import {
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AlertSnackbar, LoadingSkeleton } from "@/components";
+import { PageLoader } from "@/components";
 import { userRoles } from "@/constants";
-import { useGetUserDetailsQuery, useUpdateRoleMutation } from "@/store";
+import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import {
+  selectUserId,
+  useGetUserDetailsQuery,
+  useUpdateRoleMutation,
+} from "@/store";
 import { UserRole } from "@/types";
 
 type EditUserRoleProps = {
   userId: string;
-  currentUserId: string;
-  currentUserRole: UserRole;
 };
 
 type UserRoleUpdate = {
   role?: UserRole;
 };
 
-const EditUserRole: React.FC<EditUserRoleProps> = ({
-  userId,
-  currentUserId,
-  currentUserRole,
-}) => {
+const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [isErrorAlert, setIsErrorAlert] = useState<"success" | "error">(
-    "success"
-  );
-  const {
-    data: userDetails,
-    isLoading: isLoadingUserDetails,
-    isError,
-  } = useGetUserDetailsQuery(userId);
+
+  const currentUserId = useAppSelector(selectUserId);
+  const { data: userDetails, isLoading: isLoadingUserDetails } =
+    useGetUserDetailsQuery(userId);
 
   const [updateRole, { isLoading: isUpdatingRole }] = useUpdateRoleMutation();
 
@@ -47,21 +41,10 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
       role: userDetails?.role,
     },
   });
-  if (isError) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-        }}
-      >
-        <Typography variant="h2">User not found!</Typography>
-      </Box>
-    );
-  }
-  if (isLoadingUserDetails) return <LoadingSkeleton />;
+
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+
+  if (isLoadingUserDetails) return <PageLoader />;
 
   const onSubmit = async ({ role: updatedRole }: UserRoleUpdate) => {
     const { error } = await updateRole({
@@ -69,18 +52,17 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
       updatedRole,
     });
 
-    setIsAlertOpen(true);
     if (error) {
-      setIsErrorAlert("error");
+      openSnackbar("error", "Failed to change role!");
     } else {
-      setIsErrorAlert("success");
+      openSnackbar("success", "Role has changed successfully!");
       setIsEditMode(false);
     }
   };
 
   return (
     <Container>
-      {currentUserRole !== "Administrator" || userId === currentUserId ? (
+      {userId === currentUserId ? (
         <Box>
           <Typography variant="subtitle1" fontWeight="bold">
             User Role:
@@ -144,15 +126,8 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({
           )}
         </form>
       )}
-      <AlertSnackbar
-        severity={isErrorAlert}
-        open={isAlertOpen}
-        onClose={() => setIsAlertOpen(false)}
-      >
-        {isErrorAlert === "error"
-          ? "Fail to update user details"
-          : "Updated successfully"}
-      </AlertSnackbar>
+
+      {SnackbarComponent()}
     </Container>
   );
 };

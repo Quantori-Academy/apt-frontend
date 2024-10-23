@@ -2,9 +2,10 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AlertSnackbar, RevealableField } from "@/components";
+import { RevealableField } from "@/components";
 import { PASSWORD_REGEX } from "@/constants";
-import { useGetUserDetailsQuery, useResetPasswordMutation } from "@/store";
+import { useAlertSnackbar } from "@/hooks";
+import { useResetPasswordMutation } from "@/store";
 
 import style from "./ResetPassword.module.css";
 
@@ -19,11 +20,7 @@ type ResetPasswordProps = {
 
 const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [isErrorAlert, setIsErrorAlert] = useState<"success" | "error">(
-    "success"
-  );
-  const { isError } = useGetUserDetailsQuery(userId);
+
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   const {
@@ -38,6 +35,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
       confirmPassword: "",
     },
   });
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
   const onSubmit = async (formData: ResetPasswordFields) => {
     const { error } = await resetPassword({
@@ -45,11 +43,10 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
       newPassword: formData.password,
     });
 
-    setIsAlertOpen(true);
     if (error) {
-      setIsErrorAlert("error");
+      openSnackbar("error", "Failed to change password");
     } else {
-      setIsErrorAlert("success");
+      openSnackbar("success", "Password changed successfully");
       setIsEditMode(false);
     }
   };
@@ -58,7 +55,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     setIsEditMode(false);
     reset();
   };
-  if (isError) return null;
+
   return (
     <Container>
       <Typography
@@ -136,15 +133,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
           </Button>
         )}
       </form>
-      <AlertSnackbar
-        severity={isErrorAlert}
-        open={isAlertOpen}
-        onClose={() => setIsAlertOpen(false)}
-      >
-        {isErrorAlert === "error"
-          ? "Fail to update user details"
-          : "Updated successfully"}
-      </AlertSnackbar>
+      {SnackbarComponent()}
     </Container>
   );
 };

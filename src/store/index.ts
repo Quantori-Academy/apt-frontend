@@ -9,7 +9,16 @@ export {
   useUpdateRoleMutation,
   useResetPasswordMutation,
   useDeleteUserMutation,
-} from "./api";
+} from "./usersApi";
+
+export {
+  useGetReagentDetailsQuery,
+  useUpdateReagentMutation,
+  useDeleteSubstanceMutation,
+  substancesApi,
+} from "./substancesApi";
+
+export { useGetStorageRoomsQuery, useGetStorageLocationDetailQuery } from "./storageApi";
 
 export {
   loginUser,

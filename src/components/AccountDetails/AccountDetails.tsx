@@ -9,7 +9,8 @@ import {
 import { MouseEventHandler, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AlertSnackbar, LoadingSkeleton } from "@/components";
+import { PageLoader } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
 import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from "@/store";
 import { UserBase } from "@/types";
 
@@ -24,18 +25,14 @@ type AccountDetailsProps = {
 
 const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [isErrorAlert, setIsErrorAlert] = useState<"success" | "error">(
-    "success"
-  );
-  const {
-    data: userDetails,
-    isLoading: isLoadingUserDetails,
-    isError,
-  } = useGetUserDetailsQuery(userId!);
+
+  const { data: userDetails, isLoading: isLoadingUserDetails } =
+    useGetUserDetailsQuery(userId!);
 
   const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
+
+  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const {
     register,
@@ -44,22 +41,20 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   } = useForm({
     values: userDetails,
   });
-  if (isError) {
-    return null;
-  }
-  if (isLoadingUserDetails) return <LoadingSkeleton />;
+
+  if (isLoadingUserDetails) return <PageLoader />;
 
   const onSubmit = async (updatedUserDetails: UserDetails) => {
     const { error } = await updateUserDetails(updatedUserDetails);
 
-    setIsAlertOpen(true);
     if (error) {
-      setIsErrorAlert("error");
+      openSnackbar("error", "Failed to update details!");
     } else {
-      setIsErrorAlert("success");
+      openSnackbar("success", "Details updated successfully!");
       setIsEditMode(false);
     }
   };
+
   const handleEditToggle: MouseEventHandler = (e) => {
     e.preventDefault();
     setIsEditMode(!isEditMode);
@@ -171,15 +166,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
           </Grid>
         </Grid>
       </form>
-      <AlertSnackbar
-        severity={isErrorAlert}
-        open={isAlertOpen}
-        onClose={() => setIsAlertOpen(false)}
-      >
-        {isErrorAlert === "error"
-          ? "Fail to update user details"
-          : "Updated successfully"}
-      </AlertSnackbar>
+      {SnackbarComponent()}
     </Container>
   );
 };

@@ -17,42 +17,55 @@ const NavigationAuth: React.FC = () => {
         color="inherit"
         sx={{ p: 0, mr: 2 }}
         component={NavLink}
-        to={RouteProtectedPath.account_settings}
+        to={RouteProtectedPath.accountSettings}
       >
         <Avatar sx={{ width: 50, height: 50 }} />
       </IconButton>
+
       {/* I'll add role-based navbar object with paths and links in the future */}
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          gap: "3px",
           alignItems: "center",
           width: "100%",
         }}
       >
-        <Box sx={{ display: "flex" }}>
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? `${styles.navLink} ${styles.activeNavLink}`
+              : styles.navLink
+          }
+          to={RouteProtectedPath.dashboard}
+        >
+          Dashboard
+        </NavLink>
+        {role === userRoles.Administrator && (
           <NavLink
             className={({ isActive }) =>
               isActive
                 ? `${styles.navLink} ${styles.activeNavLink}`
                 : styles.navLink
             }
-            to={RouteProtectedPath.dashboard}
+            to={RouteProtectedPath.users}
           >
-            Dashboard
+            Users
           </NavLink>
-          {role === userRoles.Administrator && (
-            <NavLink
-              className={({ isActive }) =>
-                isActive
-                  ? `${styles.navLink} ${styles.activeNavLink}`
-                  : styles.navLink
-              }
-              to={RouteProtectedPath.users}
-            >
-              Staff
-            </NavLink>
-          )}
+        )}
+        {role !== userRoles.ProcurementOfficer && (
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.navLink} ${styles.activeNavLink}`
+                : styles.navLink
+            }
+            to={RouteProtectedPath.substances}
+          >
+            Substances
+          </NavLink>
+        )}
+        {role !== userRoles.ProcurementOfficer && (
           <NavLink
             className={({ isActive }) =>
               isActive
@@ -63,9 +76,9 @@ const NavigationAuth: React.FC = () => {
           >
             Storage
           </NavLink>
-        </Box>
-        <Button onClick={() => dispatch(logout())}>Logout</Button>
+        )}
       </Box>
+      <Button onClick={() => dispatch(logout())}>Logout</Button>
     </>
   );
 };

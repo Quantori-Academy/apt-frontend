@@ -77,15 +77,15 @@ const StorageLocationDetail: React.FC = () => {
   const handleAgreeClick = () => {
     setModalIsOpened(false);
     const locationToMove = roomToMove?.locations.find(
-      (location) => location.location_name === selectedLocation
+      (location) => location.locationName === selectedLocation
     );
 
     moveSubstance({
-      old_room_id: locationDetails?.room_id as number,
-      old_location_id: locationDetails?.location_id as number,
-      substance_id: selectedSubstanceId as number,
-      new_room_id: roomToMove?.id as number,
-      new_location_id: locationToMove?.location_id as number,
+      oldRoomId: locationDetails?.roomId as number,
+      oldLocationId: locationDetails?.locationId as number,
+      substanceId: selectedSubstanceId as number,
+      newRoomId: roomToMove?.id as number,
+      newLocationId: locationToMove?.locationId as number,
     });
   };
 
@@ -168,7 +168,7 @@ const StorageLocationDetail: React.FC = () => {
             gutterBottom
             sx={{ fontWeight: 700, color: "#333" }}
           >
-            {locationDetails.room_name} - {locationDetails.location_name}
+            {locationDetails.roomName} - {locationDetails.locationName}
           </Typography>
 
           <Box display="flex" alignItems="center">
@@ -199,16 +199,16 @@ const StorageLocationDetail: React.FC = () => {
               </Typography>
               <Divider sx={{ marginBottom: 2 }} />
               <Typography variant="body1" paragraph>
-                <strong>Room Name:</strong> {locationDetails.room_name}
+                <strong>Room Name:</strong> {locationDetails.roomName}
               </Typography>
               <Typography variant="body1" paragraph>
-                <strong>Room ID:</strong> {locationDetails.room_id}
+                <strong>Room ID:</strong> {locationDetails.roomId}
               </Typography>
               <Typography variant="body1" paragraph>
-                <strong>Location Name:</strong> {locationDetails.location_name}
+                <strong>Location Name:</strong> {locationDetails.locationName}
               </Typography>
               <Typography variant="body1" paragraph>
-                <strong>Location ID:</strong> {locationDetails.location_id}
+                <strong>Location ID:</strong> {locationDetails.locationId}
               </Typography>
             </CardContent>
           </Card>
@@ -237,7 +237,7 @@ const StorageLocationDetail: React.FC = () => {
                       justifyContent: "space-between",
                       alignItems: "center",
                     }}
-                    key={substance.substance_id}
+                    key={substance.substanceId}
                     divider
                   >
                     <ListItemText
@@ -254,7 +254,7 @@ const StorageLocationDetail: React.FC = () => {
                           </Typography>
                           <Typography variant="body2" color="textSecondary">
                             <strong>Structure (SMILES):</strong>{" "}
-                            {substance.structure_smiles}
+                            {substance.structureSmiles}
                           </Typography>
                         </>
                       }
@@ -263,7 +263,7 @@ const StorageLocationDetail: React.FC = () => {
                       onClick={() => {
                         setSelectedRoom("");
                         setModalIsOpened(true);
-                        setSelectedSubstanceId(substance.substance_id);
+                        setSelectedSubstanceId(substance.substanceId);
                       }}
                     >
                       Change Location
@@ -314,14 +314,14 @@ const StorageLocationDetail: React.FC = () => {
                 {roomToMove?.locations
                   .filter(
                     (location) =>
-                      location.location_name !== locationDetails.location_name
+                      location.locationName !== locationDetails.locationName
                   )
                   .map((location) => (
                     <MenuItem
-                      key={location.location_id}
-                      value={location.location_name}
+                      key={location.locationId}
+                      value={location.locationName}
                     >
-                      {location.location_name}
+                      {location.locationName}
                     </MenuItem>
                   ))}
               </TextField>

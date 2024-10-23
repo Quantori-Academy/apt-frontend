@@ -1,40 +1,14 @@
-import { Container, Divider } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Container, Divider, Typography } from "@mui/material";
 
-import {
-  AccountDetails,
-  DeleteUser,
-  EditUserRole,
-  ResetPassword,
-} from "@/components";
-import { userRoles } from "@/constants";
+import { AccountDetails } from "@/components";
 import { useAppSelector } from "@/hooks";
 import { selectUserId, selectUserRole } from "@/store";
 
 const AccountSettings: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const loggedInUserId = useAppSelector(selectUserId);
-  const loggedInUserRole = useAppSelector(selectUserRole);
-  //Ask Anahit(Fast Fix, ask Anahit after Demo)
+  const userId = useAppSelector(selectUserId);
+  const userRole = useAppSelector(selectUserRole);
 
-  // if (isError) {
-  //   return (
-  //     <Box
-  //       sx={{
-  //         display: "flex",
-  //         alignItems: "center",
-  //         justifyContent: "center",
-  //         height: "100%",
-  //       }}
-  //     >
-  //       <Typography variant="h2">User not found!</Typography>
-  //     </Box>
-  //   );
-  // }
-
-  if (!loggedInUserId || !loggedInUserRole) return null;
-
-  const choosenId = (id || loggedInUserId)!;
+  if (!userId || !userRole) return null;
 
   return (
     <Container
@@ -52,22 +26,14 @@ const AccountSettings: React.FC = () => {
         bgcolor: "white",
       }}
     >
-      {loggedInUserRole === userRoles.Administrator && (
-        <ResetPassword userId={choosenId} />
-      )}
+      <Typography variant="h4" gutterBottom margin={3}>
+        Account Details
+      </Typography>
+      <Typography variant="h6" gutterBottom marginX={3}>
+        User Role: {userRole}
+      </Typography>
       <Divider sx={{ my: 3 }} />
-      <EditUserRole
-        userId={choosenId}
-        currentUserId={loggedInUserId}
-        currentUserRole={loggedInUserRole}
-      />
-      <Divider sx={{ my: 3 }} />
-      <AccountDetails userId={choosenId} />
-      <DeleteUser
-        userId={choosenId}
-        currentUserId={loggedInUserId}
-        currentUserRole={loggedInUserRole}
-      />
+      <AccountDetails userId={userId} />
     </Container>
   );
 };

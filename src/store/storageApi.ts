@@ -1,35 +1,32 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL } from "@/api/apiMethods";
-import { RoomData, StorageRoomsBrief } from "@/types";
+import { prepareHeaders } from "@/api/apiMethods";
+import { BackendRoomData, BackendStorageRoomsBrief, RoomData, StorageRoomsBrief } from "@/types";
+
+import { transformStorageLocationResponse, transformStorageRoomsResponse } from "./utils/transformStorageResponse";
 
 export const storageApi = createApi({
   reducerPath: "storageApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    prepareHeaders: (headers) => {
-      const accessToken = localStorage.getItem("accessToken");
-
-      if (accessToken) {
-        headers.set("Authorization", `Bearer ${accessToken}`);
-      }
-
-      return headers;
-    },
+    prepareHeaders,
   }),
   tagTypes: ["StorageRooms"],
   endpoints: (builder) => ({
     getStorageRooms: builder.query<StorageRoomsBrief[], void>({
       query: () => "/storage",
+      transformResponse: (response: BackendStorageRoomsBrief[]) => response.map(transformStorageRoomsResponse),
       providesTags: ["StorageRooms"],
     }),
 
     getStorageLocationDetail: builder.query<RoomData, number>({
       query: (locationId) => `/storage/${locationId}`,
-      providesTags: (_, __, locationId) => [{ type: "StorageRooms", id: locationId }],
+      transformResponse: (response: BackendRoomData) => transformStorageLocationResponse(response),
+      providesTags: ["StorageRooms"],
     }),
 
-    updateStorageRoom: builder.mutation<void, { roomId: number; room: string; description: string }>({
+    updateStorageRoom: builder.mutation<void, { roomId: number | null; room: string; description: string }>({
       query: ({ roomId, room, description }) => ({
         url: `/storage/${roomId}`,
         method: "PUT",
@@ -38,18 +35,19 @@ export const storageApi = createApi({
           description,
         },
       }),
-      invalidatesTags: [{ type: "StorageRooms", id: "LIST" }],
+      invalidatesTags: ["StorageRooms"],
     }),
 
-    createStorageRoom: builder.mutation<{ id: number; location: string }, { room_id: number; location_name: string }>({
-      query: ({ room_id, location_name }) => ({
-        url: "/storage",
+    createStorageRoom: builder.mutation({
+      query: ({ roomId, locationName }) => ({
+        url: "/storage/location",
         method: "POST",
         body: {
-          room_id,
-          location_name,
+          room_id: roomId,
+          location_name: locationName,
         },
       }),
+      invalidatesTags: ["StorageRooms"],
     }),
 
     deleteStorageLocation: builder.mutation<void, number>({
@@ -57,28 +55,28 @@ export const storageApi = createApi({
         url: `/storage/${locationId}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "StorageRooms", id: "LIST" }],
+      invalidatesTags: ["StorageRooms"],
     }),
 
     moveSubstance: builder.mutation<
       void,
       {
-        old_room_id: number;
-        old_location_id: number;
-        substance_id: number;
-        new_room_id: number;
-        new_location_id: number;
+        oldRoomId: number;
+        oldLocationId: number;
+        substanceId: number;
+        newRoomId: number;
+        newLocationId: number;
       }
     >({
-      query: ({ old_room_id, old_location_id, substance_id, new_room_id, new_location_id }) => ({
+      query: ({ oldRoomId, oldLocationId, substanceId, newRoomId, newLocationId }) => ({
         url: "/storage/move",
         method: "PUT",
         body: {
-          old_room_id,
-          old_location_id,
-          substance_id,
-          new_room_id,
-          new_location_id,
+          oldRoomId,
+          oldLocationId,
+          substanceId,
+          newRoomId,
+          newLocationId,
         },
       }),
       invalidatesTags: ["StorageRooms"],
