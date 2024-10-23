@@ -71,13 +71,20 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
                     >
                       {label}:
                     </Typography>
-                    {sampleDetails[key].map(({ id, name }, index) => (
+                    {sampleDetails[key].map(({ id, name, category }, index) => (
                       <React.Fragment key={id}>
                         <NavLink
-                          to={RouteProtectedPath.reagentPage.replace(
-                            ":id",
-                            String(id)
-                          )}
+                          to={
+                            category === "Reagent"
+                              ? RouteProtectedPath.reagentPage.replace(
+                                  ":id",
+                                  String(id)
+                                )
+                              : RouteProtectedPath.samplePage.replace(
+                                  ":id",
+                                  String(id)
+                                )
+                          }
                         >
                           {name}
                         </NavLink>
