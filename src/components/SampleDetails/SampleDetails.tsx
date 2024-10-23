@@ -3,7 +3,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
+import { userRoles } from "@/constants";
+import { useAppSelector } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import { selectUserRole } from "@/store";
 import { RoomData, Sample } from "@/types";
 
 type SampleKey = keyof Sample;
@@ -38,6 +41,8 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
   setDeleteModalIsOpen,
   setIsEditing,
 }) => {
+  const role = useAppSelector(selectUserRole);
+
   return (
     <Card sx={{ background: "#0080800f" }}>
       <CardContent>
@@ -98,10 +103,12 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
           </Grid>
         </Grid>
 
-        <EditDeleteButtons
-          onDelete={() => setDeleteModalIsOpen(true)}
-          onEdit={() => setIsEditing(true)}
-        />
+        {role === userRoles.Researcher && (
+          <EditDeleteButtons
+            onDelete={() => setDeleteModalIsOpen(true)}
+            onEdit={() => setIsEditing(true)}
+          />
+        )}
       </CardContent>
     </Card>
   );

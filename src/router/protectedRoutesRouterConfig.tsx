@@ -58,17 +58,17 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.SUBSTANCES]: {
     path: RouteProtectedPath[AppProtectedRoutes.SUBSTANCES],
     element: <SubstancesList />,
-    roles: [userRoles.Administrator, userRoles.Researcher],
+    roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.REAGENT_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_PAGE],
     element: <ReagentPage />,
-    roles: [userRoles.Administrator, userRoles.Researcher],
+    roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.SAMPLE_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_PAGE],
     element: <SamplePage />,
-    roles: [userRoles.Administrator, userRoles.Researcher],
+    roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.DASHBOARD]: {
     path: RouteProtectedPath[AppProtectedRoutes.DASHBOARD],

@@ -2,6 +2,9 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
 
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
+import { userRoles } from "@/constants";
+import { useAppSelector } from "@/hooks";
+import { selectUserRole } from "@/store";
 import { Reagent, RoomData } from "@/types";
 
 type ReagentKey = keyof Reagent;
@@ -38,6 +41,8 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   setIsEditing,
   reagentLocationDetails,
 }) => {
+  const role = useAppSelector(selectUserRole);
+
   return (
     <Card sx={{ background: "#0080800f" }}>
       <CardContent>
@@ -77,10 +82,12 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
             <SmilesImage smiles={reagentDetails.structure} />
           </Grid>
         </Grid>
-        <EditDeleteButtons
-          onDelete={() => setDeleteModalIsOpen(true)}
-          onEdit={() => setIsEditing(true)}
-        />
+        {role === userRoles.Researcher && (
+          <EditDeleteButtons
+            onDelete={() => setDeleteModalIsOpen(true)}
+            onEdit={() => setIsEditing(true)}
+          />
+        )}
       </CardContent>
     </Card>
   );
