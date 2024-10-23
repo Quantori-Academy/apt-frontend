@@ -15,8 +15,7 @@ import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import {
   useDeleteSubstanceMutation,
   useGetStorageRoomsQuery,
-  useUpdateReagentMutation,
-  useUpdateSampleMutation,
+  useUpdateSubstanceMutation,
 } from "@/store";
 import { Reagent, RoomData, Sample, SubstancesCategory } from "@/types";
 
@@ -39,8 +38,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
 }) => {
   const { data: rooms, isLoading } = useGetStorageRoomsQuery();
 
-  const [updateReagent] = useUpdateReagentMutation();
-  const [updateSample] = useUpdateSampleMutation();
+  const [updateSubstance] = useUpdateSubstanceMutation();
 
   const [deleteSubstance] = useDeleteSubstanceMutation();
 
@@ -74,16 +72,12 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
       } else {
         const updatedDetails = {
           id: substanceDetails.substanceId,
+          oldLocationId: substanceLocationDetails.locationId,
           quantity: quantityLeft,
-          locationId: selectedLocation?.locationId,
+          newLocationId: selectedLocation?.locationId,
         };
-        if (substanceType === "Reagent") {
-          await updateReagent(updatedDetails).unwrap();
-          openSnackbar("success", `${substanceType} updated successfully!`);
-        } else {
-          await updateSample(updatedDetails).unwrap();
-          openSnackbar("success", `${substanceType} updated successfully!`);
-        }
+        updateSubstance(updatedDetails);
+        openSnackbar("success", `${substanceType} updated successfully!`);
         setIsEditing(false);
       }
     } catch (err) {
