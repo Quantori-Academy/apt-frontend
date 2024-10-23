@@ -12,10 +12,10 @@ export const appTheme = createTheme({
       default: "#F5F7FD",
     },
     primary: {
-      main: "#009688",
+      main: "#00695f",
     },
     secondary: {
-      main: "#4db6ac",
+      main: "#33ab9f",
     },
   },
   components: {

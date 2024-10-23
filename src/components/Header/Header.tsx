@@ -1,4 +1,5 @@
-import { AppBar, Avatar, Button, IconButton } from "@mui/material";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { AppBar, Button, IconButton } from "@mui/material";
 import * as React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -38,7 +39,16 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
           sx={{ p: 0, mr: 2 }}
           onClick={(e) => onClick(e)}
         >
-          <Avatar sx={{ width: 40, height: 40 }} />
+          <PermIdentityIcon
+            sx={{
+              width: 40,
+              height: 40,
+              border: "2px solid white",
+              borderRadius: "50%",
+              padding: "5px",
+            }}
+          />
+          {/*<Avatar color="white" />*/}
         </IconButton>
       ) : (
         <Button component={NavLink} to={RoutePublicPath.login}>
