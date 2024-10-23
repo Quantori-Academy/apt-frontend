@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
     <AppBar
       position="fixed"
       elevation={1}
-      color={"secondary"}
+      color={"primary"}
       sx={{
         zIndex: 2,
         paddingX: "24px",

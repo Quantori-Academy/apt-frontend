@@ -25,7 +25,7 @@ const AppLayout = () => {
         <Header onClick={handleClick} />
         <Container
           sx={{
-            height: "100vh",
+            height: "100%",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
