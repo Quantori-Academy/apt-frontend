@@ -1,1 +1,1 @@
-export { default as SubstancesTable } from "./SubstancesTable.tsx";
+export { default as SubstancesTable } from "./SubstancesTable";

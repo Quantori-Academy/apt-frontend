@@ -1,1 +1,1 @@
-export { default as SubstancesList } from "./SubstancesList.tsx";
+export { default as SubstancesList } from "./SubstancesList";
