@@ -2,7 +2,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
 
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
-import { Reagent } from "@/types";
+import { Reagent, RoomData } from "@/types";
 
 type ReagentKey = keyof Reagent;
 
@@ -12,26 +12,30 @@ type ReagentDetailRow = {
 };
 
 const reagentDetailsRows: ReagentDetailRow[] = [
-  { label: "Reagent ID", key: "reagentID" },
+  { label: "Reagent ID", key: "substanceId" },
   { label: "Name", key: "name" },
   { label: "Category", key: "category" },
   { label: "CAS Number", key: "CASNumber" },
   { label: "Producer", key: "producer" },
-  { label: "Storage location", key: "storageLocation" },
-  { label: "Units", key: "units" },
+  { label: "Storage location", key: "locationId" },
+  { label: "Units", key: "unit" },
   { label: "Price per unit", key: "pricePerUnit" },
-  { label: "Quantity", key: "quantity" },
+  { label: "Quantity left", key: "totalQuantityLeft" },
   { label: "Catalog ID", key: "catalogID" },
 ];
 
 type ReagentDetailsProps = {
   reagentDetails: Reagent;
-  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  reagentLocationDetails: RoomData;
 };
 
 const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   reagentDetails,
-  setModalIsOpen,
+  setDeleteModalIsOpen,
+  setIsEditing,
+  reagentLocationDetails,
 }) => {
   return (
     <Card sx={{ background: "#0080800f" }}>
@@ -42,13 +46,21 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            {reagentDetailsRows.map(({ label, key }) => (
-              <DetailItem
-                key={label}
-                label={label}
-                value={reagentDetails[key]}
-              />
-            ))}
+            {reagentDetailsRows.map(({ label, key }) =>
+              key !== "locationId" ? (
+                <DetailItem
+                  key={label}
+                  label={label}
+                  value={reagentDetails[key]}
+                />
+              ) : (
+                <DetailItem
+                  key={label}
+                  label={label}
+                  value={`${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`}
+                />
+              )
+            )}
             <Link
               href={reagentDetails.catalogLink}
               target="_blank"
@@ -65,7 +77,10 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
           </Grid>
         </Grid>
         <DetailItem label="Description" value={reagentDetails.description} />
-        <EditDeleteButtons onDelete={() => setModalIsOpen(true)} />
+        <EditDeleteButtons
+          onDelete={() => setDeleteModalIsOpen(true)}
+          onEdit={() => setIsEditing(true)}
+        />
       </CardContent>
     </Card>
   );

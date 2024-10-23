@@ -5,7 +5,7 @@ import {
   AccountSettings,
   Dashboard,
   ReagentPage,
-  ReagentSampleList,
+  SubstancesList,
   UserDetails,
   Users,
 } from "@/pages";
@@ -22,7 +22,7 @@ export const enum AppProtectedRoutes {
   USER_PAGE = "userPage",
   ACCOUNT_SETTINGS = "accountSettings",
   DASHBOARD = "dashboard",
-  REAGENT_SAMPLE_LIST = "reagentSampleList",
+  SUBSTANCES = "substances",
   REAGENT_PAGE = "reagentPage",
   SAMPLE_ADD_PAGE = "samplePage",
   REAGENT_ADD_PAGE = "reagentAddPage",
@@ -33,8 +33,8 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.USER_PAGE]: "/users/:id",
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: "/account-settings",
   [AppProtectedRoutes.DASHBOARD]: "/dashboard",
-  [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: "/reagent-sample-list",
-  [AppProtectedRoutes.SAMPLE_ADD_PAGE]: "/reagent-sample-list/add-sample",
+  [AppProtectedRoutes.SUBSTANCES]: "/substances",
+  [AppProtectedRoutes.SAMPLE_ADD_PAGE]: "/substances/add-sample",
   [AppProtectedRoutes.REAGENT_PAGE]: "/reagent-sample-list/reagent/:id",
   [AppProtectedRoutes.REAGENT_ADD_PAGE]: "/reagent-sample-list/add-reagent",
 };
@@ -58,10 +58,10 @@ export const protectedRoutesRouterConfig: Record<
     element: <AccountSettings />,
     roles: Object.values(userRoles),
   },
-  [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: {
-    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_SAMPLE_LIST],
-    element: <ReagentSampleList />,
-    roles: Object.values(userRoles),
+  [AppProtectedRoutes.SUBSTANCES]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SUBSTANCES],
+    element: <SubstancesList />,
+    roles: [userRoles.Administrator, userRoles.Researcher],
   },
   [AppProtectedRoutes.REAGENT_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_PAGE],
