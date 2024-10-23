@@ -4,7 +4,7 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { authSlice } from "./slices/authSlice";
 import { counterSlice } from "./slices/counterSlice";
 import { storageApi } from "./storageApi";
-import { substancesApi } from "./substancesApi.ts";
+import { substancesApi } from "./substancesApi";
 import { usersApi } from "./usersApi";
 
 const rootReducer = combineSlices(counterSlice, authSlice, storageApi, usersApi, substancesApi);

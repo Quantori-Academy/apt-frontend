@@ -3,7 +3,7 @@ import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
 
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
 import { RoomData } from "@/types";
-import { Reagent } from "@/types/reagent.ts";
+import { Reagent } from "@/types/reagent";
 
 type ReagentKey = keyof Reagent;
 

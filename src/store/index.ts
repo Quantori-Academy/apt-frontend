@@ -16,7 +16,7 @@ export {
   useUpdateReagentMutation,
   useDeleteSubstanceMutation,
   substancesApi,
-} from "./substancesApi.ts";
+} from "./substancesApi";
 
 export { useGetStorageRoomsQuery, useGetStorageLocationDetailQuery } from "./storageApi";
 

@@ -12,7 +12,7 @@ import React, { useMemo, useState } from "react";
 import { PageLoader, SearchBar, SubstancesTable } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { PageError } from "@/components/PageError";
-import { useGetSubstancesQuery } from "@/store/substancesApi.ts";
+import { useGetSubstancesQuery } from "@/store/substancesApi";
 import {
   CategoryFilterOption,
   ExpiredFilter,
