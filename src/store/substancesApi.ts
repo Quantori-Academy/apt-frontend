@@ -3,13 +3,25 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL, prepareHeaders } from "@/api";
 import { BackendReagent, BackendSample, Reagent, Sample, SubstancesDetails, SubstancesResponse } from "@/types";
 
-import { transformReagentResponse, transformSampleResponse, transformSubstanceList } from "./utils";
+import {
+  transformReagentResponse,
+  transformSampleResponse,
+  transformSubstanceList,
+  transformSubstancePatchRequest,
+} from "./utils";
 
 type MutationSubstanceResponse = {
   status: number;
   data: {
     message: string;
   };
+};
+
+export type MutationPatchSubstance = {
+  id: string;
+  oldLocationId: number;
+  quantity: string;
+  newLocationId?: number;
 };
 
 export const substancesApi = createApi({
@@ -27,10 +39,20 @@ export const substancesApi = createApi({
       },
       providesTags: ["Substances"],
     }),
+
     deleteSubstance: builder.mutation<MutationSubstanceResponse, string>({
       query: (substanceId) => ({
         url: `substances/${substanceId}`,
         method: "DELETE",
+      }),
+      invalidatesTags: ["Substances"],
+    }),
+
+    updateSubstance: builder.mutation<MutationSubstanceResponse, MutationPatchSubstance>({
+      query: (updatedSubstanceDetails) => ({
+        url: `/substances/${updatedSubstanceDetails.id}`,
+        method: "PATCH",
+        body: transformSubstancePatchRequest(updatedSubstanceDetails),
       }),
       invalidatesTags: ["Substances"],
     }),
@@ -40,33 +62,11 @@ export const substancesApi = createApi({
       transformResponse: (response: BackendReagent) => transformReagentResponse(response),
       providesTags: ["Substances"],
     }),
-    updateReagent: builder.mutation({
-      query: (updatedReagentDetails) => ({
-        url: `/substances/reagents/${updatedReagentDetails.id}`,
-        method: "PUT",
-        body: {
-          newQuantityLeft: updatedReagentDetails.quantity,
-          location_id: updatedReagentDetails.locationId,
-        },
-      }),
-      invalidatesTags: ["Substances"],
-    }),
 
     getSampleDetails: builder.query<Sample, string>({
       query: (sampleId) => `/substances/samples/${sampleId}`,
       transformResponse: (response: BackendSample) => transformSampleResponse(response),
       providesTags: ["Substances"],
-    }),
-    updateSample: builder.mutation({
-      query: (updatedSampleDetails) => ({
-        url: `/substances/samples/${updatedSampleDetails.id}`,
-        method: "PUT",
-        body: {
-          newQuantityLeft: updatedSampleDetails.quantity,
-          location_id: updatedSampleDetails.locationId,
-        },
-      }),
-      invalidatesTags: ["Substances"],
     }),
   }),
 });
@@ -75,7 +75,6 @@ export const {
   useGetReagentDetailsQuery,
   useDeleteSubstanceMutation,
   useGetSubstancesQuery,
-  useUpdateReagentMutation,
   useGetSampleDetailsQuery,
-  useUpdateSampleMutation,
+  useUpdateSubstanceMutation,
 } = substancesApi;
