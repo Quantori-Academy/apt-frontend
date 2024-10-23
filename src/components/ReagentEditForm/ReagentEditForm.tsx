@@ -13,7 +13,7 @@ import { PageLoader } from "@/components";
 import { useLocationQuantityDetails } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import {
-  useDeleteReagentMutation,
+  useDeleteSubstanceMutation,
   useGetStorageRoomsQuery,
   useUpdateReagentMutation,
 } from "@/store";
@@ -36,7 +36,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
 
   const [updateReagent] = useUpdateReagentMutation();
 
-  const [deleteReagent] = useDeleteReagentMutation();
+  const [deleteReagent] = useDeleteSubstanceMutation();
 
   const navigate = useNavigate();
 
@@ -57,7 +57,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
     try {
       if (quantityLeft === "0") {
         await deleteReagent(reagentDetails.substanceId).unwrap();
-        navigate(RouteProtectedPath.reagentSampleList);
+        navigate(RouteProtectedPath.substances);
       } else {
         await updateReagent({
           id: reagentDetails.substanceId,

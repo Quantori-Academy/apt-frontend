@@ -9,10 +9,13 @@ import {
 } from "@mui/material";
 import React, { useMemo, useState } from "react";
 
-import { PageLoader, ReagentSampleTable, SearchBar } from "@/components";
+import { PageLoader, SearchBar, SubstancesTable } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { PageError } from "@/components/PageError";
-import { useGetReagentSampleListQuery } from "@/store";
+import { userRoles } from "@/constants";
+import { useAppSelector } from "@/hooks";
+import { selectUserRole } from "@/store";
+import { useGetSubstancesQuery } from "@/store/substancesApi";
 import {
   CategoryFilterOption,
   ExpiredFilter,
@@ -21,16 +24,12 @@ import {
 } from "@/types";
 import { getListData } from "@/utils";
 
-import style from "./ReagentSampleList.module.css";
+import style from "./SubstancesList.module.css";
 
 const PAGE_SIZE = 5;
 
-const ReagentSampleList: React.FC = () => {
-  const {
-    data: reagents = [],
-    isLoading,
-    isError,
-  } = useGetReagentSampleListQuery();
+const SubstancesList: React.FC = () => {
+  const { data: substances = [], isLoading, isError } = useGetSubstancesQuery();
 
   const [page, setPage] = useState(1);
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
@@ -40,6 +39,7 @@ const ReagentSampleList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
 
+  const role = useAppSelector(selectUserRole);
   const handleSortChange = (property: SortColumn) => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
     setSortDirection(isAsc ? "asc" : "desc");
@@ -49,7 +49,7 @@ const ReagentSampleList: React.FC = () => {
   const { visibleItems, totalPages } = useMemo(
     () =>
       getListData({
-        items: reagents,
+        items: substances,
         categoryFilter,
         sortColumn,
         sortDirection,
@@ -60,7 +60,7 @@ const ReagentSampleList: React.FC = () => {
       }),
     [
       categoryFilter,
-      reagents,
+      substances,
       sortColumn,
       sortDirection,
       page,
@@ -84,14 +84,16 @@ const ReagentSampleList: React.FC = () => {
       <Typography variant="h4" sx={{ mb: 2 }}>
         Reagents And Samples
       </Typography>
-      <Box className={style.buttonBox}>
-        <Button variant="contained" color="primary">
-          Add Reagent
-        </Button>
-        <Button variant="contained" color="primary">
-          Add Sample
-        </Button>
-      </Box>
+      {role === userRoles.Researcher && (
+        <Box className={style.buttonBox}>
+          <Button variant="contained" color="primary">
+            Add Reagent
+          </Button>
+          <Button variant="contained" color="primary">
+            Add Sample
+          </Button>
+        </Box>
+      )}
       <Box display="flex" gap={2} marginBottom={2}>
         <CategoryFilter
           filter={categoryFilter}
@@ -111,7 +113,7 @@ const ReagentSampleList: React.FC = () => {
           <ToggleButton value="Expired">Expired</ToggleButton>
         </ToggleButtonGroup>
       </Box>
-      <ReagentSampleTable
+      <SubstancesTable
         sortColumn={sortColumn}
         sortDirection={sortDirection}
         onSortChange={handleSortChange}
@@ -128,4 +130,4 @@ const ReagentSampleList: React.FC = () => {
   );
 };
 
-export default ReagentSampleList;
+export default SubstancesList;

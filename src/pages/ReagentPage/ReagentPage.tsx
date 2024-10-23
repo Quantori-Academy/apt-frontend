@@ -12,7 +12,7 @@ import {
 import { useAlertSnackbar } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import {
-  useDeleteReagentMutation,
+  useDeleteSubstanceMutation,
   useGetReagentDetailsQuery,
   useGetStorageLocationDetailQuery,
 } from "@/store";
@@ -34,7 +34,7 @@ const ReagentPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const [deleteReagent] = useDeleteReagentMutation();
+  const [deleteReagent] = useDeleteSubstanceMutation();
 
   if (!reagentId) return null;
 
@@ -58,7 +58,7 @@ const ReagentPage: React.FC = () => {
 
       openSnackbar("success", "Reagent deleted successfully!");
 
-      navigate(RouteProtectedPath.reagentSampleList);
+      navigate(RouteProtectedPath.substances);
     } catch {
       openSnackbar("error", "Failed to delete reagent!");
     } finally {
