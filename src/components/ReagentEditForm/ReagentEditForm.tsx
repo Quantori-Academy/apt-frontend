@@ -72,19 +72,13 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
         await updateReagent({
           id: substanceDetails.substanceId,
           quantity: quantityLeft,
-          storageLocation: {
-            roomId: selectedRoom?.id,
-            locationId: selectedLocation?.locationId,
-          },
+          locationId: selectedLocation?.locationId,
         }).unwrap();
       } else {
         await updateSample({
           id: substanceDetails.substanceId,
           quantity: quantityLeft,
-          storageLocation: {
-            roomId: selectedRoom?.id,
-            locationId: selectedLocation?.locationId,
-          },
+          locationId: selectedLocation?.locationId,
         }).unwrap();
       }
       setIsEditing(false);

@@ -35,8 +35,8 @@ export const reagentsApi = createApi({
         url: `/substances/reagents/${updatedReagentDetails.id}`,
         method: "PUT",
         body: {
-          quantity_left: updatedReagentDetails.quantity,
-          storage_location: updatedReagentDetails.storageLocation,
+          decreaseAmount: updatedReagentDetails.quantity,
+          location_id: updatedReagentDetails.locationId,
         },
       }),
       invalidatesTags: ["Reagents"],
