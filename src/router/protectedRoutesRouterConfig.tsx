@@ -24,8 +24,8 @@ export const enum AppProtectedRoutes {
   DASHBOARD = "dashboard",
   REAGENT_SAMPLE_LIST = "reagentSampleList",
   REAGENT_PAGE = "reagentPage",
-  SAMPLE_ADD_FORM = "samplePage",
-  REAGENT_ADD_FORM = "reagentAddPage",
+  SAMPLE_ADD_PAGE = "samplePage",
+  REAGENT_ADD_PAGE = "reagentAddPage",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -34,9 +34,9 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: "/account-settings",
   [AppProtectedRoutes.DASHBOARD]: "/dashboard",
   [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: "/reagent-sample-list",
-  [AppProtectedRoutes.SAMPLE_ADD_FORM]: "/reagent-sample-list/add-sample",
+  [AppProtectedRoutes.SAMPLE_ADD_PAGE]: "/reagent-sample-list/add-sample",
   [AppProtectedRoutes.REAGENT_PAGE]: "/reagent-sample-list/reagent/:id",
-  [AppProtectedRoutes.REAGENT_ADD_FORM]: "/reagent-sample-list/add-reagent",
+  [AppProtectedRoutes.REAGENT_ADD_PAGE]: "/reagent-sample-list/add-reagent",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -73,13 +73,13 @@ export const protectedRoutesRouterConfig: Record<
     element: <Dashboard />,
     roles: Object.values(userRoles),
   },
-  [AppProtectedRoutes.SAMPLE_ADD_FORM]: {
-    path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_FORM],
+  [AppProtectedRoutes.SAMPLE_ADD_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_PAGE],
     element: <AddSamplePage />,
     roles: Object.values(userRoles),
   },
-  [AppProtectedRoutes.REAGENT_ADD_FORM]: {
-    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_FORM],
+  [AppProtectedRoutes.REAGENT_ADD_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_PAGE],
     element: <AddReagentPage />,
     roles: Object.values(userRoles),
   },

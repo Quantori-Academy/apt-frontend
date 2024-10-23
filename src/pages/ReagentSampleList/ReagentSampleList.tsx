@@ -13,10 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { PageLoader, ReagentSampleTable, SearchBar } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { PageError } from "@/components/PageError";
-import {
-  AppProtectedRoutes,
-  RouteProtectedPath,
-} from "@/router/protectedRoutesRouterConfig.tsx";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
 import { useGetReagentSampleListQuery } from "@/store";
 import {
   CategoryFilterOption,
@@ -94,18 +91,14 @@ const ReagentSampleList: React.FC = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() =>
-            navigate(RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_FORM])
-          }
+          onClick={() => navigate(RouteProtectedPath.samplePage)}
         >
           Add Reagent
         </Button>
         <Button
           variant="contained"
           color="primary"
-          onClick={() =>
-            navigate(RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_FORM])
-          }
+          onClick={() => navigate(RouteProtectedPath.samplePage)}
         >
           Add Sample
         </Button>
