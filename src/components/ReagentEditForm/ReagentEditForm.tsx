@@ -17,8 +17,7 @@ import {
   useGetStorageRoomsQuery,
   useUpdateReagentMutation,
 } from "@/store";
-import { RoomData } from "@/types";
-import { Reagent } from "@/types/reagent.ts";
+import { Reagent, RoomData } from "@/types";
 
 type ReagentEditFormProps = {
   isEditing: boolean;

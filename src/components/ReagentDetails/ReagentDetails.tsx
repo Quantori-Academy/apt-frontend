@@ -2,8 +2,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
 
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
-import { RoomData } from "@/types";
-import { Reagent } from "@/types/reagent";
+import { Reagent, RoomData } from "@/types";
 
 type ReagentKey = keyof Reagent;
 

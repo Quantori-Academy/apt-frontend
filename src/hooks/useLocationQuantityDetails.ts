@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { RoomData, RoomLocationBrief, StorageRoomsBrief } from "@/types";
-import { Reagent } from "@/types/reagent";
+import { Reagent, RoomData, RoomLocationBrief, StorageRoomsBrief } from "@/types";
 
 export const useLocationQuantityDetails = (
   reagentDetails: Reagent,
