@@ -13,17 +13,15 @@ import {
 } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import {
-  useDeleteReagentMutation,
+  useDeleteSubstanceMutation,
   useGetStorageLocationDetailQuery,
 } from "@/store";
-import { Reagent, Sample } from "@/types";
+import { Reagent, Sample, SubstancesCategory } from "@/types";
 
 type Substance = Reagent | Sample;
 
-export type SubstanceType = "reagent" | "sample";
-
 type SubstanceDetailsProps = {
-  substanceType: SubstanceType;
+  substanceType: SubstancesCategory;
   substanceId: string;
   substanceDetails: Substance;
   redirectPath: string;
@@ -49,17 +47,17 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
 
   const navigate = useNavigate();
 
-  const [deleteSubstance] = useDeleteReagentMutation();
+  const [deleteSubstance] = useDeleteSubstanceMutation();
 
   if (isSubstanceLocationLoading) {
     return <PageLoader />;
   }
 
+  const substanceTypeInLowerCase = substanceType.toLowerCase();
+
   if (!substanceLocationDetails) {
     return (
-      <PageError
-        text={`Failed to load ${substanceType} details. Please try again later.`}
-      />
+      <PageError text={`Failed to load ${substanceTypeInLowerCase} details.`} />
     );
   }
 
@@ -67,7 +65,10 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
     try {
       await deleteSubstance(substanceId).unwrap();
 
-      openSnackbar("success", `${substanceType} deleted successfully!`);
+      openSnackbar(
+        "success",
+        `${substanceTypeInLowerCase} deleted successfully!`
+      );
 
       navigate(redirectPath);
     } catch (err) {
@@ -85,7 +86,7 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
-      {substanceType === "reagent" ? (
+      {substanceType === "Reagent" ? (
         <ReagentDetails
           reagentDetails={substanceDetails as Reagent}
           reagentLocationDetails={substanceLocationDetails}
@@ -102,6 +103,7 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
       )}
       {isEditing && (
         <ReagentEditForm
+          openSnackbar={openSnackbar}
           substanceType={substanceType}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
@@ -112,7 +114,7 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
       <ConfirmRemoving
         open={deleteModalIsOpen}
         modalTitle=""
-        modalText={`Are you sure you want to delete this ${substanceType}?`}
+        modalText={`Are you sure you want to delete this ${substanceTypeInLowerCase}?`}
         onClose={() => setDeleteModalIsOpen(false)}
         onDelete={handleDelete}
       />

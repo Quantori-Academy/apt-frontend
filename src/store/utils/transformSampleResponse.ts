@@ -1,4 +1,4 @@
-import { BackendSample, Sample } from "@/types/sample";
+import { BackendSample, Sample } from "@/types";
 
 export const transformSampleResponse = (sample: BackendSample): Sample => ({
   substanceId: sample.substance_id,

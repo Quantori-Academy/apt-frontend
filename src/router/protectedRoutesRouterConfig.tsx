@@ -5,8 +5,8 @@ import {
   AccountSettings,
   Dashboard,
   ReagentPage,
-  ReagentSampleList,
   SamplePage,
+  SubstancesList,
   UserDetails,
   Users,
 } from "@/pages";
@@ -21,7 +21,7 @@ export const enum AppProtectedRoutes {
   USER_PAGE = "userPage",
   ACCOUNT_SETTINGS = "accountSettings",
   DASHBOARD = "dashboard",
-  REAGENT_SAMPLE_LIST = "reagentSampleList",
+  SUBSTANCES = "substances",
   REAGENT_PAGE = "reagentPage",
   SAMPLE_PAGE = "samplePage",
 }
@@ -31,9 +31,9 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.USER_PAGE]: "/users/:id",
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: "/account-settings",
   [AppProtectedRoutes.DASHBOARD]: "/dashboard",
-  [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: "/reagent-sample-list",
-  [AppProtectedRoutes.REAGENT_PAGE]: "/reagent-sample-list/reagent/:id",
-  [AppProtectedRoutes.SAMPLE_PAGE]: "/reagent-sample-list/sample/:id",
+  [AppProtectedRoutes.SUBSTANCES]: "/substances",
+  [AppProtectedRoutes.REAGENT_PAGE]: "/substances/reagent/:id",
+  [AppProtectedRoutes.SAMPLE_PAGE]: "/substances/sample/:id",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -55,20 +55,20 @@ export const protectedRoutesRouterConfig: Record<
     element: <AccountSettings />,
     roles: Object.values(userRoles),
   },
-  [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: {
-    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_SAMPLE_LIST],
-    element: <ReagentSampleList />,
-    roles: Object.values(userRoles),
+  [AppProtectedRoutes.SUBSTANCES]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SUBSTANCES],
+    element: <SubstancesList />,
+    roles: [userRoles.Administrator, userRoles.Researcher],
   },
   [AppProtectedRoutes.REAGENT_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_PAGE],
     element: <ReagentPage />,
-    roles: Object.values(userRoles),
+    roles: [userRoles.Administrator, userRoles.Researcher],
   },
   [AppProtectedRoutes.SAMPLE_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_PAGE],
     element: <SamplePage />,
-    roles: Object.values(userRoles),
+    roles: [userRoles.Administrator, userRoles.Researcher],
   },
   [AppProtectedRoutes.DASHBOARD]: {
     path: RouteProtectedPath[AppProtectedRoutes.DASHBOARD],

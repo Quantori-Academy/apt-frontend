@@ -19,19 +19,15 @@ const SamplePage: React.FC = () => {
   }
 
   if (!sampleDetails || !sampleId || isError) {
-    return (
-      <PageError
-        text={"Failed to load sample details. Please try again later."}
-      />
-    );
+    return <PageError text={"Failed to load sample details. "} />;
   }
 
   return (
     <SubstanceDetails
-      substanceType="sample"
+      substanceType="Sample"
       substanceId={sampleId}
       substanceDetails={sampleDetails}
-      redirectPath={RouteProtectedPath.samplePage}
+      redirectPath={RouteProtectedPath.substances}
     />
   );
 };

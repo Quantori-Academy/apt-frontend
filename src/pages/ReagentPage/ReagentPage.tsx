@@ -19,19 +19,15 @@ const ReagentPage: React.FC = () => {
   }
 
   if (!reagentDetails || !reagentId || isError) {
-    return (
-      <PageError
-        text={"Failed to load reagent details. Please try again later."}
-      />
-    );
+    return <PageError text={"Failed to load reagent details."} />;
   }
 
   return (
     <SubstanceDetails
-      substanceType="reagent"
+      substanceType="Reagent"
       substanceId={reagentId}
       substanceDetails={reagentDetails}
-      redirectPath={RouteProtectedPath.reagentPage}
+      redirectPath={RouteProtectedPath.substances}
     />
   );
 };

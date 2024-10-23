@@ -13,14 +13,12 @@ export {
 
 export {
   useGetReagentDetailsQuery,
-  useDeleteReagentMutation,
   useUpdateReagentMutation,
-  reagentsApi,
-} from "./reagentsApi";
-
-export { useGetSampleDetailsQuery, useDeleteSampleMutation, useUpdateSampleMutation } from "./sampleApi";
-
-export { useGetReagentSampleListQuery } from "./reagentSampleApi";
+  useGetSampleDetailsQuery,
+  useUpdateSampleMutation,
+  useDeleteSubstanceMutation,
+  substancesApi,
+} from "./substancesApi";
 
 export { useGetStorageRoomsQuery, useGetStorageLocationDetailQuery } from "./storageApi";
 

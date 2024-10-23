@@ -2,7 +2,7 @@ import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import { useState } from "react";
 
-type Severity = "success" | "error";
+export type Severity = "success" | "error";
 type SnackbarState = {
   isOpen: boolean;
   severity: Severity;

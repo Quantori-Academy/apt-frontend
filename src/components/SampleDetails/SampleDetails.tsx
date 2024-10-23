@@ -22,6 +22,7 @@ const sampleDetailsRows: ReagentDetailRow[] = [
   { label: "Units", key: "unit" },
   { label: "Price per unit", key: "pricePerUnit" },
   { label: "Quantity left", key: "totalQuantityLeft" },
+  { label: "Description", key: "description" },
 ];
 
 type SampleDetailsProps = {
@@ -96,7 +97,7 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
             <SmilesImage smiles={sampleDetails.structure} />
           </Grid>
         </Grid>
-        <DetailItem label="Description" value={sampleDetails.description} />
+
         <EditDeleteButtons
           onDelete={() => setDeleteModalIsOpen(true)}
           onEdit={() => setIsEditing(true)}
