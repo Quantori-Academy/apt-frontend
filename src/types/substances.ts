@@ -25,18 +25,14 @@ type LocationResponse = {
 export type SubstanceItemResponse = {
   id: string;
   name: string;
+  category: SubstancesCategory;
   description: string;
   structure: string;
   is_expired: boolean;
   locations: Array<LocationResponse>;
 };
 
-export type SubstancesResponse = {
-  substances: {
-    reagents: Array<SubstanceItemResponse>;
-    samples: Array<SubstanceItemResponse>;
-  };
-};
+export type SubstancesResponse = Array<SubstanceItemResponse>;
 
 export type Reagent = {
   substanceId: string;

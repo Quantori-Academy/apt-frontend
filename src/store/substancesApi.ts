@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
 import { transformReagentResponse } from "@/store/utils/transformReagentResponse.ts";
-import { transformSubstanceList } from "@/store/utils/transformSubstanceList.ts";
+import { transformSubstanceData } from "@/store/utils/transformSubstanceList.ts";
 import { BackendReagent, Reagent, SubstancesDetails, SubstancesResponse } from "@/types";
 
 type MutationSubstanceResponse = {
@@ -23,7 +23,7 @@ export const substancesApi = createApi({
     getSubstances: builder.query<Array<SubstancesDetails>, void>({
       query: () => "/substances",
       transformResponse(baseQueryReturnValue: SubstancesResponse) {
-        return transformSubstanceList(baseQueryReturnValue);
+        return transformSubstanceData(baseQueryReturnValue);
       },
       providesTags: ["Substances"],
     }),

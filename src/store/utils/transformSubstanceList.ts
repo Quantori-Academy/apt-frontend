@@ -1,10 +1,10 @@
-import { SubstanceItemResponse, SubstancesCategory, SubstancesDetails, SubstancesResponse } from "@/types";
+import { SubstancesDetails, SubstancesResponse } from "@/types";
 
-const transformSubstanceData = (substances: Array<SubstanceItemResponse>, category: SubstancesCategory) => {
+export const transformSubstanceData = (substances: SubstancesResponse) => {
   return substances.map((substance) => {
     return {
       id: substance.id,
-      category: category,
+      category: substance.category,
       description: substance.description,
       name: substance.name,
       structure: substance.structure,
@@ -13,11 +13,4 @@ const transformSubstanceData = (substances: Array<SubstanceItemResponse>, catego
       storageLocation: `${substance.locations[0].room}/${substance.locations[0].location}`,
     } as SubstancesDetails;
   });
-};
-
-export const transformSubstanceList = (substances: SubstancesResponse): Array<SubstancesDetails> => {
-  const reagents = transformSubstanceData(substances.substances.reagents, "Reagent");
-  const samples = transformSubstanceData(substances.substances.samples, "Sample");
-
-  return [...reagents, ...samples];
 };
