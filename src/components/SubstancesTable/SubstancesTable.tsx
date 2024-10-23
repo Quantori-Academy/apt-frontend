@@ -18,8 +18,14 @@ import { useNavigate } from "react-router-dom";
 import { ConfirmRemoving, PageLoader } from "@/components";
 import { userRoles } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { selectUserRole, useDeleteSubstanceMutation } from "@/store";
-import { SortColumn, SortDirection, SubstancesDetails } from "@/types";
+import {
+  SortColumn,
+  SortDirection,
+  SubstancesCategory,
+  SubstancesDetails,
+} from "@/types";
 
 type ReagentSampleTableProps = {
   sortColumn: SortColumn;
@@ -53,6 +59,16 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
 
   if (isDeleting) return <PageLoader />;
 
+  const onClickDetails = (
+    category: SubstancesCategory,
+    substanceId: string
+  ) => {
+    if (category === "Reagent")
+      navigate(RouteProtectedPath.reagentPage.replace(":id", substanceId));
+    else {
+      navigate(RouteProtectedPath.samplePage.replace(":id", substanceId));
+    }
+  };
   return (
     <>
       <TableContainer component={Paper}>
@@ -120,9 +136,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                   )}
                   <IconButton
                     title="Details"
-                    onClick={() =>
-                      navigate(`/substances/reagent/${reagent.id}`)
-                    }
+                    onClick={() => onClickDetails(reagent.category, reagent.id)}
                   >
                     <DescriptionIcon />
                   </IconButton>
