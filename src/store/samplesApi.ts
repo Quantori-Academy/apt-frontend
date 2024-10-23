@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
+import { transformSampleData } from "@/store/utils/transformSampleData.ts";
 import { SampleData } from "@/types/sampleData";
 
 export const samplesApi = createApi({
@@ -15,17 +16,7 @@ export const samplesApi = createApi({
       query: (sample: SampleData) => ({
         url: "/substances/samples",
         method: "POST",
-        body: {
-          name: sample.name,
-          description: sample.description,
-          structure: sample.structure,
-          price_per_unit: sample.price_per_unit || 0,
-          quantity_unit: sample.quantity_unit || "mL",
-          quantity_left: sample.quantity_left || 0,
-          expiration_date: sample.expiration_date || new Date().toISOString(),
-          location_id: sample.location_id || 0,
-          added_substance_ids: sample.added_substance_ids || [],
-        },
+        body: transformSampleData(sample),
       }),
       invalidatesTags: ["Samples"],
     }),
