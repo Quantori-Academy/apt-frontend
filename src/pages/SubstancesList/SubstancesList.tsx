@@ -12,6 +12,9 @@ import React, { useMemo, useState } from "react";
 import { PageLoader, SearchBar, SubstancesTable } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { PageError } from "@/components/PageError";
+import { userRoles } from "@/constants";
+import { useAppSelector } from "@/hooks";
+import { selectUserRole } from "@/store";
 import { useGetSubstancesQuery } from "@/store/substancesApi";
 import {
   CategoryFilterOption,
@@ -27,7 +30,6 @@ const PAGE_SIZE = 5;
 
 const SubstancesList: React.FC = () => {
   const { data: substances = [], isLoading, isError } = useGetSubstancesQuery();
-  console.log("am:", substances);
 
   const [page, setPage] = useState(1);
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
@@ -37,6 +39,7 @@ const SubstancesList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
 
+  const role = useAppSelector(selectUserRole);
   const handleSortChange = (property: SortColumn) => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
     setSortDirection(isAsc ? "asc" : "desc");
@@ -69,7 +72,6 @@ const SubstancesList: React.FC = () => {
   if (isLoading) {
     return <PageLoader />;
   }
-  console.log("am:", substances);
 
   if (isError) {
     return (
@@ -82,14 +84,16 @@ const SubstancesList: React.FC = () => {
       <Typography variant="h4" sx={{ mb: 2 }}>
         Reagents And Samples
       </Typography>
-      <Box className={style.buttonBox}>
-        <Button variant="contained" color="primary">
-          Add Reagent
-        </Button>
-        <Button variant="contained" color="primary">
-          Add Sample
-        </Button>
-      </Box>
+      {role === userRoles.Researcher && (
+        <Box className={style.buttonBox}>
+          <Button variant="contained" color="primary">
+            Add Reagent
+          </Button>
+          <Button variant="contained" color="primary">
+            Add Sample
+          </Button>
+        </Box>
+      )}
       <Box display="flex" gap={2} marginBottom={2}>
         <CategoryFilter
           filter={categoryFilter}

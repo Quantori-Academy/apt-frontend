@@ -55,7 +55,7 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.SUBSTANCES]: {
     path: RouteProtectedPath[AppProtectedRoutes.SUBSTANCES],
     element: <SubstancesList />,
-    roles: Object.values(userRoles),
+    roles: [userRoles.Administrator, userRoles.Researcher],
   },
   [AppProtectedRoutes.REAGENT_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_PAGE],

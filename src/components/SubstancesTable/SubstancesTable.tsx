@@ -12,11 +12,13 @@ import {
   TableSortLabel,
 } from "@mui/material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { ConfirmRemoving, PageLoader } from "@/components";
+import { userRoles } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
-import { useDeleteSubstanceMutation } from "@/store";
+import { selectUserRole, useDeleteSubstanceMutation } from "@/store";
 import { SortColumn, SortDirection, SubstancesDetails } from "@/types";
 
 type ReagentSampleTableProps = {
@@ -38,6 +40,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const navigate = useNavigate();
+  const role = useSelector(selectUserRole);
   const handleDelete = async (id: string) => {
     const { error } = await deleteSubstance(id);
 
@@ -96,21 +99,25 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                 <TableCell align="right">{reagent.quantityLeft}</TableCell>
                 <TableCell align="right">{reagent.storageLocation}</TableCell>
                 <TableCell align="right" sx={{ display: "flex" }}>
-                  <IconButton
-                    title="Delete"
-                    onClick={() => setIsOpenModal(true)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                  <ConfirmRemoving
-                    open={isOpenModal}
-                    modalTitle={""}
-                    modalText={
-                      "Are you sure you want to delete this substance?"
-                    }
-                    onDelete={() => handleDelete(reagent.id)}
-                    onClose={() => setIsOpenModal(false)}
-                  />
+                  {role === userRoles.Researcher && (
+                    <>
+                      <IconButton
+                        title="Delete"
+                        onClick={() => setIsOpenModal(true)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                      <ConfirmRemoving
+                        open={isOpenModal}
+                        modalTitle={""}
+                        modalText={
+                          "Are you sure you want to delete this substance?"
+                        }
+                        onDelete={() => handleDelete(reagent.id)}
+                        onClose={() => setIsOpenModal(false)}
+                      />
+                    </>
+                  )}
                   <IconButton
                     title="Details"
                     onClick={() =>

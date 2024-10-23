@@ -1,27 +1,4 @@
-import { SubstancesCategory, SubstancesDetails } from "@/types";
-
-type LocationResponse = {
-  room: string;
-  location: string;
-  quantity_left: number;
-  unit: string;
-};
-
-export type SubstanceItemResponse = {
-  id: string;
-  name: string;
-  description: string;
-  structure: string;
-  is_expired: boolean;
-  locations: Array<LocationResponse>;
-};
-
-export type SubstancesResponse = {
-  substances: {
-    reagents: Array<SubstanceItemResponse>;
-    samples: Array<SubstanceItemResponse>;
-  };
-};
+import { SubstanceItemResponse, SubstancesCategory, SubstancesDetails, SubstancesResponse } from "@/types";
 
 const transformSubstanceData = (substances: Array<SubstanceItemResponse>, category: SubstancesCategory) => {
   return substances.map((substance) => {
@@ -39,7 +16,6 @@ const transformSubstanceData = (substances: Array<SubstanceItemResponse>, catego
 };
 
 export const transformSubstanceList = (substances: SubstancesResponse): Array<SubstancesDetails> => {
-  console.log("transform:");
   const reagents = transformSubstanceData(substances.substances.reagents, "Reagent");
   const samples = transformSubstanceData(substances.substances.samples, "Sample");
 

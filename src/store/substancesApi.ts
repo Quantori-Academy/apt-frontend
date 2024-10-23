@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
 import { transformReagentResponse } from "@/store/utils/transformReagentResponse.ts";
-import { SubstancesResponse, transformSubstanceList } from "@/store/utils/transformSubstanceList.ts";
-import { SubstancesDetails } from "@/types";
+import { transformSubstanceList } from "@/store/utils/transformSubstanceList.ts";
+import { SubstancesDetails, SubstancesResponse } from "@/types";
 import { BackendReagent, Reagent } from "@/types/reagent.ts";
 
 type MutationSubstanceResponse = {
