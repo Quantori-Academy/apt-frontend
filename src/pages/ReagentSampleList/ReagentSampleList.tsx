@@ -91,7 +91,7 @@ const ReagentSampleList: React.FC = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => navigate(RouteProtectedPath.samplePage)}
+          onClick={() => navigate(RouteProtectedPath.reagentAddPage)}
         >
           Add Reagent
         </Button>
