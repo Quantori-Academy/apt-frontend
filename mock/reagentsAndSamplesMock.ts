@@ -1,10 +1,10 @@
-import { SubstancesResponse } from "../src/store/utils/transformSubstanceList";
+import { SubstancesResponse } from "../src/types";
 
 export const substancesObj: SubstancesResponse = {
   substances: {
     reagents: [
       {
-        id: 8,
+        id: "8",
         name: "Ethanol",
         description: "Common alcohol for lab use",
         structure: "C2H5OH",
@@ -21,7 +21,7 @@ export const substancesObj: SubstancesResponse = {
     ],
     samples: [
       {
-        id: 7,
+        id: " 7",
         name: "Water",
         description: "Laboratory grade distilled water",
         structure: "H2O",
