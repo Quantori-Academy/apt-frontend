@@ -70,7 +70,8 @@ const Dashboard = () => {
             <DashboardCard dashboardCard={userCard} />
           </NavLink>
         )}
-        {role === userRoles.Researcher && (
+        {(role === userRoles.Administrator ||
+          role === userRoles.Researcher) && (
           <NavLink to="/substances" className={style.navLink}>
             {" "}
             <DashboardCard dashboardCard={substancesCard} />
