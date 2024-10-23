@@ -8,50 +8,78 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useForm } from "react-hook-form";
 
 import { ReagentData } from "@/types/reagentData";
 
-interface AddReagentFormProps {
-  reagentData: ReagentData;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: (e: React.FormEvent) => void;
-  handleLocationChange: (
-    event: React.SyntheticEvent<Element, Event>,
-    value: { id: number; label: string } | null
-  ) => void;
-  locationOptions: { id: number; label: string }[];
-}
+type LocationOption = {
+  id: number;
+  label: string;
+};
+
+type AddReagentFormProps = {
+  handleCreateReagent: (reagentData: ReagentData) => Promise<void>;
+  locationOptions: LocationOption[];
+};
 
 const AddReagentForm: React.FC<AddReagentFormProps> = ({
-  reagentData,
-  handleChange,
-  handleSubmit,
-  handleLocationChange,
+  handleCreateReagent,
   locationOptions,
 }) => {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<ReagentData>({
+    defaultValues: {
+      name: "",
+      description: "",
+      structure: "",
+      pricePerUnit: 0,
+      quantityUnit: "",
+      quantityLeft: 0,
+      expirationDate: new Date().toISOString().slice(0, 16),
+      locationId: 0,
+      casNumber: "",
+      producer: "",
+      catalogId: 0,
+      catalogLink: "",
+    },
+  });
+
+  const onSubmit = async (data: ReagentData) => {
+    await handleCreateReagent(data);
+  };
+
+  const handleLocationChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: LocationOption | null
+  ) => {
+    setValue("locationId", value ? value.id : 0);
+  };
+
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" gutterBottom>
         Add New Reagent
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               label="Name"
-              name="name"
-              value={reagentData.name}
-              onChange={handleChange}
+              {...register("name", { required: "Name is required" })}
               fullWidth
               margin="normal"
+              error={!!errors.name}
+              helperText={errors.name?.message}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               label="Description"
-              name="description"
-              value={reagentData.description}
-              onChange={handleChange}
+              {...register("description")}
               fullWidth
               margin="normal"
             />
@@ -59,9 +87,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           <Grid item xs={12}>
             <TextField
               label="Structure"
-              name="structure"
-              value={reagentData.structure}
-              onChange={handleChange}
+              {...register("structure")}
               fullWidth
               margin="normal"
             />
@@ -69,26 +95,15 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           <Grid item xs={12} sm={6}>
             <TextField
               label="Price per Unit"
-              name="price_per_unit"
               type="number"
-              placeholder="Enter price per unit"
-              value={
-                reagentData.price_per_unit === -1
-                  ? ""
-                  : reagentData.price_per_unit
-              }
-              onChange={handleChange}
+              {...register("pricePerUnit", {
+                valueAsNumber: true,
+                min: { value: 0, message: "Price must be positive" },
+              })}
               fullWidth
               margin="normal"
-              InputProps={{
-                inputProps: { min: 0 },
-                style: { appearance: "textfield" },
-                onKeyDown: (e) => {
-                  if (e.key === "e" || e.key === "E") {
-                    e.preventDefault();
-                  }
-                },
-              }}
+              error={!!errors.pricePerUnit}
+              helperText={errors.pricePerUnit?.message}
               sx={{
                 "& input[type=number]": {
                   MozAppearance: "textfield",
@@ -104,20 +119,15 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           <Grid item xs={6}>
             <TextField
               label="Quantity Left"
-              name="quantity_left"
               type="number"
-              value={
-                reagentData.quantity_left === -1
-                  ? ""
-                  : reagentData.quantity_left
-              }
-              onChange={handleChange}
+              {...register("quantityLeft", {
+                valueAsNumber: true,
+                min: { value: 0, message: "Quantity must be positive" },
+              })}
               fullWidth
               margin="normal"
-              InputProps={{
-                inputProps: { min: 0 },
-                style: { appearance: "textfield" },
-              }}
+              error={!!errors.quantityLeft}
+              helperText={errors.quantityLeft?.message}
               sx={{
                 "& input[type=number]": {
                   MozAppearance: "textfield",
@@ -133,10 +143,8 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           <Grid item xs={12} sm={6}>
             <TextField
               label="Expiration Date"
-              name="expiration_date"
               type="datetime-local"
-              value={reagentData.expiration_date.slice(0, 16)}
-              onChange={handleChange}
+              {...register("expirationDate")}
               fullWidth
               margin="normal"
               InputLabelProps={{
@@ -164,9 +172,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           <Grid item xs={12} sm={6}>
             <TextField
               label="CAS Number"
-              name="cas_number"
-              value={reagentData.cas_number}
-              onChange={handleChange}
+              {...register("casNumber")}
               fullWidth
               margin="normal"
             />
@@ -174,9 +180,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           <Grid item xs={12} sm={6}>
             <TextField
               label="Producer"
-              name="producer"
-              value={reagentData.producer}
-              onChange={handleChange}
+              {...register("producer")}
               fullWidth
               margin="normal"
             />
@@ -184,20 +188,31 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           <Grid item xs={12}>
             <TextField
               label="Catalog ID"
-              name="catalog_id"
               type="number"
-              value={reagentData.catalog_id}
-              onChange={handleChange}
+              {...register("catalogId", {
+                valueAsNumber: true,
+                min: { value: 0, message: "Catalog ID must be positive" },
+              })}
               fullWidth
               margin="normal"
+              error={!!errors.catalogId}
+              helperText={errors.catalogId?.message}
+              sx={{
+                "& input[type=number]": {
+                  MozAppearance: "textfield",
+                },
+                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
+                  {
+                    WebkitAppearance: "none",
+                    margin: 0,
+                  },
+              }}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               label="Catalog Link"
-              name="catalog_link"
-              value={reagentData.catalog_link}
-              onChange={handleChange}
+              {...register("catalogLink")}
               fullWidth
               margin="normal"
             />
