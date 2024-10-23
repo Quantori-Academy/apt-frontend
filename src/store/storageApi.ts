@@ -62,21 +62,17 @@ export const storageApi = createApi({
       void,
       {
         oldRoomId: number;
-        oldLocationId: number;
         substanceId: number;
-        newRoomId: number;
         newLocationId: number;
       }
     >({
-      query: ({ oldRoomId, oldLocationId, substanceId, newRoomId, newLocationId }) => ({
+      query: ({ oldRoomId, substanceId, newLocationId }) => ({
         url: "/storage/move",
         method: "PUT",
         body: {
-          oldRoomId,
-          oldLocationId,
-          substanceId,
-          newRoomId,
-          newLocationId,
+          old_location_id: oldRoomId,
+          substance_id: substanceId,
+          new_location_id: newLocationId,
         },
       }),
       invalidatesTags: ["StorageRooms"],
