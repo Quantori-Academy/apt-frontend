@@ -50,7 +50,7 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
     );
 
     moveSubstance({
-      oldRoomId: locationDetails?.roomId as number,
+      oldRoomId: locationDetails?.locationId as number,
       substanceId: selectedSubstanceId as number,
       newLocationId: locationToMove?.locationId as number,
     });
