@@ -34,6 +34,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   visibleItems,
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState("");
   const [deleteSubstance, { isLoading: isDeleting }] =
     useDeleteSubstanceMutation();
 
@@ -41,8 +42,9 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
 
   const navigate = useNavigate();
   const role = useSelector(selectUserRole);
-  const handleDelete = async (id: string) => {
-    const { error } = await deleteSubstance(id);
+
+  const handleDelete = async () => {
+    const { error } = await deleteSubstance(deleteItemId);
 
     if (error) {
       openSnackbar("error", "Failed to delete substance!");
@@ -103,19 +105,13 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                     <>
                       <IconButton
                         title="Delete"
-                        onClick={() => setIsOpenModal(true)}
+                        onClick={() => {
+                          setIsOpenModal(true);
+                          setDeleteItemId(reagent.id);
+                        }}
                       >
                         <DeleteIcon />
                       </IconButton>
-                      <ConfirmRemoving
-                        open={isOpenModal}
-                        modalTitle={""}
-                        modalText={
-                          "Are you sure you want to delete this substance?"
-                        }
-                        onDelete={() => handleDelete(reagent.id)}
-                        onClose={() => setIsOpenModal(false)}
-                      />
                     </>
                   )}
                   <IconButton
@@ -132,6 +128,13 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
+      <ConfirmRemoving
+        open={isOpenModal}
+        modalTitle={""}
+        modalText={"Are you sure you want to delete this substance?"}
+        onDelete={() => handleDelete()}
+        onClose={() => setIsOpenModal(false)}
+      />
       {SnackbarComponent()}
     </>
   );
