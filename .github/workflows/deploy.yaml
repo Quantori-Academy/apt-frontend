@@ -46,7 +46,7 @@ jobs:
                 echo "${SSH_KEY}" >> /tmp/ssh_key
                 chmod 400 /tmp/ssh_key
                 ssh -o KexAlgorithms=ecdh-sha2-nistp521 -o 'StrictHostKeyChecking no' -i /tmp/ssh_key ${SSH_USER}@${VM_IP} 'rm -rf ~/apt-frontend/*'
-                scp -v -o KexAlgorithms=ecdh-sha2-nistp521 -o 'StrictHostKeyChecking no' -i /tmp/ssh_key -r ./apt-frontend ${SSH_USER}@$VM_IP:~
+                scp -o KexAlgorithms=ecdh-sha2-nistp521 -o 'StrictHostKeyChecking no' -i /tmp/ssh_key -r ./apt-frontend ${SSH_USER}@$VM_IP:~
 
             - name: Run latest version
               uses: appleboy/ssh-action@v1.0.3
@@ -58,6 +58,7 @@ jobs:
                 script: |
                   cd ~/apt-frontend
                   sudo docker compose down
+                  sudo docker rm -f frontend
                   sudo docker compose build
                   sudo docker compose up -d
                   rm -rf ./.git
