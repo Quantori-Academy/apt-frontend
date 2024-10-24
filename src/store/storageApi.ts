@@ -51,7 +51,7 @@ export const storageApi = createApi({
 
     deleteStorageLocation: builder.mutation<void, number>({
       query: (locationId) => ({
-        url: `/storage/${locationId}`,
+        url: `/storage/location/${locationId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["StorageRooms"],
