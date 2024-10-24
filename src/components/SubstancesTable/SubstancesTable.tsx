@@ -42,6 +42,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [deleteSubstance, { isLoading: isDeleting }] =
     useDeleteSubstanceMutation();
+  const [idToDelete, setIdToDelete] = useState("");
 
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
@@ -119,19 +120,13 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                     <>
                       <IconButton
                         title="Delete"
-                        onClick={() => setIsOpenModal(true)}
+                        onClick={() => {
+                          setIsOpenModal(true);
+                          setIdToDelete(reagent.id);
+                        }}
                       >
                         <DeleteIcon />
                       </IconButton>
-                      <ConfirmRemoving
-                        open={isOpenModal}
-                        modalTitle={""}
-                        modalText={
-                          "Are you sure you want to delete this substance?"
-                        }
-                        onDelete={() => handleDelete(reagent.id)}
-                        onClose={() => setIsOpenModal(false)}
-                      />
                     </>
                   )}
                   <IconButton
@@ -146,6 +141,13 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
+      <ConfirmRemoving
+        open={isOpenModal}
+        modalTitle={""}
+        modalText={"Are you sure you want to delete this substance?"}
+        onDelete={() => handleDelete(idToDelete)}
+        onClose={() => setIsOpenModal(false)}
+      />
       {SnackbarComponent()}
     </>
   );

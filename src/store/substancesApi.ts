@@ -6,7 +6,7 @@ import { BackendReagent, BackendSample, Reagent, Sample, SubstancesDetails, Subs
 import {
   transformReagentResponse,
   transformSampleResponse,
-  transformSubstanceList,
+  transformSubstanceData,
   transformSubstancePatchRequest,
 } from "./utils";
 
@@ -35,7 +35,7 @@ export const substancesApi = createApi({
     getSubstances: builder.query<Array<SubstancesDetails>, void>({
       query: () => "/substances",
       transformResponse(baseQueryReturnValue: SubstancesResponse) {
-        return transformSubstanceList(baseQueryReturnValue);
+        return transformSubstanceData(baseQueryReturnValue);
       },
       providesTags: ["Substances"],
     }),
