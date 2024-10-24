@@ -2,6 +2,9 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
 
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
+import { userRoles } from "@/constants";
+import { useAppSelector } from "@/hooks";
+import { selectUserRole } from "@/store";
 import { Reagent, RoomData } from "@/types";
 
 type ReagentKey = keyof Reagent;
@@ -22,6 +25,7 @@ const reagentDetailsRows: ReagentDetailRow[] = [
   { label: "Price per unit", key: "pricePerUnit" },
   { label: "Quantity left", key: "totalQuantityLeft" },
   { label: "Catalog ID", key: "catalogID" },
+  { label: "Description", key: "description" },
 ];
 
 type ReagentDetailsProps = {
@@ -37,6 +41,8 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   setIsEditing,
   reagentLocationDetails,
 }) => {
+  const role = useAppSelector(selectUserRole);
+
   return (
     <Card sx={{ background: "#0080800f" }}>
       <CardContent>
@@ -76,13 +82,15 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
             <SmilesImage smiles={reagentDetails.structure} />
           </Grid>
         </Grid>
-        <DetailItem label="Description" value={reagentDetails.description} />
-        <EditDeleteButtons
-          onDelete={() => setDeleteModalIsOpen(true)}
-          onEdit={() => setIsEditing(true)}
-        />
+        {role === userRoles.Researcher && (
+          <EditDeleteButtons
+            onDelete={() => setDeleteModalIsOpen(true)}
+            onEdit={() => setIsEditing(true)}
+          />
+        )}
       </CardContent>
     </Card>
   );
 };
+
 export default ReagentDetails;

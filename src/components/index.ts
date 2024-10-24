@@ -21,5 +21,7 @@ export { DetailItem } from "./DetailItem";
 export { SubstancesTable } from "./SubstancesTable";
 export { ReagentDetails } from "./ReagentDetails";
 export { ReagentEditForm } from "./ReagentEditForm";
-export { CategoryFilter } from "./CategoryFilter";
+export { SampleDetails } from "./SampleDetails";
 export { PageError } from "./PageError";
+export { SubstanceDetails } from "./SubstanceDetails";
+export { CategoryFilter } from "./CategoryFilter";

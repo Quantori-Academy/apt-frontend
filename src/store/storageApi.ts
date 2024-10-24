@@ -1,10 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { BASE_URL } from "@/api/apiMethods";
-import { prepareHeaders } from "@/api/apiMethods";
+import { BASE_URL, prepareHeaders } from "@/api";
 import { BackendRoomData, BackendStorageRoomsBrief, RoomData, StorageRoomsBrief } from "@/types";
 
-import { transformStorageLocationResponse, transformStorageRoomsResponse } from "./utils/transformStorageResponse";
+import { transformStorageLocationResponse, transformStorageRoomsResponse } from "./utils";
 
 export const storageApi = createApi({
   reducerPath: "storageApi",

@@ -62,3 +62,19 @@ export type BackendReagent = Omit<
   price_per_unit: string;
   location_id: number;
 };
+
+export type Sample = Omit<Reagent, "CASNumber" | "producer" | "catalogID" | "catalogLink"> & {
+  addedSubstances: AddedSubstance[];
+};
+
+export type BackendSample = Omit<BackendReagent, "cas_number" | "catalog_id" | "catalog_link" | "producer"> & {
+  added_substances: AddedSubstance[];
+};
+
+export type AddedSubstance = {
+  id: number;
+  name: string;
+  description: string;
+  structure: string;
+  category: string;
+};

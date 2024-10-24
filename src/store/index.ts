@@ -13,7 +13,8 @@ export {
 
 export {
   useGetReagentDetailsQuery,
-  useUpdateReagentMutation,
+  useUpdateSubstanceMutation,
+  useGetSampleDetailsQuery,
   useDeleteSubstanceMutation,
   substancesApi,
 } from "./substancesApi";
