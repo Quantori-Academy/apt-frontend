@@ -1,32 +1,48 @@
 import { Container, Typography } from "@mui/material";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { ConfirmRemoving, PageLoader, ReagentDetails } from "@/components";
+import {
+  ConfirmRemoving,
+  PageLoader,
+  ReagentDetails,
+  ReagentEditForm,
+} from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import { useDeleteReagentMutation, useGetReagentDetailsQuery } from "@/store";
+import {
+  useDeleteSubstanceMutation,
+  useGetReagentDetailsQuery,
+  useGetStorageLocationDetailQuery,
+} from "@/store";
 
-const ReagentPage = () => {
+const ReagentPage: React.FC = () => {
+  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
   const { id: reagentId } = useParams<{ id: string }>();
+  const { data: reagentDetails, isLoading: isReagentLoading } =
+    useGetReagentDetailsQuery(reagentId ? reagentId : skipToken);
 
-  const { data: reagentDetails, isLoading } = useGetReagentDetailsQuery(
-    reagentId!
-  );
-
-  const [deleteReagent] = useDeleteReagentMutation();
+  const { data: reagentLocationDetails, isLoading: isReagentLocationLoading } =
+    useGetStorageLocationDetailQuery(
+      reagentDetails ? reagentDetails.locationId : skipToken
+    );
 
   const navigate = useNavigate();
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [deleteReagent] = useDeleteSubstanceMutation();
 
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+  if (!reagentId) return null;
 
-  if (isLoading) {
+  if (isReagentLoading || isReagentLocationLoading) {
     return <PageLoader />;
   }
 
-  if (!reagentDetails) {
+  if (!reagentDetails || !reagentLocationDetails) {
     return (
       <Container maxWidth="md" sx={{ mt: 4 }}>
         <Typography variant="h6" color="error">
@@ -42,11 +58,11 @@ const ReagentPage = () => {
 
       openSnackbar("success", "Reagent deleted successfully!");
 
-      navigate(RouteProtectedPath.reagentSampleList);
+      navigate(RouteProtectedPath.substances);
     } catch {
       openSnackbar("error", "Failed to delete reagent!");
     } finally {
-      setModalIsOpen(false);
+      setDeleteModalIsOpen(false);
     }
   };
 
@@ -54,13 +70,23 @@ const ReagentPage = () => {
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <ReagentDetails
         reagentDetails={reagentDetails}
-        setModalIsOpen={setModalIsOpen}
+        setDeleteModalIsOpen={setDeleteModalIsOpen}
+        setIsEditing={setIsEditing}
+        reagentLocationDetails={reagentLocationDetails}
       />
+      {isEditing && (
+        <ReagentEditForm
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          reagentDetails={reagentDetails}
+          reagentLocationDetails={reagentLocationDetails}
+        />
+      )}
       <ConfirmRemoving
-        open={modalIsOpen}
+        open={deleteModalIsOpen}
         modalTitle=""
         modalText="Are you sure you want to delete this reagent?"
-        onClose={() => setModalIsOpen(false)}
+        onClose={() => setDeleteModalIsOpen(false)}
         onDelete={handleDelete}
       />
 
