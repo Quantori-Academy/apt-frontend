@@ -58,6 +58,9 @@ jobs:
                 script: |
                   cd ~/apt-frontend
                   sudo docker compose down
+                  docker network create apt-project
+                  docker network connect apt-project frontend 
+                  docker network connect apt-project nginx
                   sudo docker rm -f frontend
                   sudo docker rm -f nginx
                   sudo docker compose build

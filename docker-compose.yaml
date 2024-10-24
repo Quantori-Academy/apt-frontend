@@ -8,6 +8,8 @@ services:
       - ./.nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - frontend
+    networks:
+      - apt-project
 
   frontend:
     build:
@@ -18,4 +20,8 @@ services:
       - ../apt-frontend/.env
     expose:
       - "80"
-
+    networks:
+      - apt-project
+networks:
+  apt-project:
+    external: true
