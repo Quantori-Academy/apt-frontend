@@ -3,3 +3,7 @@ export * from "./user";
 export * from "./storageLocation.ts";
 export * from "./substances";
 export * from "./storageLocation";
+export * from "./sampleData.ts";
+export * from "./reagentData.ts";
+export * from "./substances.ts";
+export * from "./storageLocation.ts";

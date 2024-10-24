@@ -10,6 +10,8 @@ import {
   UserDetails,
   Users,
 } from "@/pages";
+import { AddReagentPage } from "@/pages/AddReagentPage";
+import { AddSamplePage } from "@/pages/AddSamplePage";
 import { UserRole } from "@/types";
 
 type AppRoutesProps = RouteObject & {
@@ -24,6 +26,8 @@ export const enum AppProtectedRoutes {
   SUBSTANCES = "substances",
   REAGENT_PAGE = "reagentPage",
   SAMPLE_PAGE = "samplePage",
+  SAMPLE_ADD_PAGE = "sampleAddPage",
+  REAGENT_ADD_PAGE = "reagentAddPage",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -34,6 +38,8 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.SUBSTANCES]: "/substances",
   [AppProtectedRoutes.REAGENT_PAGE]: "/substances/reagent/:id",
   [AppProtectedRoutes.SAMPLE_PAGE]: "/substances/sample/:id",
+  [AppProtectedRoutes.SAMPLE_ADD_PAGE]: "/substances/add-sample",
+  [AppProtectedRoutes.REAGENT_ADD_PAGE]: "/reagent-sample-list/add-reagent",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -73,6 +79,16 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.DASHBOARD]: {
     path: RouteProtectedPath[AppProtectedRoutes.DASHBOARD],
     element: <Dashboard />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.SAMPLE_ADD_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_PAGE],
+    element: <AddSamplePage />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.REAGENT_ADD_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_PAGE],
+    element: <AddReagentPage />,
     roles: Object.values(userRoles),
   },
 };

@@ -16,7 +16,10 @@ export {
   useUpdateSubstanceMutation,
   useGetSampleDetailsQuery,
   useDeleteSubstanceMutation,
+  useGetSubstancesQuery,
   substancesApi,
+  useCreateReagentMutation,
+  useCreateSampleMutation,
 } from "./substancesApi";
 
 export { useGetStorageRoomsQuery, useGetStorageLocationDetailQuery } from "./storageApi";
