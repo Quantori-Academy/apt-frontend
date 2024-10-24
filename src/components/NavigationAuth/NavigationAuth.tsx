@@ -65,6 +65,18 @@ const NavigationAuth: React.FC = () => {
             Substances
           </NavLink>
         )}
+        {role !== userRoles.ProcurementOfficer && (
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.navLink} ${styles.activeNavLink}`
+                : styles.navLink
+            }
+            to={RouteProtectedPath.storage}
+          >
+            Storage
+          </NavLink>
+        )}
       </Box>
       <Button onClick={() => dispatch(logout())}>Logout</Button>
     </>

@@ -50,3 +50,17 @@ export type BackendSubstance = {
   description: string;
   structure_smiles: string;
 };
+
+export type SubstancesInLocation = {
+  description: string;
+  name: string;
+  structureSmiles: string;
+  substanceId: number;
+};
+export type LocationDetails = {
+  locationId: number;
+  locationName: string;
+  roomId: number;
+  roomName: string;
+  substances: Array<SubstancesInLocation>;
+};
