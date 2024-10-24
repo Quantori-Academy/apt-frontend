@@ -145,7 +145,10 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
         open={isOpenModal}
         modalTitle={""}
         modalText={"Are you sure you want to delete this substance?"}
-        onDelete={() => handleDelete(idToDelete)}
+        onDelete={() => {
+          handleDelete(idToDelete);
+          setIdToDelete("");
+        }}
         onClose={() => setIsOpenModal(false)}
       />
       {SnackbarComponent()}
