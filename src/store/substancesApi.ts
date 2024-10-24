@@ -22,7 +22,7 @@ export const substancesApi = createApi({
   endpoints: (builder) => ({
     getSubstances: builder.query<Array<SubstancesDetails>, void>({
       query: () => "/substances",
-      transformResponse(baseQueryReturnValue: SubstancesResponse) {
+      transformResponse: (baseQueryReturnValue: SubstancesResponse) => {
         return transformSubstanceData(baseQueryReturnValue);
       },
       providesTags: ["Substances"],
