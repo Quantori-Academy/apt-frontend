@@ -10,33 +10,37 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { PageLoader } from "@/components";
-import { useLocationQuantityDetails } from "@/hooks";
+import { Severity, useLocationQuantityDetails } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import {
   useDeleteSubstanceMutation,
   useGetStorageRoomsQuery,
-  useUpdateReagentMutation,
+  useUpdateSubstanceMutation,
 } from "@/store";
-import { Reagent, RoomData } from "@/types";
+import { Reagent, RoomData, Sample, SubstancesCategory } from "@/types";
 
 type ReagentEditFormProps = {
+  substanceType: SubstancesCategory;
   isEditing: boolean;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  reagentDetails: Reagent;
-  reagentLocationDetails: RoomData;
+  substanceDetails: Reagent | Sample;
+  substanceLocationDetails: RoomData;
+  openSnackbar: (severite: Severity, text: string) => void;
 };
 
 const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
   isEditing,
   setIsEditing,
-  reagentDetails,
-  reagentLocationDetails,
+  substanceDetails,
+  substanceLocationDetails,
+  substanceType,
+  openSnackbar,
 }) => {
   const { data: rooms, isLoading } = useGetStorageRoomsQuery();
 
-  const [updateReagent] = useUpdateReagentMutation();
+  const [updateSubstance] = useUpdateSubstanceMutation();
 
-  const [deleteReagent] = useDeleteSubstanceMutation();
+  const [deleteSubstance] = useDeleteSubstanceMutation();
 
   const navigate = useNavigate();
 
@@ -47,7 +51,11 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
     setSelectedLocation,
     quantityLeft,
     setQuantityLeft,
-  } = useLocationQuantityDetails(reagentDetails, reagentLocationDetails, rooms);
+  } = useLocationQuantityDetails(
+    substanceDetails,
+    substanceLocationDetails,
+    rooms
+  );
 
   if (isLoading) {
     return <PageLoader />;
@@ -56,98 +64,118 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
   const handleSubmit = async () => {
     try {
       if (quantityLeft === "0") {
-        await deleteReagent(reagentDetails.substanceId).unwrap();
+        await deleteSubstance(substanceDetails.substanceId).unwrap();
+
+        openSnackbar("success", `${substanceType} deleted successfully!`);
+
         navigate(RouteProtectedPath.substances);
       } else {
-        await updateReagent({
-          id: reagentDetails.substanceId,
+        const updatedDetails = {
+          id: substanceDetails.substanceId,
+          oldLocationId: substanceLocationDetails.locationId,
           quantity: quantityLeft,
-          storageLocation: {
-            roomId: selectedRoom?.id,
-            locationId: selectedLocation?.locationId,
-          },
-        }).unwrap();
+          newLocationId: selectedLocation?.locationId,
+        };
+        updateSubstance(updatedDetails);
+        openSnackbar("success", `${substanceType} updated successfully!`);
+        setIsEditing(false);
       }
-      setIsEditing(false);
     } catch (err) {
-      console.error("Failed to update reagent: ", err);
+      if (typeof err === "object" && err !== null && "data" in err) {
+        const errorMessage = (err as { data: { message: string } }).data
+          .message;
+        openSnackbar("error", errorMessage);
+      } else {
+        openSnackbar("error", "An unexpected error occurred");
+      }
     }
   };
 
   const availableLocations = selectedRoom ? selectedRoom.locations : [];
 
   return (
-    <Dialog open={isEditing} onClose={() => setIsEditing(false)} maxWidth="sm">
-      <DialogTitle>Edit Reagent</DialogTitle>
-      <DialogContent
-        sx={{
-          "&.MuiDialogContent-root": {
-            paddingTop: "10px",
-          },
-        }}
+    <>
+      <Dialog
+        open={isEditing}
+        onClose={() => setIsEditing(false)}
+        maxWidth="sm"
       >
-        <TextField
-          label="Quantity Left"
-          variant="outlined"
-          value={quantityLeft}
-          inputProps={{ min: 0 }}
-          onChange={(event) => setQuantityLeft(event.target.value)}
-          type="number"
-          fullWidth
-          error={quantityLeft === "0"}
-          helperText={
-            quantityLeft === "0" && "Reagent will be deleted, if quantity is 0"
-          }
-          sx={{ marginBottom: "20px" }}
-        />
-        <Autocomplete
-          sx={{ marginBottom: "20px" }}
-          options={rooms || []}
-          getOptionLabel={(option) =>
-            option.room +
-            (option.id === reagentLocationDetails.roomId ? " (current)" : "")
-          }
-          value={selectedRoom}
-          onChange={(_, newRoom) => {
-            setSelectedLocation(null);
-            setSelectedRoom(newRoom);
+        <DialogTitle>Edit {substanceType.toLowerCase()}</DialogTitle>
+        <DialogContent
+          sx={{
+            "&.MuiDialogContent-root": {
+              paddingTop: "10px",
+            },
           }}
-          renderInput={(params) => (
-            <TextField {...params} label="Room" variant="outlined" />
-          )}
-        />
-        {selectedRoom && (
+        >
+          <TextField
+            label="Quantity Left"
+            variant="outlined"
+            value={quantityLeft}
+            inputProps={{ min: 0 }}
+            onChange={(event) => setQuantityLeft(event.target.value)}
+            type="number"
+            fullWidth
+            error={quantityLeft === "0"}
+            helperText={
+              quantityLeft === "0" &&
+              `${substanceType} will be deleted, if quantity is 0`
+            }
+            sx={{ marginBottom: "20px" }}
+          />
           <Autocomplete
-            sx={{ marginBottom: "25px" }}
-            options={availableLocations}
+            sx={{ marginBottom: "20px" }}
+            options={rooms || []}
             getOptionLabel={(option) =>
-              option.locationName +
-              (option.locationId === reagentLocationDetails.locationId
+              option.room +
+              (option.id === substanceLocationDetails.roomId
                 ? " (current)"
                 : "")
             }
-            value={selectedLocation}
-            onChange={(_, newLocation) => {
-              setSelectedLocation(newLocation);
+            value={selectedRoom}
+            onChange={(_, newRoom) => {
+              setSelectedLocation(null);
+              setSelectedRoom(newRoom);
             }}
             renderInput={(params) => (
-              <TextField {...params} label="Location" variant="outlined" />
+              <TextField {...params} label="Room" variant="outlined" />
             )}
           />
-        )}
-        <Box sx={{ display: "flex", gap: "10px" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            disabled={!selectedRoom || !selectedLocation || quantityLeft === ""}
-          >
-            Save Changes
-          </Button>
-          <Button onClick={() => setIsEditing(false)}>Close</Button>
-        </Box>
-      </DialogContent>
-    </Dialog>
+          {selectedRoom && (
+            <Autocomplete
+              sx={{ marginBottom: "25px" }}
+              options={availableLocations}
+              getOptionLabel={(option) =>
+                option.locationName +
+                (option.locationId === substanceLocationDetails.locationId
+                  ? " (current)"
+                  : "")
+              }
+              value={selectedLocation}
+              onChange={(_, newLocation) => {
+                setSelectedLocation(newLocation);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Location" variant="outlined" />
+              )}
+            />
+          )}
+          <Box sx={{ display: "flex", gap: "10px" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              disabled={
+                !selectedRoom || !selectedLocation || quantityLeft === ""
+              }
+            >
+              Save Changes
+            </Button>
+            <Button onClick={() => setIsEditing(false)}>Close</Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

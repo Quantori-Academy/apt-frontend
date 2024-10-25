@@ -25,18 +25,14 @@ type LocationResponse = {
 export type SubstanceItemResponse = {
   id: string;
   name: string;
+  category: SubstancesCategory;
   description: string;
   structure: string;
   is_expired: boolean;
   locations: Array<LocationResponse>;
 };
 
-export type SubstancesResponse = {
-  substances: {
-    reagents: Array<SubstanceItemResponse>;
-    samples: Array<SubstanceItemResponse>;
-  };
-};
+export type SubstancesResponse = Array<SubstanceItemResponse>;
 
 export type Reagent = {
   substanceId: string;
@@ -65,4 +61,20 @@ export type BackendReagent = Omit<
   total_quantity_left: number;
   price_per_unit: string;
   location_id: number;
+};
+
+export type Sample = Omit<Reagent, "CASNumber" | "producer" | "catalogID" | "catalogLink"> & {
+  addedSubstances: AddedSubstance[];
+};
+
+export type BackendSample = Omit<BackendReagent, "cas_number" | "catalog_id" | "catalog_link" | "producer"> & {
+  added_substances: AddedSubstance[];
+};
+
+export type AddedSubstance = {
+  id: number;
+  name: string;
+  description: string;
+  structure: string;
+  category: string;
 };

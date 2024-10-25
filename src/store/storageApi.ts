@@ -11,7 +11,7 @@ import {
   UpdateStorageRoom,
 } from "@/types";
 
-import { transformStorageLocationResponse, transformStorageRoomsResponse } from "./utils/transformStorageResponse";
+import { transformStorageLocationResponse, transformStorageRoomsResponse } from "./utils";
 
 export const storageApi = createApi({
   reducerPath: "storageApi",

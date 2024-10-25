@@ -18,8 +18,14 @@ import { useNavigate } from "react-router-dom";
 import { ConfirmRemoving, PageLoader } from "@/components";
 import { userRoles } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { selectUserRole, useDeleteSubstanceMutation } from "@/store";
-import { SortColumn, SortDirection, SubstancesDetails } from "@/types";
+import {
+  SortColumn,
+  SortDirection,
+  SubstancesCategory,
+  SubstancesDetails,
+} from "@/types";
 
 type ReagentSampleTableProps = {
   sortColumn: SortColumn;
@@ -34,6 +40,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   visibleItems,
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState("");
   const [deleteSubstance, { isLoading: isDeleting }] =
     useDeleteSubstanceMutation();
 
@@ -41,8 +48,9 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
 
   const navigate = useNavigate();
   const role = useSelector(selectUserRole);
-  const handleDelete = async (id: string) => {
-    const { error } = await deleteSubstance(id);
+
+  const handleDelete = async () => {
+    const { error } = await deleteSubstance(deleteItemId);
 
     if (error) {
       openSnackbar("error", "Failed to delete substance!");
@@ -53,6 +61,16 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
 
   if (isDeleting) return <PageLoader />;
 
+  const onClickDetails = (
+    category: SubstancesCategory,
+    substanceId: string
+  ) => {
+    if (category === "Reagent")
+      navigate(RouteProtectedPath.reagentPage.replace(":id", substanceId));
+    else {
+      navigate(RouteProtectedPath.samplePage.replace(":id", substanceId));
+    }
+  };
   return (
     <>
       <TableContainer component={Paper}>
@@ -103,26 +121,18 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                     <>
                       <IconButton
                         title="Delete"
-                        onClick={() => setIsOpenModal(true)}
+                        onClick={() => {
+                          setIsOpenModal(true);
+                          setDeleteItemId(reagent.id);
+                        }}
                       >
                         <DeleteIcon />
                       </IconButton>
-                      <ConfirmRemoving
-                        open={isOpenModal}
-                        modalTitle={""}
-                        modalText={
-                          "Are you sure you want to delete this substance?"
-                        }
-                        onDelete={() => handleDelete(reagent.id)}
-                        onClose={() => setIsOpenModal(false)}
-                      />
                     </>
                   )}
                   <IconButton
                     title="Details"
-                    onClick={() =>
-                      navigate(`/substances/reagent/${reagent.id}`)
-                    }
+                    onClick={() => onClickDetails(reagent.category, reagent.id)}
                   >
                     <DescriptionIcon />
                   </IconButton>
@@ -132,6 +142,13 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
+      <ConfirmRemoving
+        open={isOpenModal}
+        modalTitle={""}
+        modalText={"Are you sure you want to delete this substance?"}
+        onDelete={() => handleDelete()}
+        onClose={() => setIsOpenModal(false)}
+      />
       {SnackbarComponent()}
     </>
   );

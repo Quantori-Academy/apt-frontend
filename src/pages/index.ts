@@ -8,3 +8,4 @@ export { StorageLocationDetails } from "./StorageLocationDetails";
 export { ReagentPage } from "./ReagentPage";
 export { SubstancesList } from "./SubstancesList";
 export { UserDetails } from "./UserDetails";
+export { SamplePage } from "./SamplePage";

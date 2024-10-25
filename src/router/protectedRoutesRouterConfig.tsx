@@ -5,6 +5,7 @@ import {
   AccountSettings,
   Dashboard,
   ReagentPage,
+  SamplePage,
   StorageLocationDetails,
   StorageLocations,
   SubstancesList,
@@ -26,6 +27,7 @@ export const enum AppProtectedRoutes {
   REAGENT_PAGE = "reagentPage",
   STORAGE_LOCATIONS = "storageLocation",
   STORAGE_LOCATION_DETAIL = "storageLocationDetail",
+  SAMPLE_PAGE = "samplePage",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -36,7 +38,8 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.STORAGE_LOCATION_DETAIL]: "/storage/:locationId",
   [AppProtectedRoutes.DASHBOARD]: "/dashboard",
   [AppProtectedRoutes.SUBSTANCES]: "/substances",
-  [AppProtectedRoutes.REAGENT_PAGE]: "/reagent-sample-list/reagent/:id",
+  [AppProtectedRoutes.REAGENT_PAGE]: "/substances/reagent/:id",
+  [AppProtectedRoutes.SAMPLE_PAGE]: "/substances/sample/:id",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -71,11 +74,16 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.SUBSTANCES]: {
     path: RouteProtectedPath[AppProtectedRoutes.SUBSTANCES],
     element: <SubstancesList />,
-    roles: [userRoles.Administrator, userRoles.Researcher],
+    roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.REAGENT_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_PAGE],
     element: <ReagentPage />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.SAMPLE_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_PAGE],
+    element: <SamplePage />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.DASHBOARD]: {
