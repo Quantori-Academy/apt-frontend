@@ -14,7 +14,7 @@ import { useUpdateStorageRoomMutation } from "@/store";
 type EditStorageProps = {
   open: boolean;
   onClose: () => void;
-  id: number;
+  id: string;
 };
 
 type editRoomSelect = {

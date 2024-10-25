@@ -19,7 +19,7 @@ type ChangeLocationDialogProps = {
   open: boolean;
   onClose: () => void;
   locationDetails: LocationDetails;
-  selectedSubstanceId: number;
+  selectedSubstanceId: string;
 };
 
 const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
@@ -53,9 +53,9 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
     );
 
     const { error } = await moveSubstance({
-      oldRoomId: locationDetails?.locationId as number,
-      substanceId: selectedSubstanceId as number,
-      newLocationId: locationToMove?.locationId as number,
+      oldRoomId: locationDetails?.locationId,
+      substanceId: selectedSubstanceId,
+      newLocationId: locationToMove?.locationId,
     });
 
     if (error) {

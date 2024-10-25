@@ -18,8 +18,7 @@ const PAGE_SIZE = 3;
 const StorageLocations: React.FC = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
-  //TODO: change -1
-  const [roomIdToEdit, setRoomIdToEdit] = useState<number>(-1);
+  const [roomIdToEdit, setRoomIdToEdit] = useState<string>("");
   const [page, setPage] = useState(1);
   const {
     data: storages,
@@ -27,7 +26,7 @@ const StorageLocations: React.FC = () => {
     isLoading: isGettingStorages,
   } = useGetStorageRoomsQuery();
 
-  const handleEdit = (roomId: number) => {
+  const handleEdit = (roomId: string) => {
     setRoomIdToEdit(roomId);
     setEditDialogOpen(true);
   };

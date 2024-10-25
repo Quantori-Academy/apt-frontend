@@ -16,7 +16,7 @@ import { StorageRoomsBrief } from "@/types";
 
 type StorageLocationsListProps = {
   storages: Array<StorageRoomsBrief>;
-  onEditRoom: (id: number) => void;
+  onEditRoom: (id: string) => void;
 };
 
 const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
@@ -25,7 +25,7 @@ const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleLocationClick = (locationId: number) => {
+  const handleLocationClick = (locationId: string) => {
     navigate(
       AppProtectedRoutes.STORAGE_LOCATION_DETAIL.replace(
         ":locationId",

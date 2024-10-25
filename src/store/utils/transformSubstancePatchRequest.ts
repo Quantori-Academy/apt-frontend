@@ -1,9 +1,9 @@
 import { MutationPatchSubstance } from "../substancesApi";
 
 type SubstancePatchRequest = {
-  old_location_id: number;
+  old_location_id: string;
   new_quantity: string;
-  new_location_id?: number;
+  new_location_id?: string;
 };
 
 export const transformSubstancePatchRequest = (data: MutationPatchSubstance): SubstancePatchRequest => {

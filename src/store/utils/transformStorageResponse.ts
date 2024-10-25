@@ -12,12 +12,12 @@ export const transformStorageRoomsResponse = (room: BackendStorageRoomsBrief): S
 });
 
 export const transformStorageLocationResponse = (location: BackendRoomData): RoomData => ({
-  roomId: location.room_id,
-  locationId: location.location_id,
+  roomId: String(location.room_id),
+  locationId: String(location.location_id),
   roomName: location.room_name,
   locationName: location.location_name,
   substances: location.substances.map((substance) => ({
-    substanceId: substance.substance_id,
+    substanceId: String(substance.substance_id),
     name: substance.name,
     description: substance.description,
     structureSmiles: substance.structure_smiles,

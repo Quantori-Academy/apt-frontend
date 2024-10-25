@@ -11,7 +11,7 @@ import { SubstancesInLocation } from "@/types";
 
 type StoredSubstancesProps = {
   substances: Array<SubstancesInLocation>;
-  onChangeLocation: (substanceId: number) => void;
+  onChangeLocation: (substanceId: string) => void;
   openModal: () => void;
 };
 

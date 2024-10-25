@@ -25,8 +25,7 @@ import {
 } from "@/store";
 
 const StorageLocationDetails: React.FC = () => {
-  //TODO: change -1
-  const [selectedSubstanceId, setSelectedSubstanceId] = useState<number>(-1);
+  const [selectedSubstanceId, setSelectedSubstanceId] = useState<string>("");
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
   const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
@@ -35,7 +34,7 @@ const StorageLocationDetails: React.FC = () => {
     data: locationDetails,
     isError,
     isLoading,
-  } = useGetStorageLocationDetailQuery(Number(locationId));
+  } = useGetStorageLocationDetailQuery(locationId!);
 
   const [deleteStorageLocation, { isLoading: isDeleting }] =
     useDeleteStorageLocationMutation();
@@ -60,7 +59,7 @@ const StorageLocationDetails: React.FC = () => {
     }
   };
 
-  const handleChangeLocation = (substanceId: number) => {
+  const handleChangeLocation = (substanceId: string) => {
     setSelectedSubstanceId(substanceId);
   };
 

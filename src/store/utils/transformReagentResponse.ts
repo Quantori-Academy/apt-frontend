@@ -13,5 +13,5 @@ export const transformReagentResponse = (reagent: BackendReagent): Reagent => ({
   totalQuantityLeft: reagent.total_quantity_left,
   unit: reagent.unit,
   pricePerUnit: reagent.price_per_unit,
-  locationId: reagent.location_id,
+  locationId: String(reagent.location_id),
 });

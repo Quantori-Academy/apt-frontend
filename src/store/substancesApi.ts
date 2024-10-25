@@ -19,9 +19,9 @@ type MutationSubstanceResponse = {
 
 export type MutationPatchSubstance = {
   id: string;
-  oldLocationId: number;
+  oldLocationId: string;
   quantity: string;
-  newLocationId?: number;
+  newLocationId?: string;
 };
 
 export const substancesApi = createApi({

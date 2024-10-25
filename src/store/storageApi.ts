@@ -27,7 +27,7 @@ export const storageApi = createApi({
       providesTags: ["StorageRooms"],
     }),
 
-    getStorageLocationDetail: builder.query<RoomData, number>({
+    getStorageLocationDetail: builder.query<RoomData, string>({
       query: (locationId) => `/storage/${locationId}`,
       transformResponse: (response: BackendRoomData) => transformStorageLocationResponse(response),
       providesTags: ["StorageRooms"],

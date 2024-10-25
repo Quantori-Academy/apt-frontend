@@ -27,8 +27,7 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
   onClose,
   storages,
 }) => {
-  //TODO: Change -1
-  const [selectedRoomId, setSelectedRoomId] = useState<number>(-1);
+  const [selectedRoomId, setSelectedRoomId] = useState<string>("");
   const [locationName, setLocationName] = useState<string>("");
   const [createStorageRoom, { isLoading: isCreating }] =
     useCreateStorageRoomMutation();
@@ -43,7 +42,7 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
 
     if (!error) {
       onClose();
-      setSelectedRoomId(0);
+      setSelectedRoomId("0");
       setLocationName("");
     } else {
       openSnackbar("error", "Failed to create storage location!");
@@ -61,7 +60,7 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
               variant="outlined"
               label="Room"
               value={selectedRoomId}
-              onChange={(e) => setSelectedRoomId(e.target.value as number)}
+              onChange={(e) => setSelectedRoomId(e.target.value)}
             >
               <MenuItem value={0} disabled>
                 Select a room
@@ -80,7 +79,7 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
             onChange={(e) => setLocationName(e.target.value)}
             fullWidth
             margin="normal"
-            disabled={selectedRoomId === 0}
+            disabled={selectedRoomId === "0"}
           />
         </DialogContent>
         <DialogActions>
@@ -90,7 +89,9 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
           <Button
             onClick={handleCreateSubmit}
             color="primary"
-            disabled={isCreating || selectedRoomId === 0 || locationName === ""}
+            disabled={
+              isCreating || selectedRoomId === "0" || locationName === ""
+            }
           >
             {isCreating ? "Creating..." : "Create"}
           </Button>
