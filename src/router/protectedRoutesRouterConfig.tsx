@@ -5,8 +5,8 @@ import {
   AccountSettings,
   Dashboard,
   ReagentPage,
-  StorageLocationDetailPage,
-  StorageLocationPage,
+  StorageLocationDetails,
+  StorageLocations,
   SubstancesList,
   UserDetails,
   Users,
@@ -18,14 +18,14 @@ type AppRoutesProps = RouteObject & {
 };
 
 export const enum AppProtectedRoutes {
+  DASHBOARD = "dashboard",
   USERS = "users",
   USER_PAGE = "userPage",
   ACCOUNT_SETTINGS = "accountSettings",
-  DASHBOARD = "dashboard",
   SUBSTANCES = "substances",
   REAGENT_PAGE = "reagentPage",
-  STORAGE_LOCATIONS = "storage",
-  STORAGE_LOCATION_DETAIL = "storageDetail",
+  STORAGE_LOCATIONS = "storageLocation",
+  STORAGE_LOCATION_DETAIL = "storageLocationDetail",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -55,12 +55,12 @@ export const protectedRoutesRouterConfig: Record<
   },
   [AppProtectedRoutes.STORAGE_LOCATIONS]: {
     path: RouteProtectedPath[AppProtectedRoutes.STORAGE_LOCATIONS],
-    element: <StorageLocationPage />,
+    element: <StorageLocations />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.STORAGE_LOCATION_DETAIL]: {
     path: RouteProtectedPath[AppProtectedRoutes.STORAGE_LOCATION_DETAIL],
-    element: <StorageLocationDetailPage />,
+    element: <StorageLocationDetails />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: {

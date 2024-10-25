@@ -13,7 +13,7 @@ import {
 import React, { useState } from "react";
 
 import { useAlertSnackbar } from "@/hooks";
-import { useCreateStorageRoomMutation } from "@/store/storageApi.ts";
+import { useCreateStorageRoomMutation } from "@/store";
 import { StorageRoomsBrief } from "@/types";
 
 type AddStorageDialogProps = {
@@ -21,12 +21,13 @@ type AddStorageDialogProps = {
   onClose: () => void;
   storages: Array<StorageRoomsBrief>;
 };
+
 const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
   open,
   onClose,
   storages,
 }) => {
-  const [selectedRoomId, setSelectedRoomId] = useState<number>(0);
+  const [selectedRoomId, setSelectedRoomId] = useState<number>(-1);
   const [locationName, setLocationName] = useState<string>("");
   const [createStorageRoom, { isLoading: isCreating }] =
     useCreateStorageRoomMutation();

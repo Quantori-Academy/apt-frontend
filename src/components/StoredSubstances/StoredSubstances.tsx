@@ -14,12 +14,12 @@ type StoredSubstancesProps = {
   onChangeLocation: (substanceId: number) => void;
   openModal: () => void;
 };
+
 const StoredSubstances: React.FC<StoredSubstancesProps> = ({
   substances,
   onChangeLocation,
   openModal,
 }) => {
-  console.log("am:", substances);
   return (
     <>
       {substances.length > 0 ? (

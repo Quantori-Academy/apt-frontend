@@ -6,6 +6,7 @@ import { LocationDetails } from "@/types";
 type StorageLocationDetailProps = {
   locationDetails: LocationDetails;
 };
+
 const StorageLocationDetail: React.FC<StorageLocationDetailProps> = ({
   locationDetails,
 }) => {

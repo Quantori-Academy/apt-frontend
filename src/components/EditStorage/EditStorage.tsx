@@ -9,19 +9,20 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import { useAlertSnackbar } from "@/hooks";
-import { useUpdateStorageRoomMutation } from "@/store/storageApi.ts";
+import { useUpdateStorageRoomMutation } from "@/store";
 
 type EditStorageProps = {
   open: boolean;
   onClose: () => void;
-  roomId: number | null;
+  id: number;
 };
+
 type editRoomSelect = {
   roomName: string;
   roomDescription: string;
 };
 
-const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, roomId }) => {
+const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, id }) => {
   const [updateStorageRoom, { isLoading: isUpdating }] =
     useUpdateStorageRoomMutation();
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
@@ -40,7 +41,7 @@ const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, roomId }) => {
   const onSubmit = async (editedStorage: editRoomSelect) => {
     const { roomName, roomDescription } = editedStorage;
     const { error } = await updateStorageRoom({
-      roomId,
+      id,
       room: roomName,
       description: roomDescription,
     });
@@ -51,7 +52,6 @@ const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, roomId }) => {
       openSnackbar("success", "Room edited successfully!");
       onClose();
     }
-    console.log("am:", editedStorage);
   };
 
   return (

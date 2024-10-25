@@ -11,12 +11,14 @@ import {
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import { AppProtectedRoutes } from "@/router/protectedRoutesRouterConfig.tsx";
 import { StorageRoomsBrief } from "@/types";
 
 type StorageLocationsListProps = {
   storages: Array<StorageRoomsBrief>;
   onEditRoom: (id: number) => void;
 };
+
 const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
   storages,
   onEditRoom,
@@ -24,7 +26,12 @@ const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
   const navigate = useNavigate();
 
   const handleLocationClick = (locationId: number) => {
-    navigate(`/storage/${locationId}`);
+    navigate(
+      AppProtectedRoutes.STORAGE_LOCATION_DETAIL.replace(
+        ":locationId",
+        `${locationId}`
+      )
+    );
   };
 
   return (

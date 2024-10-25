@@ -10,17 +10,22 @@ import {
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { PageError, PageLoader, StorageLocationDetail } from "@/components";
-import ChangeLocationDialog from "@/components/ChangeLocationDialog/ChangeLocationDialog.tsx";
-import StoredSubstances from "@/components/StoredSubstances/StoredSubstances.tsx";
+import {
+  ChangeLocationDialog,
+  PageError,
+  PageLoader,
+  StorageLocationDetail,
+  StoredSubstances,
+} from "@/components";
 import { useAlertSnackbar } from "@/hooks";
-import { useGetStorageLocationDetailQuery } from "@/store";
-import { useDeleteStorageLocationMutation } from "@/store/storageApi.ts";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
+import {
+  useDeleteStorageLocationMutation,
+  useGetStorageLocationDetailQuery,
+} from "@/store";
 
-const StorageLocationDetailPage: React.FC = () => {
-  const [selectedSubstanceId, setSelectedSubstanceId] = useState<number | null>(
-    null
-  );
+const StorageLocationDetails: React.FC = () => {
+  const [selectedSubstanceId, setSelectedSubstanceId] = useState<number>(-1);
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
   const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
@@ -35,14 +40,14 @@ const StorageLocationDetailPage: React.FC = () => {
     useDeleteStorageLocationMutation();
 
   const [modalIsOpened, setModalIsOpened] = useState(false);
-  console.log("am:", locationDetails);
+
   const handleDelete = async () => {
     if (locationDetails?.substances.length === 0) {
       const { error } = await deleteStorageLocation(Number(locationId));
 
       if (!error) {
         openSnackbar("success", "Storage location deleted successfully.");
-        navigate("/storage");
+        navigate(RouteProtectedPath.storageLocation);
       } else {
         openSnackbar("error", "Failed to delete storage location");
       }
@@ -58,11 +63,9 @@ const StorageLocationDetailPage: React.FC = () => {
     setSelectedSubstanceId(substanceId);
   };
 
-  if (isLoading || isDeleting) {
-    return <PageLoader />;
-  }
-  if (!locationDetails) return <PageError text={"there is no location here"} />;
-  if (isError) return <PageError text={"Failed to get location"} />;
+  if (isLoading || isDeleting) return <PageLoader />;
+  if (!locationDetails) return <PageError text="there is no location here" />;
+  if (isError) return <PageError text="Failed to get location" />;
 
   return (
     <Box padding={4}>
@@ -127,4 +130,4 @@ const StorageLocationDetailPage: React.FC = () => {
   );
 };
 
-export default StorageLocationDetailPage;
+export default StorageLocationDetails;

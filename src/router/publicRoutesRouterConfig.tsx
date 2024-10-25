@@ -13,7 +13,6 @@ export const enum AppPublicRoutes {
 export const RoutePublicPath: Record<AppPublicRoutes, string> = {
   [AppPublicRoutes.HOME]: "/",
   [AppPublicRoutes.LOGIN]: "/login",
-
   [AppPublicRoutes.NOT_FOUND]: "*",
 };
 
