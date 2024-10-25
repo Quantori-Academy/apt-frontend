@@ -25,6 +25,7 @@ import {
 } from "@/store";
 
 const StorageLocationDetails: React.FC = () => {
+  //TODO: change -1
   const [selectedSubstanceId, setSelectedSubstanceId] = useState<number>(-1);
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();

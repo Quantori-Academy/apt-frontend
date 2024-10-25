@@ -27,6 +27,7 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
   onClose,
   storages,
 }) => {
+  //TODO: Change -1
   const [selectedRoomId, setSelectedRoomId] = useState<number>(-1);
   const [locationName, setLocationName] = useState<string>("");
   const [createStorageRoom, { isLoading: isCreating }] =
