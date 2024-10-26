@@ -57,6 +57,7 @@ const Dashboard = () => {
           gap: "10px",
           alignItems: "center",
           marginTop: 4,
+          transition: "box-shadow 0.3s ease-in-out",
         }}
       >
         {role === userRoles.Administrator && (

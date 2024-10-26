@@ -22,6 +22,9 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: bgColor,
+        "&:hover": {
+          boxShadow: 3,
+        },
       }}
     >
       {dashboardCard}
