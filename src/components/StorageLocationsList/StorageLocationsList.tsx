@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { AppProtectedRoutes } from "@/router/protectedRoutesRouterConfig.tsx";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
 import { StorageRoomsBrief } from "@/types";
 
 type StorageLocationsListProps = {
@@ -27,7 +27,7 @@ const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
 
   const handleLocationClick = (locationId: string) => {
     navigate(
-      AppProtectedRoutes.STORAGE_LOCATION_DETAIL.replace(
+      RouteProtectedPath.storageLocationDetail.replace(
         ":locationId",
         `${locationId}`
       )

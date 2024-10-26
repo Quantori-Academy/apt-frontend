@@ -25,7 +25,7 @@ import {
 } from "@/store";
 
 const StorageLocationDetails: React.FC = () => {
-  const [selectedSubstanceId, setSelectedSubstanceId] = useState<string>("");
+  const [selectedSubstanceId, setSelectedSubstanceId] = useState("");
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
   const { openSnackbar, SnackbarComponent } = useAlertSnackbar();

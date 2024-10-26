@@ -18,7 +18,7 @@ const PAGE_SIZE = 3;
 const StorageLocations: React.FC = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
-  const [roomIdToEdit, setRoomIdToEdit] = useState<string>("");
+  const [roomIdToEdit, setRoomIdToEdit] = useState("");
   const [page, setPage] = useState(1);
   const {
     data: storages,
