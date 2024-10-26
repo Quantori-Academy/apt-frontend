@@ -30,16 +30,16 @@ const Users: React.FC = () => {
 
   return (
     <Container>
-      <DashboardBreadcrumbs route="users" />
+      <DashboardBreadcrumbs />
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "20px",
+          marginY: "30px",
         }}
       >
-        <Typography variant="h2">Users list</Typography>
+        <Typography variant="h3">Users list</Typography>
         <Button onClick={() => setOpenModal(true)} variant="outlined">
           Add User
         </Button>

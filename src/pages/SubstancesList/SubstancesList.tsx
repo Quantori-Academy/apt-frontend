@@ -81,8 +81,8 @@ const SubstancesList: React.FC = () => {
 
   return (
     <Container>
-      <DashboardBreadcrumbs route={"substances"} />
-      <Typography variant="h4" sx={{ mb: 2 }}>
+      <DashboardBreadcrumbs />
+      <Typography variant="h3" sx={{ marginBottom: "30px" }}>
         Reagents And Samples
       </Typography>
       {role === userRoles.Researcher && (

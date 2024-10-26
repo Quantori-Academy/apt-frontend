@@ -1,29 +1,31 @@
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import * as React from "react";
 import { ReactElement } from "react";
 
 type DashboardCardProps = {
   dashboardCard: ReactElement;
+  bgColor: string;
 };
 
-const DashboardCard: React.FC<DashboardCardProps> = ({ dashboardCard }) => {
+const DashboardCard: React.FC<DashboardCardProps> = ({
+  dashboardCard,
+  bgColor,
+}) => {
   return (
-    <Box>
-      <Card
-        variant="outlined"
-        sx={{
-          width: 150,
-          height: 150,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
-        }}
-      >
-        {dashboardCard}
-      </Card>
-    </Box>
+    <Card
+      variant="outlined"
+      sx={{
+        border: "none",
+        width: 250,
+        height: 150,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: bgColor,
+      }}
+    >
+      {dashboardCard}
+    </Card>
   );
 };
 

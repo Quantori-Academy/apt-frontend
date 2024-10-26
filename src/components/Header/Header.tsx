@@ -18,8 +18,8 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
   return (
     <AppBar
       position="fixed"
-      elevation={1}
-      color={"primary"}
+      elevation={3}
+      color="primary"
       sx={{
         zIndex: 2,
         paddingX: "24px",
@@ -30,6 +30,7 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
         justifyContent: "space-between",
         gap: "5px",
         alignItems: "center",
+        height: "60px",
       }}
     >
       <Logo />

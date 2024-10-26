@@ -2,38 +2,94 @@ import { NavigateNext } from "@mui/icons-material";
 import { Link } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import * as React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
-type DashboardBreadcrumbsProps = {
-  route: "users" | "substances" | "storages" | null;
-};
-const DashboardBreadcrumbs: React.FC<DashboardBreadcrumbsProps> = ({
-  route,
-}) => {
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
+
+const DashboardBreadcrumbs: React.FC = () => {
+  const location = useLocation();
+  const path = location.pathname;
+
+  const breadcrumbsRoutes = {
+    [RouteProtectedPath.dashboard]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+    ],
+    [RouteProtectedPath.users]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+      { label: "Users", path: RouteProtectedPath.users },
+    ],
+    [RouteProtectedPath.userPage]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+      { label: "Users", path: RouteProtectedPath.users },
+      { label: "User Details", path: RouteProtectedPath.userPage },
+    ],
+    [RouteProtectedPath.storageLocation]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+      { label: "Storage Locations", path: RouteProtectedPath.storageLocation },
+    ],
+
+    [RouteProtectedPath.storageLocationDetail]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+      { label: "Storage Locations", path: RouteProtectedPath.storageLocation },
+      {
+        label: "Storage Detail",
+        path: RouteProtectedPath.storageLocationDetail,
+      },
+    ],
+    [RouteProtectedPath.substances]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+      { label: "Substances", path: RouteProtectedPath.substances },
+    ],
+    [RouteProtectedPath.reagentPage]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+      { label: "Substances", path: RouteProtectedPath.substances },
+      {
+        label: "Reagent Detail",
+        path: RouteProtectedPath.reagentPage,
+      },
+    ],
+    [RouteProtectedPath.samplePage]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+      { label: "Substances", path: RouteProtectedPath.substances },
+      {
+        label: "Sample Detail",
+        path: RouteProtectedPath.samplePage,
+      },
+    ],
+  };
+
+  const breadcrumbTrail = Object.entries(breadcrumbsRoutes).find(
+    ([routePath]) => {
+      const regex = new RegExp(`^${routePath.replace(/:\w+/g, "\\w+")}$`);
+      return regex.test(path);
+    }
+  );
+
+  const breadcrumbs = breadcrumbTrail ? breadcrumbTrail[1] : [];
+
+  const processedBreadcrumbs = breadcrumbs.map((breadcrumb) => {
+    const dynamicPath = breadcrumb.path.replace(/:\w+/g, (match) => {
+      const paramName = match.substring(1);
+      const paramValue = path.split("/").pop();
+      return paramValue || paramName;
+    });
+
+    return { ...breadcrumb, path: dynamicPath };
+  });
+
   return (
     <Breadcrumbs
       separator={<NavigateNext fontSize="small" />}
       aria-label="breadcrumb"
+      sx={{ marginBottom: "30px" }}
     >
-      <Link component={RouterLink} to="/dashboard">
-        Dashboard
-      </Link>
-
-      {route === "users" && (
-        <Link component={RouterLink} color="inherit" to="/users">
-          Users
-        </Link>
-      )}
-      {route === "storages" && (
-        <Link component={RouterLink} color="inherit" to="/storage">
-          Storage
-        </Link>
-      )}
-      {route === "substances" && (
-        <Link component={RouterLink} color="inherit" to="/substances">
-          Substances
-        </Link>
-      )}
+      {processedBreadcrumbs.map((breadcrumb, index) => (
+        <li key={index}>
+          <Link component={RouterLink} to={breadcrumb.path}>
+            {breadcrumb.label}
+          </Link>
+        </li>
+      ))}
     </Breadcrumbs>
   );
 };

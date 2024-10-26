@@ -1,4 +1,4 @@
-import { Box, Container, Paper } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 
@@ -41,17 +41,15 @@ const AppLayout = () => {
       <Header onClick={handleClick} />
       <AccountMenu anchorEl={anchorEl} open={open} onClose={handleClose} />
 
-      <Container>
-        <Paper
-          sx={{
-            marginTop: "75px",
-            padding: "30px",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <Outlet />
-        </Paper>
+      <Container
+        sx={{
+          marginTop: "75px",
+          padding: "30px",
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <Outlet />
       </Container>
     </Box>
   );
