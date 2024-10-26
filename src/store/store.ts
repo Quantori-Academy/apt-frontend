@@ -1,5 +1,4 @@
-import type { Action, ThunkAction } from "@reduxjs/toolkit";
-import { combineSlices, configureStore } from "@reduxjs/toolkit";
+import { Action, ThunkAction, combineSlices, configureStore } from "@reduxjs/toolkit";
 
 import { authSlice } from "./slices/authSlice";
 import { counterSlice } from "./slices/counterSlice";

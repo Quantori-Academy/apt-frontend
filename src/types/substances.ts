@@ -40,7 +40,7 @@ export type Reagent = {
   category: string;
   CASNumber: string;
   producer: string;
-  locationId: number;
+  locationId: string;
   unit: string;
   pricePerUnit: string;
   totalQuantityLeft: number;
@@ -72,7 +72,7 @@ export type BackendSample = Omit<BackendReagent, "cas_number" | "catalog_id" | "
 };
 
 export type AddedSubstance = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   structure: string;

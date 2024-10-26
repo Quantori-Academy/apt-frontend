@@ -76,7 +76,8 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
           quantity: quantityLeft,
           newLocationId: selectedLocation?.locationId,
         };
-        updateSubstance(updatedDetails);
+
+        await updateSubstance(updatedDetails);
         openSnackbar("success", `${substanceType} updated successfully!`);
         setIsEditing(false);
       }

@@ -14,8 +14,7 @@ import { CategoryFilter } from "@/components/CategoryFilter";
 import { PageError } from "@/components/PageError";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
-import { selectUserRole } from "@/store";
-import { useGetSubstancesQuery } from "@/store/substancesApi";
+import { selectUserRole, useGetSubstancesQuery } from "@/store";
 import {
   CategoryFilterOption,
   ExpiredFilter,

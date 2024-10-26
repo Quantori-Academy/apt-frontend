@@ -3,6 +3,8 @@ export { Users } from "./Users";
 export { AccountSettings } from "./AccountSettings";
 export { Dashboard } from "./Dashboard";
 export { Home } from "./Home";
+export { StorageLocations } from "./StorageLocations";
+export { StorageLocationDetails } from "./StorageLocationDetails";
 export { ReagentPage } from "./ReagentPage";
 export { SubstancesList } from "./SubstancesList";
 export { UserDetails } from "./UserDetails";

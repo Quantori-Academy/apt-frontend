@@ -10,7 +10,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import { RevealableField } from "@/components";
 import { useAppSelector, useLoginForm } from "@/hooks";
-import { selectErrorMessage, selectLoading } from "@/store/slices/authSlice";
+import { selectErrorMessage, selectLoading } from "@/store/slices";
 
 const LoginForm: React.FC = () => {
   const errorMessage = useAppSelector(selectErrorMessage);

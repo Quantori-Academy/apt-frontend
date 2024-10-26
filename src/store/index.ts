@@ -16,10 +16,17 @@ export {
   useUpdateSubstanceMutation,
   useGetSampleDetailsQuery,
   useDeleteSubstanceMutation,
-  substancesApi,
+  useGetSubstancesQuery,
 } from "./substancesApi";
 
-export { useGetStorageRoomsQuery, useGetStorageLocationDetailQuery } from "./storageApi";
+export {
+  useGetStorageRoomsQuery,
+  useGetStorageLocationDetailQuery,
+  useUpdateStorageRoomMutation,
+  useCreateStorageRoomMutation,
+  useDeleteStorageLocationMutation,
+  useMoveSubstanceMutation,
+} from "./storageApi";
 
 export {
   loginUser,
