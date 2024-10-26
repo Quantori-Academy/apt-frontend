@@ -1,71 +1,34 @@
-import { Container, Typography } from "@mui/material";
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { skipToken } from "@reduxjs/toolkit/query";
+import { useParams } from "react-router-dom";
 
-import { ConfirmRemoving, PageLoader, ReagentDetails } from "@/components";
-import { useAlertSnackbar } from "@/hooks";
+import { PageError, PageLoader, SubstanceDetails } from "@/components";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import { useDeleteReagentMutation, useGetReagentDetailsQuery } from "@/store";
+import { useGetReagentDetailsQuery } from "@/store";
 
-const ReagentPage = () => {
+const ReagentPage: React.FC = () => {
   const { id: reagentId } = useParams<{ id: string }>();
 
-  const { data: reagentDetails, isLoading } = useGetReagentDetailsQuery(
-    reagentId!
-  );
+  const {
+    data: reagentDetails,
+    isError,
+    isLoading: isReagentLoading,
+  } = useGetReagentDetailsQuery(reagentId ? reagentId : skipToken);
 
-  const [deleteReagent] = useDeleteReagentMutation();
-
-  const navigate = useNavigate();
-
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
-
-  if (isLoading) {
+  if (isReagentLoading) {
     return <PageLoader />;
   }
 
-  if (!reagentDetails) {
-    return (
-      <Container maxWidth="md" sx={{ mt: 4 }}>
-        <Typography variant="h6" color="error">
-          Failed to load reagent details. Please try again later.
-        </Typography>
-      </Container>
-    );
+  if (!reagentDetails || !reagentId || isError) {
+    return <PageError text={"Failed to load reagent details."} />;
   }
 
-  const handleDelete = async () => {
-    try {
-      await deleteReagent(reagentId).unwrap();
-
-      openSnackbar("success", "Reagent deleted successfully!");
-
-      navigate(RouteProtectedPath.reagentSampleList);
-    } catch {
-      openSnackbar("error", "Failed to delete reagent!");
-    } finally {
-      setModalIsOpen(false);
-    }
-  };
-
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <ReagentDetails
-        reagentDetails={reagentDetails}
-        setModalIsOpen={setModalIsOpen}
-      />
-      <ConfirmRemoving
-        open={modalIsOpen}
-        modalTitle=""
-        modalText="Are you sure you want to delete this reagent?"
-        onClose={() => setModalIsOpen(false)}
-        onDelete={handleDelete}
-      />
-
-      {SnackbarComponent()}
-    </Container>
+    <SubstanceDetails
+      substanceType="Reagent"
+      substanceId={reagentId}
+      substanceDetails={reagentDetails}
+      redirectPath={RouteProtectedPath.substances}
+    />
   );
 };
 

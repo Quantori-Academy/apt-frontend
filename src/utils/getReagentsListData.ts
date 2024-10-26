@@ -1,7 +1,7 @@
-import { CategoryFilterOption, ExpiredFilter, ReagentDetails, SortColumn, SortDirection } from "@/types";
+import { CategoryFilterOption, ExpiredFilter, SortColumn, SortDirection, SubstancesDetails } from "@/types";
 
 type GetListDataOptions = {
-  items: Array<ReagentDetails>;
+  items: Array<SubstancesDetails>;
   searchQuery: string;
   categoryFilter: CategoryFilterOption;
   expiredFilter: ExpiredFilter;
@@ -31,7 +31,7 @@ export const getListData = ({
 };
 
 const filterListData = (
-  items: Array<ReagentDetails>,
+  items: Array<SubstancesDetails>,
   categoryFilter: CategoryFilterOption,
   searchQuery: string,
   expiredFilter: ExpiredFilter
@@ -46,13 +46,13 @@ const filterListData = (
   });
 };
 
-const sortListData = (items: Array<ReagentDetails>, sortColumn: SortColumn, sortDirection: SortDirection) => {
+const sortListData = (items: Array<SubstancesDetails>, sortColumn: SortColumn, sortDirection: SortDirection) => {
   return items.toSorted((a, b) => {
     const order = a[sortColumn].localeCompare(b[sortColumn]);
     return sortDirection === "asc" ? order : -1 * order;
   });
 };
 
-const paginateListData = (items: Array<ReagentDetails>, page: number, pageSize: number) => {
+const paginateListData = (items: Array<SubstancesDetails>, page: number, pageSize: number) => {
   return items.slice((page - 1) * pageSize, page * pageSize);
 };

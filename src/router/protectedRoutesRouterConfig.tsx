@@ -5,7 +5,10 @@ import {
   AccountSettings,
   Dashboard,
   ReagentPage,
-  ReagentSampleList,
+  SamplePage,
+  StorageLocationDetails,
+  StorageLocations,
+  SubstancesList,
   UserDetails,
   Users,
 } from "@/pages";
@@ -16,21 +19,27 @@ type AppRoutesProps = RouteObject & {
 };
 
 export const enum AppProtectedRoutes {
+  DASHBOARD = "dashboard",
   USERS = "users",
   USER_PAGE = "userPage",
   ACCOUNT_SETTINGS = "accountSettings",
-  DASHBOARD = "dashboard",
-  REAGENT_SAMPLE_LIST = "reagentSampleList",
+  SUBSTANCES = "substances",
   REAGENT_PAGE = "reagentPage",
+  STORAGE_LOCATIONS = "storageLocation",
+  STORAGE_LOCATION_DETAIL = "storageLocationDetail",
+  SAMPLE_PAGE = "samplePage",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.USERS]: "/users",
   [AppProtectedRoutes.USER_PAGE]: "/users/:id",
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: "/account-settings",
+  [AppProtectedRoutes.STORAGE_LOCATIONS]: "/storage",
+  [AppProtectedRoutes.STORAGE_LOCATION_DETAIL]: "/storage/:locationId",
   [AppProtectedRoutes.DASHBOARD]: "/dashboard",
-  [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: "/reagent-sample-list",
-  [AppProtectedRoutes.REAGENT_PAGE]: "/reagent-sample-list/reagent/:id",
+  [AppProtectedRoutes.SUBSTANCES]: "/substances",
+  [AppProtectedRoutes.REAGENT_PAGE]: "/substances/reagent/:id",
+  [AppProtectedRoutes.SAMPLE_PAGE]: "/substances/sample/:id",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -47,19 +56,34 @@ export const protectedRoutesRouterConfig: Record<
     element: <UserDetails />,
     roles: [userRoles.Administrator],
   },
+  [AppProtectedRoutes.STORAGE_LOCATIONS]: {
+    path: RouteProtectedPath[AppProtectedRoutes.STORAGE_LOCATIONS],
+    element: <StorageLocations />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.STORAGE_LOCATION_DETAIL]: {
+    path: RouteProtectedPath[AppProtectedRoutes.STORAGE_LOCATION_DETAIL],
+    element: <StorageLocationDetails />,
+    roles: Object.values(userRoles),
+  },
   [AppProtectedRoutes.ACCOUNT_SETTINGS]: {
     path: RouteProtectedPath[AppProtectedRoutes.ACCOUNT_SETTINGS],
     element: <AccountSettings />,
     roles: Object.values(userRoles),
   },
-  [AppProtectedRoutes.REAGENT_SAMPLE_LIST]: {
-    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_SAMPLE_LIST],
-    element: <ReagentSampleList />,
-    roles: [userRoles.Administrator, userRoles.Researcher],
+  [AppProtectedRoutes.SUBSTANCES]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SUBSTANCES],
+    element: <SubstancesList />,
+    roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.REAGENT_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_PAGE],
     element: <ReagentPage />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.SAMPLE_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_PAGE],
+    element: <SamplePage />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.DASHBOARD]: {

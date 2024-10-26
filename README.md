@@ -45,6 +45,7 @@ This project utilizes the following tools and libraries:
 - **React Router** for handling navigation and protected routes.
 - **TypeScript** for static typing.
 - **MUI** for building responsive, accessible, and modern UI components.
+- **Smiles Drawer** for parsing and rendering SMILES strings into graphical representations of chemical structures.
 - **Vite** for fast builds and hot module replacement during development.
 
 ## Diagrams
@@ -103,9 +104,11 @@ graph LR;
 
     %% Reagents and samples management
     RSM{{Reagents and samples management}} --> UserRSMQ((Any Role))
+    RSM-->UserRSMR((Researcher))
+
     UserRSMQ --> SeeReagentsSamples(See reagents and samples list)
-    UserRSMQ --> AddReagentsSamples(Add reagents in the system)
-    UserRSMQ --> EditReagentsSamples(Edit reagents in the system)
+    UserRSMR --> AddReagentsSamples(Add reagents in the system)
+    UserRSMR --> EditReagentsSamples(Edit reagents in the system)
 
 
 
@@ -126,7 +129,7 @@ graph LR;
     %% Applying role class
     class AdminUM,AdminSM admin;
     class OfficerRRM,OfficerOM officer;
-    class ResearcherRRM researcher;
+    class ResearcherRRM,UserRSMR researcher;
     class User,UserUM,UserSM,UserRSM,UserSMResOfficer,UserRSMQ user;
 
     %% Applying priority class
@@ -181,9 +184,9 @@ classDef green fill:#166e07, color:#ffffff;
 classDef yellow fill:#fcca03, color:#ffffff;
 classDef grey fill:#575757, color:#ffffff;
 
-class U,ADM,RSR,PRCR,SL green;
-class R,S yellow;
-class RR,O grey;
+class U,ADM,RSR,PRCR,SL,R,S green;
+class O,RR yellow;
+class dashboard grey;
 ```
 
 
@@ -192,57 +195,87 @@ class RR,O grey;
 ```mermaid
 erDiagram
 
+    %% Types (Role and Compound as Enum)
+    role {
+        enum Administrator
+        enum ProcurementOfficer
+        enum Researcher
+    }
 
-    reagents {
-        int id
-        varchar name
-        text description
-        text structure_smiles
+    compound {
+        enum Reagent
+        enum Sample
+    }
+
+    %% Tables
+    substance {
+        serial id PK "Unique identifier for each reagent"
+        varchar name "Name of the reagent"
+        text description "Description of the reagent"
+        text structure "Unique structure of the reagent"
+        compound category "Category of the substance, either Reagent or Sample"
+        date expiration_date "Expiration date of the substance"
+        boolean is_expired "Indicates whether the substance is expired"
     }
 
     storage {
-        int id
-        varchar room
-        text description
+        serial id PK "Unique identifier for each storage location"
+        varchar room "Room where reagents are stored"
+        text description "Description of the storage room"
     }
 
     storage_location {
-        int id
-        int room_id
-        varchar location
+        serial id PK "Unique identifier for each storage location"
+        integer room_id FK "References the storage room"
+        varchar location "Specific location within the storage room"
     }
 
     storage_content {
-        int id
-        int room_id
-        int location_id
-        int substance_id
+        serial id PK "Unique identifier for each storage content entry"
+        integer location_id FK "References the specific location within the storage room"
+        integer substance_id FK "References the substance"
+        integer quantity_left "Quantity of the substance left in stock"
+        varchar unit "The amount of space a substance occupies"
+        numeric price_per_unit "Price of substance per unit"
     }
 
     users {
-        int id
-        varchar username
-        varchar first_name
-        varchar last_name
-        varchar email
-        char password_hash
-        role role
-        timestamp created_at
-        timestamptz last_login
+        serial id PK "Unique identifier for each user"
+        varchar username "Unique username for each user"
+        varchar first_name "First name of the user"
+        varchar last_name "Last name of the user"
+        varchar email "Email address of the user"
+        char password_hash "Hashed password of the user"
+        role role "Role of the user in the system"
+        timestamp created_at "Timestamp when the user was created"
+        timestamptz last_login "Timestamp of the user's last login"
     }
 
-
-    role {
-        type Administrator
-        type ProcurementOfficer
-        type Researcher
+    reagent {
+        integer substance_id PK, FK "Reference to specific chemical substance"
+        varchar cas_number "CAS number of the reagent"
+        varchar producer "Producer of the reagent"
+        integer catalog_id "ID of the reagent in the producer's catalog"
+        text catalog_link "Link to the catalog page for the reagent"
     }
 
-    storage ||--o{ storage_location : has
-    storage_content ||--o{ storage_location : references
-    storage_content ||--o{ reagents : contains
-    storage ||--o{ storage_content : "stores in"
-    users }o--|| role : has
-    users }o--|| storage : "has access to"
+    sample {
+        integer substance_id PK, FK "Reference to specific chemical substance"
+        integer added_substance_id PK, FK "Added chemical to the given sample"
+    }
+
+    %% Relationships
+    storage ||--o{ storage_location : "has many"
+    storage_location ||--o{ storage_content : "contains"
+    storage_content ||--o| substance : "stores"
+    substance ||--o| compound : "is categorized as"
+
+    substance ||--|{ reagent : "is"
+    substance ||--|{ sample : "is"
+    sample ||--o| substance : "has added"
+
+    %% Users (not related in the schema but included for completeness)
+    users ||--|{ role : "has role"
+    users ||--|{ storage: "has access to"
 ```
 

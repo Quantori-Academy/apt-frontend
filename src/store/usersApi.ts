@@ -1,10 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { prepareHeaders } from "@/api";
-import { BASE_URL } from "@/api/apiMethods";
+import { BASE_URL, prepareHeaders } from "@/api";
 import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData, UserRole } from "@/types";
 
-import { transformUserResponse } from "./utils/transformUserResponse";
+import { transformUserResponse } from "./utils";
 
 // TODO. Think of backend-to-frontend object fields mapper
 // const keysForBackend: Pick<UserRegisterInput, "firstName" | "lastName"> = {

@@ -1,4 +1,4 @@
-import { Box, Button, Container } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -58,6 +58,14 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
 
   return (
     <Container>
+      <Typography
+        sx={{ textAlign: "center", marginBottom: "25px" }}
+        variant="h5"
+        gutterBottom
+        margin={3}
+      >
+        Account Details
+      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         {isEditMode ? (
           <Box className={style.inputBox}>
@@ -121,7 +129,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
             fullWidth
             onClick={() => setIsEditMode(true)}
           >
-            Reset Password
+            Change Password
           </Button>
         )}
       </form>
