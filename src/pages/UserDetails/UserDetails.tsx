@@ -7,6 +7,7 @@ import {
   EditUserRole,
   ResetPassword,
 } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { PageError } from "@/components/PageError";
 import { useGetUserDetailsQuery } from "@/store";
 
@@ -33,7 +34,8 @@ const UserDetails: React.FC = () => {
         bgcolor: "white",
       }}
     >
-      <Typography variant="h5" gutterBottom margin={3}>
+      <DashboardBreadcrumbs />
+      <Typography variant="h3" gutterBottom margin={3}>
         Account Details
       </Typography>
       <ResetPassword userId={id} />
