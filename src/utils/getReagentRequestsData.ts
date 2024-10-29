@@ -1,4 +1,4 @@
-import { ReagentRequests, RequestsSortColumns, SortDirection } from "@/types";
+import { ReagentRequests, RequestsSortColumns, SortDirection, StatusFilterOption } from "@/types";
 
 type GetListDataOptions = {
   pageSize: number;
@@ -6,15 +6,29 @@ type GetListDataOptions = {
   sortDirection: SortDirection;
   sortColumn: RequestsSortColumns;
   items: ReagentRequests;
+  statusFilter: StatusFilterOption;
 };
 
-export const getRequestsListData = ({ pageSize, page, sortDirection, sortColumn, items }: GetListDataOptions) => {
-  const sorted = sortListData(items, sortColumn, sortDirection);
+export const getRequestsListData = ({
+  pageSize,
+  page,
+  sortDirection,
+  sortColumn,
+  items,
+  statusFilter,
+}: GetListDataOptions) => {
+  const filtered = filterListData(items, statusFilter);
+  const sorted = sortListData(filtered, sortColumn, sortDirection);
   const paginated = paginateListData(sorted, page, pageSize);
 
   const totalPages = Math.ceil(sorted.length / pageSize);
 
   return { visibleItems: paginated, totalPages };
+};
+const filterListData = (items: ReagentRequests, statusFilter: StatusFilterOption) => {
+  if (statusFilter !== "All") {
+    return items.filter((item) => item.status === statusFilter);
+  } else return items;
 };
 
 const sortListData = (items: ReagentRequests, sortColumn: RequestsSortColumns, sortDirection: SortDirection) => {

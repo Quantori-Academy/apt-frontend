@@ -1,6 +1,4 @@
 import {
-  Box,
-  Pagination,
   Paper,
   Table,
   TableBody,
@@ -10,47 +8,22 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import React from "react";
 
-import { PageError, PageLoader } from "@/components";
-import { useGetReagentRequestsQuery } from "@/store";
-import { RequestsSortColumns, SortDirection } from "@/types";
-import { getRequestsListData } from "@/utils/getReagentRequestsData.ts";
+import { ReagentRequests, RequestsSortColumns, SortDirection } from "@/types";
 
-import style from "./ReagentRequestTable.module.css";
-
-const PAGE_SIZE = 2;
-
-const ReagentRequestTable: React.FC = () => {
-  const [page, setPage] = useState(1);
-  const [sortColumn, setSortColumn] = useState<RequestsSortColumns>("name");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-
-  const { data: reagentRequests = [], isLoading } =
-    useGetReagentRequestsQuery();
-
-  const { visibleItems, totalPages } = useMemo(
-    () =>
-      getRequestsListData({
-        items: reagentRequests,
-        sortColumn,
-        sortDirection,
-        page,
-        pageSize: PAGE_SIZE,
-      }),
-    [reagentRequests, sortColumn, sortDirection, page]
-  );
-  if (isLoading) return <PageLoader />;
-  if (!reagentRequests) {
-    return <PageError text="There are no reagent request to show" />;
-  }
-
-  const handleSortChange = (property: RequestsSortColumns) => {
-    const isAsc = sortColumn !== property || sortDirection === "desc";
-    setSortDirection(isAsc ? "asc" : "desc");
-    setSortColumn(property);
-  };
-
+type ReagentRequestTableProps = {
+  sortColumn: RequestsSortColumns;
+  sortDirection: SortDirection;
+  onSortChange: (property: RequestsSortColumns) => void;
+  visibleItems: ReagentRequests;
+};
+const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
+  sortColumn,
+  sortDirection,
+  onSortChange,
+  visibleItems,
+}) => {
   return (
     <>
       <TableContainer component={Paper}>
@@ -61,7 +34,7 @@ const ReagentRequestTable: React.FC = () => {
                 <TableSortLabel
                   active={sortColumn === "name"}
                   direction={sortDirection}
-                  onClick={() => handleSortChange("name")}
+                  onClick={() => onSortChange("name")}
                 >
                   Name
                 </TableSortLabel>
@@ -73,7 +46,7 @@ const ReagentRequestTable: React.FC = () => {
                 <TableSortLabel
                   active={sortColumn === "status"}
                   direction={sortDirection}
-                  onClick={() => handleSortChange("status")}
+                  onClick={() => onSortChange("status")}
                 >
                   Status
                 </TableSortLabel>
@@ -84,7 +57,7 @@ const ReagentRequestTable: React.FC = () => {
                 <TableSortLabel
                   active={sortColumn === "dateCreated"}
                   direction={sortDirection}
-                  onClick={() => handleSortChange("dateCreated")}
+                  onClick={() => onSortChange("dateCreated")}
                 >
                   Date Created
                 </TableSortLabel>
@@ -114,13 +87,6 @@ const ReagentRequestTable: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Box className={style.pagination}>
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={(_, page) => setPage(page)}
-        />
-      </Box>
     </>
   );
 };
