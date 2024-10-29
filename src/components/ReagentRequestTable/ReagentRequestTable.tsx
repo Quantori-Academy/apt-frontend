@@ -1,6 +1,4 @@
 import {
-  Box,
-  Pagination,
   Paper,
   Table,
   TableBody,
@@ -8,60 +6,73 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TableSortLabel,
 } from "@mui/material";
-import React, { useState } from "react";
 
-import { PageError, PageLoader } from "@/components";
-import { useGetReagentRequestsQuery } from "@/store";
-import { paginateReagentRequestList } from "@/utils/getPaginatedReagentRequests.ts";
+import { ReagentRequests, RequestsSortColumns, SortDirection } from "@/types";
 
-import style from "./ReagentRequestTable.module.css";
+type ReagentRequestTableProps = {
+  sortColumn: RequestsSortColumns;
+  sortDirection: SortDirection;
+  onSortChange: (property: RequestsSortColumns) => void;
+  visibleItems: ReagentRequests;
+};
 
-const PAGE_SIZE = 2;
-
-const ReagentRequestTable: React.FC = () => {
-  const [page, setPage] = useState(1);
-
-  const { data: reagentRequests, isLoading } = useGetReagentRequestsQuery();
-
-  if (isLoading) return <PageLoader />;
-  if (!reagentRequests) {
-    return <PageError text="There are no reagent request to show" />;
-  }
-
-  const paginatedRequests = paginateReagentRequestList(
-    reagentRequests,
-    page,
-    PAGE_SIZE
-  );
-
-  const totalPages = Math.ceil(reagentRequests.length / PAGE_SIZE);
-
+const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
+  sortColumn,
+  sortDirection,
+  onSortChange,
+  visibleItems,
+}) => {
   return (
     <>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Reagent Name</TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortColumn === "name"}
+                  direction={sortDirection}
+                  onClick={() => onSortChange("name")}
+                >
+                  Name
+                </TableSortLabel>
+              </TableCell>
               <TableCell align="right">Structure</TableCell>
               <TableCell align="right">CAS</TableCell>
               <TableCell align="right">Desired Quantity</TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortColumn === "status"}
+                  direction={sortDirection}
+                  onClick={() => onSortChange("status")}
+                >
+                  Status
+                </TableSortLabel>
+              </TableCell>
               <TableCell align="right">User Comments</TableCell>
               <TableCell align="right">Procurement Comments</TableCell>
-              <TableCell align="right">Date Created</TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortColumn === "dateCreated"}
+                  direction={sortDirection}
+                  onClick={() => onSortChange("dateCreated")}
+                >
+                  Date Created
+                </TableSortLabel>
+              </TableCell>
               <TableCell align="right">Date Modified</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedRequests?.map((row) => (
+            {visibleItems?.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.reagentName}
+                  {row.name}
                 </TableCell>
                 <TableCell>{row.structure}</TableCell>
                 <TableCell>{row.CAS}</TableCell>
@@ -76,13 +87,6 @@ const ReagentRequestTable: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Box className={style.pagination}>
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={(_, page) => setPage(page)}
-        />
-      </Box>
     </>
   );
 };
