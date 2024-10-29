@@ -40,9 +40,7 @@ const StorageLocations: React.FC = () => {
 
   return (
     <Container sx={{ padding: "20px" }}>
-      <Typography variant="h4" gutterBottom>
-        Storage Locations
-      </Typography>
+      <Typography variant="h3">Storage Locations</Typography>
       <Button
         variant="contained"
         color="primary"

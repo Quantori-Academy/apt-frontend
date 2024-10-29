@@ -80,8 +80,8 @@ const SubstancesList: React.FC = () => {
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        Reagents And Samples
+      <Typography variant="h3" sx={{ mb: 2 }}>
+        Substances
       </Typography>
       {role === userRoles.Researcher && (
         <Box className={style.buttonBox}>

@@ -3,6 +3,14 @@ import { createTheme } from "@mui/material/styles";
 export const defaultTheme = createTheme();
 
 export const appTheme = createTheme({
+  typography: {
+    h3: {
+      fontSize: "2rem",
+      fontWeight: 600,
+      lineHeight: 1.3,
+      color: "#004d40",
+    },
+  },
   shape: {
     borderRadius: 8,
   },

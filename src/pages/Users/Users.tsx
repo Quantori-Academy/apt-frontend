@@ -37,7 +37,7 @@ const Users: React.FC = () => {
           marginBottom: "20px",
         }}
       >
-        <Typography variant="h2">Users list</Typography>
+        <Typography variant="h3">Users list</Typography>
         <Button onClick={() => setOpenModal(true)} variant="outlined">
           Add User
         </Button>
