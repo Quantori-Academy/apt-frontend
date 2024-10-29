@@ -1,5 +1,6 @@
 export type ReagentRequests = Array<RequestedReagent>;
 export type RequestedReagent = {
+  id: number;
   reagentName: string;
   structure: string;
   CAS: string;

@@ -1,9 +1,10 @@
-import { ReagentRequests } from "../src/types";
+import { ReagentRequests } from "@/types";
 
 export const reagentRequestsMock: ReagentRequests = [
   {
+    id: 1,
     reagentName: "Sodium Chloride",
-    structure: "Cl[Na]", // SMILES notation for chemical structure
+    structure: "Cl[Na]",
     CAS: "7647-14-5",
     desiredQuantity: "500 ml",
     status: "pending",
@@ -13,6 +14,7 @@ export const reagentRequestsMock: ReagentRequests = [
     dateModified: "2024-10-10",
   },
   {
+    id: 2,
     reagentName: "Acetone",
     structure: "CC(=O)C",
     CAS: "67-64-1",
@@ -24,6 +26,7 @@ export const reagentRequestsMock: ReagentRequests = [
     dateModified: "2024-10-05",
   },
   {
+    id: 3,
     reagentName: "Ethanol",
     structure: "CCO",
     CAS: "64-17-5",
@@ -35,6 +38,7 @@ export const reagentRequestsMock: ReagentRequests = [
     dateModified: "2024-10-06",
   },
   {
+    id: 4,
     reagentName: "Hydrochloric Acid",
     structure: "Cl",
     CAS: "7647-01-0",
@@ -46,6 +50,7 @@ export const reagentRequestsMock: ReagentRequests = [
     dateModified: "2024-10-12",
   },
   {
+    id: 5,
     reagentName: "Benzene",
     structure: "c1ccccc1",
     CAS: "71-43-2",
