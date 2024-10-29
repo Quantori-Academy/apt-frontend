@@ -37,3 +37,5 @@ export {
   selectErrorMessage,
   selectUserIsAuthenticated,
 } from "./slices/authSlice";
+
+export { useGetReagentRequestsQuery } from "./reagentRequestApi.ts";

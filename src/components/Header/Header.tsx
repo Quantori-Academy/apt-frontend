@@ -1,28 +1,61 @@
-import { AppBar, Container, Toolbar } from "@mui/material";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { AppBar, Button, IconButton } from "@mui/material";
+import * as React from "react";
+import { NavLink } from "react-router-dom";
 
 import { useAppSelector } from "@/hooks";
+import { RoutePublicPath } from "@/router/publicRoutesRouterConfig.tsx";
 import { selectUserIsAuthenticated } from "@/store";
 
-import { NavigationAuth } from "../NavigationAuth";
-import { NavigationUnauth } from "../NavigationUnauth";
+import { Logo } from "../Logo";
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  onClick: (event: React.MouseEvent<HTMLElement>) => void | null;
+};
+const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
 
   return (
-    <AppBar position="sticky" color="inherit" sx={{ height: "75px" }}>
-      <Container sx={{ height: "100%" }}>
-        <Toolbar
-          sx={{
-            height: "100%",
-            justifyContent: isAuthenticated ? "" : "flex-end",
-            alignItems: "center",
-          }}
-          variant="dense"
+    <AppBar
+      position="fixed"
+      elevation={3}
+      color="primary"
+      sx={{
+        zIndex: 2,
+        paddingX: "24px",
+        paddingY: "12px",
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        gap: "5px",
+        alignItems: "center",
+        height: "60px",
+      }}
+    >
+      <Logo />
+      {isAuthenticated ? (
+        <IconButton
+          color="inherit"
+          sx={{ p: 0, mr: 2 }}
+          onClick={(e) => onClick(e)}
         >
-          {isAuthenticated ? <NavigationAuth /> : <NavigationUnauth />}
-        </Toolbar>
-      </Container>
+          <PermIdentityIcon
+            sx={{
+              width: 40,
+              height: 40,
+              border: "2px solid white",
+              borderRadius: "50%",
+              padding: "5px",
+            }}
+          />
+          {/*<Avatar color="white" />*/}
+        </IconButton>
+      ) : (
+        <Button component={NavLink} to={RoutePublicPath.login}>
+          Login
+        </Button>
+      )}
     </AppBar>
   );
 };

@@ -1,18 +1,24 @@
 import { Action, ThunkAction, combineSlices, configureStore } from "@reduxjs/toolkit";
 
-import { authSlice } from "./slices/authSlice";
-import { counterSlice } from "./slices/counterSlice";
+import { reagentRequestApi } from "@/store/reagentRequestApi.ts";
+
+import { authSlice, counterSlice } from "./slices";
 import { storageApi } from "./storageApi";
 import { substancesApi } from "./substancesApi";
 import { usersApi } from "./usersApi";
 
-const rootReducer = combineSlices(counterSlice, authSlice, storageApi, usersApi, substancesApi);
+const rootReducer = combineSlices(counterSlice, authSlice, storageApi, usersApi, substancesApi, reagentRequestApi);
 
 export const makeStore = () => {
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(usersApi.middleware, storageApi.middleware, substancesApi.middleware),
+      getDefaultMiddleware().concat(
+        usersApi.middleware,
+        storageApi.middleware,
+        substancesApi.middleware,
+        reagentRequestApi.middleware
+      ),
   });
 
   return store;

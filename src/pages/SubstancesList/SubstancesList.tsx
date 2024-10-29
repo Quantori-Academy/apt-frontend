@@ -11,6 +11,7 @@ import React, { useMemo, useState } from "react";
 
 import { PageLoader, SearchBar, SubstancesTable } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { PageError } from "@/components/PageError";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
@@ -80,7 +81,8 @@ const SubstancesList: React.FC = () => {
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ mb: 2 }}>
+      <DashboardBreadcrumbs />
+      <Typography variant="h3" sx={{ marginBottom: "30px" }}>
         Reagents And Samples
       </Typography>
       {role === userRoles.Researcher && (
