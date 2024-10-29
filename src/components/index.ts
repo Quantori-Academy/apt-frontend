@@ -31,3 +31,4 @@ export { EditStorage } from "./EditStorage";
 export { StoredSubstances } from "./StoredSubstances";
 export { SubstanceDetails } from "./SubstanceDetails";
 export { CategoryFilter } from "./CategoryFilter";
+export { ReagentRequestTable } from "./ReagentRequestTable";
