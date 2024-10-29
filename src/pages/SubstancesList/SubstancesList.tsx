@@ -80,7 +80,7 @@ const SubstancesList: React.FC = () => {
 
   return (
     <Container>
-      <Typography variant="h3" sx={{ mb: 2 }}>
+      <Typography variant="h3" marginBottom="30px">
         Substances
       </Typography>
       {role === userRoles.Researcher && (
