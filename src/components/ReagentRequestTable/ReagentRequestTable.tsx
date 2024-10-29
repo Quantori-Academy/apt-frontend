@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Paper,
   Table,
   TableBody,
@@ -8,7 +10,9 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
+import { useState } from "react";
 
+import { BasicModal } from "@/components";
 import { ReagentRequests, RequestsSortColumns, SortDirection } from "@/types";
 
 type ReagentRequestTableProps = {
@@ -24,6 +28,10 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   onSortChange,
   visibleItems,
 }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpen = () => setModalOpen(true);
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -63,6 +71,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right">Date Modified</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -82,11 +91,21 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{row.procurementComments}</TableCell>
                 <TableCell>{row.dateCreated}</TableCell>
                 <TableCell>{row.dateModified}</TableCell>
+                <TableCell>
+                  <Button onClick={handleOpen}>Decline</Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <BasicModal
+        title="Decline Reagent Request"
+        closeModal={() => setModalOpen(false)}
+        isOpen={modalOpen}
+      >
+        <Box>Hello</Box>
+      </BasicModal>
     </>
   );
 };
