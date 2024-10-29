@@ -9,12 +9,15 @@ import {
 } from "@mui/material";
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { PageLoader, SearchBar, SubstancesTable } from "@/components";
 import { CategoryFilter } from "@/components/CategoryFilter";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { PageError } from "@/components/PageError";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
+import { RouteProtectedPath } from "@/router";
 import { selectUserRole, useGetSubstancesQuery } from "@/store";
 import {
   CategoryFilterOption,
@@ -39,6 +42,7 @@ const SubstancesList: React.FC = () => {
     useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
+  const navigate = useNavigate();
 
   const role = useAppSelector(selectUserRole);
   const handleSortChange = (property: SortColumn) => {
@@ -82,15 +86,24 @@ const SubstancesList: React.FC = () => {
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        {t("substances")}
+      <DashboardBreadcrumbs />
+      <Typography variant="h3" sx={{ marginBottom: "30px" }}>
+        {t("Substances")}
       </Typography>
       {role === userRoles.Researcher && (
         <Box className={style.buttonBox}>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate(RouteProtectedPath.reagentAddPage)}
+          >
             {t("substances.add.reagent")}
           </Button>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate(RouteProtectedPath.sampleAddPage)}
+          >
             {t("substances.add.sample")}
           </Button>
         </Box>

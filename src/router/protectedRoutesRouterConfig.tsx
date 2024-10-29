@@ -5,6 +5,7 @@ import {
   AccountSettings,
   Dashboard,
   ReagentPage,
+  ReagentRequests,
   SamplePage,
   StorageLocationDetails,
   StorageLocations,
@@ -12,6 +13,8 @@ import {
   UserDetails,
   Users,
 } from "@/pages";
+import { AddReagentPage } from "@/pages/AddReagentPage";
+import { AddSamplePage } from "@/pages/AddSamplePage";
 import { UserRole } from "@/types";
 
 type AppRoutesProps = RouteObject & {
@@ -25,9 +28,12 @@ export const enum AppProtectedRoutes {
   ACCOUNT_SETTINGS = "accountSettings",
   SUBSTANCES = "substances",
   REAGENT_PAGE = "reagentPage",
-  STORAGE_LOCATIONS = "storageLocation",
+  SAMPLE_ADD_PAGE = "sampleAddPage",
+  REAGENT_ADD_PAGE = "reagentAddPage",
   STORAGE_LOCATION_DETAIL = "storageLocationDetail",
+  STORAGE_LOCATIONS = "storageLocation",
   SAMPLE_PAGE = "samplePage",
+  REAGENT_REQUESTS = "reagentRequests",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -40,6 +46,9 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.SUBSTANCES]: "/substances",
   [AppProtectedRoutes.REAGENT_PAGE]: "/substances/reagent/:id",
   [AppProtectedRoutes.SAMPLE_PAGE]: "/substances/sample/:id",
+  [AppProtectedRoutes.SAMPLE_ADD_PAGE]: "/substances/add-sample",
+  [AppProtectedRoutes.REAGENT_ADD_PAGE]: "/substances/add-reagent",
+  [AppProtectedRoutes.REAGENT_REQUESTS]: "/reagent-requests",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -89,6 +98,21 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.DASHBOARD]: {
     path: RouteProtectedPath[AppProtectedRoutes.DASHBOARD],
     element: <Dashboard />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.SAMPLE_ADD_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_PAGE],
+    element: <AddSamplePage />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.REAGENT_ADD_PAGE]: {
+    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_PAGE],
+    element: <AddReagentPage />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.REAGENT_REQUESTS]: {
+    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_REQUESTS],
+    element: <ReagentRequests />,
     roles: Object.values(userRoles),
   },
 };

@@ -1,10 +1,21 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { BackendReagent, BackendSample, Reagent, Sample, SubstancesDetails, SubstancesResponse } from "@/types";
+import {
+  BackendReagent,
+  BackendSample,
+  Reagent,
+  ReagentData,
+  Sample,
+  SampleData,
+  SubstancesDetails,
+  SubstancesResponse,
+} from "@/types";
 
 import {
+  transformReagentData,
   transformReagentResponse,
+  transformSampleData,
   transformSampleResponse,
   transformSubstanceData,
   transformSubstancePatchRequest,
@@ -39,7 +50,6 @@ export const substancesApi = createApi({
       },
       providesTags: ["Substances"],
     }),
-
     deleteSubstance: builder.mutation<MutationSubstanceResponse, string>({
       query: (substanceId) => ({
         url: `substances/${substanceId}`,
@@ -48,6 +58,21 @@ export const substancesApi = createApi({
       invalidatesTags: ["Substances"],
     }),
 
+    createReagent: builder.mutation({
+      query: (reagent: ReagentData) => ({
+        url: "/substances/reagents",
+        method: "POST",
+        body: transformReagentData(reagent),
+      }),
+      invalidatesTags: ["Substances"],
+    }),
+    createSample: builder.mutation({
+      query: (sample: SampleData) => ({
+        url: "/substances/samples",
+        method: "POST",
+        body: transformSampleData(sample),
+      }),
+    }),
     updateSubstance: builder.mutation<MutationSubstanceResponse, MutationPatchSubstance>({
       query: (updatedSubstanceDetails) => ({
         url: `/substances/${updatedSubstanceDetails.id}`,
@@ -62,7 +87,6 @@ export const substancesApi = createApi({
       transformResponse: (response: BackendReagent) => transformReagentResponse(response),
       providesTags: ["Substances"],
     }),
-
     getSampleDetails: builder.query<Sample, string>({
       query: (sampleId) => `/substances/samples/${sampleId}`,
       transformResponse: (response: BackendSample) => transformSampleResponse(response),
@@ -72,9 +96,11 @@ export const substancesApi = createApi({
 });
 
 export const {
+  useGetSubstancesQuery,
   useGetReagentDetailsQuery,
   useDeleteSubstanceMutation,
-  useGetSubstancesQuery,
+  useCreateSampleMutation,
+  useCreateReagentMutation,
   useGetSampleDetailsQuery,
   useUpdateSubstanceMutation,
 } = substancesApi;

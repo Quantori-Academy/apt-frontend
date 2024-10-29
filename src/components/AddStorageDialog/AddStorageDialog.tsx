@@ -21,7 +21,6 @@ type AddStorageDialogProps = {
   onClose: () => void;
   storages: Array<StorageRoomsBrief>;
 };
-
 const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
   open,
   onClose,

@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
+import { RouteProtectedPath } from "@/router";
 import { StorageRoomsBrief } from "@/types";
 
 type StorageLocationsListProps = {

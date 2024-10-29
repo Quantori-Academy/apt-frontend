@@ -27,7 +27,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
           display: "flex",
           alignItems: "center",
           "&:hover": {
-            backgroundColor: "white",
+            backgroundColor: "transparent",
             color: "black",
           },
         }}

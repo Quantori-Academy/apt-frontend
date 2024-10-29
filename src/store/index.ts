@@ -17,6 +17,8 @@ export {
   useGetSampleDetailsQuery,
   useDeleteSubstanceMutation,
   useGetSubstancesQuery,
+  useCreateReagentMutation,
+  useCreateSampleMutation,
 } from "./substancesApi";
 
 export {
@@ -37,3 +39,5 @@ export {
   selectErrorMessage,
   selectUserIsAuthenticated,
 } from "./slices/authSlice";
+
+export { useGetReagentRequestsQuery } from "./reagentRequestApi.ts";
