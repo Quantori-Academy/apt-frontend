@@ -15,9 +15,8 @@ import { CategoryFilter } from "@/components/CategoryFilter";
 import { PageError } from "@/components/PageError";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
-import { selectUserRole } from "@/store";
-import { useGetSubstancesQuery } from "@/store";
+import { RouteProtectedPath } from "@/router";
+import { selectUserRole, useGetSubstancesQuery } from "@/store";
 import {
   CategoryFilterOption,
   ExpiredFilter,

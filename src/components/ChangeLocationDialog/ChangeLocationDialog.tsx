@@ -11,16 +11,17 @@ import {
 import React, { ChangeEvent, useState } from "react";
 
 import { PageLoader } from "@/components";
-import { useGetStorageRoomsQuery } from "@/store";
-import { useMoveSubstanceMutation } from "@/store/storageApi.ts";
+import { useAlertSnackbar } from "@/hooks";
+import { useGetStorageRoomsQuery, useMoveSubstanceMutation } from "@/store";
 import { LocationDetails } from "@/types";
 
 type ChangeLocationDialogProps = {
   open: boolean;
   onClose: () => void;
   locationDetails: LocationDetails;
-  selectedSubstanceId: number | null;
+  selectedSubstanceId: string;
 };
+
 const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
   open,
   onClose,
@@ -33,6 +34,8 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
   const { data: rooms, isLoading: isRoomsLoading } = useGetStorageRoomsQuery();
   const [moveSubstance] = useMoveSubstanceMutation();
 
+  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+
   const roomToMove = rooms?.find((room) => room.room === selectedRoom);
 
   const handleRoomChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -43,78 +46,92 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
     setSelectedLocation(event.target.value);
   };
 
-  const handleAgree = () => {
+  const handleConfirm = async () => {
     onClose();
     const locationToMove = roomToMove?.locations.find(
       (location) => location.locationName === selectedLocation
     );
 
-    moveSubstance({
-      oldRoomId: locationDetails?.locationId as number,
-      substanceId: selectedSubstanceId as number,
-      newLocationId: locationToMove?.locationId as number,
+    const { error } = await moveSubstance({
+      oldRoomId: locationDetails?.locationId,
+      substanceId: selectedSubstanceId,
+      newLocationId: locationToMove?.locationId,
     });
+
+    if (error) {
+      openSnackbar("error", "Failed to move substances!");
+    } else {
+      openSnackbar("success", "Substance moved successfully!");
+      onClose();
+    }
   };
 
   if (isRoomsLoading) return <PageLoader />;
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title" sx={{ paddingBottom: "5px" }}>
-        {"Change location of this reagent?"}
-      </DialogTitle>
-      <DialogContent sx={{ paddingTop: "10px !important" }}>
-        <DialogContentText id="alert-dialog-description">
-          <TextField
-            label="Rooms"
-            fullWidth
-            select
-            value={selectedRoom}
-            onChange={handleRoomChange}
-          >
-            {rooms?.map((room) => (
-              <MenuItem key={room.id} value={room.room}>
-                {room.room}
-              </MenuItem>
-            ))}
-          </TextField>
-          {selectedRoom && (
+    <>
+      <Dialog
+        open={open}
+        onClose={onClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" sx={{ marginBottom: "10px" }}>
+          Change location of this substance?
+        </DialogTitle>
+        <DialogContent sx={{ paddingTop: "10px !important" }}>
+          <DialogContentText id="alert-dialog-description">
             <TextField
-              sx={{ marginTop: "25px" }}
-              label="Location"
+              label="Rooms"
               fullWidth
               select
-              value={selectedLocation}
-              onChange={handleLocationChange}
+              value={selectedRoom}
+              onChange={handleRoomChange}
             >
-              {roomToMove?.locations
-                .filter(
-                  (location) =>
-                    location.locationName !== locationDetails.locationName
-                )
-                .map((location) => (
-                  <MenuItem
-                    key={location.locationId}
-                    value={location.locationName}
-                  >
-                    {location.locationName}
-                  </MenuItem>
-                ))}
+              {rooms?.map((room) => (
+                <MenuItem key={room.id} value={room.room}>
+                  {room.room}
+                </MenuItem>
+              ))}
             </TextField>
-          )}
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => onClose()}>Cancel</Button>
-        <Button disabled={!selectedLocation} onClick={handleAgree} autoFocus>
-          Change
-        </Button>
-      </DialogActions>
-    </Dialog>
+            {selectedRoom && (
+              <TextField
+                sx={{ marginTop: "25px" }}
+                label="Location"
+                fullWidth
+                select
+                value={selectedLocation}
+                onChange={handleLocationChange}
+              >
+                {roomToMove?.locations
+                  .filter(
+                    (location) =>
+                      location.locationName !== locationDetails.locationName
+                  )
+                  .map((location) => (
+                    <MenuItem
+                      key={location.locationId}
+                      value={location.locationName}
+                    >
+                      {location.locationName}
+                    </MenuItem>
+                  ))}
+              </TextField>
+            )}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => onClose()}>Cancel</Button>
+          <Button
+            disabled={!selectedLocation}
+            onClick={handleConfirm}
+            autoFocus
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {SnackbarComponent()}
+    </>
   );
 };
 

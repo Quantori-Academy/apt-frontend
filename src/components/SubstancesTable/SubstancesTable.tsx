@@ -40,16 +40,17 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   visibleItems,
 }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState("");
   const [deleteSubstance, { isLoading: isDeleting }] =
     useDeleteSubstanceMutation();
-  const [idToDelete, setIdToDelete] = useState("");
 
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const navigate = useNavigate();
   const role = useSelector(selectUserRole);
-  const handleDelete = async (id: string) => {
-    const { error } = await deleteSubstance(id);
+
+  const handleDelete = async () => {
+    const { error } = await deleteSubstance(deleteItemId);
 
     if (error) {
       openSnackbar("error", "Failed to delete substance!");
@@ -122,7 +123,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                         title="Delete"
                         onClick={() => {
                           setIsOpenModal(true);
-                          setIdToDelete(reagent.id);
+                          setDeleteItemId(reagent.id);
                         }}
                       >
                         <DeleteIcon />
@@ -145,10 +146,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
         open={isOpenModal}
         modalTitle={""}
         modalText={"Are you sure you want to delete this substance?"}
-        onDelete={() => {
-          handleDelete(idToDelete);
-          setIdToDelete("");
-        }}
+        onDelete={() => handleDelete()}
         onClose={() => setIsOpenModal(false)}
       />
       {SnackbarComponent()}

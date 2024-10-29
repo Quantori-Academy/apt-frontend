@@ -15,7 +15,7 @@ import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { ReagentData } from "@/types/reagentData";
 
 type LocationOption = {
-  id: number;
+  id: string;
   label: string;
 };
 
@@ -42,7 +42,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
       quantityUnit: "",
       quantityLeft: 0,
       expirationDate: new Date().toISOString().slice(0, 16),
-      locationId: 0,
+      locationId: "0",
       casNumber: "",
       producer: "",
       catalogId: 0,
@@ -59,7 +59,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
     _event: React.ChangeEvent<unknown>,
     value: LocationOption | null
   ) => {
-    setValue("locationId", value ? value.id : 0);
+    setValue("locationId", value ? value.id : "0");
   };
 
   return (

@@ -72,7 +72,7 @@ const NavigationAuth: React.FC = () => {
                 ? `${styles.navLink} ${styles.activeNavLink}`
                 : styles.navLink
             }
-            to={RouteProtectedPath.storage}
+            to={RouteProtectedPath.storageLocation}
           >
             Storage
           </NavLink>

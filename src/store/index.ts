@@ -17,12 +17,18 @@ export {
   useGetSampleDetailsQuery,
   useDeleteSubstanceMutation,
   useGetSubstancesQuery,
-  substancesApi,
   useCreateReagentMutation,
   useCreateSampleMutation,
 } from "./substancesApi";
 
-export { useGetStorageRoomsQuery, useGetStorageLocationDetailQuery } from "./storageApi";
+export {
+  useGetStorageRoomsQuery,
+  useGetStorageLocationDetailQuery,
+  useUpdateStorageRoomMutation,
+  useCreateStorageRoomMutation,
+  useDeleteStorageLocationMutation,
+  useMoveSubstanceMutation,
+} from "./storageApi";
 
 export {
   loginUser,

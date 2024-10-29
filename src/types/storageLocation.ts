@@ -1,18 +1,28 @@
 export type StorageRoomsBrief = {
-  id: number;
+  id: string;
   room: string;
   description: string;
   locations: RoomLocationBrief[];
   totalSubstances: number;
 };
 
+export type UpdateStorageRoom = Pick<StorageRoomsBrief, "id" | "room" | "description">;
+
 export type RoomLocationBrief = {
-  locationId: number;
+  locationId: string;
   locationName: string;
 };
 
+export type RoomData = {
+  roomId: string;
+  locationId: string;
+  roomName: string;
+  locationName: string;
+  substances: Substance[];
+};
+
 export type BackendRoomLocationBrief = {
-  location_id: number;
+  location_id: string;
   location_name: string;
 };
 
@@ -21,31 +31,25 @@ export type BackendStorageRoomsBrief = Omit<StorageRoomsBrief, "locations" | "to
   total_substances: number;
 };
 
-export type RoomData = {
-  roomId: number;
-  locationId: number;
-  roomName: string;
-  locationName: string;
-  substances: Substance[];
-};
+export type NewRoom = Pick<RoomData, "roomId" | "locationName">;
 
 export type Substance = {
-  substanceId: number;
+  substanceId: string;
   name: string;
   description: string;
   structureSmiles: string;
 };
 
 export type BackendRoomData = {
-  room_id: number;
-  location_id: number;
+  room_id: string;
+  location_id: string;
   room_name: string;
   location_name: string;
   substances: BackendSubstance[];
 };
 
 export type BackendSubstance = {
-  substance_id: number;
+  substance_id: string;
   name: string;
   description: string;
   structure_smiles: string;
@@ -55,12 +59,19 @@ export type SubstancesInLocation = {
   description: string;
   name: string;
   structureSmiles: string;
-  substanceId: number;
+  substanceId: string;
 };
+
 export type LocationDetails = {
-  locationId: number;
+  locationId: string;
   locationName: string;
-  roomId: number;
+  roomId: string;
   roomName: string;
   substances: Array<SubstancesInLocation>;
+};
+
+export type MoveSubstance = {
+  oldRoomId: string;
+  substanceId: string;
+  newLocationId?: string;
 };

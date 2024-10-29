@@ -10,7 +10,7 @@ const StoragePage: React.FC = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
-  const [roomIdToEdit, setRoomIdToEdit] = useState<number | null>(null);
+  const [roomIdToEdit, setRoomIdToEdit] = useState<string>("");
 
   const {
     data: storages,
@@ -18,7 +18,7 @@ const StoragePage: React.FC = () => {
     isLoading: isGettingStorages,
   } = useGetStorageRoomsQuery();
 
-  const handleEdit = (roomId: number) => {
+  const handleEdit = (roomId: string) => {
     setRoomIdToEdit(roomId);
     setEditDialogOpen(true);
   };
@@ -45,7 +45,7 @@ const StoragePage: React.FC = () => {
         <EditStorage
           open={editDialogOpen}
           onClose={() => setEditDialogOpen(false)}
-          roomId={roomIdToEdit}
+          id={roomIdToEdit}
         />
         <AddStorageDialog
           open={createDialogOpen}

@@ -1,6 +1,6 @@
 import { SubstancesDetails, SubstancesResponse } from "@/types";
 
-export const transformSubstanceData = (substances: SubstancesResponse) => {
+export const transformSubstanceData = (substances: SubstancesResponse): Array<SubstancesDetails> => {
   return substances.map((substance) => {
     return {
       id: substance.id,
@@ -11,6 +11,6 @@ export const transformSubstanceData = (substances: SubstancesResponse) => {
       isExpired: substance.is_expired,
       quantityLeft: `${substance.locations[0].quantity_left} ${substance.locations[0].unit}`,
       storageLocation: `${substance.locations[0].room}/${substance.locations[0].location}`,
-    } as SubstancesDetails;
+    };
   });
 };

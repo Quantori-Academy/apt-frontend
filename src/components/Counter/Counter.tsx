@@ -3,7 +3,7 @@ import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import { Box, IconButton, Typography } from "@mui/material";
 
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { decrement, increment, selectCount } from "@/store/slices/counterSlice";
+import { decrement, increment, selectCount } from "@/store/slices";
 
 const Counter: React.FC = () => {
   const dispatch = useAppDispatch();

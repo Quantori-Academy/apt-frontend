@@ -1,7 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { BackendRoomData, BackendStorageRoomsBrief, RoomData, StorageRoomsBrief } from "@/types";
+import {
+  BackendRoomData,
+  BackendStorageRoomsBrief,
+  MoveSubstance,
+  NewRoom,
+  RoomData,
+  StorageRoomsBrief,
+  UpdateStorageRoom,
+} from "@/types";
 
 import { transformStorageLocationResponse, transformStorageRoomsResponse } from "./utils";
 
@@ -19,15 +27,15 @@ export const storageApi = createApi({
       providesTags: ["StorageRooms"],
     }),
 
-    getStorageLocationDetail: builder.query<RoomData, number>({
+    getStorageLocationDetail: builder.query<RoomData, string>({
       query: (locationId) => `/storage/${locationId}`,
       transformResponse: (response: BackendRoomData) => transformStorageLocationResponse(response),
       providesTags: ["StorageRooms"],
     }),
 
-    updateStorageRoom: builder.mutation<void, { roomId: number | null; room: string; description: string }>({
-      query: ({ roomId, room, description }) => ({
-        url: `/storage/${roomId}`,
+    updateStorageRoom: builder.mutation<void, UpdateStorageRoom>({
+      query: ({ id, room, description }) => ({
+        url: `/storage/${id}`,
         method: "PUT",
         body: {
           room,
@@ -37,7 +45,7 @@ export const storageApi = createApi({
       invalidatesTags: ["StorageRooms"],
     }),
 
-    createStorageRoom: builder.mutation({
+    createStorageRoom: builder.mutation<void, NewRoom>({
       query: ({ roomId, locationName }) => ({
         url: "/storage/location",
         method: "POST",
@@ -57,14 +65,7 @@ export const storageApi = createApi({
       invalidatesTags: ["StorageRooms"],
     }),
 
-    moveSubstance: builder.mutation<
-      void,
-      {
-        oldRoomId: number;
-        substanceId: number;
-        newLocationId: number;
-      }
-    >({
+    moveSubstance: builder.mutation<void, MoveSubstance>({
       query: ({ oldRoomId, substanceId, newLocationId }) => ({
         url: "/storage/move",
         method: "PUT",

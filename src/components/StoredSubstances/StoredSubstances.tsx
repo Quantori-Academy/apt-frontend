@@ -11,15 +11,15 @@ import { SubstancesInLocation } from "@/types";
 
 type StoredSubstancesProps = {
   substances: Array<SubstancesInLocation>;
-  onChangeLocation: (substanceId: number) => void;
+  onChangeLocation: (substanceId: string) => void;
   openModal: () => void;
 };
+
 const StoredSubstances: React.FC<StoredSubstancesProps> = ({
   substances,
   onChangeLocation,
   openModal,
 }) => {
-  console.log("am:", substances);
   return (
     <>
       {substances.length > 0 ? (

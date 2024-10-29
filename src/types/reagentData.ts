@@ -6,7 +6,7 @@ export type ReagentData = {
   quantityUnit: string;
   quantityLeft: number;
   expirationDate: string;
-  locationId: number;
+  locationId: string;
   casNumber: string;
   producer: string;
   catalogId: number;

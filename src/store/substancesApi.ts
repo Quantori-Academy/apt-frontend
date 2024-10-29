@@ -30,9 +30,9 @@ type MutationSubstanceResponse = {
 
 export type MutationPatchSubstance = {
   id: string;
-  oldLocationId: number;
+  oldLocationId: string;
   quantity: string;
-  newLocationId?: number;
+  newLocationId?: string;
 };
 
 export const substancesApi = createApi({
@@ -45,18 +45,10 @@ export const substancesApi = createApi({
   endpoints: (builder) => ({
     getSubstances: builder.query<Array<SubstancesDetails>, void>({
       query: () => "/substances",
-      transformResponse(baseQueryReturnValue: SubstancesResponse) {
+      transformResponse: (baseQueryReturnValue: SubstancesResponse) => {
         return transformSubstanceData(baseQueryReturnValue);
       },
       providesTags: ["Substances"],
-    }),
-    updateSubstance: builder.mutation<MutationSubstanceResponse, MutationPatchSubstance>({
-      query: (updatedSubstanceDetails) => ({
-        url: `/substances/${updatedSubstanceDetails.id}`,
-        method: "PATCH",
-        body: transformSubstancePatchRequest(updatedSubstanceDetails),
-      }),
-      invalidatesTags: ["Substances"],
     }),
     deleteSubstance: builder.mutation<MutationSubstanceResponse, string>({
       query: (substanceId) => ({
@@ -80,6 +72,13 @@ export const substancesApi = createApi({
         method: "POST",
         body: transformSampleData(sample),
       }),
+    }),
+    updateSubstance: builder.mutation<MutationSubstanceResponse, MutationPatchSubstance>({
+      query: (updatedSubstanceDetails) => ({
+        url: `/substances/${updatedSubstanceDetails.id}`,
+        method: "PATCH",
+        body: transformSubstancePatchRequest(updatedSubstanceDetails),
+      }),
       invalidatesTags: ["Substances"],
     }),
 
@@ -99,9 +98,9 @@ export const substancesApi = createApi({
 export const {
   useGetSubstancesQuery,
   useGetReagentDetailsQuery,
-  useGetSampleDetailsQuery,
   useDeleteSubstanceMutation,
-  useUpdateSubstanceMutation,
   useCreateSampleMutation,
   useCreateReagentMutation,
+  useGetSampleDetailsQuery,
+  useUpdateSubstanceMutation,
 } = substancesApi;
