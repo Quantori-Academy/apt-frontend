@@ -8,7 +8,6 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import React from "react";
 
 import { ReagentRequests, RequestsSortColumns, SortDirection } from "@/types";
 

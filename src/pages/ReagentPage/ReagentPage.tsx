@@ -2,6 +2,7 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import { useParams } from "react-router-dom";
 
 import { PageError, PageLoader, SubstanceDetails } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { useGetReagentDetailsQuery } from "@/store";
 
@@ -23,12 +24,15 @@ const ReagentPage: React.FC = () => {
   }
 
   return (
-    <SubstanceDetails
-      substanceType="Reagent"
-      substanceId={reagentId}
-      substanceDetails={reagentDetails}
-      redirectPath={RouteProtectedPath.substances}
-    />
+    <>
+      <DashboardBreadcrumbs />
+      <SubstanceDetails
+        substanceType="Reagent"
+        substanceId={reagentId}
+        substanceDetails={reagentDetails}
+        redirectPath={RouteProtectedPath.substances}
+      />
+    </>
   );
 };
 

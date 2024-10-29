@@ -8,6 +8,7 @@ import {
   PageLoader,
   StorageLocationsList,
 } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useGetStorageRoomsQuery } from "@/store";
 import { paginateStorages } from "@/utils";
 
@@ -40,7 +41,8 @@ const StorageLocations: React.FC = () => {
 
   return (
     <Container sx={{ padding: "20px" }}>
-      <Typography variant="h3" marginBottom="30px">
+      <DashboardBreadcrumbs />
+      <Typography variant="h3" sx={{ marginBottom: "30px" }}>
         Storage Locations
       </Typography>
       <Button
