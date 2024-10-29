@@ -3,7 +3,7 @@ import { ReagentRequests } from "@/types";
 export const reagentRequestsMock: ReagentRequests = [
   {
     id: 1,
-    reagentName: "Sodium Chloride",
+    name: "Sodium Chloride",
     structure: "Cl[Na]",
     CAS: "7647-14-5",
     desiredQuantity: "500 ml",
@@ -15,7 +15,7 @@ export const reagentRequestsMock: ReagentRequests = [
   },
   {
     id: 2,
-    reagentName: "Acetone",
+    name: "Acetone",
     structure: "CC(=O)C",
     CAS: "67-64-1",
     desiredQuantity: "1 L",
@@ -27,7 +27,7 @@ export const reagentRequestsMock: ReagentRequests = [
   },
   {
     id: 3,
-    reagentName: "Ethanol",
+    name: "Ethanol",
     structure: "CCO",
     CAS: "64-17-5",
     desiredQuantity: "250 ml",
@@ -39,7 +39,7 @@ export const reagentRequestsMock: ReagentRequests = [
   },
   {
     id: 4,
-    reagentName: "Hydrochloric Acid",
+    name: "Hydrochloric Acid",
     structure: "Cl",
     CAS: "7647-01-0",
     desiredQuantity: "100 ml",
@@ -51,7 +51,7 @@ export const reagentRequestsMock: ReagentRequests = [
   },
   {
     id: 5,
-    reagentName: "Benzene",
+    name: "Benzene",
     structure: "c1ccccc1",
     CAS: "71-43-2",
     desiredQuantity: "150 ml",
