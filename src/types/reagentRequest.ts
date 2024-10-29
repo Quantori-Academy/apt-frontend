@@ -1,7 +1,7 @@
 export type ReagentRequests = Array<RequestedReagent>;
 export type RequestedReagent = {
   id: number;
-  reagentName: string;
+  name: string;
   structure: string;
   CAS: string;
   desiredQuantity: string;
@@ -11,5 +11,8 @@ export type RequestedReagent = {
   dateCreated: string;
   dateModified: string;
 };
+export type RequestsSortColumns = "name" | "dateCreated" | "status";
 
-export type RequestStatus = "pending" | "ordered" | "declined";
+export type RequestStatus = "Pending" | "Ordered" | "Declined";
+
+export type StatusFilterOption = RequestStatus | "All";
