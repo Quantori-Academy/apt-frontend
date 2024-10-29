@@ -77,11 +77,13 @@ const OrdersTable: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {visibleRows.map((row) => {
+            {visibleRows.map((order) => {
               return (
-                <TableRow hover key={row.id}>
+                <TableRow hover key={order.id}>
                   {headCells.map((cell) => (
-                    <TableCell key={cell.key}>{row.title}</TableCell>
+                    <TableCell key={cell.key}>
+                      {order[cell.key as keyof typeof order]}
+                    </TableCell>
                   ))}
                 </TableRow>
               );
