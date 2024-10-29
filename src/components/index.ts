@@ -1,5 +1,4 @@
 export { Counter } from "./Counter";
-export { PageLayout } from "./PageLayout";
 export { PageLoader } from "./PageLoader";
 export { StatusChecker } from "./StatusChecker";
 export { UsersTable } from "./UsersTable";
@@ -31,3 +30,5 @@ export { EditStorage } from "./EditStorage";
 export { StoredSubstances } from "./StoredSubstances";
 export { SubstanceDetails } from "./SubstanceDetails";
 export { CategoryFilter } from "./CategoryFilter";
+export { ReagentRequestTable } from "./ReagentRequestTable";
+export { DashboardCard } from "./DashboardCard";

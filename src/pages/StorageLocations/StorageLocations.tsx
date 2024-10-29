@@ -8,8 +8,9 @@ import {
   PageLoader,
   StorageLocationsList,
 } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useGetStorageRoomsQuery } from "@/store";
-import { paginateListData } from "@/utils/getPaginatedStorageLocations.ts";
+import { paginateStorages } from "@/utils";
 
 import style from "./StorageLocations.module.css";
 
@@ -36,11 +37,12 @@ const StorageLocations: React.FC = () => {
   if (!storages) return <PageError text="There isn't any storages" />;
 
   const totalPages = Math.ceil(storages.length / PAGE_SIZE);
-  const paginatedStorages = paginateListData(storages, page, PAGE_SIZE);
+  const paginatedStorages = paginateStorages(storages, page, PAGE_SIZE);
 
   return (
     <Container sx={{ padding: "20px" }}>
-      <Typography variant="h4" gutterBottom>
+      <DashboardBreadcrumbs />
+      <Typography variant="h3" sx={{ marginBottom: "30px" }}>
         Storage Locations
       </Typography>
       <Button

@@ -6,3 +6,4 @@ export * from "./reagentData.ts";
 export * from "./substances.ts";
 export * from "./storageLocation";
 export * from "./substances";
+export * from "./reagentRequest.ts";

@@ -2,6 +2,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 
 import { AddUserModal, RoleFilter, SearchBar, UsersTable } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useGetUsersQuery } from "@/store";
 import { UserRole } from "@/types";
 import { getFilteredUsers } from "@/utils";
@@ -29,15 +30,16 @@ const Users: React.FC = () => {
 
   return (
     <Container>
+      <DashboardBreadcrumbs />
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "20px",
+          marginY: "30px",
         }}
       >
-        <Typography variant="h2">Users list</Typography>
+        <Typography variant="h3">Users list</Typography>
         <Button onClick={() => setOpenModal(true)} variant="outlined">
           Add User
         </Button>

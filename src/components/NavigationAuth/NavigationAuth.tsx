@@ -22,7 +22,6 @@ const NavigationAuth: React.FC = () => {
         <Avatar sx={{ width: 50, height: 50 }} />
       </IconButton>
 
-      {/* I'll add role-based navbar object with paths and links in the future */}
       <Box
         sx={{
           display: "flex",
@@ -77,6 +76,17 @@ const NavigationAuth: React.FC = () => {
             Storage
           </NavLink>
         )}
+
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? `${styles.navLink} ${styles.activeNavLink}`
+              : styles.navLink
+          }
+          to={RouteProtectedPath.reagentRequests}
+        >
+          Reagent Requests
+        </NavLink>
       </Box>
       <Button onClick={() => dispatch(logout())}>Logout</Button>
     </>

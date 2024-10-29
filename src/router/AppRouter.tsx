@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import { PageLayout, PageLoader } from "@/components";
+import { PageLoader } from "@/components";
+import { AppLayout } from "@/components/AppLayout";
 
 import { ProtectedRoute } from "./ProtectedRoute";
 import { protectedRoutesRouterConfig } from "./protectedRoutesRouterConfig";
@@ -8,7 +9,7 @@ import { publicRoutesRouterConfig } from "./publicRoutesRouterConfig";
 
 const routes = [
   {
-    element: <PageLayout />,
+    element: <AppLayout />,
     children: [
       ...Object.values(publicRoutesRouterConfig),
 

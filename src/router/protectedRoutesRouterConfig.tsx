@@ -5,6 +5,7 @@ import {
   AccountSettings,
   Dashboard,
   ReagentPage,
+  ReagentRequests,
   SamplePage,
   StorageLocationDetails,
   StorageLocations,
@@ -32,6 +33,7 @@ export const enum AppProtectedRoutes {
   STORAGE_LOCATION_DETAIL = "storageLocationDetail",
   STORAGE_LOCATIONS = "storageLocation",
   SAMPLE_PAGE = "samplePage",
+  REAGENT_REQUESTS = "reagentRequests",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -46,6 +48,7 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.SAMPLE_PAGE]: "/substances/sample/:id",
   [AppProtectedRoutes.SAMPLE_ADD_PAGE]: "/substances/add-sample",
   [AppProtectedRoutes.REAGENT_ADD_PAGE]: "/reagent-sample-list/add-reagent",
+  [AppProtectedRoutes.REAGENT_REQUESTS]: "/reagent-requests",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -101,10 +104,12 @@ export const protectedRoutesRouterConfig: Record<
     path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_PAGE],
     element: <AddSamplePage />,
     roles: Object.values(userRoles),
-  },
   [AppProtectedRoutes.REAGENT_ADD_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_PAGE],
     element: <AddReagentPage />,
+  [AppProtectedRoutes.REAGENT_REQUESTS]: {
+    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_REQUESTS],
+    element: <ReagentRequests />,
     roles: Object.values(userRoles),
   },
 };
