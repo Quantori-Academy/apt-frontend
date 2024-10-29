@@ -13,12 +13,12 @@ export const useLocationQuantityDetails = (
 
   useEffect(() => {
     if (substanceDetails && rooms?.length) {
-      const currentRoom = rooms.find((room) => room.id === substanceLocationDetails.roomId);
+      const currentRoom = rooms.find((room) => room.id == substanceLocationDetails.roomId);
       setSelectedRoom(currentRoom || null);
 
       if (currentRoom) {
         const currentLocation = currentRoom.locations.find(
-          (location) => location.locationId === substanceLocationDetails.locationId
+          (location) => location.locationId == substanceLocationDetails.locationId
         );
         setSelectedLocation(currentLocation || null);
       }

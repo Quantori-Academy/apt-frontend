@@ -129,9 +129,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
             options={rooms || []}
             getOptionLabel={(option) =>
               option.room +
-              (option.id === substanceLocationDetails.roomId
-                ? " (current)"
-                : "")
+              (option.id == substanceLocationDetails.roomId ? " (current)" : "")
             }
             value={selectedRoom}
             onChange={(_, newRoom) => {
@@ -148,7 +146,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
               options={availableLocations}
               getOptionLabel={(option) =>
                 option.locationName +
-                (option.locationId === substanceLocationDetails.locationId
+                (option.locationId == substanceLocationDetails.locationId
                   ? " (current)"
                   : "")
               }

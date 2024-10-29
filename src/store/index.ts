@@ -17,6 +17,8 @@ export {
   useGetSampleDetailsQuery,
   useDeleteSubstanceMutation,
   useGetSubstancesQuery,
+  useCreateReagentMutation,
+  useCreateSampleMutation,
 } from "./substancesApi";
 
 export {
