@@ -1,5 +1,5 @@
 import { AppBar, Container, Toolbar } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useAppSelector } from "@/hooks";
@@ -14,11 +14,13 @@ const Header: React.FC = () => {
     i18n: { changeLanguage, language },
   } = useTranslation();
 
-  const [currentLanguage, setCurrentLanguage] = React.useState(language);
-  const handleChangeLanguage = (value: string) => {
+  const [currentLanguage, setCurrentLanguage] = useState(language);
+
+  const handleChangeLanguage = async (value: string) => {
     setCurrentLanguage(value);
-    changeLanguage(value);
+    await changeLanguage(value);
   };
+
   const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
 
   const displayLanguageValue = currentLanguage === "ENG" ? "ENG" : "РУС";
