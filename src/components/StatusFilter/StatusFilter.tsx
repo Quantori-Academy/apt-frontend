@@ -14,6 +14,7 @@ type StatusFilterProps = {
   setFilter: (filter: StatusFilterOption) => void;
   setPage: (page: number) => void;
 };
+
 const StatusFilter: React.FC<StatusFilterProps> = ({
   filter,
   setFilter,

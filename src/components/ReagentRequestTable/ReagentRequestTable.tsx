@@ -17,6 +17,7 @@ type ReagentRequestTableProps = {
   onSortChange: (property: RequestsSortColumns) => void;
   visibleItems: ReagentRequests;
 };
+
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   sortColumn,
   sortDirection,

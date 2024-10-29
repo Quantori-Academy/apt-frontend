@@ -20,11 +20,11 @@ export const getRequestsListData = ({
   const filtered = filterListData(items, statusFilter);
   const sorted = sortListData(filtered, sortColumn, sortDirection);
   const paginated = paginateListData(sorted, page, pageSize);
-
   const totalPages = Math.ceil(sorted.length / pageSize);
 
   return { visibleItems: paginated, totalPages };
 };
+
 const filterListData = (items: ReagentRequests, statusFilter: StatusFilterOption) => {
   if (statusFilter !== "All") {
     return items.filter((item) => item.status === statusFilter);

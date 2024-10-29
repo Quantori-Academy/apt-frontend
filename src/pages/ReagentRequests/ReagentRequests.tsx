@@ -13,9 +13,9 @@ import {
   SortDirection,
   StatusFilterOption,
 } from "@/types";
-import { getRequestsListData } from "@/utils/getReagentRequestsData.ts";
+import { getRequestsListData } from "@/utils";
 
-import style from "@/components/ReagentRequestTable/ReagentRequestTable.module.css";
+import style from "./ReagentRequests.module.css";
 
 const PAGE_SIZE = 4;
 
@@ -41,7 +41,6 @@ const ReagentRequests: React.FC = () => {
     [reagentRequests, sortColumn, sortDirection, page, statusFilter]
   );
 
-  console.log("am:", visibleItems);
   if (isLoading) return <PageLoader />;
   if (!reagentRequests) {
     return <PageError text="There are no reagent request to show" />;
