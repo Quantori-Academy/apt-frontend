@@ -22,11 +22,11 @@ const AccountSettings: React.FC = () => {
         padding: 4,
         borderRadius: 2,
         boxShadow: 3,
-        mt: 8,
-        bgcolor: "white",
+        marginTop: 8,
+        backgroundColor: "white",
       }}
     >
-      <Typography variant="h3" gutterBottom margin={3}>
+      <Typography variant="h3" margin={1}>
         Account Details
       </Typography>
       <Typography variant="h6" gutterBottom marginX={3}>

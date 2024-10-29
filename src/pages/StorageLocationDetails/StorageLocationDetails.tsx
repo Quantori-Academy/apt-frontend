@@ -17,6 +17,7 @@ import {
   StorageLocationDetail,
   StoredSubstances,
 } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useAlertSnackbar } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
 import {
@@ -69,6 +70,7 @@ const StorageLocationDetails: React.FC = () => {
 
   return (
     <Box padding={4}>
+      <DashboardBreadcrumbs />
       <Grid container spacing={4} direction="column">
         <Grid
           item
