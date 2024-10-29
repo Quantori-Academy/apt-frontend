@@ -47,7 +47,7 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.REAGENT_PAGE]: "/substances/reagent/:id",
   [AppProtectedRoutes.SAMPLE_PAGE]: "/substances/sample/:id",
   [AppProtectedRoutes.SAMPLE_ADD_PAGE]: "/substances/add-sample",
-  [AppProtectedRoutes.REAGENT_ADD_PAGE]: "/reagent-sample-list/add-reagent",
+  [AppProtectedRoutes.REAGENT_ADD_PAGE]: "/substances/add-reagent",
   [AppProtectedRoutes.REAGENT_REQUESTS]: "/reagent-requests",
 };
 
@@ -104,9 +104,12 @@ export const protectedRoutesRouterConfig: Record<
     path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_PAGE],
     element: <AddSamplePage />,
     roles: Object.values(userRoles),
+  },
   [AppProtectedRoutes.REAGENT_ADD_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_PAGE],
     element: <AddReagentPage />,
+    roles: Object.values(userRoles),
+  },
   [AppProtectedRoutes.REAGENT_REQUESTS]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_REQUESTS],
     element: <ReagentRequests />,
