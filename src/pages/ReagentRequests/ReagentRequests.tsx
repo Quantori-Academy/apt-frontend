@@ -8,7 +8,7 @@ const ReagentRequests: React.FC = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-around",
+        gap: "30px",
         height: "100%",
       }}
     >
