@@ -4,6 +4,7 @@ import { userRoles } from "@/constants";
 import {
   AccountSettings,
   Dashboard,
+  Orders,
   ReagentPage,
   SamplePage,
   StorageLocationDetails,
@@ -28,6 +29,7 @@ export const enum AppProtectedRoutes {
   STORAGE_LOCATIONS = "storageLocation",
   STORAGE_LOCATION_DETAIL = "storageLocationDetail",
   SAMPLE_PAGE = "samplePage",
+  ORDERS = "orders",
 }
 
 export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
@@ -40,6 +42,7 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.SUBSTANCES]: "/substances",
   [AppProtectedRoutes.REAGENT_PAGE]: "/substances/reagent/:id",
   [AppProtectedRoutes.SAMPLE_PAGE]: "/substances/sample/:id",
+  [AppProtectedRoutes.ORDERS]: "/orders",
 };
 
 export const protectedRoutesRouterConfig: Record<
@@ -84,6 +87,11 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.SAMPLE_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_PAGE],
     element: <SamplePage />,
+    roles: Object.values(userRoles),
+  },
+  [AppProtectedRoutes.ORDERS]: {
+    path: RouteProtectedPath[AppProtectedRoutes.ORDERS],
+    element: <Orders />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.DASHBOARD]: {
