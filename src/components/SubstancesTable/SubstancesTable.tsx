@@ -159,7 +159,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
       <ConfirmRemoving
         open={isOpenModal}
         modalTitle={""}
-        modalText={"Are you sure you want to delete this substance?"}
+        modalText={t("substances.modalMessages.confirmDelete")}
         onDelete={() => handleDelete()}
         onClose={() => setIsOpenModal(false)}
       />

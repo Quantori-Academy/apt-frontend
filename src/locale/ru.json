@@ -9,7 +9,7 @@
       "edit": "Редактировать",
       "save": "Сохранить",
       "cancel": "Отменить",
-      "agree": "Согласен",
+      "agree": "Удалить",
       "login": "Войти",
       "logout": "Выйти"
     },
@@ -188,6 +188,10 @@
         "quantityLeft": "Остаток",
         "storageLocation": "Место хранения",
         "actions": "Действия"
+      },
+
+      "modalMessages": {
+        "confirmDelete": "Вы уверены, что хотите удалить это вещество?"
       },
 
       "snackBarMessages": {
