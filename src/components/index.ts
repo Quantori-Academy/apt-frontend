@@ -34,3 +34,4 @@ export { OrdersTable } from "./OrdersTable";
 export { ReagentRequestTable } from "./ReagentRequestTable";
 export { DashboardCard } from "./DashboardCard";
 export { StatusFilter } from "./StatusFilter";
+export { OrdersFilter } from "./OrdersFilter";
