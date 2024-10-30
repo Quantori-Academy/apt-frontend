@@ -1,0 +1,26 @@
+{
+  "translation": {
+    "header.dashboard": "Панель управления",
+    "header.substances": "Список веществ",
+    "header.storage": "Хранилище",
+    "header.button.logout": "Выйти",
+    "header.button.login": "Войти",
+
+    "userDetails.username": "Никнейм",
+    "userDetails.firstName": "Имя",
+    "userDetails.lastName": "Фамилия",
+    "userDetails.email": "Почта",
+
+    "substances": "Реагенты и образцы",
+    "substances.add.reagent": "Добавить реагент",
+    "substances.add.sample": "Добавить образец",
+
+    "substances.list.name": "Название",
+    "substances.list.category": "Категория",
+    "substances.list.structure": "Состав",
+    "substances.list.description": "Описание",
+    "substances.list.quantityLeft": "Остаток",
+    "substances.list.storageLocation": "Место хранения",
+    "substances.list.actions": "Действия"
+  }
+}

@@ -1,4 +1,5 @@
 import { Avatar, Box, Button, IconButton } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
 import { userRoles } from "@/constants";
@@ -9,6 +10,7 @@ import { logout, selectUserRole } from "@/store";
 import styles from "./NavigationAuth.module.css";
 
 const NavigationAuth: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const role = useAppSelector(selectUserRole);
   return (
@@ -38,7 +40,7 @@ const NavigationAuth: React.FC = () => {
           }
           to={RouteProtectedPath.dashboard}
         >
-          Dashboard
+          {t("header.dashboard")}
         </NavLink>
         {role === userRoles.Administrator && (
           <NavLink
@@ -61,7 +63,7 @@ const NavigationAuth: React.FC = () => {
             }
             to={RouteProtectedPath.substances}
           >
-            Substances
+            {t("header.substances")}
           </NavLink>
         )}
         {role !== userRoles.ProcurementOfficer && (
@@ -73,7 +75,7 @@ const NavigationAuth: React.FC = () => {
             }
             to={RouteProtectedPath.storageLocation}
           >
-            Storage
+            {t("header.storage")}
           </NavLink>
         )}
 
@@ -88,7 +90,9 @@ const NavigationAuth: React.FC = () => {
           Reagent Requests
         </NavLink>
       </Box>
-      <Button onClick={() => dispatch(logout())}>Logout</Button>
+      <Button onClick={() => dispatch(logout())}>
+        {t("header.button.logout")}
+      </Button>
     </>
   );
 };

@@ -1,0 +1,26 @@
+{
+  "translation": {
+    "header.dashboard": "Dashboard",
+    "header.substances": "Substances",
+    "header.storage": "Storage",
+    "header.button.logout": "Logout",
+    "header.button.login": "Login",
+
+    "userDetails.username": "Username",
+    "userDetails.firstName": "First name",
+    "userDetails.lastName": "Last name",
+    "userDetails.email": "Email",
+
+    "substances": "Reagents And Samples",
+    "substances.add.reagent": "Add Reagent",
+    "substances.add.sample": "Add Sample",
+
+    "substances.list.name": "Name",
+    "substances.list.category": "Category",
+    "substances.list.structure": "Structure",
+    "substances.list.description": "Description",
+    "substances.list.quantityLeft": "Quantity left",
+    "substances.list.storageLocation": "Storage location",
+    "substances.list.actions": "Actions"
+  }
+}

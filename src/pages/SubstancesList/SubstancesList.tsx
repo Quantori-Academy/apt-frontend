@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { PageLoader, SearchBar, SubstancesTable } from "@/components";
@@ -31,6 +32,7 @@ import style from "./SubstancesList.module.css";
 const PAGE_SIZE = 5;
 
 const SubstancesList: React.FC = () => {
+  const { t } = useTranslation();
   const { data: substances = [], isLoading, isError } = useGetSubstancesQuery();
 
   const [page, setPage] = useState(1);
@@ -86,7 +88,7 @@ const SubstancesList: React.FC = () => {
     <Container>
       <DashboardBreadcrumbs />
       <Typography variant="h3" sx={{ marginBottom: "30px" }}>
-        Reagents And Samples
+        {t("Substances")}
       </Typography>
       {role === userRoles.Researcher && (
         <Box className={style.buttonBox}>
@@ -95,14 +97,14 @@ const SubstancesList: React.FC = () => {
             color="primary"
             onClick={() => navigate(RouteProtectedPath.reagentAddPage)}
           >
-            Add Reagent
+            {t("substances.add.reagent")}
           </Button>
           <Button
             variant="contained"
             color="primary"
             onClick={() => navigate(RouteProtectedPath.sampleAddPage)}
           >
-            Add Sample
+            {t("substances.add.sample")}
           </Button>
         </Box>
       )}
