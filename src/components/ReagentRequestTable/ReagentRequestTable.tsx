@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-import { BasicModal, DeclineReagentRequest } from "@/components";
+import { DeclineReagentRequest } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import {
   ReagentRequests,
@@ -33,8 +33,8 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   onSortChange,
   visibleItems,
 }) => {
-  const [modalOpen, setModalOpen] = useState(false);
   const [requestId, setRequestId] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
@@ -117,17 +117,14 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <BasicModal
-        title="Decline Reagent Request"
-        closeModal={() => setModalOpen(false)}
-        isOpen={modalOpen}
-      >
-        <DeclineReagentRequest
-          onDeclineSubmit={handleSubmit}
-          onClose={() => setModalOpen(false)}
-          id={Number(requestId)}
-        />
-      </BasicModal>
+
+      <DeclineReagentRequest
+        onDeclineSubmit={handleSubmit}
+        id={Number(requestId)}
+        onClose={() => setModalOpen(false)}
+        modalOpen={modalOpen}
+      />
+
       {SnackbarComponent()}
     </>
   );
