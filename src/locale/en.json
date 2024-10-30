@@ -1,15 +1,161 @@
 {
   "translation": {
-    "header.dashboard": "Dashboard",
-    "header.substances": "Substances",
-    "header.storage": "Storage",
-    "header.button.logout": "Logout",
-    "header.button.login": "Login",
+    "header": {
+      "dashboard": "Dashboard",
+      "substances": "Substances",
+      "storage": "Storage",
+      "button.logout": "Logout",
+      "button.login": "Login"
+    },
 
-    "userDetails.username": "Username",
-    "userDetails.firstName": "First name",
-    "userDetails.lastName": "Last name",
-    "userDetails.email": "Email",
+    "buttons": {
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "agree": "Agree"
+    },
+
+    "users": {
+      "title": "Users",
+
+      "buttons": {
+        "addUser": "Add user"
+      },
+
+      "errors": {
+        "loadError": "Failed to load users."
+      },
+
+      "filters": {
+        "search": "Search...",
+        "role": "Role"
+      },
+
+      "roles": {
+        "All": "All",
+        "Administrator": "Administrator",
+        "Procurement Officer": "Procurement Officer",
+        "Researcher": "Researcher"
+      },
+
+      "table": {
+        "username": "Username",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "role": "Role",
+        "lastLogin": "Last login",
+        "actions": "Actions"
+      }
+    },
+
+    "userDetails": {
+      "title": "Account Details",
+
+      "buttons": {
+        "editDetails": "Edit Details",
+        "changePassword": "Change Password",
+        "editRole": "Edit Role",
+        "deleteUser": "Delete User"
+      },
+
+      "snackBarMessages": {
+        "password": {
+          "success": "Password changed successfully",
+          "error": "Failed to change password"
+        },
+        "role": {
+          "success": "Role has changed successfully",
+          "error": "Failed to change role"
+        },
+        "details": {
+          "success": "Details updated successfully",
+          "error": "Failed to update details"
+        },
+        "delete": {
+          "success": "User deleted successfully",
+          "error": "Failed to delete user"
+        }
+      },
+
+      "modalMessages": {
+        "confirmDelete": "Are you sure you want to delete this user?"
+      },
+
+      "requiredFields": {
+        "firstName": "First name is required",
+        "lastName": "Last name is required",
+        "email": {
+          "requiredMessage": "Email is required",
+          "patternMessage": "Please provide a valid email"
+        },
+        "password": {
+          "label": "Password",
+          "requiredMessage": "Password is required",
+          "minLengthMessage": "Password need to be not less than 8 character",
+          "patternMessage": "Password must contain at least one uppercase letter"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "requiredMessage": "This field is required",
+          "matchMessage": "Passwords need to match"
+        }
+      }
+    },
+
+    "addUserForm": {
+      "title": "Add New User",
+
+      "buttons": {
+        "createUser": "Create User"
+      },
+
+      "snackBarMessages": {
+        "success": "User added successfully",
+        "error": "Failed to add user"
+      },
+
+      "requiredFields": {
+        "username": {
+          "label": "Username",
+          "requiredMessage": "Username is required"
+        },
+
+        "firstName": {
+          "label": "First name",
+          "requiredMessage": "First name is required"
+        },
+
+        "lastName": {
+          "label": "Last name",
+          "requiredMessage": "Last name is required"
+        },
+
+        "email": {
+          "label": "Email",
+          "requiredMessage": "Email is required",
+          "patternMessage": "Please provide a valid email"
+        },
+
+        "password": {
+          "label": "Password",
+          "requiredMessage": "Password is required",
+          "minLengthMessage": "Password need to be not less than 8 character",
+          "patternMessage": "Password must contain at least one uppercase letter"
+        },
+
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "requiredMessage": "This field is required",
+          "matchMessage": "Passwords need to match"
+        },
+
+        "role": {
+          "label": "Select Role",
+          "requiredMessage": "Please select a role"
+        }
+      }
+    },
 
     "substances": "Reagents And Samples",
     "substances.add.reagent": "Add Reagent",

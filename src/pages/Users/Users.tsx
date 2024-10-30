@@ -1,7 +1,15 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { AddUserModal, RoleFilter, SearchBar, UsersTable } from "@/components";
+import {
+  AddUserModal,
+  PageError,
+  PageLoader,
+  RoleFilter,
+  SearchBar,
+  UsersTable,
+} from "@/components";
 import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useGetUsersQuery } from "@/store";
 import { UserRole } from "@/types";
@@ -10,6 +18,8 @@ import { getFilteredUsers } from "@/utils";
 export type RoleFilterState = UserRole | "All";
 
 const Users: React.FC = () => {
+  const { t } = useTranslation();
+
   const { data: users, isLoading } = useGetUsersQuery();
 
   const [openModal, setOpenModal] = useState(false);
@@ -18,11 +28,11 @@ const Users: React.FC = () => {
   const [roleFilter, setRoleFilter] = useState<RoleFilterState>("All");
 
   if (isLoading) {
-    return <Typography variant="h3">Loading...</Typography>;
+    return <PageLoader />;
   }
 
   if (!users) {
-    return <Typography variant="h2">No users found.</Typography>;
+    return <PageError text={t("users.errors.loadError")} />;
   }
 
   const filteredUsers =
@@ -39,9 +49,9 @@ const Users: React.FC = () => {
           marginY: "30px",
         }}
       >
-        <Typography variant="h3">Users list</Typography>
+        <Typography variant="h3">{t("users.title")}</Typography>
         <Button onClick={() => setOpenModal(true)} variant="outlined">
-          Add User
+          {t("users.buttons.addUser")}
         </Button>
         <AddUserModal open={openModal} onClose={() => setOpenModal(false)} />
       </Box>

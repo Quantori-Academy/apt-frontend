@@ -6,6 +6,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 type DeleteModalProps = {
   open: boolean;
@@ -22,6 +23,8 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
   modalText,
   onDelete,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog
       open={open}
@@ -39,7 +42,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions sx={{ margin: "20px" }}>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>{t("buttons.cancel")}</Button>
         <Button
           onClick={onDelete}
           variant="outlined"
@@ -53,7 +56,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
           }}
           autoFocus
         >
-          Agree
+          {t("buttons.agree")}
         </Button>
       </DialogActions>
     </Dialog>

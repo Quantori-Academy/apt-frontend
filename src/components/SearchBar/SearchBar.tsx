@@ -1,5 +1,6 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 type SearchBarProps = {
   searchQuery: string;
@@ -10,6 +11,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   searchQuery,
   setSearchQuery,
 }) => {
+  const { t } = useTranslation();
   return (
     <TextField
       sx={{
@@ -21,7 +23,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       variant="outlined"
       size="medium"
       value={searchQuery}
-      placeholder="Search..."
+      placeholder={t("users.filters.search")}
       onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
       InputProps={{
         endAdornment: (
