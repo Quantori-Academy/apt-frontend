@@ -8,7 +8,7 @@ import style from "@/components/AddUserForm/AddUserForm.module.css";
 type ReagentRequestInput = {
   reagentName: string;
   CAS: string;
-  desiredQuantity: number;
+  desiredQuantity: number | null;
   userComment: string;
   unit: string;
 };
@@ -31,13 +31,14 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
     defaultValues: {
       reagentName: "",
       CAS: "",
-      desiredQuantity: 0,
+      desiredQuantity: null,
       userComment: "",
       unit: "",
     },
   });
 
   const onSubmit = async (newReagentRequest: ReagentRequestInput) => {
+    //TODO: implement after backend ready
     console.log("am:", newReagentRequest);
     reset();
     onClose();
@@ -63,7 +64,7 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
           <TextField
             label="Desired Quantity"
             {...register("desiredQuantity", {
-              required: "Desired Quantity is required",
+              required: "Quantity is required",
             })}
             helperText={errors.desiredQuantity?.message}
             error={!!errors.desiredQuantity}
@@ -71,10 +72,10 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
           <TextField
             label="Unit"
             {...register("unit", {
-              required: "unit is required",
+              required: "Unit is required",
             })}
-            helperText={errors.desiredQuantity?.message}
-            error={!!errors.desiredQuantity}
+            helperText={errors.unit?.message}
+            error={!!errors.unit}
           />
           <TextField
             multiline
