@@ -32,13 +32,20 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   visibleItems,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [requestId, setRequestId] = useState("");
 
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+
   const handleSubmit = (severity: "error" | "success") => {
     openSnackbar(
       severity,
       severity === "success" ? "Request Declined" : "Faild to decline request"
     );
+  };
+
+  const handleDecline = (id: number) => {
+    setModalOpen(true);
+    setRequestId(String(id));
   };
 
   return (
@@ -101,7 +108,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{row.dateCreated}</TableCell>
                 <TableCell>{row.dateModified}</TableCell>
                 <TableCell>
-                  <Button onClick={() => setModalOpen(true)}>Decline</Button>
+                  <Button onClick={() => handleDecline(row.id)}>Decline</Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -111,7 +118,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
       <Modal open={modalOpen}>
         <Box
           sx={{
-            bgcolor: "background.paper",
+            backgroundColor: "background.paper",
             padding: 2,
             borderRadius: 1,
             outline: "none",
@@ -124,7 +131,8 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
 
           <DeclineReagentRequest
             onDeclineSubmit={handleSubmit}
-            onCancel={() => setModalOpen(false)}
+            onClose={() => setModalOpen(false)}
+            id={Number(requestId)}
           />
         </Box>
       </Modal>

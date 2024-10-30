@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 
 type DeclineReagentRequestProps = {
   onDeclineSubmit: (severity: "error" | "success") => void;
-  onCancel: () => void;
+  onClose: () => void;
+  id: number;
 };
 
 type DeclineMessage = {
@@ -12,7 +13,8 @@ type DeclineMessage = {
 
 const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
   onDeclineSubmit,
-  onCancel,
+  onClose,
+  id,
 }) => {
   const {
     register,
@@ -24,9 +26,12 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
     },
   });
 
-  const onSubmit = (data: DeclineMessage) => {
+  const onSubmit = async (message: DeclineMessage) => {
+    //TODO: waiting for the backend to use id and message
+    console.log("am:", message);
+    console.log("am:", id);
     onDeclineSubmit("success");
-    console.log("am:", typeof data);
+    onClose();
   };
 
   return (
@@ -52,7 +57,7 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
         />
         <Box sx={{ display: "flex", gap: "5px", justifyContent: "end" }}>
           <Button type="submit">Submit</Button>
-          <Button onClick={onCancel}>Cancel</Button>
+          <Button onClick={onClose}>Cancel</Button>
         </Box>
       </Box>
     </form>
