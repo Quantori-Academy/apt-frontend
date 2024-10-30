@@ -18,15 +18,17 @@ const BasicModal: React.FC<BasicModalProps> = ({
       <Box
         sx={{
           backgroundColor: "white",
-          padding: 2,
+          padding: 4,
           borderRadius: 1,
           outline: "none",
           maxWidth: 400,
-          margin: "auto",
-          marginTop: "20%",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
         }}
       >
-        <Typography variant="h6">{title}</Typography>
+        <Typography variant="h5">{title}</Typography>
         {children}
       </Box>
     </Modal>

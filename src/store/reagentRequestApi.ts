@@ -33,6 +33,17 @@ export const reagentRequestApi = createApi({
       },
       providesTags: ["Requests"],
     }),
+    addReagentRequest: builder.query({
+      query: ({ newRequest }) => {
+        return {
+          url: `/reagents/requests`,
+          method: "POST",
+          body: {
+            newRequest,
+          },
+        };
+      },
+    }),
   }),
 });
 

@@ -36,3 +36,4 @@ export { DashboardCard } from "./DashboardCard";
 export { StatusFilter } from "./StatusFilter";
 export { BasicModal } from "./BasicModal";
 export { DeclineReagentRequest } from "./DeclineReagentRequest";
+export { AddReagentRequest } from "./AddReagentRequest";
