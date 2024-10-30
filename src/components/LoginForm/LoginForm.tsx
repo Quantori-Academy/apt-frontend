@@ -7,12 +7,15 @@ import {
   Typography,
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useTranslation } from "react-i18next";
 
 import { RevealableField } from "@/components";
 import { useAppSelector, useLoginForm } from "@/hooks";
 import { selectErrorMessage, selectLoading } from "@/store/slices";
 
 const LoginForm: React.FC = () => {
+  const { t } = useTranslation();
+
   const errorMessage = useAppSelector(selectErrorMessage);
   const isLoading = useAppSelector(selectLoading);
 
@@ -35,23 +38,23 @@ const LoginForm: React.FC = () => {
       <TextField
         sx={{ width: "100%" }}
         error={!!requiredErrors.username}
-        label="Username"
+        label={t("addUserForm.requiredFields.username.label")}
         type="text"
         variant="outlined"
         size="small"
         {...register("username", {
-          required: "Username is required!",
+          required: t("addUserForm.requiredFields.username.requiredMessage"),
         })}
-        helperText={
-          requiredErrors.username?.message ? "Username is required!" : ""
-        }
+        helperText={requiredErrors.username?.message}
       />
       <RevealableField
         name="password"
-        label="Password"
+        label={t("addUserForm.requiredFields.password.label")}
         register={register}
         error={requiredErrors.password}
-        options={{ required: "Password is required!" }}
+        options={{
+          required: t("addUserForm.requiredFields.password.requiredMessage"),
+        }}
       />
       {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
 
@@ -67,7 +70,7 @@ const LoginForm: React.FC = () => {
           sx={{ display: "flex", gap: "3px" }}
         >
           <Typography variant="body1" component="span">
-            Login
+            {t("buttons.login")}
           </Typography>{" "}
           <Login />
         </Button>
