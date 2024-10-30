@@ -1,7 +1,9 @@
-import { Box, Container, Pagination, Typography } from "@mui/material";
+import { Box, Button, Container, Pagination, Typography } from "@mui/material";
 import React, { useMemo, useState } from "react";
 
 import {
+  AddReagentRequest,
+  BasicModal,
   PageError,
   PageLoader,
   ReagentRequestTable,
@@ -24,6 +26,7 @@ const ReagentRequests: React.FC = () => {
   const [sortColumn, setSortColumn] = useState<RequestsSortColumns>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { data: reagentRequests = [], isLoading } =
     useGetReagentRequestsQuery();
@@ -62,11 +65,17 @@ const ReagentRequests: React.FC = () => {
       }}
     >
       <Typography variant="h3">Reagent Requests</Typography>
-      <StatusFilter
-        filter={statusFilter}
-        setFilter={setStatusFilter}
-        setPage={setPage}
-      />
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <StatusFilter
+          filter={statusFilter}
+          setFilter={setStatusFilter}
+          setPage={setPage}
+        />
+        <Button onClick={() => setModalOpen(true)}>
+          Create Reagent Request
+        </Button>
+      </Box>
+
       <ReagentRequestTable
         sortColumn={sortColumn}
         sortDirection={sortDirection}
@@ -80,6 +89,13 @@ const ReagentRequests: React.FC = () => {
           onChange={(_, page) => setPage(page)}
         />
       </Box>
+      <BasicModal
+        title="Create Reagent request"
+        closeModal={() => setModalOpen(false)}
+        isOpen={modalOpen}
+      >
+        <AddReagentRequest />
+      </BasicModal>
     </Container>
   );
 };

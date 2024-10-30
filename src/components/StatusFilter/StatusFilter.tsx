@@ -21,7 +21,7 @@ const StatusFilter: React.FC<StatusFilterProps> = ({
   setPage,
 }) => {
   return (
-    <FormControl size="medium" sx={{ width: "30%" }}>
+    <FormControl size="small" sx={{ width: "20%", padding: "5px" }}>
       <InputLabel sx={{ height: "auto" }} id="selectRole">
         Status
       </InputLabel>

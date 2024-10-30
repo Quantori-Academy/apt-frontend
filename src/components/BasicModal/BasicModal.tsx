@@ -26,7 +26,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
           marginTop: "20%",
         }}
       >
-        <Typography variant="h6">{title}</Typography>
+        <Typography variant="h5">{title}</Typography>
         {children}
       </Box>
     </Modal>
