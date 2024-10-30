@@ -21,7 +21,30 @@ export const reagentRequestApi = createApi({
 
       providesTags: ["Requests"],
     }),
+    declineReagentRequest: builder.query<void, { requestId: number; declineMessage: string }>({
+      query: ({ requestId, declineMessage }) => {
+        return {
+          url: `/reagents/requests/${requestId}`,
+          method: "PUT",
+          body: {
+            declineMessage,
+          },
+        };
+      },
+      providesTags: ["Requests"],
+    }),
+    addReagentRequest: builder.query({
+      query: ({ newRequest }) => {
+        return {
+          url: `/reagents/requests`,
+          method: "POST",
+          body: {
+            newRequest,
+          },
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetReagentRequestsQuery } = reagentRequestApi;
+export const { useGetReagentRequestsQuery, useDeclineReagentRequestQuery } = reagentRequestApi;

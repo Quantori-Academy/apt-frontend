@@ -11,8 +11,7 @@ import {
 } from "@mui/material";
 import { ChangeEvent, useMemo, useState } from "react";
 
-import { Order, SortType } from "@/types";
-import { StatusFilter } from "@/types";
+import { Order, SortType, StatusFilter } from "@/types";
 import { getOrdersRows } from "@/utils";
 
 import { orders } from "../../../mock";
