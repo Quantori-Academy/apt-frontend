@@ -12,6 +12,7 @@ import {
   TableSortLabel,
 } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -39,6 +40,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   sortDirection,
   visibleItems,
 }) => {
+  const { t } = useTranslation();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
   const [deleteSubstance, { isLoading: isDeleting }] =
@@ -83,7 +85,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                   direction={sortDirection}
                   onClick={() => onSortChange("name")}
                 >
-                  Name
+                  {t("substances.list.name")}
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -92,14 +94,24 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                   direction={sortDirection}
                   onClick={() => onSortChange("category")}
                 >
-                  Category
+                  {t("substances.list.category")}
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">Structure</TableCell>
-              <TableCell align="right">Description</TableCell>
-              <TableCell align="right">Quantity Left</TableCell>
-              <TableCell align="right">Storage Location</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell align="right">
+                {t("substances.list.structure")}
+              </TableCell>
+              <TableCell align="right">
+                {t("substances.list.description")}
+              </TableCell>
+              <TableCell align="right">
+                {t("substances.list.quantityLeft")}
+              </TableCell>
+              <TableCell align="right">
+                {t("substances.list.storageLocation")}
+              </TableCell>
+              <TableCell align="right">
+                {t("substances.list.actions")}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

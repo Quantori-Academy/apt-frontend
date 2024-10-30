@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { MouseEventHandler, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { PageLoader } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
@@ -24,6 +25,7 @@ type AccountDetailsProps = {
 };
 
 const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
+  const { t } = useTranslation();
   const [isEditMode, setIsEditMode] = useState(false);
 
   const { data: userDetails, isLoading: isLoadingUserDetails } =
@@ -66,14 +68,14 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="subtitle1" fontWeight="bold">
-              Username:
+              {t("userDetails.username")}:
             </Typography>
             <Typography>{userDetails?.username}</Typography>{" "}
           </Grid>
 
           <Grid item xs={6}>
             <Typography variant="subtitle1" fontWeight="bold">
-              First Name:
+              {t("userDetails.firstName")}:
             </Typography>
             {isEditMode ? (
               <TextField
@@ -92,7 +94,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
 
           <Grid item xs={6}>
             <Typography variant="subtitle1" fontWeight="bold">
-              Last Name:
+              {t("userDetails.lastName")}:
             </Typography>
             {isEditMode ? (
               <TextField
@@ -111,7 +113,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
 
           <Grid item xs={12}>
             <Typography variant="subtitle1" fontWeight="bold">
-              Email:
+              {t("userDetails.email")}:
             </Typography>
             {isEditMode ? (
               <TextField
