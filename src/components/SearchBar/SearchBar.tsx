@@ -3,7 +3,7 @@ import { IconButton, InputAdornment, TextField } from "@mui/material";
 
 type SearchBarProps = {
   searchQuery: string;
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  setSearchQuery: (value: string) => void;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({
