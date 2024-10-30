@@ -1,4 +1,5 @@
 import { skipToken } from "@reduxjs/toolkit/query";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import { PageError, PageLoader, SubstanceDetails } from "@/components";
@@ -7,6 +8,8 @@ import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { useGetReagentDetailsQuery } from "@/store";
 
 const ReagentPage: React.FC = () => {
+  const { t } = useTranslation();
+
   const { id: reagentId } = useParams<{ id: string }>();
 
   const {
@@ -20,7 +23,7 @@ const ReagentPage: React.FC = () => {
   }
 
   if (!reagentDetails || !reagentId || isError) {
-    return <PageError text={"Failed to load reagent details."} />;
+    return <PageError text={t("substanceDetails.errors.reagentLoadError")} />;
   }
 
   return (

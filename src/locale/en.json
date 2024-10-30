@@ -9,7 +9,7 @@
       "edit": "Edit",
       "save": "Save",
       "cancel": "Cancel",
-      "agree": "Delete",
+      "delete": "Delete",
       "login": "Login",
       "logout": "Logout"
     },
@@ -266,6 +266,57 @@
       }
     },
 
-    "substanceDetails": {}
+    "substanceDetails": {
+      "title": {
+        "reagent": "Reagent Details",
+        "sample": "Sample Details",
+        "editReagent": "Edit Reagent",
+        "editSample": "Edit Sample"
+      },
+
+      "buttons": {
+        "editDetails": "Edit Details",
+        "saveChanges": "Save Changes"
+      },
+
+      "fields": {
+        "substanceId": "Reagent ID",
+        "name": "Name",
+        "category": "Category",
+        "CASNumber": "CAS Number",
+        "producer": "producer",
+        "locationId": "Storage location",
+        "unit": "Units",
+        "pricePerUnit": "Price per unit",
+        "totalQuantityLeft": "Quantity left",
+        "catalogID": "Catalog ID",
+        "description": "Description",
+        "structure": "Structure",
+        "addedSubstances": "Substances",
+        "room": "Room",
+        "location": "Location"
+      },
+
+      "currentLocation": " (current)",
+
+      "quantityWarning": "Will be deleted, if quantity is 0",
+
+      "errors": {
+        "reagentLoadError": "Failed to load reagent details.",
+        "sampleLoadError": "Failed to load reagent details."
+      },
+
+      "snackBarMessages": {
+        "reagent": {
+          "successDelete": "Reagent deleted successfully",
+          "successUpdate": "Reagent updated successfully"
+        },
+        "sample": {
+          "successDelete": "Sample deleted successfully",
+          "successUpdate": "Sample updated successfully"
+        },
+        "unexpectedError": "An unexpected error occurred"
+      }
+    }
   }
 }

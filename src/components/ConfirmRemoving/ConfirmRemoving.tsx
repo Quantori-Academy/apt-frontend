@@ -56,7 +56,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
           }}
           autoFocus
         >
-          {t("buttons.agree")}
+          {t("buttons.delete")}
         </Button>
       </DialogActions>
     </Dialog>

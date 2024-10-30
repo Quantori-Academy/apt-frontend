@@ -1,5 +1,6 @@
 import LinkIcon from "@mui/icons-material/Link";
 import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
 import { userRoles } from "@/constants";
@@ -41,13 +42,15 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   setIsEditing,
   reagentLocationDetails,
 }) => {
+  const { t } = useTranslation();
+
   const role = useAppSelector(selectUserRole);
 
   return (
     <Card sx={{ background: "#0080800f" }}>
       <CardContent>
         <Typography variant="h4" gutterBottom>
-          Reagent Details
+          {t("substanceDetails.title.reagent")}
         </Typography>
 
         <Grid container spacing={2}>
@@ -56,13 +59,17 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
               key !== "locationId" ? (
                 <DetailItem
                   key={label}
-                  label={label}
-                  value={reagentDetails[key]}
+                  label={t(`substanceDetails.fields.${key}`)}
+                  value={
+                    key === "category"
+                      ? t(`substances.filters.options.${reagentDetails[key]}`)
+                      : reagentDetails[key]
+                  }
                 />
               ) : (
                 <DetailItem
                   key={label}
-                  label={label}
+                  label={t(`substanceDetails.fields.${key}`)}
                   value={`${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`}
                 />
               )
@@ -74,7 +81,8 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
               underline="hover"
               sx={{ display: "flex", alignItems: "center" }}
             >
-              <LinkIcon sx={{ mr: 1 }} /> Catalog Link
+              <LinkIcon sx={{ mr: 1 }} />{" "}
+              {t("addSubstanceForm.requiredFields.catalogLink.label")}
             </Link>
           </Grid>
 

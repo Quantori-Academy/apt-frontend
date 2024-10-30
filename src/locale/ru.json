@@ -9,7 +9,7 @@
       "edit": "Редактировать",
       "save": "Сохранить",
       "cancel": "Отменить",
-      "agree": "Удалить",
+      "delete": "Удалить",
       "login": "Войти",
       "logout": "Выйти"
     },
@@ -263,6 +263,59 @@
         "catalogLink": {
           "label": "Ссылка на каталог"
         }
+      }
+    },
+
+    "substanceDetails": {
+      "title": {
+        "reagent": "Детали реактива",
+        "sample": "Детали образца",
+        "editReagent": "Редактировать реактив",
+        "editSample": "Редактировать образец"
+      },
+
+      "buttons": {
+        "editDetails": "Редактировать детали",
+        "saveChanges": "Сохранить изменения"
+      },
+
+      "fields": {
+        "substanceId": "ID реактива",
+        "name": "Название",
+        "category": "Категория",
+        "CASNumber": "Номер CAS",
+        "producer": "Производитель",
+        "locationId": "Место хранения",
+        "units": "Единицы",
+        "pricePerUnit": "Цена за единицу",
+        "totalQuantityLeft": "Остаток",
+        "catalogID": "ID каталога",
+        "description": "Описание",
+        "structure": "Структура",
+        "addedSubstances": "Вещества",
+        "room": "Комната",
+        "location": "Локация"
+      },
+
+      "currentLocation": " (текущая)",
+
+      "quantityWarning": "Будет удалено, если количество равно 0",
+
+      "errors": {
+        "reagentLoadError": "Не удалось загрузить детали реактива.",
+        "sampleLoadError": "Не удалось загрузить детали образца."
+      },
+
+      "snackBarMessages": {
+        "reagent": {
+          "successDelete": "Реактив успешно удалён",
+          "successUpdate": "Реактив успешно обновлён"
+        },
+        "sample": {
+          "successDelete": "Образец успешно удалён",
+          "successUpdate": "Образец успешно обновлён"
+        },
+        "unexpectedError": "Произошла непредвиденная ошибка"
       }
     }
   }
