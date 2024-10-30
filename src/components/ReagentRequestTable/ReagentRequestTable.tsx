@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Modal,
   Paper,
   Table,
   TableBody,
@@ -9,10 +10,12 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
 
-import { BasicModal } from "@/components";
+import { DeclineReagentRequest } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
 import { ReagentRequests, RequestsSortColumns, SortDirection } from "@/types";
 
 type ReagentRequestTableProps = {
@@ -30,7 +33,13 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handleOpen = () => setModalOpen(true);
+  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+  const handleSubmit = (severity: "error" | "success") => {
+    openSnackbar(
+      severity,
+      severity === "success" ? "Request Declined" : "Faild to decline request"
+    );
+  };
 
   return (
     <>
@@ -92,20 +101,34 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{row.dateCreated}</TableCell>
                 <TableCell>{row.dateModified}</TableCell>
                 <TableCell>
-                  <Button onClick={handleOpen}>Decline</Button>
+                  <Button onClick={() => setModalOpen(true)}>Decline</Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <BasicModal
-        title="Decline Reagent Request"
-        closeModal={() => setModalOpen(false)}
-        isOpen={modalOpen}
-      >
-        <Box>Hello</Box>
-      </BasicModal>
+      <Modal open={modalOpen}>
+        <Box
+          sx={{
+            bgcolor: "background.paper",
+            padding: 2,
+            borderRadius: 1,
+            outline: "none",
+            maxWidth: 400,
+            margin: "auto",
+            marginTop: "20%",
+          }}
+        >
+          <Typography variant="h6">Decline Message</Typography>
+
+          <DeclineReagentRequest
+            onDeclineSubmit={handleSubmit}
+            onCancel={() => setModalOpen(false)}
+          />
+        </Box>
+      </Modal>
+      {SnackbarComponent()}
     </>
   );
 };
