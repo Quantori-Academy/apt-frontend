@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
@@ -26,6 +27,8 @@ import {
 } from "@/store";
 
 const StorageLocationDetails: React.FC = () => {
+  const { t } = useTranslation();
+
   const [selectedSubstanceId, setSelectedSubstanceId] = useState("");
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
@@ -47,16 +50,13 @@ const StorageLocationDetails: React.FC = () => {
       const { error } = await deleteStorageLocation(Number(locationId));
 
       if (!error) {
-        openSnackbar("success", "Storage location deleted successfully.");
+        openSnackbar("success", t("storage.snackBarMessages.successDelete"));
         navigate(RouteProtectedPath.storageLocation);
       } else {
-        openSnackbar("error", "Failed to delete storage location");
+        openSnackbar("error", t("storage.snackBarMessages.errorDelete"));
       }
     } else {
-      openSnackbar(
-        "error",
-        "You can't delete this storage location because it contains substances."
-      );
+      openSnackbar("error", t("storage.snackBarMessages.notEmptyError"));
     }
   };
 
@@ -65,8 +65,10 @@ const StorageLocationDetails: React.FC = () => {
   };
 
   if (isLoading || isDeleting) return <PageLoader />;
-  if (!locationDetails) return <PageError text="there is no location here" />;
-  if (isError) return <PageError text="Failed to get location" />;
+  if (!locationDetails)
+    return <PageError text={t("storage.errors.noLocation")} />;
+  if (isError)
+    return <PageError text={t("storage.errors.locationLoadError")} />;
 
   return (
     <Box padding={4}>
@@ -110,7 +112,7 @@ const StorageLocationDetails: React.FC = () => {
             }}
           >
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-              Stored Substances
+              {t("storage.fields.storedSubstances")}
             </Typography>
             <Divider sx={{ marginBottom: 2 }} />
             <StoredSubstances

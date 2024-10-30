@@ -317,6 +317,70 @@
         },
         "unexpectedError": "An unexpected error occurred"
       }
+    },
+
+    "storage": {
+      "title": {
+        "storage": "Storage Locations",
+        "location": "Location Details"
+      },
+
+      "buttons": {
+        "createLocation": "Create New Storage Location",
+        "editRoom": "Edit Room",
+        "updatingRooms": "Updating...",
+        "creatingLocation": "Creating...",
+        "create": "Create",
+        "changeLocation": "Change Location"
+      },
+
+      "errors": {
+        "storageLoadError": "Failed to get storages",
+        "emptyStorageError": "There isn't any storages",
+        "locationLoadError": "Failed to get location",
+        "noLocation": "There is no location here"
+      },
+
+      "fields": {
+        "room": "Room",
+        "roomId": "Room ID",
+        "selectRoom": "Select a room",
+        "location": "Location",
+        "locationName": "Location Name",
+        "locationId": "Location ID",
+        "locations": "Locations:",
+        "totalSubstances": "Total Substances:",
+        "storedSubstances": "Stored Substances",
+        "description": "Description",
+        "structure": "Structure",
+        "emptyRoom": "No substances stored in this room"
+      },
+
+      "requiredFields": {
+        "roomName": {
+          "label": "Room Name",
+          "requiredMessage": "Room name is required"
+        },
+        "description": {
+          "label": "Description",
+          "requiredMessage": "Description is required"
+        }
+      },
+
+      "modalMessages": {
+        "confirmLocationChange": "Change location of this substance?"
+      },
+
+      "snackBarMessages": {
+        "successEdit": "Room edited successfully!",
+        "errorEdit": "Failed to edit room!",
+        "successDelete": "Storage location deleted successfully",
+        "errorDelete": "Failed to delete storage location",
+        "successMove": "Substance moved successfully",
+        "errorMove": "Failed to move substances",
+        "notEmptyError": "You can't delete this storage location because it contains substances",
+        "creationError": "Failed to create storage location!"
+      }
     }
   }
 }

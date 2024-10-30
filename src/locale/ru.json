@@ -317,6 +317,70 @@
         },
         "unexpectedError": "Произошла непредвиденная ошибка"
       }
+    },
+
+    "storage": {
+      "title": {
+        "storage": "Места хранения",
+        "location": "Детали локации"
+      },
+
+      "buttons": {
+        "createLocation": "Создать новое место хранения",
+        "editRoom": "Редактировать комнату",
+        "updatingRooms": "Обновление...",
+        "creatingLocation": "Создание...",
+        "create": "Создать",
+        "changeLocation": "Изменить локацию"
+      },
+
+      "errors": {
+        "storageLoadError": "Не удалось получить места хранения",
+        "emptyStorageError": "Нет доступных мест хранения",
+        "locationLoadError": "Не удалось получить локацию",
+        "noLocation": "Здесь нет локации"
+      },
+
+      "fields": {
+        "room": "Комната",
+        "roomId": "ID комнаты",
+        "selectRoom": "Выберите комнату",
+        "location": "Локация",
+        "locationName": "Название локации",
+        "locationId": "ID локации",
+        "locations": "Локации:",
+        "totalSubstances": "Всего веществ:",
+        "storedSubstances": "Вещества в хранилище",
+        "description": "Описание",
+        "structure": "Структура",
+        "emptyRoom": "В этой комнате нет сохранённых веществ"
+      },
+
+      "requiredFields": {
+        "roomName": {
+          "label": "Название комнаты",
+          "requiredMessage": "Название комнаты обязательно"
+        },
+        "description": {
+          "label": "Описание",
+          "requiredMessage": "Описание обязательно"
+        }
+      },
+
+      "modalMessages": {
+        "confirmLocationChange": "Изменить локацию этого вещества?"
+      },
+
+      "snackBarMessages": {
+        "successEdit": "Комната успешно отредактирована!",
+        "errorEdit": "Не удалось отредактировать комнату!",
+        "successDelete": "Место хранения успешно удалено",
+        "errorDelete": "Не удалось удалить место хранения",
+        "successMove": "Вещество успешно перемещено",
+        "errorMove": "Не удалось переместить вещества",
+        "notEmptyError": "Вы не можете удалить это место хранения, так как оно содержит вещества",
+        "creationError": "Не удалось создать место хранения!"
+      }
     }
   }
 }

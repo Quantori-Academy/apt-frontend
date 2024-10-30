@@ -9,6 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import React, { ChangeEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { PageLoader } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
@@ -28,6 +29,8 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
   locationDetails,
   selectedSubstanceId,
 }) => {
+  const { t } = useTranslation();
+
   const [selectedRoom, setSelectedRoom] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
 
@@ -59,9 +62,9 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
     });
 
     if (error) {
-      openSnackbar("error", "Failed to move substances!");
+      openSnackbar("error", t("storage.snackBarMessages.errorMove"));
     } else {
-      openSnackbar("success", "Substance moved successfully!");
+      openSnackbar("success", t("storage.snackBarMessages.successMove"));
       onClose();
     }
   };
@@ -76,12 +79,12 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" sx={{ marginBottom: "10px" }}>
-          Change location of this substance?
+          {t("storage.modalMessages.confirmLocationChange")}
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px !important" }}>
           <DialogContentText id="alert-dialog-description">
             <TextField
-              label="Rooms"
+              label={t("storage.fields.room")}
               fullWidth
               select
               value={selectedRoom}
@@ -96,7 +99,7 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
             {selectedRoom && (
               <TextField
                 sx={{ marginTop: "25px" }}
-                label="Location"
+                label={t("storage.fields.location")}
                 fullWidth
                 select
                 value={selectedLocation}
@@ -120,13 +123,13 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => onClose()}>Cancel</Button>
+          <Button onClick={() => onClose()}>{t("buttons.cancel")}</Button>
           <Button
             disabled={!selectedLocation}
             onClick={handleConfirm}
             autoFocus
           >
-            Confirm
+            {t("buttons.save")}
           </Button>
         </DialogActions>
       </Dialog>

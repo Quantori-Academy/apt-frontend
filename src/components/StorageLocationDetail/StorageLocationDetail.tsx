@@ -1,5 +1,6 @@
 import { Card, CardContent, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { LocationDetails } from "@/types";
 
@@ -9,6 +10,8 @@ type StorageLocationDetailProps = {
 const StorageLocationDetail: React.FC<StorageLocationDetailProps> = ({
   locationDetails,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Grid item xs={12}>
       <Card
@@ -22,20 +25,24 @@ const StorageLocationDetail: React.FC<StorageLocationDetailProps> = ({
       >
         <CardContent>
           <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-            Location Details
+            {t("storage.title.location")}
           </Typography>
           <Divider sx={{ marginBottom: 2 }} />
           <Typography variant="body1" paragraph>
-            <strong>Room Name:</strong> {locationDetails.roomName}
+            <strong>{t("storage.requiredFields.roomName.label")}:</strong>{" "}
+            {locationDetails.roomName}
           </Typography>
           <Typography variant="body1" paragraph>
-            <strong>Room ID:</strong> {locationDetails.roomId}
+            <strong>{t("storage.fields.roomId")}:</strong>{" "}
+            {locationDetails.roomId}
           </Typography>
           <Typography variant="body1" paragraph>
-            <strong>Location Name:</strong> {locationDetails.locationName}
+            <strong>{t("storage.fields.locationName")}:</strong>{" "}
+            {locationDetails.locationName}
           </Typography>
           <Typography variant="body1" paragraph>
-            <strong>Location ID:</strong> {locationDetails.locationId}
+            <strong>{t("storage.fields.locationId")}:</strong>{" "}
+            {locationDetails.locationId}
           </Typography>
         </CardContent>
       </Card>

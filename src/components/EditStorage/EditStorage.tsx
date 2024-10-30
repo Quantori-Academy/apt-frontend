@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogContent,
@@ -7,6 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { useAlertSnackbar } from "@/hooks";
 import { useUpdateStorageRoomMutation } from "@/store";
@@ -23,6 +25,8 @@ type editRoomSelect = {
 };
 
 const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, id }) => {
+  const { t } = useTranslation();
+
   const [updateStorageRoom, { isLoading: isUpdating }] =
     useUpdateStorageRoomMutation();
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
@@ -47,9 +51,9 @@ const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, id }) => {
     });
 
     if (error) {
-      openSnackbar("error", "Failed to edit room!");
+      openSnackbar("error", t("storage.snackBarMessages.error"));
     } else {
-      openSnackbar("success", "Room edited successfully!");
+      openSnackbar("success", t("storage.snackBarMessages.success"));
       onClose();
     }
   };
@@ -61,31 +65,37 @@ const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, id }) => {
         <DialogContent sx={{ display: "flex", flexDirection: "column" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextField
-              label="Room Name"
+              label={t("storage.requiredFields.roomName.label")}
               fullWidth
               margin="normal"
               {...register("roomName", {
-                required: "room name is required",
+                required: t("storage.requiredFields.roomName.requiredMessage"),
               })}
               error={!!errors.roomName}
               helperText={errors.roomName?.message}
             />
             <TextField
-              label="Description"
+              label={t("storage.requiredFields.description.label")}
               fullWidth
               margin="normal"
               {...register("roomDescription", {
-                required: "Description is required",
+                required: t(
+                  "storage.requiredFields.description.requiredMessage"
+                ),
               })}
               error={!!errors.roomDescription}
               helperText={errors.roomDescription?.message}
             />
-            <Button onClick={onClose} color="primary">
-              Cancel
-            </Button>
-            <Button type="submit" color="primary" disabled={isUpdating}>
-              {isUpdating ? "Updating..." : "Update"}
-            </Button>
+            <Box sx={{ display: "flex ", gap: "5px" }}>
+              <Button onClick={onClose} color="primary">
+                {t("buttons.cancel")}
+              </Button>
+              <Button type="submit" color="primary" disabled={isUpdating}>
+                {isUpdating
+                  ? t("storage.buttons.updatingRooms")
+                  : t("buttons.save")}
+              </Button>
+            </Box>
           </form>
         </DialogContent>
       </Dialog>
