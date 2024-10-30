@@ -156,16 +156,110 @@
       }
     },
 
-    "substances": "Reagents And Samples",
-    "substances.add.reagent": "Add Reagent",
-    "substances.add.sample": "Add Sample",
+    "substances": {
+      "title": "Substances",
 
-    "substances.list.name": "Name",
-    "substances.list.category": "Category",
-    "substances.list.structure": "Structure",
-    "substances.list.description": "Description",
-    "substances.list.quantityLeft": "Quantity left",
-    "substances.list.storageLocation": "Storage location",
-    "substances.list.actions": "Actions"
+      "buttons": {
+        "addReagent": "Add reagent",
+        "addSample": "Add sample",
+        "addLoading": "Adding..."
+      },
+
+      "errors": {
+        "loadError": "Faild to load Reagents and Sample page, Please try later"
+      },
+
+      "filters": {
+        "all": "All",
+        "expired": "Expired",
+        "label": "Category",
+        "options": {
+          "All": "All",
+          "Reagent": "Reagent",
+          "Sample": "Sample"
+        }
+      },
+
+      "table": {
+        "name": "Name",
+        "category": "Category",
+        "structure": "Structure",
+        "description": "Description",
+        "quantityLeft": "Quantity left",
+        "storageLocation": "Storage location",
+        "actions": "Actions"
+      },
+
+      "snackBarMessages": {
+        "delete": {
+          "success": "Substance deleted successfully",
+          "error": "Failed to delete substance"
+        }
+      }
+    },
+
+    "addSubstanceForm": {
+      "title": {
+        "reagent": "Add New Reagent",
+        "sample": "Add New Sample"
+      },
+
+      "buttons": {
+        "createUser": "Create User"
+      },
+
+      "snackBarMessages": {
+        "reagent": {
+          "success": "Reagent added successfully",
+          "error": "Failed to add reagent"
+        },
+        "sample": {
+          "success": "Sample added successfully",
+          "error": "Failed to add sample"
+        }
+      },
+
+      "requiredFields": {
+        "name": {
+          "label": "Name",
+          "requiredMessage": "Name is required"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "structure": {
+          "label": "Structure"
+        },
+        "price": {
+          "label": "Price per Unit",
+          "minPriceMessage": "Price must be positive"
+        },
+        "quantityUnit": {
+          "label": "Quantity Unit"
+        },
+        "quantity": {
+          "label": "Quantity Left",
+          "minQuantityMessage": "Quantity must be positive"
+        },
+        "expirationDate": {
+          "label": "Expiration Date"
+        },
+        "location": {
+          "label": "Location"
+        },
+        "CASNumber": {
+          "label": "CAS Number"
+        },
+        "producer": {
+          "label": "Producer"
+        },
+        "catalogId": {
+          "label": "Catalog ID"
+        },
+        "catalogLink": {
+          "label": "Catalog Link"
+        }
+      }
+    }
   }
 }

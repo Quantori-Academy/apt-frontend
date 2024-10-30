@@ -14,8 +14,6 @@
       "logout": "Выйти"
     },
 
-    "login": {},
-
     "users": {
       "title": "Пользователи",
 
@@ -158,16 +156,110 @@
       }
     },
 
-    "substances": "Реагенты и образцы",
-    "substances.add.reagent": "Добавить реагент",
-    "substances.add.sample": "Добавить образец",
+    "substances": {
+      "title": "Вещества",
 
-    "substances.list.name": "Название",
-    "substances.list.category": "Категория",
-    "substances.list.structure": "Состав",
-    "substances.list.description": "Описание",
-    "substances.list.quantityLeft": "Остаток",
-    "substances.list.storageLocation": "Место хранения",
-    "substances.list.actions": "Действия"
+      "buttons": {
+        "addReagent": "Добавить реактив",
+        "addSample": "Добавить образец",
+        "addLoading": "Добавление..."
+      },
+
+      "errors": {
+        "loadError": "Не удалось загрузить страницу с реактивами и образцами. Пожалуйста, попробуйте позже"
+      },
+
+      "filters": {
+        "all": "Все",
+        "expired": "Просроченные",
+        "label": "Категория",
+        "options": {
+          "All": "Все",
+          "Reagent": "Реактив",
+          "Sample": "Образец"
+        }
+      },
+
+      "table": {
+        "name": "Название",
+        "category": "Категория",
+        "structure": "Структура",
+        "description": "Описание",
+        "quantityLeft": "Остаток",
+        "storageLocation": "Место хранения",
+        "actions": "Действия"
+      },
+
+      "snackBarMessages": {
+        "delete": {
+          "success": "Вещество успешно удалено",
+          "error": "Не удалось удалить вещество"
+        }
+      }
+    },
+
+    "addSubstanceForm": {
+      "title": {
+        "reagent": "Добавить новый реактив",
+        "sample": "Добавить новый образец"
+      },
+
+      "buttons": {
+        "createUser": "Создать пользователя"
+      },
+
+      "snackBarMessages": {
+        "reagent": {
+          "success": "Реактив успешно добавлен",
+          "error": "Не удалось добавить реактив"
+        },
+        "sample": {
+          "success": "Образец успешно добавлен",
+          "error": "Не удалось добавить образец"
+        }
+      },
+
+      "requiredFields": {
+        "name": {
+          "label": "Название",
+          "requiredMessage": "Название обязательно"
+        },
+        "description": {
+          "label": "Описание"
+        },
+        "structure": {
+          "label": "Структура"
+        },
+        "price": {
+          "label": "Цена за единицу",
+          "minPriceMessage": "Цена должна быть положительной"
+        },
+        "quantityUnit": {
+          "label": "Единица измерения количества"
+        },
+        "quantity": {
+          "label": "Остаток",
+          "minQuantityMessage": "Количество должно быть положительным"
+        },
+        "expirationDate": {
+          "label": "Дата истечения срока"
+        },
+        "location": {
+          "label": "Местоположение"
+        },
+        "CASNumber": {
+          "label": "Номер CAS"
+        },
+        "producer": {
+          "label": "Производитель"
+        },
+        "catalogId": {
+          "label": "ID каталога"
+        },
+        "catalogLink": {
+          "label": "Ссылка на каталог"
+        }
+      }
+    }
   }
 }
