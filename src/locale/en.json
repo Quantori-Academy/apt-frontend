@@ -5,6 +5,17 @@
       "accountSettings": "Account Settings"
     },
 
+    "breadcrumbs": {
+      "Dashboard": "Dashboard",
+      "Users": "Users",
+      "User Details": "User Details",
+      "Storage Locations": "Storage Locations",
+      "Storage Detail": "Storage Detail",
+      "Substances": "Substances",
+      "Reagent Detail": "Reagent Detail",
+      "Sample Detail": "Sample Detail"
+    },
+
     "buttons": {
       "edit": "Edit",
       "save": "Save",
@@ -322,6 +333,7 @@
     "storage": {
       "title": {
         "storage": "Storage Locations",
+        "dashboardStorage": "Storage",
         "location": "Location Details"
       },
 

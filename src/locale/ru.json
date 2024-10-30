@@ -5,6 +5,17 @@
       "accountSettings": "Настройки аккаунта"
     },
 
+    "breadcrumbs": {
+      "Dashboard": "Панель управления",
+      "Users": "Пользователи",
+      "User Details": "Детали пользователя",
+      "Storage Locations": "Места хранения",
+      "Storage Detail": "Детали хранения",
+      "Substances": "Вещества",
+      "Reagent Detail": "Детали реактива",
+      "Sample Detail": "Детали образца"
+    },
+
     "buttons": {
       "edit": "Редактировать",
       "save": "Сохранить",
@@ -322,6 +333,7 @@
     "storage": {
       "title": {
         "storage": "Места хранения",
+        "dashboardStorage": "Хранилище",
         "location": "Детали локации"
       },
 
