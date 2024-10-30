@@ -1,4 +1,5 @@
 import {
+  Button,
   Paper,
   Table,
   TableBody,
@@ -8,8 +9,16 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
+import { useState } from "react";
 
-import { ReagentRequests, RequestsSortColumns, SortDirection } from "@/types";
+import { DeclineReagentRequest } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
+import {
+  ReagentRequests,
+  RequestedReagent,
+  RequestsSortColumns,
+  SortDirection,
+} from "@/types";
 
 type ReagentRequestTableProps = {
   sortColumn: RequestsSortColumns;
@@ -24,6 +33,23 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   onSortChange,
   visibleItems,
 }) => {
+  const [requestId, setRequestId] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+
+  const handleSubmit = (severity: "error" | "success") => {
+    openSnackbar(
+      severity,
+      severity === "success" ? "Request Declined" : "Failed to decline request"
+    );
+  };
+
+  const handleDecline = (id: number) => {
+    setModalOpen(true);
+    setRequestId(String(id));
+  };
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -63,10 +89,11 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right">Date Modified</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {visibleItems?.map((row) => (
+            {visibleItems?.map((row: RequestedReagent) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -82,11 +109,23 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{row.procurementComments}</TableCell>
                 <TableCell>{row.dateCreated}</TableCell>
                 <TableCell>{row.dateModified}</TableCell>
+                <TableCell>
+                  <Button onClick={() => handleDecline(row.id)}>Decline</Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      <DeclineReagentRequest
+        onDeclineSubmit={handleSubmit}
+        id={Number(requestId)}
+        onClose={() => setModalOpen(false)}
+        modalOpen={modalOpen}
+      />
+
+      {SnackbarComponent()}
     </>
   );
 };
