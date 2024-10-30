@@ -2,10 +2,7 @@
   "translation": {
     "header": {
       "dashboard": "Dashboard",
-      "substances": "Substances",
-      "storage": "Storage",
-      "button.logout": "Logout",
-      "button.login": "Login"
+      "accountSettings": "Account Settings"
     },
 
     "buttons": {
@@ -13,7 +10,8 @@
       "save": "Save",
       "cancel": "Cancel",
       "agree": "Agree",
-      "login": "Login"
+      "login": "Login",
+      "logout": "Logout"
     },
 
     "users": {

@@ -2,10 +2,7 @@
   "translation": {
     "header": {
       "dashboard": "Панель управления",
-      "substances": "Список веществ",
-      "storage": "Хранилище",
-      "button.logout": "Выйти",
-      "button.login": "Войти"
+      "accountSettings": "Настройки аккаунта"
     },
 
     "buttons": {
@@ -13,7 +10,8 @@
       "save": "Сохранить",
       "cancel": "Отменить",
       "agree": "Согласен",
-      "login": "Войти"
+      "login": "Войти",
+      "logout": "Выйти"
     },
 
     "login": {},
