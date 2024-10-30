@@ -3,7 +3,6 @@ import React, { useMemo, useState } from "react";
 
 import {
   AddReagentRequest,
-  BasicModal,
   PageError,
   PageLoader,
   ReagentRequestTable,
@@ -89,13 +88,10 @@ const ReagentRequests: React.FC = () => {
           onChange={(_, page) => setPage(page)}
         />
       </Box>
-      <BasicModal
-        title="Create Reagent request"
-        closeModal={() => setModalOpen(false)}
-        isOpen={modalOpen}
-      >
-        <AddReagentRequest />
-      </BasicModal>
+      <AddReagentRequest
+        modalOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </Container>
   );
 };
