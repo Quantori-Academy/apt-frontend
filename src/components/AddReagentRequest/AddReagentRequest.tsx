@@ -10,6 +10,7 @@ type ReagentRequestInput = {
   CAS: string;
   desiredQuantity: number;
   userComment: string;
+  unit: string;
 };
 
 type AddReagentRequestProps = {
@@ -24,6 +25,7 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ReagentRequestInput>({
     defaultValues: {
@@ -31,11 +33,13 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
       CAS: "",
       desiredQuantity: 0,
       userComment: "",
+      unit: "",
     },
   });
 
   const onSubmit = async (newReagentRequest: ReagentRequestInput) => {
     console.log("am:", newReagentRequest);
+    reset();
     onClose();
   };
 
@@ -65,12 +69,20 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
             error={!!errors.desiredQuantity}
           />
           <TextField
+            label="Unit"
+            {...register("unit", {
+              required: "unit is required",
+            })}
+            helperText={errors.desiredQuantity?.message}
+            error={!!errors.desiredQuantity}
+          />
+          <TextField
             multiline
             rows={4}
             label="Comment"
             {...register("userComment")}
           />
-          <Box>
+          <Box sx={{ display: "flex", gap: "5px", justifyContent: "end" }}>
             <Button type="submit">Submit</Button>
             <Button onClick={onClose}>Cancel</Button>
           </Box>
