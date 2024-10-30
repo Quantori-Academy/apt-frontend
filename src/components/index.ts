@@ -33,4 +33,5 @@ export { CategoryFilter } from "./CategoryFilter";
 export { ReagentRequestTable } from "./ReagentRequestTable";
 export { DashboardCard } from "./DashboardCard";
 export { StatusFilter } from "./StatusFilter";
+export { BasicModal } from "./BasicModal";
 export { DeclineReagentRequest } from "./DeclineReagentRequest";

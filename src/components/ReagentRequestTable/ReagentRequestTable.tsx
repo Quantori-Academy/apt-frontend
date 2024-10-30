@@ -1,7 +1,5 @@
 import {
-  Box,
   Button,
-  Modal,
   Paper,
   Table,
   TableBody,
@@ -10,13 +8,17 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
-  Typography,
 } from "@mui/material";
 import { useState } from "react";
 
-import { DeclineReagentRequest } from "@/components";
+import { BasicModal, DeclineReagentRequest } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
-import { ReagentRequests, RequestsSortColumns, SortDirection } from "@/types";
+import {
+  ReagentRequests,
+  RequestedReagent,
+  RequestsSortColumns,
+  SortDirection,
+} from "@/types";
 
 type ReagentRequestTableProps = {
   sortColumn: RequestsSortColumns;
@@ -39,7 +41,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   const handleSubmit = (severity: "error" | "success") => {
     openSnackbar(
       severity,
-      severity === "success" ? "Request Declined" : "Faild to decline request"
+      severity === "success" ? "Request Declined" : "Failed to decline request"
     );
   };
 
@@ -91,7 +93,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {visibleItems?.map((row) => (
+            {visibleItems?.map((row: RequestedReagent) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -115,27 +117,17 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <Modal open={modalOpen}>
-        <Box
-          sx={{
-            backgroundColor: "background.paper",
-            padding: 2,
-            borderRadius: 1,
-            outline: "none",
-            maxWidth: 400,
-            margin: "auto",
-            marginTop: "20%",
-          }}
-        >
-          <Typography variant="h6">Decline Message</Typography>
-
-          <DeclineReagentRequest
-            onDeclineSubmit={handleSubmit}
-            onClose={() => setModalOpen(false)}
-            id={Number(requestId)}
-          />
-        </Box>
-      </Modal>
+      <BasicModal
+        title="Decline Reagent Request"
+        closeModal={() => setModalOpen(false)}
+        isOpen={modalOpen}
+      >
+        <DeclineReagentRequest
+          onDeclineSubmit={handleSubmit}
+          onClose={() => setModalOpen(false)}
+          id={Number(requestId)}
+        />
+      </BasicModal>
       {SnackbarComponent()}
     </>
   );
