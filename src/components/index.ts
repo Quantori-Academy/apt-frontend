@@ -30,6 +30,7 @@ export { EditStorage } from "./EditStorage";
 export { StoredSubstances } from "./StoredSubstances";
 export { SubstanceDetails } from "./SubstanceDetails";
 export { CategoryFilter } from "./CategoryFilter";
+export { OrdersTable } from "./OrdersTable";
 export { ReagentRequestTable } from "./ReagentRequestTable";
 export { DashboardCard } from "./DashboardCard";
 export { StatusFilter } from "./StatusFilter";
