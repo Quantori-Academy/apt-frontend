@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { ChangeEvent, useMemo, useState } from "react";
 
-import { Order, SortType } from "@/types";
+import { Order, SortType, StatusFilter } from "@/types";
 import { getOrdersRows } from "@/utils";
 
 import { orders } from "../../../mock";
@@ -28,10 +28,22 @@ const headCells: readonly HeadCell[] = [
   { label: "Status", key: "status" },
 ];
 
-const OrdersTable: React.FC = () => {
+type OrdersTableProps = {
+  searchQuery: string;
+  statusFilter: StatusFilter;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const OrdersTable: React.FC<OrdersTableProps> = ({
+  searchQuery,
+  statusFilter,
+  page,
+  setPage,
+}) => {
   const [order, setOrder] = useState<SortType>("asc");
   const [orderBy, setOrderBy] = useState<keyof Order>("title");
-  const [page, setPage] = useState(0);
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (property: keyof Order) => {
@@ -45,14 +57,24 @@ const OrdersTable: React.FC = () => {
     setPage(0);
   };
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
-
-  const visibleRows = useMemo(
+  const { visibleRows, filteredOrders } = useMemo(
     () =>
-      getOrdersRows({ orderBy, orders, page, sortType: order, rowsPerPage }),
-    [order, orderBy, page, rowsPerPage]
+      getOrdersRows({
+        orderBy,
+        orders,
+        page,
+        searchQuery,
+        statusFilter,
+        sortType: order,
+        rowsPerPage,
+      }),
+    [order, orderBy, page, rowsPerPage, statusFilter, searchQuery]
   );
+
+  const emptyRows =
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - filteredOrders.length)
+      : 0;
 
   return (
     <Paper sx={{ width: "100%", mb: 2 }}>
@@ -103,7 +125,7 @@ const OrdersTable: React.FC = () => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={orders.length}
+        count={filteredOrders.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={(_, newPage) => setPage(newPage)}

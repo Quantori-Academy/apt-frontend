@@ -4,6 +4,7 @@ import ScienceIcon from "@mui/icons-material/Science";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import { Box, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
 import { DashboardCard } from "@/components";
@@ -16,49 +17,51 @@ import style from "./Dashboard.module.css";
 
 const iconStyles = { height: "80px", width: "80px" };
 
-const userCard = (
-  <CardContent sx={{ textAlign: "center" }}>
-    <PeopleAltIcon sx={{ ...iconStyles, color: "#ef9a9a" }} />
-    <Typography color="#2c387e" variant="h6">
-      Users
-    </Typography>
-  </CardContent>
-);
-
-const substancesCard = (
-  <CardContent sx={{ textAlign: "center" }}>
-    <ScienceIcon color="secondary" sx={{ ...iconStyles, color: "#9fa8da" }} />
-    <Typography color="#2c387e" variant="h6">
-      Substances
-    </Typography>
-  </CardContent>
-);
-
-const storageCard = (
-  <CardContent sx={{ textAlign: "center" }}>
-    <Inventory2Icon color="secondary" sx={iconStyles} />
-    <Typography color="#2c387e" variant="h6">
-      Storage
-    </Typography>
-  </CardContent>
-);
-
-const reagentRequestCard = (
-  <CardContent sx={{ textAlign: "center" }}>
-    <WorkHistoryIcon sx={{ ...iconStyles, color: "#8d6e63" }} />
-    <Typography color="#2c387e" variant="h6">
-      Reagent Requests
-    </Typography>
-  </CardContent>
-);
-
 const Dashboard = () => {
+  const { t } = useTranslation();
+
   const role = useAppSelector(selectUserRole);
+
+  const userCard = (
+    <CardContent sx={{ textAlign: "center" }}>
+      <PeopleAltIcon sx={{ ...iconStyles, color: "#ef9a9a" }} />
+      <Typography color="#2c387e" variant="h6">
+        {t("users.title")}
+      </Typography>
+    </CardContent>
+  );
+
+  const substancesCard = (
+    <CardContent sx={{ textAlign: "center" }}>
+      <ScienceIcon color="secondary" sx={{ ...iconStyles, color: "#9fa8da" }} />
+      <Typography color="#2c387e" variant="h6">
+        {t("substances.title")}
+      </Typography>
+    </CardContent>
+  );
+
+  const storageCard = (
+    <CardContent sx={{ textAlign: "center" }}>
+      <Inventory2Icon color="secondary" sx={iconStyles} />
+      <Typography color="#2c387e" variant="h6">
+        {t("storage.title.dashboardStorage")}
+      </Typography>
+    </CardContent>
+  );
+
+  const reagentRequestCard = (
+    <CardContent sx={{ textAlign: "center" }}>
+      <WorkHistoryIcon sx={{ ...iconStyles, color: "#8d6e63" }} />
+      <Typography color="#2c387e" variant="h6">
+        Reagent Requests
+      </Typography>
+    </CardContent>
+  );
 
   return (
     <Box maxWidth="sm">
       <Typography variant="h3" gutterBottom>
-        Dashboard
+        {t("header.dashboard")}
       </Typography>
 
       <Box

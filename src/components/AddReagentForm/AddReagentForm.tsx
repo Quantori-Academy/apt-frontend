@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
@@ -28,6 +29,8 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
   handleCreateReagent,
   locationOptions,
 }) => {
+  const { t } = useTranslation();
+
   const {
     register,
     handleSubmit,
@@ -65,14 +68,18 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" gutterBottom>
-        Add New Reagent
+        {t("addSubstanceForm.title.reagent")}
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
-              label="Name"
-              {...register("name", { required: "Name is required" })}
+              label={t("addSubstanceForm.requiredFields.name.label")}
+              {...register("name", {
+                required: t(
+                  "addSubstanceForm.requiredFields.name.requiredMessage"
+                ),
+              })}
               fullWidth
               margin="normal"
               error={!!errors.name}
@@ -81,7 +88,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Description"
+              label={t("addSubstanceForm.requiredFields.description.label")}
               {...register("description")}
               fullWidth
               margin="normal"
@@ -89,7 +96,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Structure"
+              label={t("addSubstanceForm.requiredFields.structure.label")}
               {...register("structure")}
               fullWidth
               margin="normal"
@@ -97,11 +104,16 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Price per Unit"
+              label={t("addSubstanceForm.requiredFields.price.label")}
               type="number"
               {...register("pricePerUnit", {
                 valueAsNumber: true,
-                min: { value: 0, message: "Price must be positive" },
+                min: {
+                  value: 0,
+                  message: t(
+                    "addSubstanceForm.requiredFields.price.minPriceMessage"
+                  ),
+                },
               })}
               fullWidth
               margin="normal"
@@ -121,11 +133,16 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
           <Grid item xs={6}>
             <TextField
-              label="Quantity Left"
+              label={t("addSubstanceForm.requiredFields.quantity.label")}
               type="number"
               {...register("quantityLeft", {
                 valueAsNumber: true,
-                min: { value: 0, message: "Quantity must be positive" },
+                min: {
+                  value: 0,
+                  message: t(
+                    "addSubstanceForm.requiredFields.quantity.minQuantityMessage"
+                  ),
+                },
               })}
               fullWidth
               margin="normal"
@@ -145,7 +162,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Expiration Date"
+              label={t("addSubstanceForm.requiredFields.expirationDate.label")}
               type="datetime-local"
               {...register("expirationDate")}
               fullWidth
@@ -164,7 +181,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Location"
+                  label={t("addSubstanceForm.requiredFields.location.label")}
                   placeholder="Select location"
                   fullWidth
                   margin="normal"
@@ -174,7 +191,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="CAS Number"
+              label={t("addSubstanceForm.requiredFields.CASNumber.label")}
               {...register("casNumber")}
               fullWidth
               margin="normal"
@@ -182,7 +199,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Producer"
+              label={t("addSubstanceForm.requiredFields.producer.label")}
               {...register("producer")}
               fullWidth
               margin="normal"
@@ -190,7 +207,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Catalog ID"
+              label={t("addSubstanceForm.requiredFields.catalogId.label")}
               type="number"
               {...register("catalogId", {
                 valueAsNumber: true,
@@ -214,7 +231,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Catalog Link"
+              label={t("addSubstanceForm.requiredFields.catalogLink.label")}
               {...register("catalogLink")}
               fullWidth
               margin="normal"
@@ -223,7 +240,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           <Grid item xs={12}>
             <Box display="flex" justifyContent="center">
               <Button variant="contained" color="primary" type="submit">
-                Add Reagent
+                {t("substances.buttons.addReagent")}
               </Button>
             </Box>
           </Grid>

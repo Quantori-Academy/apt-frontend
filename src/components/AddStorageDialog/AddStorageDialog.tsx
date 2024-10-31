@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useAlertSnackbar } from "@/hooks";
 import { useCreateStorageRoomMutation } from "@/store";
@@ -26,6 +27,8 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
   onClose,
   storages,
 }) => {
+  const { t } = useTranslation();
+
   const [selectedRoomId, setSelectedRoomId] = useState("");
   const [locationName, setLocationName] = useState("");
   const [createStorageRoom, { isLoading: isCreating }] =
@@ -44,25 +47,25 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
       setSelectedRoomId("0");
       setLocationName("");
     } else {
-      openSnackbar("error", "Failed to create storage location!");
+      openSnackbar("error", t("storage.snackBarMessages.creationError"));
     }
   };
 
   return (
     <>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Create New Storage Location</DialogTitle>
+        <DialogTitle>{t("storage.buttons.createLocation")}</DialogTitle>
         <DialogContent>
           <FormControl fullWidth margin="normal">
-            <InputLabel>Room</InputLabel>
+            <InputLabel>{t("storage.fields.room")}</InputLabel>
             <Select
               variant="outlined"
-              label="Room"
+              label={t("storage.fields.room")}
               value={selectedRoomId}
               onChange={(e) => setSelectedRoomId(e.target.value)}
             >
               <MenuItem value={0} disabled>
-                Select a room
+                {t("storage.fields.selectRoom")}
               </MenuItem>
               {storages?.map((room) => (
                 <MenuItem key={room.id} value={room.id}>
@@ -73,7 +76,7 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
           </FormControl>
 
           <TextField
-            label="Location Name"
+            label={t("storage.fields.locationName")}
             value={locationName}
             onChange={(e) => setLocationName(e.target.value)}
             fullWidth
@@ -83,7 +86,7 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="primary">
-            Cancel
+            {t("buttons.cancel")}
           </Button>
           <Button
             onClick={handleCreateSubmit}
@@ -92,7 +95,9 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
               isCreating || selectedRoomId === "0" || locationName === ""
             }
           >
-            {isCreating ? "Creating..." : "Create"}
+            {isCreating
+              ? t("storage.buttons.creatingLocation")
+              : t("storage.buttons.create")}
           </Button>
         </DialogActions>
       </Dialog>

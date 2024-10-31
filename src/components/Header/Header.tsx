@@ -17,6 +17,7 @@ type HeaderProps = {
 };
 const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const {
+    t,
     i18n: { changeLanguage, language },
   } = useTranslation();
 
@@ -75,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
           </IconButton>
         ) : (
           <Button component={NavLink} to={RoutePublicPath.login}>
-            Login
+            {t("buttons.login")}
           </Button>
         )}
         <LanguageSwitcher

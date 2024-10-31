@@ -1,4 +1,4 @@
-type OrderStatus = "pending" | "ordered" | "completed";
+type OrderStatus = "pending" | "submitted" | "fulfilled" | "canceled";
 
 export type Order = {
   id: number;
@@ -9,3 +9,5 @@ export type Order = {
 };
 
 export type SortType = "asc" | "desc";
+
+export type StatusFilter = Capitalize<OrderStatus> | "All";

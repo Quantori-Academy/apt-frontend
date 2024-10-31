@@ -6,6 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { SubstancesInLocation } from "@/types";
 
@@ -20,6 +21,8 @@ const StoredSubstances: React.FC<StoredSubstancesProps> = ({
   onChangeLocation,
   openModal,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       {substances.length > 0 ? (
@@ -43,10 +46,11 @@ const StoredSubstances: React.FC<StoredSubstancesProps> = ({
                 secondary={
                   <>
                     <Typography variant="body2" color="textSecondary">
-                      <strong>Description:</strong> {substance.description}
+                      <strong>{t("storage.fields.description")}:</strong>{" "}
+                      {substance.description}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      <strong>Structure (SMILES):</strong>{" "}
+                      <strong>{t("storage.fields.structure")}:</strong>{" "}
                       {substance.structureSmiles}
                     </Typography>
                   </>
@@ -58,13 +62,13 @@ const StoredSubstances: React.FC<StoredSubstancesProps> = ({
                   openModal();
                 }}
               >
-                Change Location
+                {t("storage.buttons.changeLocation")}
               </Button>
             </ListItem>
           ))}
         </List>
       ) : (
-        <Typography>No substances stored in this room.</Typography>
+        <Typography>{t("storage.fields.emptyRoom")}</Typography>
       )}
     </>
   );

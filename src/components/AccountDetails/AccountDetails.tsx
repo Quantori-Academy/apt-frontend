@@ -50,9 +50,12 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
     const { error } = await updateUserDetails(updatedUserDetails);
 
     if (error) {
-      openSnackbar("error", "Failed to update details!");
+      openSnackbar("error", t("userDetails.snackBarMessages.details.error"));
     } else {
-      openSnackbar("success", "Details updated successfully!");
+      openSnackbar(
+        "success",
+        t("userDetails.snackBarMessages.details.success")
+      );
       setIsEditMode(false);
     }
   };
@@ -68,20 +71,20 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="subtitle1" fontWeight="bold">
-              {t("userDetails.username")}:
+              {t("users.table.username")}:
             </Typography>
             <Typography>{userDetails?.username}</Typography>{" "}
           </Grid>
 
           <Grid item xs={6}>
             <Typography variant="subtitle1" fontWeight="bold">
-              {t("userDetails.firstName")}:
+              {t("users.table.firstName")}:
             </Typography>
             {isEditMode ? (
               <TextField
                 fullWidth
                 {...register("firstName", {
-                  required: "First Name is required",
+                  required: t("userDetails.requiredFields.firstName"),
                 })}
                 error={!!errors.firstName}
                 helperText={errors.firstName?.message}
@@ -94,13 +97,13 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
 
           <Grid item xs={6}>
             <Typography variant="subtitle1" fontWeight="bold">
-              {t("userDetails.lastName")}:
+              {t("users.table.lastName")}:
             </Typography>
             {isEditMode ? (
               <TextField
                 fullWidth
                 {...register("lastName", {
-                  required: "Last Name is required",
+                  required: t("userDetails.requiredFields.lastName"),
                 })}
                 helperText={errors.lastName?.message}
                 error={!!errors.lastName}
@@ -113,16 +116,20 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
 
           <Grid item xs={12}>
             <Typography variant="subtitle1" fontWeight="bold">
-              {t("userDetails.email")}:
+              {t("users.table.email")}:
             </Typography>
             {isEditMode ? (
               <TextField
                 fullWidth
                 {...register("email", {
-                  required: "e-mail is required",
+                  required: t(
+                    "userDetails.requiredFields.email.requiredMessage"
+                  ),
                   pattern: {
                     value: /\S+@\S+\.\S+/,
-                    message: "Please provide a valid email",
+                    message: t(
+                      "userDetails.requiredFields.email.patternMessage"
+                    ),
                   },
                 })}
                 error={!!errors.email}
@@ -144,7 +151,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
                   type="submit"
                   disabled={isUpdatingDetails}
                 >
-                  Save
+                  {t("buttons.save")}
                 </Button>
                 <Button
                   fullWidth
@@ -152,7 +159,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
                   color="primary"
                   onClick={() => setIsEditMode(false)}
                 >
-                  Cancel
+                  {t("buttons.cancel")}
                 </Button>
               </Box>
             ) : (
@@ -162,7 +169,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
                 fullWidth
                 onClick={handleEditToggle}
               >
-                Edit Details
+                {t("userDetails.buttons.editDetails")}
               </Button>
             )}
           </Grid>

@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { PageLoader } from "@/components";
 import { userRoles } from "@/constants";
@@ -28,6 +29,8 @@ type UserRoleUpdate = {
 };
 
 const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
+  const { t } = useTranslation();
+
   const [isEditMode, setIsEditMode] = useState(false);
 
   const currentUserId = useAppSelector(selectUserId);
@@ -53,9 +56,9 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
     });
 
     if (error) {
-      openSnackbar("error", "Failed to change role!");
+      openSnackbar("error", t("userDetails.snackBarMessages.role.error"));
     } else {
-      openSnackbar("success", "Role has changed successfully!");
+      openSnackbar("success", t("userDetails.snackBarMessages.role.success"));
       setIsEditMode(false);
     }
   };
@@ -65,15 +68,15 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
       {userId === currentUserId ? (
         <Box>
           <Typography variant="subtitle1" fontWeight="bold">
-            User Role:
+            {t("users.table.role")}
           </Typography>
-          <Typography>{userDetails?.role}</Typography>
+          <Typography>{t(`users.roles.${userDetails?.role}`)}</Typography>
         </Box>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
           {isEditMode ? (
             <TextField
-              label="User Roles"
+              label={t("users.table.role")}
               fullWidth
               select
               defaultValue={userRoles.Administrator}
@@ -81,16 +84,16 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
             >
               {Object.values(userRoles).map((role) => (
                 <MenuItem key={role} value={role}>
-                  {role}
+                  {t(`users.roles.${role}`)}
                 </MenuItem>
               ))}
             </TextField>
           ) : (
             <Box className="roleBox" margin={2}>
               <Typography variant="subtitle1" fontWeight="bold">
-                User Role:
+                {t("users.table.role")}
               </Typography>
-              <Typography>{userDetails?.role}</Typography>
+              <Typography>{t(`users.roles.${userDetails?.role}`)}</Typography>
             </Box>
           )}
           {isEditMode ? (
@@ -103,7 +106,7 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
                 type="submit"
                 disabled={isUpdatingRole}
               >
-                Save
+                {t("buttons.save")}
               </Button>
               <Button
                 fullWidth
@@ -111,7 +114,7 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
                 color="primary"
                 onClick={() => setIsEditMode(false)}
               >
-                Cancel
+                {t("buttons.cancel")}
               </Button>
             </Box>
           ) : (
@@ -121,7 +124,7 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
               fullWidth
               onClick={() => setIsEditMode(true)}
             >
-              Edit Role
+              {t("userDetails.buttons.editRole")}
             </Button>
           )}
         </form>

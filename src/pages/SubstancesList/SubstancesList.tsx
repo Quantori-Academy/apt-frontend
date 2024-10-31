@@ -2,12 +2,12 @@ import {
   Box,
   Button,
   Container,
-  Pagination,
+  TablePagination,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import React, { ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -29,19 +29,18 @@ import { getListData } from "@/utils";
 
 import style from "./SubstancesList.module.css";
 
-const PAGE_SIZE = 5;
-
 const SubstancesList: React.FC = () => {
   const { t } = useTranslation();
   const { data: substances = [], isLoading, isError } = useGetSubstancesQuery();
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [categoryFilter, setCategoryFilter] =
     useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const navigate = useNavigate();
 
   const role = useAppSelector(selectUserRole);
@@ -49,6 +48,11 @@ const SubstancesList: React.FC = () => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
     setSortDirection(isAsc ? "asc" : "desc");
     setSortColumn(property);
+  };
+
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   const { visibleItems, totalPages } = useMemo(
@@ -61,7 +65,7 @@ const SubstancesList: React.FC = () => {
         page,
         searchQuery,
         expiredFilter,
-        pageSize: PAGE_SIZE,
+        pageSize: rowsPerPage,
       }),
     [
       categoryFilter,
@@ -71,6 +75,7 @@ const SubstancesList: React.FC = () => {
       page,
       searchQuery,
       expiredFilter,
+      rowsPerPage,
     ]
   );
 
@@ -79,16 +84,14 @@ const SubstancesList: React.FC = () => {
   }
 
   if (isError) {
-    return (
-      <PageError text="Faild to load Reagents and Sample page, Please try later" />
-    );
+    return <PageError text={t("substances.errors.loadError")} />;
   }
 
   return (
     <Container>
       <DashboardBreadcrumbs />
       <Typography variant="h3" sx={{ marginBottom: "30px" }}>
-        {t("Substances")}
+        {t("substances.title")}
       </Typography>
       {role === userRoles.Researcher && (
         <Box className={style.buttonBox}>
@@ -97,14 +100,14 @@ const SubstancesList: React.FC = () => {
             color="primary"
             onClick={() => navigate(RouteProtectedPath.reagentAddPage)}
           >
-            {t("substances.add.reagent")}
+            {t("substances.buttons.addReagent")}
           </Button>
           <Button
             variant="contained"
             color="primary"
             onClick={() => navigate(RouteProtectedPath.sampleAddPage)}
           >
-            {t("substances.add.sample")}
+            {t("substances.buttons.addSample")}
           </Button>
         </Box>
       )}
@@ -123,8 +126,10 @@ const SubstancesList: React.FC = () => {
             setExpiredFilter(value)
           }
         >
-          <ToggleButton value="All">All</ToggleButton>
-          <ToggleButton value="Expired">Expired</ToggleButton>
+          <ToggleButton value="All">{t("substances.filters.all")}</ToggleButton>
+          <ToggleButton value="Expired">
+            {t("substances.filters.expired")}
+          </ToggleButton>
         </ToggleButtonGroup>
       </Box>
       <SubstancesTable
@@ -133,13 +138,15 @@ const SubstancesList: React.FC = () => {
         onSortChange={handleSortChange}
         visibleItems={visibleItems}
       />
-      <Box className={style.pagination}>
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={(_, page) => setPage(page)}
-        />
-      </Box>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={totalPages}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(_, page) => setPage(page)}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </Container>
   );
 };

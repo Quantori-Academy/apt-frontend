@@ -8,7 +8,7 @@ const NavigationUnauth: React.FC = () => {
   const { t } = useTranslation();
   return (
     <Button component={NavLink} to={RoutePublicPath.login}>
-      {t("header.button.login")}
+      {t("buttons.login")}
     </Button>
   );
 };

@@ -1,4 +1,5 @@
 import { Container, Divider, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import {
@@ -12,6 +13,8 @@ import { PageError } from "@/components/PageError";
 import { useGetUserDetailsQuery } from "@/store";
 
 const UserDetails: React.FC = () => {
+  const { t } = useTranslation();
+
   const { id } = useParams<{ id: string }>();
 
   const { isError } = useGetUserDetailsQuery(id!);
@@ -36,7 +39,7 @@ const UserDetails: React.FC = () => {
     >
       <DashboardBreadcrumbs />
       <Typography variant="h3" gutterBottom margin={3}>
-        Account Details
+        {t("userDetails.title")}
       </Typography>
       <ResetPassword userId={id} />
       <Divider sx={{ my: 3 }} />
