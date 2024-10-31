@@ -123,11 +123,11 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                 <TableCell component="th" scope="row">
                   {reagent.name}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="left">
                   {t(`substances.filters.options.${reagent.category}`)}
                 </TableCell>
                 <TableCell align="right">{reagent.structure}</TableCell>
-                <TableCell align="right">{reagent.description}</TableCell>
+                <TableCell align="left">{reagent.description}</TableCell>
                 <TableCell align="right">{reagent.quantityLeft}</TableCell>
                 <TableCell align="right">{reagent.storageLocation}</TableCell>
                 <TableCell align="right" sx={{ display: "flex" }}>

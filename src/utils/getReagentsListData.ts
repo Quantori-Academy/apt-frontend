@@ -56,5 +56,5 @@ const sortListData = (items: Array<SubstancesDetails>, sortColumn: SortColumn, s
 };
 
 const paginateListData = (items: Array<SubstancesDetails>, page: number, pageSize: number) => {
-  return items.slice((page - 1) * pageSize, page * pageSize);
+  return items.slice(page * pageSize, (page + 1) * pageSize);
 };
