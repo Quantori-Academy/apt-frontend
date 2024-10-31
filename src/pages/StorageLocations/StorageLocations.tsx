@@ -1,5 +1,6 @@
 import { Box, Button, Container, Pagination, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   AddStorageDialog,
@@ -17,6 +18,8 @@ import style from "./StorageLocations.module.css";
 const PAGE_SIZE = 3;
 
 const StorageLocations: React.FC = () => {
+  const { t } = useTranslation();
+
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [roomIdToEdit, setRoomIdToEdit] = useState("");
@@ -33,8 +36,9 @@ const StorageLocations: React.FC = () => {
   };
 
   if (isGettingStorages) return <PageLoader />;
-  if (isError) return <PageError text="Failed to get storages" />;
-  if (!storages) return <PageError text="There isn't any storages" />;
+  if (isError) return <PageError text={t("storage.errors.storageLoadError")} />;
+  if (!storages)
+    return <PageError text={t("storage.errors.emptyStorageError")} />;
 
   const totalPages = Math.ceil(storages.length / PAGE_SIZE);
   const paginatedStorages = paginateStorages(storages, page, PAGE_SIZE);
@@ -43,7 +47,7 @@ const StorageLocations: React.FC = () => {
     <Container sx={{ padding: "20px" }}>
       <DashboardBreadcrumbs />
       <Typography variant="h3" sx={{ marginBottom: "30px" }}>
-        Storage Locations
+        {t("storage.title.storage")}
       </Typography>
       <Button
         variant="contained"
@@ -51,7 +55,7 @@ const StorageLocations: React.FC = () => {
         onClick={() => setCreateDialogOpen(true)}
         style={{ marginBottom: "20px" }}
       >
-        Create New Storage Location
+        {t("storage.buttons.createLocation")}
       </Button>
       <StorageLocationsList
         storages={paginatedStorages}

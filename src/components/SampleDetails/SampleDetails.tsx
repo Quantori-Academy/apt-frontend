@@ -1,5 +1,6 @@
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
@@ -41,13 +42,15 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
   setDeleteModalIsOpen,
   setIsEditing,
 }) => {
+  const { t } = useTranslation();
+
   const role = useAppSelector(selectUserRole);
 
   return (
     <Card sx={{ background: "#0080800f" }}>
       <CardContent>
         <Typography variant="h4" gutterBottom>
-          Sample Details
+          {t("substanceDetails.title.sample")}
         </Typography>
 
         <Grid container spacing={2}>
@@ -57,7 +60,7 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
                 return (
                   <DetailItem
                     key={label}
-                    label={label}
+                    label={t(`substanceDetails.fields.${key}`)}
                     value={`${sampleLocationDetails.roomName}, ${sampleLocationDetails.locationName}`}
                   />
                 );
@@ -69,7 +72,7 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
                       fontWeight="bold"
                       marginRight={1}
                     >
-                      {label}:
+                      {t(`substanceDetails.fields.${key}`)}:
                     </Typography>
                     {sampleDetails[key].map(({ id, name, category }, index) => (
                       <React.Fragment key={id}>
@@ -97,8 +100,12 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
                 return (
                   <DetailItem
                     key={label}
-                    label={label}
-                    value={sampleDetails[key]}
+                    label={t(`substanceDetails.fields.${key}`)}
+                    value={
+                      key === "category"
+                        ? t(`substances.filters.options.${sampleDetails[key]}`)
+                        : sampleDetails[key]
+                    }
                   />
                 );
               }

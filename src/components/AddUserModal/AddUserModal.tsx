@@ -1,4 +1,5 @@
 import { Box, Modal, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { AddUserForm, AddUserStatus } from "@/components/AddUserForm";
 import { useAlertSnackbar } from "@/hooks";
@@ -11,14 +12,16 @@ type AddUserModalProps = {
 };
 
 const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
+  const { t } = useTranslation();
+
   const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
   function handleFormSubmit(status: AddUserStatus) {
     if (status === "success") {
-      openSnackbar("success", "User added successfully!");
+      openSnackbar("success", t("addUserForm.snackBarMessages.success"));
       onClose();
     } else {
-      openSnackbar("error", "Failed to add user!");
+      openSnackbar("error", t("addUserForm.snackBarMessages.error"));
     }
   }
 
@@ -32,7 +35,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
       >
         <Box className={style.modalStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add New User
+            {t("addUserForm.title")}
           </Typography>
           <AddUserForm onFormSubmit={handleFormSubmit} />
         </Box>

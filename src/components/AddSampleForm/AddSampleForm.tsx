@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
@@ -39,6 +40,8 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
   reagentOptions,
   locationOptions,
 }) => {
+  const { t } = useTranslation();
+
   const {
     register,
     handleSubmit: handleFormSubmit,
@@ -81,14 +84,18 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" gutterBottom>
-        Add New Sample
+        {t("addSubstanceForm.title.sample")}
       </Typography>
       <form onSubmit={handleFormSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Name"
-              {...register("name", { required: "Name is required" })}
+              label={t("addSubstanceForm.requiredFields.name.label")}
+              {...register("name", {
+                required: t(
+                  "addSubstanceForm.requiredFields.name.requiredMessage"
+                ),
+              })}
               fullWidth
               margin="normal"
               error={!!errors.name}
@@ -97,7 +104,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Structure"
+              label={t("addSubstanceForm.requiredFields.structure.label")}
               {...register("structure")}
               fullWidth
               margin="normal"
@@ -105,7 +112,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Description"
+              label={t("addSubstanceForm.requiredFields.description.label")}
               {...register("description")}
               fullWidth
               margin="normal"
@@ -113,11 +120,16 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Price per Unit"
+              label={t("addSubstanceForm.requiredFields.price.label")}
               type="number"
               {...register("pricePerUnit", {
                 valueAsNumber: true,
-                min: { value: 0, message: "Price must be positive" },
+                min: {
+                  value: 0,
+                  message: t(
+                    "addSubstanceForm.requiredFields.price.minPriceMessage"
+                  ),
+                },
               })}
               fullWidth
               margin="normal"
@@ -140,7 +152,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Quantity Unit"
+              label={t("addSubstanceForm.requiredFields.quantityUnit.label")}
               {...register("quantityUnit")}
               fullWidth
               margin="normal"
@@ -148,7 +160,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Expiration Date"
+              label={t("addSubstanceForm.requiredFields.expirationDate.label")}
               type="datetime-local"
               {...register("expirationDate")}
               fullWidth
@@ -165,7 +177,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Location"
+                  label={t("addSubstanceForm.requiredFields.location.label")}
                   placeholder="Select location"
                   fullWidth
                   margin="normal"
@@ -175,11 +187,16 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Quantity Left"
+              label={t("addSubstanceForm.requiredFields.quantity.label")}
               type="number"
               {...register("quantityLeft", {
                 valueAsNumber: true,
-                min: { value: 0, message: "Quantity must be positive" },
+                min: {
+                  value: 0,
+                  message: t(
+                    "addSubstanceForm.requiredFields.quantity.minQuantityMessage"
+                  ),
+                },
               })}
               fullWidth
               margin="normal"
@@ -200,7 +217,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Substances"
+                  label={t("substances.title")}
                   placeholder="Select substances"
                   fullWidth
                   margin="normal"
@@ -216,7 +233,9 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                 type="submit"
                 disabled={isLoading}
               >
-                {isLoading ? "Adding..." : "Add Sample"}
+                {isLoading
+                  ? t("substances.buttons.adding")
+                  : t("substances.buttons.addSample")}
               </Button>
             </Box>
           </Grid>

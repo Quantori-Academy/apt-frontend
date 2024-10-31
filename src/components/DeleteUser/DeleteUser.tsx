@@ -1,5 +1,6 @@
 import { Button, Container } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { ConfirmRemoving } from "@/components";
@@ -11,6 +12,8 @@ type DeleteUserProps = {
 };
 
 const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
+  const { t } = useTranslation();
+
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
@@ -23,9 +26,9 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
     const { error } = await deleteUser(userId);
 
     if (error) {
-      openSnackbar("error", "Failed to delete user!");
+      openSnackbar("error", t("userDetails.snackBarMessages.delete.error"));
     } else {
-      openSnackbar("success", "User deleted successfully!");
+      openSnackbar("success", t("userDetails.snackBarMessages.delete.error"));
       navigate("/users");
     }
   };
@@ -43,12 +46,12 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
         onClick={() => setIsOpenModal(true)}
         disabled={isDeleting}
       >
-        Delete User
+        {t("userDetails.buttons.deleteUser")}
       </Button>
       <ConfirmRemoving
         open={isOpenModal}
         modalTitle={""}
-        modalText={"Are you sure you want to delete this user?"}
+        modalText={t("userDetails.modalMessages.confirmDelete")}
         onClose={() => setIsOpenModal(false)}
         onDelete={handleDeleteUser}
       />

@@ -1,4 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { CategoryFilterOption } from "@/types";
 
@@ -14,16 +15,18 @@ const CategoryFilter: React.FC<FilterReagentsProps> = ({
   setFilter,
   setPage,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <FormControl size="medium" sx={{ width: "30%" }}>
       <InputLabel sx={{ height: "auto" }} id="selectRole">
-        Category
+        {t("substances.filters.label")}
       </InputLabel>
       <Select
         variant={"outlined"}
         labelId="selectCategory"
         value={filter}
-        label="Category"
+        label={t("substances.filters.label")}
         onChange={(e) => {
           setFilter(e.target.value as CategoryFilterOption);
           setPage(1);
@@ -31,7 +34,7 @@ const CategoryFilter: React.FC<FilterReagentsProps> = ({
       >
         {filterOptions.map((option) => (
           <MenuItem key={option} value={option}>
-            {option}
+            {t(`substances.filters.options.${option}`)}
           </MenuItem>
         ))}
       </Select>

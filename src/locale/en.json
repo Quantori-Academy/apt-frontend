@@ -1,26 +1,398 @@
 {
   "translation": {
-    "header.dashboard": "Dashboard",
-    "header.substances": "Substances",
-    "header.storage": "Storage",
-    "header.button.logout": "Logout",
-    "header.button.login": "Login",
+    "header": {
+      "dashboard": "Dashboard",
+      "accountSettings": "Account Settings"
+    },
 
-    "userDetails.username": "Username",
-    "userDetails.firstName": "First name",
-    "userDetails.lastName": "Last name",
-    "userDetails.email": "Email",
+    "breadcrumbs": {
+      "Dashboard": "Dashboard",
+      "Users": "Users",
+      "User Details": "User Details",
+      "Storage Locations": "Storage Locations",
+      "Storage Detail": "Storage Detail",
+      "Substances": "Substances",
+      "Reagent Detail": "Reagent Detail",
+      "Sample Detail": "Sample Detail"
+    },
 
-    "substances": "Reagents And Samples",
-    "substances.add.reagent": "Add Reagent",
-    "substances.add.sample": "Add Sample",
+    "buttons": {
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "login": "Login",
+      "logout": "Logout"
+    },
 
-    "substances.list.name": "Name",
-    "substances.list.category": "Category",
-    "substances.list.structure": "Structure",
-    "substances.list.description": "Description",
-    "substances.list.quantityLeft": "Quantity left",
-    "substances.list.storageLocation": "Storage location",
-    "substances.list.actions": "Actions"
+    "users": {
+      "title": "Users",
+
+      "buttons": {
+        "addUser": "Add user"
+      },
+
+      "errors": {
+        "loadError": "Failed to load users."
+      },
+
+      "filters": {
+        "search": "Search...",
+        "role": "Role"
+      },
+
+      "roles": {
+        "All": "All",
+        "Administrator": "Administrator",
+        "Procurement Officer": "Procurement Officer",
+        "Researcher": "Researcher"
+      },
+
+      "table": {
+        "username": "Username",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "role": "Role",
+        "lastLogin": "Last login",
+        "actions": "Actions"
+      }
+    },
+
+    "userDetails": {
+      "title": "Account Details",
+
+      "buttons": {
+        "editDetails": "Edit Details",
+        "changePassword": "Change Password",
+        "editRole": "Edit Role",
+        "deleteUser": "Delete User"
+      },
+
+      "snackBarMessages": {
+        "password": {
+          "success": "Password changed successfully",
+          "error": "Failed to change password"
+        },
+        "role": {
+          "success": "Role has changed successfully",
+          "error": "Failed to change role"
+        },
+        "details": {
+          "success": "Details updated successfully",
+          "error": "Failed to update details"
+        },
+        "delete": {
+          "success": "User deleted successfully",
+          "error": "Failed to delete user"
+        }
+      },
+
+      "modalMessages": {
+        "confirmDelete": "Are you sure you want to delete this user?"
+      },
+
+      "requiredFields": {
+        "firstName": "First name is required",
+        "lastName": "Last name is required",
+        "email": {
+          "requiredMessage": "Email is required",
+          "patternMessage": "Please provide a valid email"
+        },
+        "password": {
+          "label": "Password",
+          "requiredMessage": "Password is required",
+          "minLengthMessage": "Password need to be not less than 8 character",
+          "patternMessage": "Password must contain at least one uppercase letter"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "requiredMessage": "This field is required",
+          "matchMessage": "Passwords need to match"
+        }
+      }
+    },
+
+    "addUserForm": {
+      "title": "Add New User",
+
+      "buttons": {
+        "createUser": "Create User"
+      },
+
+      "snackBarMessages": {
+        "success": "User added successfully",
+        "error": "Failed to add user"
+      },
+
+      "requiredFields": {
+        "username": {
+          "label": "Username",
+          "requiredMessage": "Username is required"
+        },
+
+        "firstName": {
+          "label": "First name",
+          "requiredMessage": "First name is required"
+        },
+
+        "lastName": {
+          "label": "Last name",
+          "requiredMessage": "Last name is required"
+        },
+
+        "email": {
+          "label": "Email",
+          "requiredMessage": "Email is required",
+          "patternMessage": "Please provide a valid email"
+        },
+
+        "password": {
+          "label": "Password",
+          "requiredMessage": "Password is required",
+          "minLengthMessage": "Password need to be not less than 8 character",
+          "patternMessage": "Password must contain at least one uppercase letter"
+        },
+
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "requiredMessage": "This field is required",
+          "matchMessage": "Passwords need to match"
+        },
+
+        "role": {
+          "label": "Select Role",
+          "requiredMessage": "Please select a role"
+        }
+      }
+    },
+
+    "substances": {
+      "title": "Substances",
+
+      "buttons": {
+        "addReagent": "Add reagent",
+        "addSample": "Add sample",
+        "addLoading": "Adding..."
+      },
+
+      "errors": {
+        "loadError": "Faild to load Reagents and Sample page, Please try later"
+      },
+
+      "filters": {
+        "all": "All",
+        "expired": "Expired",
+        "label": "Category",
+        "options": {
+          "All": "All",
+          "Reagent": "Reagent",
+          "Sample": "Sample"
+        }
+      },
+
+      "table": {
+        "name": "Name",
+        "category": "Category",
+        "structure": "Structure",
+        "description": "Description",
+        "quantityLeft": "Quantity left",
+        "storageLocation": "Storage location",
+        "actions": "Actions"
+      },
+
+      "modalMessages": {
+        "confirmDelete": "Are you sure you want to delete this substance?"
+      },
+
+      "snackBarMessages": {
+        "delete": {
+          "success": "Substance deleted successfully",
+          "error": "Failed to delete substance"
+        }
+      }
+    },
+
+    "addSubstanceForm": {
+      "title": {
+        "reagent": "Add New Reagent",
+        "sample": "Add New Sample"
+      },
+
+      "buttons": {
+        "createUser": "Create User"
+      },
+
+      "snackBarMessages": {
+        "reagent": {
+          "success": "Reagent added successfully",
+          "error": "Failed to add reagent"
+        },
+        "sample": {
+          "success": "Sample added successfully",
+          "error": "Failed to add sample"
+        }
+      },
+
+      "requiredFields": {
+        "name": {
+          "label": "Name",
+          "requiredMessage": "Name is required"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "structure": {
+          "label": "Structure"
+        },
+        "price": {
+          "label": "Price per Unit",
+          "minPriceMessage": "Price must be positive"
+        },
+        "quantityUnit": {
+          "label": "Quantity Unit"
+        },
+        "quantity": {
+          "label": "Quantity Left",
+          "minQuantityMessage": "Quantity must be positive"
+        },
+        "expirationDate": {
+          "label": "Expiration Date"
+        },
+        "location": {
+          "label": "Location"
+        },
+        "CASNumber": {
+          "label": "CAS Number"
+        },
+        "producer": {
+          "label": "Producer"
+        },
+        "catalogId": {
+          "label": "Catalog ID"
+        },
+        "catalogLink": {
+          "label": "Catalog Link"
+        }
+      }
+    },
+
+    "substanceDetails": {
+      "title": {
+        "reagent": "Reagent Details",
+        "sample": "Sample Details",
+        "editReagent": "Edit Reagent",
+        "editSample": "Edit Sample"
+      },
+
+      "buttons": {
+        "editDetails": "Edit Details",
+        "saveChanges": "Save Changes"
+      },
+
+      "fields": {
+        "substanceId": "Reagent ID",
+        "name": "Name",
+        "category": "Category",
+        "CASNumber": "CAS Number",
+        "producer": "producer",
+        "locationId": "Storage location",
+        "unit": "Units",
+        "pricePerUnit": "Price per unit",
+        "totalQuantityLeft": "Quantity left",
+        "catalogID": "Catalog ID",
+        "description": "Description",
+        "structure": "Structure",
+        "addedSubstances": "Substances",
+        "room": "Room",
+        "location": "Location"
+      },
+
+      "currentLocation": " (current)",
+
+      "quantityWarning": "Will be deleted, if quantity is 0",
+
+      "errors": {
+        "reagentLoadError": "Failed to load reagent details.",
+        "sampleLoadError": "Failed to load reagent details."
+      },
+
+      "snackBarMessages": {
+        "reagent": {
+          "successDelete": "Reagent deleted successfully",
+          "successUpdate": "Reagent updated successfully"
+        },
+        "sample": {
+          "successDelete": "Sample deleted successfully",
+          "successUpdate": "Sample updated successfully"
+        },
+        "unexpectedError": "An unexpected error occurred"
+      }
+    },
+
+    "storage": {
+      "title": {
+        "storage": "Storage Locations",
+        "dashboardStorage": "Storage",
+        "location": "Location Details"
+      },
+
+      "buttons": {
+        "createLocation": "Create New Storage Location",
+        "editRoom": "Edit Room",
+        "updatingRooms": "Updating...",
+        "creatingLocation": "Creating...",
+        "create": "Create",
+        "changeLocation": "Change Location"
+      },
+
+      "errors": {
+        "storageLoadError": "Failed to get storages",
+        "emptyStorageError": "There isn't any storages",
+        "locationLoadError": "Failed to get location",
+        "noLocation": "There is no location here"
+      },
+
+      "fields": {
+        "room": "Room",
+        "roomId": "Room ID",
+        "selectRoom": "Select a room",
+        "location": "Location",
+        "locationName": "Location Name",
+        "locationId": "Location ID",
+        "locations": "Locations:",
+        "totalSubstances": "Total Substances:",
+        "storedSubstances": "Stored Substances",
+        "description": "Description",
+        "structure": "Structure",
+        "emptyRoom": "No substances stored in this room"
+      },
+
+      "requiredFields": {
+        "roomName": {
+          "label": "Room Name",
+          "requiredMessage": "Room name is required"
+        },
+        "description": {
+          "label": "Description",
+          "requiredMessage": "Description is required"
+        }
+      },
+
+      "modalMessages": {
+        "confirmLocationChange": "Change location of this substance?"
+      },
+
+      "snackBarMessages": {
+        "successEdit": "Room edited successfully!",
+        "errorEdit": "Failed to edit room!",
+        "successDelete": "Storage location deleted successfully",
+        "errorDelete": "Failed to delete storage location",
+        "successMove": "Substance moved successfully",
+        "errorMove": "Failed to move substances",
+        "notEmptyError": "You can't delete this storage location because it contains substances",
+        "creationError": "Failed to create storage location!"
+      }
+    }
   }
 }

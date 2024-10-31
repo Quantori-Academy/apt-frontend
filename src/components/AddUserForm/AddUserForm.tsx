@@ -1,5 +1,6 @@
 import { Box, Button, MenuItem, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { PASSWORD_REGEX, userRoles } from "@/constants";
 import { useAddUserMutation } from "@/store";
@@ -16,6 +17,8 @@ type AddUserFormProps = {
 const roles = Object.values(userRoles);
 
 const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
+  const { t } = useTranslation();
+
   const [addUser, { isLoading }] = useAddUserMutation();
 
   const {
@@ -49,86 +52,103 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onFormSubmit }) => {
       <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
         <Stack spacing={2} width={300}>
           <TextField
-            label="Username"
+            label={t("addUserForm.requiredFields.username.label")}
             {...register("username", {
-              required: "Username is required",
+              required: t(
+                "addUserForm.requiredFields.username.requiredMessage"
+              ),
             })}
             helperText={errors.username?.message}
             error={!!errors.username}
           />
           <TextField
             id="firstName"
-            label="First Name"
+            label={t("addUserForm.requiredFields.firstName.label")}
             {...register("firstName", {
-              required: "First Name is required",
+              required: t(
+                "addUserForm.requiredFields.firstName.requiredMessage"
+              ),
             })}
             error={!!errors.firstName}
             helperText={errors.firstName?.message}
           />
           <TextField
-            label="Last Name"
+            label={t("addUserForm.requiredFields.lastName.label")}
             {...register("lastName", {
-              required: "Last Name is required",
+              required: t(
+                "addUserForm.requiredFields.lastName.requiredMessage"
+              ),
             })}
             helperText={errors.lastName?.message}
             error={!!errors.lastName}
           />
           <TextField
             type="email"
-            label="E-mail"
+            label={t("addUserForm.requiredFields.email.label")}
             {...register("email", {
-              required: "e-mail is required",
+              required: t("addUserForm.requiredFields.email.requiredMessage"),
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: "Please provide a valid email",
+                message: t("addUserForm.requiredFields.email.patternMessage"),
               },
             })}
             error={!!errors.email}
             helperText={errors.email?.message}
           />
           <TextField
-            label="Password"
+            label={t("addUserForm.requiredFields.password.label")}
             type="password"
             {...register("password", {
-              required: "Password is required",
+              required: t(
+                "addUserForm.requiredFields.password.requiredMessage"
+              ),
               minLength: {
                 value: 8,
-                message: "Password need to be not less than 8 character",
+                message: t(
+                  "addUserForm.requiredFields.password.minLengthMessage"
+                ),
               },
               pattern: {
                 value: PASSWORD_REGEX,
-                message: "Password must contain at least one uppercase letter",
+                message: t(
+                  "addUserForm.requiredFields.password.patternMessage"
+                ),
               },
             })}
             error={!!errors.password}
             helperText={errors.password?.message}
           />
           <TextField
-            label="Confirm Password"
+            label={t("addUserForm.requiredFields.confirmPassword.label")}
             type="password"
             {...register("confirmPassword", {
-              required: "This field is required",
+              required: t(
+                "addUserForm.requiredFields.confirmPassword.requiredMessage"
+              ),
               validate: (value) =>
-                value === getValues().password || "Passwords need to match",
+                value === getValues().password ||
+                t("addUserForm.requiredFields.confirmPassword.matchMessage"),
             })}
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword?.message}
           />
           <TextField
             select
-            label="Select Role"
+            label={t("addUserForm.requiredFields.role.label")}
             defaultValue={userRoles.Administrator}
-            {...register("role", { required: "Please select a role" })}
+            {...register("role", {
+              required: t("addUserForm.requiredFields.role.requiredMessage"),
+            })}
           >
             {roles.map((option) => (
               <MenuItem key={option} value={option}>
-                {option}
+                {t(`users.roles.${option}`)}
               </MenuItem>
             ))}
           </TextField>
 
           <Button type="submit" disabled={isLoading}>
-            Create User
+            {t("addUserForm.buttons.createUser")}
           </Button>
         </Stack>
       </form>

@@ -5,6 +5,7 @@ import { Menu, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MenuItem from "@mui/material/MenuItem";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -23,6 +24,8 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
   open,
   onClose,
 }) => {
+  const { t } = useTranslation();
+
   const role = useAppSelector(selectUserRole);
   const dispatch = useAppDispatch();
 
@@ -70,7 +73,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Typography sx={{ textAlign: "center", padding: "10px" }}>
-          {role}
+          {t(`users.roles.${role}`)}
         </Typography>
 
         <Divider />
@@ -79,7 +82,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
             <ListItemIcon>
               <DashboardIcon fontSize="small" />
             </ListItemIcon>
-            Dashboard
+            {t("header.dashboard")}
           </MenuItem>
         </Link>
         <Link to="/account-settings" className={style.link}>
@@ -87,7 +90,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
             <ListItemIcon>
               <Settings fontSize="small" />
             </ListItemIcon>
-            Account Settings
+            {t("header.accountSettings")}
           </MenuItem>
         </Link>
 
@@ -95,7 +98,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          {t("buttons.logout")}
         </MenuItem>
       </Menu>
     </>

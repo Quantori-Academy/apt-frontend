@@ -79,16 +79,14 @@ const SubstancesList: React.FC = () => {
   }
 
   if (isError) {
-    return (
-      <PageError text="Faild to load Reagents and Sample page, Please try later" />
-    );
+    return <PageError text={t("substances.errors.loadError")} />;
   }
 
   return (
     <Container>
       <DashboardBreadcrumbs />
       <Typography variant="h3" sx={{ marginBottom: "30px" }}>
-        {t("Substances")}
+        {t("substances.title")}
       </Typography>
       {role === userRoles.Researcher && (
         <Box className={style.buttonBox}>
@@ -97,14 +95,14 @@ const SubstancesList: React.FC = () => {
             color="primary"
             onClick={() => navigate(RouteProtectedPath.reagentAddPage)}
           >
-            {t("substances.add.reagent")}
+            {t("substances.buttons.addReagent")}
           </Button>
           <Button
             variant="contained"
             color="primary"
             onClick={() => navigate(RouteProtectedPath.sampleAddPage)}
           >
-            {t("substances.add.sample")}
+            {t("substances.buttons.addSample")}
           </Button>
         </Box>
       )}
@@ -123,8 +121,10 @@ const SubstancesList: React.FC = () => {
             setExpiredFilter(value)
           }
         >
-          <ToggleButton value="All">All</ToggleButton>
-          <ToggleButton value="Expired">Expired</ToggleButton>
+          <ToggleButton value="All">{t("substances.filters.all")}</ToggleButton>
+          <ToggleButton value="Expired">
+            {t("substances.filters.expired")}
+          </ToggleButton>
         </ToggleButtonGroup>
       </Box>
       <SubstancesTable
