@@ -2,6 +2,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 
 import {
+  AddOrder,
   OrdersFilter,
   OrdersTable,
   PageError,
@@ -15,6 +16,7 @@ const Orders = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
   const [page, setPage] = useState(0);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   const {
     data: orders,
@@ -38,6 +40,7 @@ const Orders = () => {
     setStatusFilter(value);
     setPage(0);
   };
+
   const handleSearchQuery = (value: string) => {
     setSearchQuery(value);
     setPage(0);
@@ -54,7 +57,9 @@ const Orders = () => {
         }}
       >
         <Typography variant="h3">Orders</Typography>
-        <Button variant="outlined">Add Order</Button>
+        <Button variant="outlined" onClick={() => setIsOrderModalOpen(true)}>
+          Add Order
+        </Button>
       </Box>
       <Box
         sx={{
@@ -83,6 +88,10 @@ const Orders = () => {
         page={page}
         setPage={setPage}
         orders={orders}
+      />
+      <AddOrder
+        modalOpen={isOrderModalOpen}
+        onClose={() => setIsOrderModalOpen(false)}
       />
     </Container>
   );

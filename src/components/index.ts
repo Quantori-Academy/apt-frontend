@@ -38,3 +38,4 @@ export { OrdersFilter } from "./OrdersFilter";
 export { BasicModal } from "./BasicModal";
 export { DeclineReagentRequest } from "./DeclineReagentRequest";
 export { AddReagentRequest } from "./AddReagentRequest";
+export { AddOrder } from "./AddOrder";
