@@ -30,7 +30,19 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
     defaultValues: {
       title: "",
       seller: "",
-      orderReagents: [],
+      orderReagents: [
+        {
+          name: "",
+          units: "",
+          quantity: "",
+          price: "",
+          structure: "",
+          CAS: "",
+          producer: "",
+          catalogId: "",
+          catalogLink: "",
+        },
+      ],
     },
   });
 
@@ -104,7 +116,7 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
             </Button>
             <Button type="submit">Submit</Button>
           </Box>
-          <FormHelperText error>
+          <FormHelperText error sx={{ mt: 1, fontSize: 14 }}>
             {errors.orderReagents?.root?.message}
           </FormHelperText>
           {fields.map((field, index, arr) => (
