@@ -1,13 +1,38 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 
-import { OrdersFilter, OrdersTable, SearchBar } from "@/components";
+import {
+  OrdersFilter,
+  OrdersTable,
+  PageError,
+  PageLoader,
+  SearchBar,
+} from "@/components";
+import { useGetOrdersQuery } from "@/store";
 import { StatusFilter } from "@/types";
 
 const Orders = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
   const [page, setPage] = useState(0);
+
+  const {
+    data: orders,
+    isLoading: isOrdersLoading,
+    isError,
+  } = useGetOrdersQuery();
+
+  if (isOrdersLoading) {
+    return <PageLoader />;
+  }
+
+  if (isError) {
+    return <PageError text="Failed to load orders" />;
+  }
+
+  if (!orders?.length) {
+    return <PageError text="Orders list is empty" />;
+  }
 
   const handleStatusChange = (value: StatusFilter) => {
     setStatusFilter(value);
@@ -57,6 +82,7 @@ const Orders = () => {
         statusFilter={statusFilter}
         page={page}
         setPage={setPage}
+        orders={orders}
       />
     </Container>
   );

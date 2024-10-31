@@ -14,8 +14,6 @@ import { ChangeEvent, useMemo, useState } from "react";
 import { Order, SortType, StatusFilter } from "@/types";
 import { getOrdersRows } from "@/utils";
 
-import { orders } from "../../../mock";
-
 type HeadCell = {
   label: string;
   key: keyof Order;
@@ -33,6 +31,7 @@ type OrdersTableProps = {
   statusFilter: StatusFilter;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  orders: Order[];
 };
 
 const OrdersTable: React.FC<OrdersTableProps> = ({
@@ -40,6 +39,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
   statusFilter,
   page,
   setPage,
+  orders,
 }) => {
   const [order, setOrder] = useState<SortType>("asc");
   const [orderBy, setOrderBy] = useState<keyof Order>("title");
@@ -68,7 +68,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
         sortType: order,
         rowsPerPage,
       }),
-    [order, orderBy, page, rowsPerPage, statusFilter, searchQuery]
+    [order, orderBy, orders, page, rowsPerPage, statusFilter, searchQuery]
   );
 
   const emptyRows =

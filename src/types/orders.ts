@@ -8,6 +8,10 @@ export type Order = {
   status: OrderStatus;
 };
 
+export type BackendOrder = Omit<Order, "creationDate"> & {
+  creation_date: string;
+};
+
 export type SortType = "asc" | "desc";
 
 export type StatusFilter = Capitalize<OrderStatus> | "All";
