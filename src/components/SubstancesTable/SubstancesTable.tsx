@@ -13,6 +13,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+import { SmilesImage } from "@/components";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import {
   SortColumn,
@@ -101,11 +102,17 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                 <TableCell align="left">
                   {t(`substances.filters.options.${reagent.category}`)}
                 </TableCell>
-                <TableCell align="right">{reagent.structure}</TableCell>
+                <TableCell align="right">
+                  {" "}
+                  <SmilesImage
+                    smiles={reagent.structure}
+                    svgOptions={{ width: 100, height: 100 }}
+                  />
+                </TableCell>
                 <TableCell align="left">{reagent.description}</TableCell>
                 <TableCell align="right">{reagent.quantityLeft}</TableCell>
                 <TableCell align="right">{reagent.storageLocation}</TableCell>
-                <TableCell align="right" sx={{ display: "flex" }}>
+                <TableCell align="right">
                   <IconButton
                     title="Details"
                     onClick={() => onClickDetails(reagent.category, reagent.id)}
