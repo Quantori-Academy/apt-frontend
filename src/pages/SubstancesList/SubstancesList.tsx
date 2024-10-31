@@ -33,7 +33,7 @@ const SubstancesList: React.FC = () => {
   const { t } = useTranslation();
   const { data: substances = [], isLoading, isError } = useGetSubstancesQuery();
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [categoryFilter, setCategoryFilter] =
@@ -52,7 +52,7 @@ const SubstancesList: React.FC = () => {
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(1);
+    setPage(0);
   };
 
   const { visibleItems, totalPages } = useMemo(
@@ -144,7 +144,7 @@ const SubstancesList: React.FC = () => {
         count={totalPages}
         rowsPerPage={rowsPerPage}
         page={page}
-        onPageChange={(_, newPage) => setPage(newPage)}
+        onPageChange={(_, page) => setPage(page)}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Container>
