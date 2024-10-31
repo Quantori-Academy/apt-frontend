@@ -22,6 +22,7 @@ type LocationOption = {
 type ReagentOption = {
   id: number;
   label: string;
+  consumption: string;
 };
 
 type AddSampleFormProps = {
@@ -33,7 +34,6 @@ type AddSampleFormProps = {
 };
 
 const AddSampleForm: React.FC<AddSampleFormProps> = ({
-  initialSampleData,
   handleSubmit,
   isLoading,
   reagentOptions,
@@ -57,13 +57,44 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
       addedSubstanceIds: [],
     },
   });
+  const [selectedReagents, setSelectedReagents] = React.useState<
+    { id: number; amount: string; unit: string; label: string }[]
+  >([]);
 
   const handleReagentChange = (
     _event: React.ChangeEvent<unknown>,
-    value: ReagentOption[]
+    value: ReagentOption | null,
+    index: number
   ) => {
-    const reagentIdsArray = value.map(({ id }) => id);
-    setValue("addedSubstanceIds", reagentIdsArray);
+    const newReagents = [...selectedReagents];
+    if (value) {
+      const [amount, unit] = value.consumption.split(" ");
+      newReagents[index] = {
+        id: value.id,
+        label: value.label,
+        amount,
+        unit,
+      };
+      setSelectedReagents(newReagents);
+      setValue(
+        "addedSubstanceIds",
+        newReagents.map((reagent) => reagent.id)
+      );
+    }
+  };
+  const handleAmountChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    index: number
+  ) => {
+    const newReagents = [...selectedReagents];
+    newReagents[index].amount = event.target.value;
+    setSelectedReagents(newReagents);
+  };
+  const addReagentField = () => {
+    setSelectedReagents([
+      ...selectedReagents,
+      { id: 0, amount: "", unit: "", label: "" },
+    ]);
   };
 
   const handleLocationChange = (
@@ -188,26 +219,65 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
             />
           </Grid>
           <Grid item xs={12}>
-            <Autocomplete
-              multiple
-              id="substances-select"
-              options={reagentOptions.filter(
-                ({ id }) => !initialSampleData.addedSubstanceIds.includes(id)
-              )}
-              getOptionLabel={({ label }) => label}
-              onChange={handleReagentChange}
-              disableCloseOnSelect
-              renderInput={(params) => (
+            <Button
+              variant="outlined"
+              onClick={addReagentField}
+              disabled={selectedReagents.length >= reagentOptions.length}
+              fullWidth
+            >
+              Add Reagent
+            </Button>
+          </Grid>
+          {selectedReagents.map((reagent, index) => (
+            <Grid
+              container
+              spacing={2}
+              key={index}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                justifyContent: "center",
+              }}
+            >
+              <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  options={reagentOptions}
+                  getOptionLabel={({ label }) => label}
+                  onChange={(event, value) =>
+                    handleReagentChange(event, value, index)
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Reagent"
+                      placeholder="Select reagent"
+                      fullWidth
+                      margin="normal"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                sx={{ display: "flex", alignItems: "center", gap: 1 }}
+              >
                 <TextField
-                  {...params}
-                  label="Substances"
-                  placeholder="Select substances"
+                  label="Consumption"
+                  value={reagent.amount}
+                  onChange={(event) => handleAmountChange(event, index)}
                   fullWidth
                   margin="normal"
+                  InputProps={{
+                    inputProps: { min: 1 },
+                  }}
                 />
-              )}
-            />
-          </Grid>
+                <Typography sx={{ marginTop: 1 }}>{reagent.unit}</Typography>
+              </Grid>
+            </Grid>
+          ))}
           <Grid item xs={12}>
             <Box display="flex" justifyContent="center">
               <Button
