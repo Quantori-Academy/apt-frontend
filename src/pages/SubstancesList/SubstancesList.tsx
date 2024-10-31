@@ -2,12 +2,12 @@ import {
   Box,
   Button,
   Container,
-  Pagination,
+  TablePagination,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import React, { ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -29,8 +29,6 @@ import { getListData } from "@/utils";
 
 import style from "./SubstancesList.module.css";
 
-const PAGE_SIZE = 5;
-
 const SubstancesList: React.FC = () => {
   const { t } = useTranslation();
   const { data: substances = [], isLoading, isError } = useGetSubstancesQuery();
@@ -42,6 +40,7 @@ const SubstancesList: React.FC = () => {
     useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const navigate = useNavigate();
 
   const role = useAppSelector(selectUserRole);
@@ -49,6 +48,11 @@ const SubstancesList: React.FC = () => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
     setSortDirection(isAsc ? "asc" : "desc");
     setSortColumn(property);
+  };
+
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(1);
   };
 
   const { visibleItems, totalPages } = useMemo(
@@ -61,7 +65,7 @@ const SubstancesList: React.FC = () => {
         page,
         searchQuery,
         expiredFilter,
-        pageSize: PAGE_SIZE,
+        pageSize: rowsPerPage,
       }),
     [
       categoryFilter,
@@ -71,6 +75,7 @@ const SubstancesList: React.FC = () => {
       page,
       searchQuery,
       expiredFilter,
+      rowsPerPage,
     ]
   );
 
@@ -133,13 +138,15 @@ const SubstancesList: React.FC = () => {
         onSortChange={handleSortChange}
         visibleItems={visibleItems}
       />
-      <Box className={style.pagination}>
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={(_, page) => setPage(page)}
-        />
-      </Box>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={totalPages}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(_, newPage) => setPage(newPage)}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </Container>
   );
 };
