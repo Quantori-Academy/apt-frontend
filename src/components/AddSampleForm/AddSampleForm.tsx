@@ -242,7 +242,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               disabled={selectedReagents.length >= reagentOptions.length}
               fullWidth
             >
-              {t("substances.buttons.addSample")}
+              {t("substances.buttons.chooseSubstance")}
             </Button>
           </Grid>
           {selectedReagents.map((reagent, index) => (
@@ -267,7 +267,9 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="Reagent"
+                      label={t(
+                        "addSubstanceForm.requiredFields.substance.label"
+                      )}
                       placeholder="Select reagent"
                       fullWidth
                       margin="normal"
@@ -282,7 +284,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                 sx={{ display: "flex", alignItems: "center", gap: 1 }}
               >
                 <TextField
-                  label="Consumption"
+                  label={t("addSubstanceForm.requiredFields.consumption.label")}
                   value={reagent.amount}
                   onChange={(event) => handleAmountChange(event, index)}
                   fullWidth
