@@ -125,8 +125,8 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
                 <Box
                   sx={{
                     display: "inline-block",
-                    padding: "4px 12px",
-                    fontSize: "24px",
+                    padding: "6px 12px",
+                    fontSize: "20px",
                     fontWeight: 500,
                     color: "#004d40",
                     borderRadius: "16px",
