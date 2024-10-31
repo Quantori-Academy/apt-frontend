@@ -1,10 +1,13 @@
 import { Container, Divider, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { AccountDetails } from "@/components";
 import { useAppSelector } from "@/hooks";
 import { selectUserId, selectUserRole } from "@/store";
 
 const AccountSettings: React.FC = () => {
+  const { t } = useTranslation();
+
   const userId = useAppSelector(selectUserId);
   const userRole = useAppSelector(selectUserRole);
 
@@ -27,10 +30,10 @@ const AccountSettings: React.FC = () => {
       }}
     >
       <Typography variant="h3" margin={1}>
-        Account Details
+        {t("userDetails.title")}
       </Typography>
       <Typography variant="h6" gutterBottom marginX={3}>
-        User Role: {userRole}
+        {t("users.table.role")}: {t(`users.roles.${userRole}`)}
       </Typography>
       <Divider sx={{ my: 3 }} />
       <AccountDetails userId={userId} />

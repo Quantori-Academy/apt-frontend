@@ -1,6 +1,7 @@
 import { Container } from "@mui/material";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -33,6 +34,8 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
   substanceId,
   redirectPath,
 }) => {
+  const { t } = useTranslation();
+
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
@@ -53,11 +56,13 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
     return <PageLoader />;
   }
 
-  const substanceTypeInLowerCase = substanceType.toLowerCase();
-
   if (!substanceLocationDetails) {
     return (
-      <PageError text={`Failed to load ${substanceTypeInLowerCase} details.`} />
+      <PageError
+        text={t(
+          `substanceDetails.errors.${substanceType === "Reagent" ? "reagentLoadError" : "sampleLoadError"}`
+        )}
+      />
     );
   }
 
@@ -67,7 +72,9 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
 
       openSnackbar(
         "success",
-        `${substanceTypeInLowerCase} deleted successfully!`
+        t(
+          `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.success" : "sample.success"}`
+        )
       );
 
       navigate(redirectPath);
@@ -77,7 +84,10 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
           .message;
         openSnackbar("error", errorMessage);
       } else {
-        openSnackbar("error", "An unexpected error occurred");
+        openSnackbar(
+          "error",
+          t("substanceDetails.snackBarMessages.unexpectedError")
+        );
       }
     } finally {
       setDeleteModalIsOpen(false);
@@ -114,7 +124,7 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
       <ConfirmRemoving
         open={deleteModalIsOpen}
         modalTitle=""
-        modalText={`Are you sure you want to delete this ${substanceTypeInLowerCase}?`}
+        modalText={t("substances.modalMessages.confirmDelete")}
         onClose={() => setDeleteModalIsOpen(false)}
         onDelete={handleDelete}
       />

@@ -7,6 +7,7 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { PageLoader } from "@/components";
@@ -36,6 +37,8 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
   substanceType,
   openSnackbar,
 }) => {
+  const { t } = useTranslation();
+
   const { data: rooms, isLoading } = useGetStorageRoomsQuery();
 
   const [updateSubstance] = useUpdateSubstanceMutation();
@@ -66,7 +69,12 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
       if (quantityLeft === "0") {
         await deleteSubstance(substanceDetails.substanceId).unwrap();
 
-        openSnackbar("success", `${substanceType} deleted successfully!`);
+        openSnackbar(
+          "success",
+          t(
+            `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.successDelete" : "sample.successDelete"}`
+          )
+        );
 
         navigate(RouteProtectedPath.substances);
       } else {
@@ -78,7 +86,12 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
         };
 
         await updateSubstance(updatedDetails);
-        openSnackbar("success", `${substanceType} updated successfully!`);
+        openSnackbar(
+          "success",
+          t(
+            `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.successUpdate" : "sample.successUpdate"}`
+          )
+        );
         setIsEditing(false);
       }
     } catch (err) {
@@ -87,7 +100,10 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
           .message;
         openSnackbar("error", errorMessage);
       } else {
-        openSnackbar("error", "An unexpected error occurred");
+        openSnackbar(
+          "error",
+          t("substanceDetails.snackBarMessages.unexpectedError")
+        );
       }
     }
   };
@@ -101,7 +117,11 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
         onClose={() => setIsEditing(false)}
         maxWidth="sm"
       >
-        <DialogTitle>Edit {substanceType.toLowerCase()}</DialogTitle>
+        <DialogTitle>
+          {t(
+            `substanceDetails.title.${substanceType === "Reagent" ? "editReagent" : "editSample"}`
+          )}
+        </DialogTitle>
         <DialogContent
           sx={{
             "&.MuiDialogContent-root": {
@@ -110,7 +130,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
           }}
         >
           <TextField
-            label="Quantity Left"
+            label={t("substanceDetails.fields.totalQuantityLeft")}
             variant="outlined"
             value={quantityLeft}
             inputProps={{ min: 0 }}
@@ -119,8 +139,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
             fullWidth
             error={quantityLeft === "0"}
             helperText={
-              quantityLeft === "0" &&
-              `${substanceType} will be deleted, if quantity is 0`
+              quantityLeft === "0" && t("substanceDetails.quantityWarning")
             }
             sx={{ marginBottom: "20px" }}
           />
@@ -129,7 +148,9 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
             options={rooms || []}
             getOptionLabel={(option) =>
               option.room +
-              (option.id == substanceLocationDetails.roomId ? " (current)" : "")
+              (option.id == substanceLocationDetails.roomId
+                ? t("substanceDetails.currentLocation")
+                : "")
             }
             value={selectedRoom}
             onChange={(_, newRoom) => {
@@ -137,7 +158,11 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
               setSelectedRoom(newRoom);
             }}
             renderInput={(params) => (
-              <TextField {...params} label="Room" variant="outlined" />
+              <TextField
+                {...params}
+                label={t("substanceDetails.fields.room")}
+                variant="outlined"
+              />
             )}
           />
           {selectedRoom && (
@@ -147,7 +172,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
               getOptionLabel={(option) =>
                 option.locationName +
                 (option.locationId == substanceLocationDetails.locationId
-                  ? " (current)"
+                  ? t("substanceDetails.currentLocation")
                   : "")
               }
               value={selectedLocation}
@@ -155,7 +180,11 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
                 setSelectedLocation(newLocation);
               }}
               renderInput={(params) => (
-                <TextField {...params} label="Location" variant="outlined" />
+                <TextField
+                  {...params}
+                  label={t("substanceDetails.fields.location")}
+                  variant="outlined"
+                />
               )}
             />
           )}
@@ -168,9 +197,11 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
                 !selectedRoom || !selectedLocation || quantityLeft === ""
               }
             >
-              Save Changes
+              {t("substanceDetails.buttons.saveChanges")}
             </Button>
-            <Button onClick={() => setIsEditing(false)}>Close</Button>
+            <Button onClick={() => setIsEditing(false)}>
+              {t("buttons.cancel")}
+            </Button>
           </Box>
         </DialogContent>
       </Dialog>

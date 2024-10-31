@@ -1,5 +1,7 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
+import { PageLoader } from "@/components";
 import { AddSampleForm } from "@/components/AddSampleForm";
 import useAlertSnackbar from "@/hooks/useAlertSnackbar";
 import { useCreateSampleMutation } from "@/store";
@@ -20,6 +22,8 @@ const defaultSampleData: SampleData = {
 };
 
 const AddSamplePage: React.FC = () => {
+  const { t } = useTranslation();
+
   const { data: reagentData, isLoading: isReagentsLoading } =
     useGetSubstancesQuery();
   const { data: storageRooms, isLoading: isLocationsLoading } =
@@ -32,15 +36,21 @@ const AddSamplePage: React.FC = () => {
   const handleSubmit = async (sampleData: SampleData) => {
     try {
       await createSample(sampleData).unwrap();
-      openSnackbar("success", "Sample created successfully!");
+      openSnackbar(
+        "success",
+        t("addSubstanceForm.snackBarMessages.sample.success")
+      );
     } catch (error) {
       console.error("Failed to create sample:", error);
-      openSnackbar("error", "Failed to create sample.");
+      openSnackbar(
+        "error",
+        t("addSubstanceForm.snackBarMessages.sample.error")
+      );
     }
   };
 
   if (isReagentsLoading || isLocationsLoading) {
-    return <div>Loading...</div>;
+    return <PageLoader />;
   }
 
   const reagentOptions =

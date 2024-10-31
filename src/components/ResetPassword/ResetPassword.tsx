@@ -1,6 +1,7 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { RevealableField } from "@/components";
 import { PASSWORD_REGEX } from "@/constants";
@@ -19,6 +20,8 @@ type ResetPasswordProps = {
 };
 
 const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
+  const { t } = useTranslation();
+
   const [isEditMode, setIsEditMode] = useState(false);
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
@@ -44,9 +47,12 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     });
 
     if (error) {
-      openSnackbar("error", "Failed to change password");
+      openSnackbar("error", t("userDetails.snackBarMessages.password.error"));
     } else {
-      openSnackbar("success", "Password changed successfully");
+      openSnackbar(
+        "success",
+        t("userDetails.snackBarMessages.password.success")
+      );
       setIsEditMode(false);
     }
   };
@@ -58,44 +64,44 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
 
   return (
     <Container>
-      <Typography
-        sx={{ textAlign: "center", marginBottom: "25px" }}
-        variant="h5"
-        gutterBottom
-        margin={3}
-      >
-        Account Details
-      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         {isEditMode ? (
           <Box className={style.inputBox}>
             <RevealableField
               name="password"
-              label="Password"
+              label={t("userDetails.requiredFields.password.label")}
               register={register}
               error={errors.password}
               options={{
-                required: "Password is required",
+                required: t(
+                  "userDetails.requiredFields.password.requiredMessage"
+                ),
                 minLength: {
                   value: 8,
-                  message: "Password need to be not less than 8 character",
+                  message: t(
+                    "userDetails.requiredFields.password.minLengthMessage"
+                  ),
                 },
                 pattern: {
                   value: PASSWORD_REGEX,
-                  message:
-                    "Password must contain at least one uppercase letter",
+                  message: t(
+                    "userDetails.requiredFields.password.patternMessage"
+                  ),
                 },
               }}
             />
             <RevealableField
               name="confirmPassword"
-              label="Confirm Password"
+              label={t("userDetails.requiredFields.confirmPassword.label")}
               register={register}
               error={errors.confirmPassword}
               options={{
-                required: "This field is required",
+                required: t(
+                  "userDetails.requiredFields.confirmPassword.requiredMessage"
+                ),
                 validate: (value) =>
-                  value === getValues().password || "Passwords need to match",
+                  value === getValues().password ||
+                  t("userDetails.requiredFields.confirmPassword.matchMessage"),
               }}
             />
           </Box>
@@ -111,7 +117,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
               type="submit"
               disabled={isLoading}
             >
-              Save
+              {t("buttons.save")}
             </Button>
             <Button
               fullWidth
@@ -119,7 +125,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
               color="primary"
               onClick={handleCancel}
             >
-              Cancel
+              {t("buttons.cancel")}
             </Button>
           </Box>
         ) : (
@@ -129,7 +135,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
             fullWidth
             onClick={() => setIsEditMode(true)}
           >
-            Change Password
+            {t("userDetails.buttons.changePassword")}
           </Button>
         )}
       </form>

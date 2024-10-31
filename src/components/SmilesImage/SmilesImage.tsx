@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 // @ts-expect-error: No type declarations for 'smiles-drawer'
 import SmilesDrawer from "smiles-drawer";
 
@@ -15,6 +16,7 @@ const options = {
 };
 
 const SmilesImage: React.FC<SmilesImageProps> = ({ smiles }) => {
+  const { t } = useTranslation();
   useEffect(() => {
     const drawer = new SmilesDrawer.SvgDrawer(options);
     SmilesDrawer.parse(smiles, function (tree: unknown) {
@@ -27,7 +29,7 @@ const SmilesImage: React.FC<SmilesImageProps> = ({ smiles }) => {
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Typography variant="body2" sx={{ textAlign: "center" }}>
-        Structure(smiles)
+        {t("substanceDetails.fields.structure")}
       </Typography>
       <svg className={styles.smilesSvg} {...options} id="structure-svg"></svg>
     </Box>

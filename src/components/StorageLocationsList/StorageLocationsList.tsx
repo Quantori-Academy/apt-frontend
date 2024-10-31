@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { RouteProtectedPath } from "@/router";
@@ -23,6 +24,8 @@ const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
   storages,
   onEditRoom,
 }) => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const handleLocationClick = (locationId: string) => {
@@ -56,7 +59,7 @@ const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
               variant="subtitle1"
               style={{ marginTop: "10px", fontWeight: 600 }}
             >
-              Locations:
+              {t("storage.fields.locations")}
             </Typography>
             <List
               style={{
@@ -91,7 +94,7 @@ const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
 
             <Divider style={{ margin: "10px 0" }} />
             <Typography variant="body2" color="textSecondary">
-              Total Substances: {room.totalSubstances}
+              {`${t("storage.fields.totalSubstances")} ${room.totalSubstances}`}
             </Typography>
 
             <Button
@@ -100,7 +103,7 @@ const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
               style={{ marginTop: "10px" }}
               onClick={() => onEditRoom(room.id)}
             >
-              Edit Room
+              {t("storage.buttons.editRoom")}
             </Button>
           </CardContent>
         </Card>

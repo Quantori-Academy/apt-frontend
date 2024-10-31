@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "@/hooks";
@@ -28,16 +29,18 @@ type UserTableProps = {
 };
 
 const columns: UserTableColumn[] = [
-  { label: "Username", key: "username" },
-  { label: "First Name", key: "firstName" },
-  { label: "Last Name", key: "lastName" },
-  { label: "Email", key: "email" },
-  { label: "Role", key: "role" },
-  { label: "Last login", key: "lastLogin" },
-  { label: "Actions", key: "actions" },
+  { label: "users.table.username", key: "username" },
+  { label: "users.table.firstName", key: "firstName" },
+  { label: "users.table.lastName", key: "lastName" },
+  { label: "users.table.email", key: "email" },
+  { label: "users.table.role", key: "role" },
+  { label: "users.table.lastLogin", key: "lastLogin" },
+  { label: "users.table.actions", key: "actions" },
 ];
 
 const UsersTable: React.FC<UserTableProps> = ({ users }) => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const loggedInUserId = useAppSelector(selectUserId);
@@ -58,7 +61,7 @@ const UsersTable: React.FC<UserTableProps> = ({ users }) => {
         <TableHead>
           <TableRow>
             {columns.map((column) => (
-              <TableCell key={column.key}>{column.label}</TableCell>
+              <TableCell key={column.key}>{t(column.label)}</TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -69,7 +72,9 @@ const UsersTable: React.FC<UserTableProps> = ({ users }) => {
                 if (column.key !== "actions") {
                   return (
                     <TableCell key={column.key}>
-                      {user[column.key as keyof typeof user]}
+                      {column.key === "role"
+                        ? t(`users.roles.${user[column.key]}`)
+                        : user[column.key as keyof typeof user]}
                     </TableCell>
                   );
                 }
@@ -80,7 +85,7 @@ const UsersTable: React.FC<UserTableProps> = ({ users }) => {
                   color="primary"
                   onClick={() => handleEdit(user.id)}
                 >
-                  Edit
+                  {t("buttons.edit")}
                 </Button>
               </TableCell>
             </TableRow>

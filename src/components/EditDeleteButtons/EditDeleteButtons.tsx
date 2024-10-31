@@ -1,6 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button, Grid } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 type EditDeleteButtonsProps = {
   onEdit: () => void;
@@ -11,6 +12,8 @@ const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
   onDelete,
   onEdit,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Grid container spacing={2} sx={{ mt: 4 }}>
       <Grid item>
@@ -20,7 +23,7 @@ const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
           startIcon={<EditIcon />}
           onClick={onEdit}
         >
-          Edit
+          {t("buttons.edit")}
         </Button>
       </Grid>
       <Grid item>
@@ -30,7 +33,7 @@ const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
           startIcon={<DeleteIcon />}
           onClick={onDelete}
         >
-          Delete
+          {t("buttons.delete")}
         </Button>
       </Grid>
     </Grid>

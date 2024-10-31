@@ -55,9 +55,9 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
     const { error } = await deleteSubstance(deleteItemId);
 
     if (error) {
-      openSnackbar("error", "Failed to delete substance!");
+      openSnackbar("error", t("substances.snackBarMessages.delete.error"));
     } else {
-      openSnackbar("success", "Substance deleted successfully!");
+      openSnackbar("success", t("substances.snackBarMessages.delete.success"));
     }
   };
 
@@ -85,7 +85,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                   direction={sortDirection}
                   onClick={() => onSortChange("name")}
                 >
-                  {t("substances.list.name")}
+                  {t("substances.table.name")}
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -94,23 +94,23 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                   direction={sortDirection}
                   onClick={() => onSortChange("category")}
                 >
-                  {t("substances.list.category")}
+                  {t("substances.table.category")}
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right">
-                {t("substances.list.structure")}
+                {t("substances.table.structure")}
               </TableCell>
               <TableCell align="right">
-                {t("substances.list.description")}
+                {t("substances.table.description")}
               </TableCell>
               <TableCell align="right">
-                {t("substances.list.quantityLeft")}
+                {t("substances.table.quantityLeft")}
               </TableCell>
               <TableCell align="right">
-                {t("substances.list.storageLocation")}
+                {t("substances.table.storageLocation")}
               </TableCell>
               <TableCell align="right">
-                {t("substances.list.actions")}
+                {t("substances.table.actions")}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -123,7 +123,9 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                 <TableCell component="th" scope="row">
                   {reagent.name}
                 </TableCell>
-                <TableCell align="left">{reagent.category}</TableCell>
+                <TableCell align="left">
+                  {t(`substances.filters.options.${reagent.category}`)}
+                </TableCell>
                 <TableCell align="right">{reagent.structure}</TableCell>
                 <TableCell align="left">{reagent.description}</TableCell>
                 <TableCell align="right">{reagent.quantityLeft}</TableCell>
@@ -157,7 +159,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
       <ConfirmRemoving
         open={isOpenModal}
         modalTitle={""}
-        modalText={"Are you sure you want to delete this substance?"}
+        modalText={t("substances.modalMessages.confirmDelete")}
         onDelete={() => handleDelete()}
         onClose={() => setIsOpenModal(false)}
       />
