@@ -247,20 +247,24 @@
         },
         "price": {
           "label": "Price per Unit",
+          "requiredMessage": "Price is required",
           "minPriceMessage": "Price must be positive"
         },
         "quantityUnit": {
-          "label": "Quantity Unit"
+          "label": "Quantity Unit",
+          "requiredMessage": "Quantity unit is required"
         },
         "quantity": {
           "label": "Quantity Left",
+          "requiredMessage": "Quantity left is required",
           "minQuantityMessage": "Quantity must be positive"
         },
         "expirationDate": {
           "label": "Expiration Date"
         },
         "location": {
-          "label": "Location"
+          "label": "Location",
+          "requiredMessage": "Location is required"
         },
         "CASNumber": {
           "label": "CAS Number"
