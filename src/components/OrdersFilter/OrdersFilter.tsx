@@ -1,4 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { StatusFilter } from "@/types";
 
@@ -14,24 +15,27 @@ const statuses: StatusFilter[] = [
   "Fulfilled",
   "Canceled",
 ];
+
 const OrdersFilter: React.FC<OrdersFilterProps> = ({
   statusFilter,
   handleStatusChange,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <FormControl fullWidth size="medium" variant="outlined">
       <InputLabel sx={{ height: "auto" }} id="selectStatus">
-        Status
+        {t("orders.statuses.status")}
       </InputLabel>
       <Select
         labelId="selectStatus"
         value={statusFilter}
-        label="Status"
+        label={t("orders.statuses.status")}
         onChange={(e) => handleStatusChange(e.target.value as StatusFilter)}
       >
         {statuses.map((option) => (
           <MenuItem key={option} value={option}>
-            {option}
+            {t(`orders.statuses.${option}`)}
           </MenuItem>
         ))}
       </Select>

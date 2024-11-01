@@ -10,11 +10,10 @@ import {
   TableSortLabel,
 } from "@mui/material";
 import { ChangeEvent, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Order, SortType, StatusFilter } from "@/types";
 import { getOrdersRows } from "@/utils";
-
-import { orders } from "../../../mock";
 
 type HeadCell = {
   label: string;
@@ -33,6 +32,7 @@ type OrdersTableProps = {
   statusFilter: StatusFilter;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  orders: Order[];
 };
 
 const OrdersTable: React.FC<OrdersTableProps> = ({
@@ -40,7 +40,10 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
   statusFilter,
   page,
   setPage,
+  orders,
 }) => {
+  const { t } = useTranslation();
+
   const [order, setOrder] = useState<SortType>("asc");
   const [orderBy, setOrderBy] = useState<keyof Order>("title");
 
@@ -68,7 +71,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
         sortType: order,
         rowsPerPage,
       }),
-    [order, orderBy, page, rowsPerPage, statusFilter, searchQuery]
+    [order, orderBy, orders, page, rowsPerPage, statusFilter, searchQuery]
   );
 
   const emptyRows =
@@ -92,7 +95,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                     direction={orderBy === headCell.key ? order : "asc"}
                     onClick={() => handleRequestSort(headCell.key)}
                   >
-                    {headCell.label}
+                    {t(`orders.table.${headCell.label}`)}
                   </TableSortLabel>
                 </TableCell>
               ))}
@@ -104,7 +107,9 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                 <TableRow hover key={order.id}>
                   {headCells.map((cell) => (
                     <TableCell key={cell.key}>
-                      {order[cell.key as keyof typeof order]}
+                      {cell.key === "status"
+                        ? t(`orders.statuses.${order[cell.key]}`)
+                        : order[cell.key as keyof typeof order]}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -130,6 +135,10 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
         page={page}
         onPageChange={(_, newPage) => setPage(newPage)}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        labelRowsPerPage={t("orders.table.Pagantion.RowsPerPage")}
+        labelDisplayedRows={({ from, to, count }) =>
+          `${from}-${to} ${t("orders.table.Pagantion.of")} ${count !== -1 ? count : `${t("orders.table.Pagantion.moreThan")} ${to}`}`
+        } // Customize this text
       />
     </Paper>
   );

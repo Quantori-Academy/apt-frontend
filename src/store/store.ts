@@ -2,12 +2,21 @@ import { Action, ThunkAction, combineSlices, configureStore } from "@reduxjs/too
 
 import { reagentRequestApi } from "@/store/reagentRequestApi.ts";
 
+import { ordersApi } from "./ordersApi";
 import { authSlice, counterSlice } from "./slices";
 import { storageApi } from "./storageApi";
 import { substancesApi } from "./substancesApi";
 import { usersApi } from "./usersApi";
 
-const rootReducer = combineSlices(counterSlice, authSlice, storageApi, usersApi, substancesApi, reagentRequestApi);
+const rootReducer = combineSlices(
+  counterSlice,
+  authSlice,
+  storageApi,
+  usersApi,
+  substancesApi,
+  reagentRequestApi,
+  ordersApi
+);
 
 export const makeStore = () => {
   const store = configureStore({
@@ -17,7 +26,8 @@ export const makeStore = () => {
         usersApi.middleware,
         storageApi.middleware,
         substancesApi.middleware,
-        reagentRequestApi.middleware
+        reagentRequestApi.middleware,
+        ordersApi.middleware
       ),
   });
 

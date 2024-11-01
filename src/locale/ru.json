@@ -22,7 +22,8 @@
       "cancel": "Отменить",
       "delete": "Удалить",
       "login": "Войти",
-      "logout": "Выйти"
+      "logout": "Выйти",
+      "create": "Создать"
     },
 
     "users": {
@@ -251,12 +252,13 @@
           "minPriceMessage": "Цена должна быть положительной"
         },
         "quantityUnit": {
-          "label": "Единица измерения количества",
-          "requiredMessage": "Поле 'Единица количества' обязательно для заполнения"
+          "label": "Единица измерения",
+          "requiredMessage": "Поле 'Единица измерения' обязательно для заполнения"
         },
         "quantity": {
           "label": "Остаток",
-          "requiredMessage": "Поле 'Количество оставшихся' обязательно для заполнения"
+          "requiredMessage": "Поле 'Остаток' обязательно для заполнения",
+          "minQuantityMessage": "Quantity must be positive"
         },
         "expirationDate": {
           "label": "Дата истечения срока"
@@ -264,7 +266,6 @@
         "location": {
           "label": "Местоположение",
           "requiredMessage": "Поле 'Местоположение' обязательно для заполнения"
-
         },
         "CASNumber": {
           "label": "Номер CAS"
@@ -301,7 +302,7 @@
         "CASNumber": "Номер CAS",
         "producer": "Производитель",
         "locationId": "Место хранения",
-        "units": "Единицы",
+        "unit": "Единица измерения",
         "pricePerUnit": "Цена за единицу",
         "totalQuantityLeft": "Остаток",
         "catalogID": "ID каталога",
@@ -346,7 +347,6 @@
         "editRoom": "Редактировать комнату",
         "updatingRooms": "Обновление...",
         "creatingLocation": "Создание...",
-        "create": "Создать",
         "changeLocation": "Изменить локацию"
       },
 
@@ -396,6 +396,80 @@
         "errorMove": "Не удалось переместить вещества",
         "notEmptyError": "Вы не можете удалить это место хранения, так как оно содержит вещества",
         "creationError": "Не удалось создать место хранения!"
+      }
+    },
+
+    "orders": {
+      "title": "Заказы",
+
+      "buttons": {
+        "createOrder": "Создать заказ",
+        "create": "Создать"
+      },
+
+      "errors": {
+        "loadError": "Не удалось загрузить заказы",
+        "emptyError": "Список заказов пуст"
+      },
+
+      "statuses": {
+        "status": "Статус",
+        "All": "Все",
+        "Pending": "В ожидании",
+        "Submitted": "Отправлено",
+        "Fulfilled": "Выполнено",
+        "Canceled": "Отменено"
+      },
+
+      "table": {
+        "Title": "Название",
+        "Creation Date": "Дата создания",
+        "Seller": "Продавец",
+        "Status": "Статус",
+        "Pagantion": {
+          "RowsPerPage": "Строк на странице:",
+          "of": "из",
+          "moreThan": "больше чем"
+        }
+      }
+    },
+
+    "createOrderForm": {
+      "buttons": {
+        "removeReagentFromOrder": "Удалить из заказа"
+      },
+
+      "errors": {
+        "noReagentsOrder": "Добавьте хотя бы 1 реактив в заказ"
+      },
+
+      "requiredFields": {
+        "title": {
+          "label": "Название*",
+          "requiredMessage": "Название обязательно",
+          "maxLengthMessage": "Название не должно превышать 200 символов"
+        },
+        "seller": {
+          "label": "Продавец*",
+          "requiredMessage": "Продавец обязателен"
+        },
+
+        "name": {
+          "label": "Название*",
+          "requiredMessage": "Название обязательно"
+        },
+        "units": {
+          "label": "Единица измерения*",
+          "requiredMessage": "Единица измерения обязательны"
+        },
+        "quantity": {
+          "label": "Количество*",
+          "requiredMessage": "Количество обязательно"
+        },
+        "price": {
+          "label": "Цена*",
+          "requiredMessage": "Цена обязательна"
+        }
       }
     }
   }
