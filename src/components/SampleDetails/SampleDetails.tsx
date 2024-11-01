@@ -113,7 +113,10 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <SmilesImage smiles={sampleDetails.structure} />
+            <SmilesImage
+              smiles={sampleDetails.structure}
+              svgOptions={{ width: 185, height: 185 }}
+            />
           </Grid>
         </Grid>
 
