@@ -108,6 +108,9 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               type="number"
               {...register("pricePerUnit", {
                 valueAsNumber: true,
+                required: t(
+                  "addSubstanceForm.requiredFields.price.requiredMessage"
+                ),
                 min: {
                   value: 0,
                   message: t(
@@ -137,6 +140,9 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               type="number"
               {...register("quantityLeft", {
                 valueAsNumber: true,
+                required: t(
+                  "addSubstanceForm.requiredFields.quantity.requiredMessage"
+                ),
                 min: {
                   value: 0,
                   message: t(
@@ -173,6 +179,21 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
             />
           </Grid>
           <Grid item xs={12} sm={6}>
+            <TextField
+              label={t("addSubstanceForm.requiredFields.quantityUnit.label")}
+              {...register("quantityUnit", {
+                required: t(
+                  "addSubstanceForm.requiredFields.quantityUnit.requiredMessage"
+                ),
+              })}
+              fullWidth
+              margin="normal"
+              error={!!errors.quantityUnit}
+              helperText={errors.quantityUnit?.message}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
             <Autocomplete
               id="location-select"
               options={locationOptions}
@@ -185,6 +206,13 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
                   placeholder="Select location"
                   fullWidth
                   margin="normal"
+                  error={!!errors.locationId}
+                  helperText={errors.locationId?.message}
+                  {...register("locationId", {
+                    required: t(
+                      "addSubstanceForm.requiredFields.location.requiredMessage"
+                    ),
+                  })}
                 />
               )}
             />
