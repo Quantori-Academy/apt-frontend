@@ -1,5 +1,6 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   AddOrder,
@@ -13,9 +14,13 @@ import { useGetOrdersQuery } from "@/store";
 import { StatusFilter } from "@/types";
 
 const Orders = () => {
+  const { t } = useTranslation();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
+
   const [page, setPage] = useState(0);
+
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   const {
@@ -29,11 +34,11 @@ const Orders = () => {
   }
 
   if (isError) {
-    return <PageError text="Failed to load orders" />;
+    return <PageError text={t("orders.errors.loadError")} />;
   }
 
   if (!orders?.length) {
-    return <PageError text="Orders list is empty" />;
+    return <PageError text={t("orders.errors.emptyError")} />;
   }
 
   const handleStatusChange = (value: StatusFilter) => {
@@ -56,9 +61,9 @@ const Orders = () => {
           marginY: "30px",
         }}
       >
-        <Typography variant="h3">Orders</Typography>
+        <Typography variant="h3">{t("orders.title")}</Typography>
         <Button variant="outlined" onClick={() => setIsOrderModalOpen(true)}>
-          Add Order
+          {t("orders.buttons.createOrder")}
         </Button>
       </Box>
       <Box

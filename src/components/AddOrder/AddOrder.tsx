@@ -10,6 +10,7 @@ import {
   TextField,
 } from "@mui/material";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { OrderInput } from "@/types";
 
@@ -19,6 +20,8 @@ type AddOrderProps = {
 };
 
 const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
+  const { t } = useTranslation();
+
   const {
     register,
     handleSubmit,
@@ -50,7 +53,7 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
     name: "orderReagents",
     control,
     rules: {
-      required: "Add at least 1 reagent to the order",
+      required: t("createOrderForm.errors.noReagentsOrder"),
     },
   });
 
@@ -62,7 +65,7 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
 
   return (
     <Dialog open={modalOpen} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Create Order</DialogTitle>
+      <DialogTitle>{t("orders.buttons.createOrder")}</DialogTitle>
       <DialogContent
         sx={{
           "&.MuiDialogContent-root": {
@@ -73,12 +76,16 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
         <Box onSubmit={handleSubmit(onSubmit)} component="form">
           <Stack spacing={3} mb={3}>
             <TextField
-              label="Title*"
+              label={t("createOrderForm.requiredFields.title.label")}
               {...register("title", {
-                required: "Order required",
+                required: t(
+                  "createOrderForm.requiredFields.title.requiredMessage"
+                ),
                 maxLength: {
                   value: 200,
-                  message: "Title cannot exceed 200 characters",
+                  message: t(
+                    "createOrderForm.requiredFields.title.maxLengthMessage"
+                  ),
                 },
               })}
               fullWidth
@@ -86,9 +93,11 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
               error={!!errors.title}
             />
             <TextField
-              label="Seller*"
+              label={t("createOrderForm.requiredFields.seller.label")}
               {...register("seller", {
-                required: "Seller required",
+                required: t(
+                  "createOrderForm.requiredFields.seller.requiredMessage"
+                ),
               })}
               fullWidth
               helperText={errors.seller?.message}
@@ -112,9 +121,9 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
                 })
               }
             >
-              Add Reagent
+              {t("substances.buttons.addReagent")}
             </Button>
-            <Button type="submit">Submit</Button>
+            <Button type="submit">{t("buttons.create")}</Button>
           </Box>
           <FormHelperText error sx={{ mt: 1, fontSize: 14 }}>
             {errors.orderReagents?.root?.message}
@@ -133,45 +142,53 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
                     backgroundColor: "#f0f0f0",
                   }}
                 >
-                  {`Reagent №${arr.length - index}`}
+                  {`${t("substances.filters.options.Reagent")} №${arr.length - index}`}
                 </Box>
               </Divider>
               <TextField
-                label="Name*"
+                label={t("createOrderForm.requiredFields.name.label")}
                 {...register(`orderReagents.${index}.name`, {
-                  required: "Name required",
+                  required: t(
+                    "createOrderForm.requiredFields.name.requiredMessage"
+                  ),
                 })}
                 helperText={errors.orderReagents?.[index]?.name?.message}
                 error={!!errors.orderReagents?.[index]?.name}
               />
               <Box sx={{ display: "flex", gap: 2 }}>
                 <TextField
-                  label="Units*"
+                  label={t("createOrderForm.requiredFields.units.label")}
                   fullWidth
                   {...register(`orderReagents.${index}.units`, {
-                    required: "Units required",
+                    required: t(
+                      "createOrderForm.requiredFields.units.requiredMessage"
+                    ),
                   })}
                   helperText={errors.orderReagents?.[index]?.units?.message}
                   error={!!errors.orderReagents?.[index]?.units}
                 />
                 <TextField
-                  label="Quantity*"
+                  label={t("createOrderForm.requiredFields.quantity.label")}
                   fullWidth
                   inputProps={{ min: 0 }}
                   type="number"
                   {...register(`orderReagents.${index}.quantity`, {
-                    required: "Quantity required",
+                    required: t(
+                      "createOrderForm.requiredFields.quantity.requiredMessage"
+                    ),
                   })}
                   helperText={errors.orderReagents?.[index]?.quantity?.message}
                   error={!!errors.orderReagents?.[index]?.quantity}
                 />
                 <TextField
-                  label="Price*"
+                  label={t("createOrderForm.requiredFields.price.label")}
                   fullWidth
                   inputProps={{ min: 0 }}
                   type="number"
                   {...register(`orderReagents.${index}.price`, {
-                    required: "Price required",
+                    required: t(
+                      "createOrderForm.requiredFields.price.requiredMessage"
+                    ),
                   })}
                   helperText={errors.orderReagents?.[index]?.price?.message}
                   error={!!errors.orderReagents?.[index]?.price}
@@ -179,37 +196,37 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
               </Box>
               <Box sx={{ display: "flex", gap: 2 }}>
                 <TextField
-                  label="CAS"
+                  label={t("addSubstanceForm.requiredFields.CASNumber.label")}
                   fullWidth
                   {...register(`orderReagents.${index}.CAS`)}
                 />
                 <TextField
-                  label="Producer"
+                  label={t("addSubstanceForm.requiredFields.producer.label")}
                   fullWidth
                   {...register(`orderReagents.${index}.producer`)}
                 />
               </Box>
               <TextField
-                label="Structure"
+                label={t("addSubstanceForm.requiredFields.structure.label")}
                 fullWidth
                 {...register(`orderReagents.${index}.structure`)}
               />
               <Box sx={{ display: "flex", gap: 2 }}>
                 <TextField
-                  label="Catalog Link"
+                  label={t("addSubstanceForm.requiredFields.catalogLink.label")}
                   fullWidth
                   sx={{ flex: "1" }}
                   {...register(`orderReagents.${index}.catalogLink`)}
                 />
                 <TextField
-                  label="Catalog Id"
+                  label={t("addSubstanceForm.requiredFields.catalogId.label")}
                   fullWidth
                   sx={{ flex: "0 0 20%" }}
                   {...register(`orderReagents.${index}.catalogId`)}
                 />
               </Box>
               <Button type="button" onClick={() => remove(index)}>
-                Remove from order
+                {t("createOrderForm.buttons.removeReagentFromOrder")}
               </Button>
             </Stack>
           ))}

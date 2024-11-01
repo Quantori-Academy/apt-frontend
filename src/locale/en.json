@@ -22,7 +22,8 @@
       "cancel": "Cancel",
       "delete": "Delete",
       "login": "Login",
-      "logout": "Logout"
+      "logout": "Logout",
+      "create": "Create"
     },
 
     "users": {
@@ -346,7 +347,6 @@
         "editRoom": "Edit Room",
         "updatingRooms": "Updating...",
         "creatingLocation": "Creating...",
-        "create": "Create",
         "changeLocation": "Change Location"
       },
 
@@ -396,6 +396,80 @@
         "errorMove": "Failed to move substances",
         "notEmptyError": "You can't delete this storage location because it contains substances",
         "creationError": "Failed to create storage location!"
+      }
+    },
+
+    "orders": {
+      "title": "Orders",
+
+      "buttons": {
+        "createOrder": "Create Order",
+        "create": "Create"
+      },
+
+      "errors": {
+        "loadError": "Failed to load orders",
+        "emptyError": "Orders list is empty"
+      },
+
+      "statuses": {
+        "status": "Status",
+        "All": "All",
+        "Pending": "Pending",
+        "Submitted": "Submitted",
+        "Fulfilled": "Fulfilled",
+        "Canceled": "Canceled"
+      },
+
+      "table": {
+        "Title": "Title",
+        "Creation Date": "Creation Date",
+        "Seller": "Seller",
+        "Status": "Status",
+        "Pagantion": {
+          "RowsPerPage": "Rows per page:",
+          "of": "of",
+          "moreThan": "more than"
+        }
+      }
+    },
+
+    "createOrderForm": {
+      "buttons": {
+        "removeReagentFromOrder": "Remove from order"
+      },
+
+      "errors": {
+        "noReagentsOrder": "Add at least 1 reagent to the order"
+      },
+
+      "requiredFields": {
+        "title": {
+          "label": "Title*",
+          "requiredMessage": "Title required",
+          "maxLengthMessage": "Title cannot exceed 200 characters"
+        },
+        "seller": {
+          "label": "Seller*",
+          "requiredMessage": "Seller required"
+        },
+
+        "name": {
+          "label": "Name*",
+          "requiredMessage": "Name required"
+        },
+        "units": {
+          "label": "Units*",
+          "requiredMessage": "Units required"
+        },
+        "quantity": {
+          "label": "Quantity*",
+          "requiredMessage": "Quantity required"
+        },
+        "price": {
+          "label": "Price*",
+          "requiredMessage": "Price required"
+        }
       }
     }
   }
