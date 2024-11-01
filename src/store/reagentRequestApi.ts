@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
+import { transformRequestData } from "@/store/utils/transformRequestData.ts";
 import { ReagentRequests } from "@/types";
 
 import { reagentRequestsMock } from "../../mock/reagentRequestsMock.ts";
@@ -16,7 +17,7 @@ export const reagentRequestApi = createApi({
     getReagentRequests: builder.query<ReagentRequests, void>({
       queryFn: async () => {
         await new Promise((resolve) => setTimeout(resolve, 500));
-        return { data: reagentRequestsMock };
+        return { data: transformRequestData(reagentRequestsMock) };
       },
 
       providesTags: ["Requests"],

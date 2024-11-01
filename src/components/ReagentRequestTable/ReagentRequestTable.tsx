@@ -45,9 +45,9 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
     );
   };
 
-  const handleDecline = (id: number) => {
+  const handleDecline = (id: string) => {
     setModalOpen(true);
-    setRequestId(String(id));
+    setRequestId(id);
   };
 
   return (
@@ -105,8 +105,8 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{row.CAS}</TableCell>
                 <TableCell>{row.desiredQuantity}</TableCell>
                 <TableCell>{row.status}</TableCell>
-                <TableCell>{row.userComments}</TableCell>
-                <TableCell>{row.procurementComments}</TableCell>
+                <TableCell align="left">{row.userComments}</TableCell>
+                <TableCell align="left">{row.procurementComments}</TableCell>
                 <TableCell>{row.dateCreated}</TableCell>
                 <TableCell>{row.dateModified}</TableCell>
                 <TableCell>
@@ -120,7 +120,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
 
       <DeclineReagentRequest
         onDeclineSubmit={handleSubmit}
-        id={Number(requestId)}
+        id={requestId}
         onClose={() => setModalOpen(false)}
         modalOpen={modalOpen}
       />
