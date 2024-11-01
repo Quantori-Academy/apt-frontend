@@ -1,5 +1,6 @@
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {
-  Button,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -19,6 +20,7 @@ import {
   RequestsSortColumns,
   SortDirection,
 } from "@/types";
+import { formatDate } from "@/utils/formatDate.ts";
 
 type ReagentRequestTableProps = {
   sortColumn: RequestsSortColumns;
@@ -107,10 +109,15 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{row.status}</TableCell>
                 <TableCell align="left">{row.userComments}</TableCell>
                 <TableCell align="left">{row.procurementComments}</TableCell>
-                <TableCell>{row.dateCreated}</TableCell>
-                <TableCell>{row.dateModified}</TableCell>
+                <TableCell>{formatDate(row.dateCreated)}</TableCell>
+                <TableCell>{formatDate(row.dateModified)}</TableCell>
                 <TableCell>
-                  <Button onClick={() => handleDecline(row.id)}>Decline</Button>
+                  <IconButton
+                    title="Decline"
+                    onClick={() => handleDecline(row.id)}
+                  >
+                    <HighlightOffIcon color="error" />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}

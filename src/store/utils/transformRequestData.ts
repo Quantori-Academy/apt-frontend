@@ -12,7 +12,7 @@ export const transformRequestData = (requestedReagents: Array<RequestedReagentBa
       userComments: request.user_comment?.comment.comment_text,
       procurementComments: request.procurement_comment?.comment.comment_text,
       dateCreated: request.created_at,
-      dateModified: request.modified_at,
+      dateModified: request.modified_at || "",
     };
   });
 };

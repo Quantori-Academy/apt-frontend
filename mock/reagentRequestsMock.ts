@@ -1,4 +1,4 @@
-import { RequestedReagentBackend } from "@/types";
+import { RequestedReagentBackend } from "../src/types";
 
 export const reagentRequestsMock: Array<RequestedReagentBackend> = [
   {

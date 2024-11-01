@@ -15,7 +15,6 @@ export const reagentRequestApi = createApi({
     getReagentRequests: builder.query<ReagentRequests, void>({
       query: () => "/requests",
       transformResponse: (baseQueryReturnValue: Array<RequestedReagentBackend>) => {
-        console.log("am:", baseQueryReturnValue);
         return transformRequestData(baseQueryReturnValue);
       },
 

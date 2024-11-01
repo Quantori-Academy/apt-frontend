@@ -29,7 +29,6 @@ const ReagentRequests: React.FC = () => {
 
   const { data: reagentRequests = [], isLoading } =
     useGetReagentRequestsQuery();
-  console.log("am:", reagentRequests);
 
   const { visibleItems, totalPages } = useMemo(
     () =>
