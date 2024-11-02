@@ -155,6 +155,9 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               type="number"
               {...register("pricePerUnit", {
                 valueAsNumber: true,
+                required: t(
+                  "addSubstanceForm.requiredFields.price.requiredMessage"
+                ),
                 min: {
                   value: 0,
                   message: t(
@@ -184,9 +187,18 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           <Grid item xs={12} sm={6}>
             <TextField
               label={t("addSubstanceForm.requiredFields.quantityUnit.label")}
-              {...register("quantityUnit")}
+              {...register("quantityUnit", {
+                required: {
+                  value: true,
+                  message: t(
+                    "addSubstanceForm.requiredFields.quantityUnit.requiredMessage"
+                  ),
+                },
+              })}
               fullWidth
               margin="normal"
+              error={!!errors.quantityUnit}
+              helperText={errors.quantityUnit?.message}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -212,6 +224,13 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                   placeholder="Select location"
                   fullWidth
                   margin="normal"
+                  error={!!errors.locationId}
+                  helperText={errors.locationId?.message}
+                  {...register("locationId", {
+                    required: t(
+                      "addSubstanceForm.requiredFields.location.requiredMessage"
+                    ),
+                  })}
                 />
               )}
             />
@@ -222,6 +241,9 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               type="number"
               {...register("quantityLeft", {
                 valueAsNumber: true,
+                required: t(
+                  "addSubstanceForm.requiredFields.quantity.requiredMessage"
+                ),
                 min: {
                   value: 0,
                   message: t(

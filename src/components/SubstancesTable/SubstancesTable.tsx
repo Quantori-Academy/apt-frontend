@@ -1,4 +1,3 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import DescriptionIcon from "@mui/icons-material/Description";
 import {
   IconButton,
@@ -11,16 +10,11 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { ConfirmRemoving, PageLoader } from "@/components";
-import { userRoles } from "@/constants";
-import { useAlertSnackbar } from "@/hooks";
+import { SmilesImage } from "@/components";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import { selectUserRole, useDeleteSubstanceMutation } from "@/store";
 import {
   SortColumn,
   SortDirection,
@@ -41,27 +35,8 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   visibleItems,
 }) => {
   const { t } = useTranslation();
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [deleteItemId, setDeleteItemId] = useState("");
-  const [deleteSubstance, { isLoading: isDeleting }] =
-    useDeleteSubstanceMutation();
-
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const navigate = useNavigate();
-  const role = useSelector(selectUserRole);
-
-  const handleDelete = async () => {
-    const { error } = await deleteSubstance(deleteItemId);
-
-    if (error) {
-      openSnackbar("error", t("substances.snackBarMessages.delete.error"));
-    } else {
-      openSnackbar("success", t("substances.snackBarMessages.delete.success"));
-    }
-  };
-
-  if (isDeleting) return <PageLoader />;
 
   const onClickDetails = (
     category: SubstancesCategory,
@@ -73,6 +48,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
       navigate(RouteProtectedPath.samplePage.replace(":id", substanceId));
     }
   };
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -126,24 +102,16 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                 <TableCell align="left">
                   {t(`substances.filters.options.${reagent.category}`)}
                 </TableCell>
-                <TableCell align="right">{reagent.structure}</TableCell>
+                <TableCell align="right">
+                  <SmilesImage
+                    smiles={reagent.structure}
+                    svgOptions={{ width: 100, height: 100 }}
+                  />
+                </TableCell>
                 <TableCell align="left">{reagent.description}</TableCell>
                 <TableCell align="right">{reagent.quantityLeft}</TableCell>
                 <TableCell align="right">{reagent.storageLocation}</TableCell>
-                <TableCell align="right" sx={{ display: "flex" }}>
-                  {role === userRoles.Researcher && (
-                    <>
-                      <IconButton
-                        title="Delete"
-                        onClick={() => {
-                          setIsOpenModal(true);
-                          setDeleteItemId(reagent.id);
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </>
-                  )}
+                <TableCell align="right">
                   <IconButton
                     title="Details"
                     onClick={() => onClickDetails(reagent.category, reagent.id)}
@@ -156,14 +124,6 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <ConfirmRemoving
-        open={isOpenModal}
-        modalTitle={""}
-        modalText={t("substances.modalMessages.confirmDelete")}
-        onDelete={() => handleDelete()}
-        onClose={() => setIsOpenModal(false)}
-      />
-      {SnackbarComponent()}
     </>
   );
 };

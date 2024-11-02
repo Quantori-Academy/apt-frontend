@@ -97,7 +97,7 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
           >
             {isCreating
               ? t("storage.buttons.creatingLocation")
-              : t("storage.buttons.create")}
+              : t("buttons.create")}
           </Button>
         </DialogActions>
       </Dialog>

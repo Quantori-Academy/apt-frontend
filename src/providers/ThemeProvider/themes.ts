@@ -142,5 +142,14 @@ export const appTheme = createTheme({
         },
       },
     },
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          "&.MuiDivider-withChildren::before, &.MuiDivider-withChildren::after": {
+            borderColor: "#00695f",
+          },
+        },
+      },
+    },
   },
 });

@@ -41,3 +41,5 @@ export {
 } from "./slices/authSlice";
 
 export { useGetReagentRequestsQuery, useDeclineReagentRequestQuery } from "./reagentRequestApi.ts";
+
+export { useGetOrdersQuery } from "./ordersApi.ts";

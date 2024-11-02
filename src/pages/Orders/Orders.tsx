@@ -1,18 +1,51 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { OrdersFilter, OrdersTable, SearchBar } from "@/components";
+import {
+  AddOrder,
+  OrdersFilter,
+  OrdersTable,
+  PageError,
+  PageLoader,
+  SearchBar,
+} from "@/components";
+import { useGetOrdersQuery } from "@/store";
 import { StatusFilter } from "@/types";
 
 const Orders = () => {
+  const { t } = useTranslation();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
+
   const [page, setPage] = useState(0);
+
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+
+  const {
+    data: orders,
+    isLoading: isOrdersLoading,
+    isError,
+  } = useGetOrdersQuery();
+
+  if (isOrdersLoading) {
+    return <PageLoader />;
+  }
+
+  if (isError) {
+    return <PageError text={t("orders.errors.loadError")} />;
+  }
+
+  if (!orders?.length) {
+    return <PageError text={t("orders.errors.emptyError")} />;
+  }
 
   const handleStatusChange = (value: StatusFilter) => {
     setStatusFilter(value);
     setPage(0);
   };
+
   const handleSearchQuery = (value: string) => {
     setSearchQuery(value);
     setPage(0);
@@ -28,8 +61,10 @@ const Orders = () => {
           marginY: "30px",
         }}
       >
-        <Typography variant="h3">Orders</Typography>
-        <Button variant="outlined">Add Order</Button>
+        <Typography variant="h3">{t("orders.title")}</Typography>
+        <Button variant="outlined" onClick={() => setIsOrderModalOpen(true)}>
+          {t("orders.buttons.createOrder")}
+        </Button>
       </Box>
       <Box
         sx={{
@@ -57,6 +92,11 @@ const Orders = () => {
         statusFilter={statusFilter}
         page={page}
         setPage={setPage}
+        orders={orders}
+      />
+      <AddOrder
+        modalOpen={isOrderModalOpen}
+        onClose={() => setIsOrderModalOpen(false)}
       />
     </Container>
   );

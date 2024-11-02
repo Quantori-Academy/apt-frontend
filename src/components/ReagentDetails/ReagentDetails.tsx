@@ -87,7 +87,10 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <SmilesImage smiles={reagentDetails.structure} />
+            <SmilesImage
+              smiles={reagentDetails.structure}
+              svgOptions={{ width: 185, height: 185 }}
+            />
           </Grid>
         </Grid>
         {role === userRoles.Researcher && (
