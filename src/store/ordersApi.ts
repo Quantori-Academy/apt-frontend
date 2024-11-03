@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { BackendOrder, Order } from "@/types";
+import { BackendOrder, Order, OrderInput } from "@/types";
 
+import { transformOrderData } from "./utils";
 import { transformOrderResponse } from "./utils/transformOrderResponse";
 
 export const ordersApi = createApi({
@@ -18,7 +19,15 @@ export const ordersApi = createApi({
       transformResponse: (response: BackendOrder[]) => response.map(transformOrderResponse),
       providesTags: ["Orders"],
     }),
+    createOrder: builder.mutation<void, OrderInput>({
+      query: (orderData) => ({
+        url: "/orders",
+        method: "POST",
+        body: transformOrderData(orderData),
+      }),
+      invalidatesTags: ["Orders"],
+    }),
   }),
 });
 
-export const { useGetOrdersQuery } = ordersApi;
+export const { useGetOrdersQuery, useCreateOrderMutation } = ordersApi;
