@@ -15,9 +15,14 @@ import { useNavigate } from "react-router-dom";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { SampleData } from "@/types/sampleData.ts";
 
+export type RoomOption = {
+  id: string;
+  room: string;
+  locations: LocationOption[];
+};
 type LocationOption = {
-  id: number;
-  label: string;
+  locationId: string;
+  locationName: string;
 };
 
 type ReagentOption = {
@@ -31,7 +36,7 @@ type AddSampleFormProps = {
   handleSubmit: (sampleData: SampleData) => Promise<void>;
   isLoading: boolean;
   reagentOptions: ReagentOption[];
-  locationOptions: LocationOption[];
+  locationOptions: RoomOption[];
 };
 
 const AddSampleForm: React.FC<AddSampleFormProps> = ({
@@ -63,6 +68,9 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
   const [selectedReagents, setSelectedReagents] = React.useState<
     { id: number; amount: string; unit: string; label: string }[]
   >([]);
+  const [selectedRoom, setSelectedRoom] = React.useState<RoomOption | null>(
+    null
+  );
 
   const handleReagentChange = (
     _event: React.ChangeEvent<unknown>,
@@ -100,17 +108,27 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
     ]);
   };
 
+  const handleRoomChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: RoomOption | null
+  ) => {
+    setSelectedRoom(value);
+  };
+
   const handleLocationChange = (
     _event: React.ChangeEvent<unknown>,
     value: LocationOption | null
   ) => {
-    setValue("locationId", value ? value.id : 0);
+    const val = value?.locationId;
+    setValue("locationId", Number(val));
   };
   const navigate = useNavigate();
   const onSubmit = async (data: SampleData) => {
     await handleSubmit(data);
     navigate(RouteProtectedPath.substances);
   };
+
+  const autocompleteOption = selectedRoom?.locations || [];
 
   return (
     <Container maxWidth="sm">
@@ -211,31 +229,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Autocomplete
-              id="location-select"
-              options={locationOptions}
-              getOptionLabel={({ label }) => label}
-              onChange={handleLocationChange}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={t("addSubstanceForm.requiredFields.location.label")}
-                  placeholder="Select location"
-                  fullWidth
-                  margin="normal"
-                  error={!!errors.locationId}
-                  helperText={errors.locationId?.message}
-                  {...register("locationId", {
-                    required: t(
-                      "addSubstanceForm.requiredFields.location.requiredMessage"
-                    ),
-                  })}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
               label={t("addSubstanceForm.requiredFields.quantity.label")}
               type="number"
@@ -255,6 +249,50 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               margin="normal"
               error={!!errors.quantityLeft}
               helperText={errors.quantityLeft?.message}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Autocomplete
+              id="room-select"
+              options={locationOptions}
+              getOptionLabel={({ room }) => room}
+              onChange={handleRoomChange}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={t("addSubstanceForm.requiredFields.location.room")}
+                  placeholder="Select room"
+                  fullWidth
+                  margin="normal"
+                  error={!!errors.locationId}
+                  helperText={errors.locationId?.message}
+                  {...register("locationId", {
+                    required: t(
+                      "addSubstanceForm.requiredFields.location.requiredMessage"
+                    ),
+                  })}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Autocomplete
+              id="location-select"
+              disabled={!selectedRoom}
+              options={autocompleteOption}
+              getOptionLabel={({ locationName }) => locationName}
+              onChange={handleLocationChange}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={t("addSubstanceForm.requiredFields.location.label")}
+                  placeholder="Select location"
+                  fullWidth
+                  margin="normal"
+                  error={!!errors.locationId}
+                  helperText={errors.locationId?.message}
+                />
+              )}
             />
           </Grid>
           <Grid item xs={12}>

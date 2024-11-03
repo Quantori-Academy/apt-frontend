@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { PageLoader } from "@/components";
 import { AddSampleForm } from "@/components/AddSampleForm";
+// import { RoomOption } from "@/components/AddSampleForm/AddSampleForm";
 import useAlertSnackbar from "@/hooks/useAlertSnackbar";
 import { useCreateSampleMutation } from "@/store";
 import { useGetStorageRoomsQuery } from "@/store/storageApi";
@@ -60,13 +61,16 @@ const AddSamplePage: React.FC = () => {
       consumption: reagent.quantityLeft,
     })) || [];
 
-  const locationOptions =
-    storageRooms?.flatMap((room) =>
-      room.locations.map((location) => ({
-        id: Number(location.locationId),
-        label: location.locationName,
-      }))
-    ) || [];
+  const locationOptions = storageRooms?.flatMap((room) => room) || [];
+  // const locationOptions: RoomOption[] =
+  //   storageRooms?.map((room) => ({
+  //     id: Number(room.id),
+  //     room: room.room,
+  //     locations: room.locations.map((location) => ({
+  //       locationId: Number(location.locationId),
+  //       locationName: location.locationName,
+  //     })),
+  //   })) || [];
 
   return (
     <div>

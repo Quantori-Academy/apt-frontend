@@ -265,6 +265,7 @@
           "label": "Expiration Date"
         },
         "location": {
+          "room": "Room",
           "label": "Location",
           "requiredMessage": "Location is required"
         },
