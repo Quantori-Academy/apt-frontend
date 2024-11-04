@@ -9,6 +9,7 @@ import {
   ReagentRequestTable,
   StatusFilter,
 } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
 import { useGetReagentRequestsQuery } from "@/store";
 import {
   RequestsSortColumns,
@@ -28,6 +29,7 @@ const ReagentRequests: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
   const [modalOpen, setModalOpen] = useState(false);
 
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
   const { t } = useTranslation();
   const { data: reagentRequests = [], isLoading } =
     useGetReagentRequestsQuery();
@@ -54,6 +56,15 @@ const ReagentRequests: React.FC = () => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
     setSortDirection(isAsc ? "asc" : "desc");
     setSortColumn(property);
+  };
+
+  const onAddRequestForm = (severity: "error" | "success") => {
+    openSnackbar(
+      severity,
+      severity === "error"
+        ? "Failed to add request"
+        : "Request Successfully Added"
+    );
   };
 
   return (
@@ -93,7 +104,9 @@ const ReagentRequests: React.FC = () => {
       <AddReagentRequest
         modalOpen={modalOpen}
         onClose={() => setModalOpen(false)}
+        onAddRequestForm={onAddRequestForm}
       />
+      {SnackbarComponent()}
     </Container>
   );
 };

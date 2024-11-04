@@ -4,6 +4,7 @@
       "dashboard": "Dashboard",
       "accountSettings": "Account Settings"
     },
+
     "breadcrumbs": {
       "Dashboard": "Dashboard",
       "Users": "Users",
@@ -14,6 +15,7 @@
       "Reagent Detail": "Reagent Detail",
       "Sample Detail": "Sample Detail"
     },
+
     "buttons": {
       "edit": "Edit",
       "save": "Save",
@@ -23,24 +25,30 @@
       "logout": "Logout",
       "create": "Create"
     },
+
     "users": {
       "title": "Users",
+
       "buttons": {
         "addUser": "Add user"
       },
+
       "errors": {
         "loadError": "Failed to load users."
       },
+
       "filters": {
         "search": "Search...",
         "role": "Role"
       },
+
       "roles": {
         "All": "All",
         "Administrator": "Administrator",
         "Procurement Officer": "Procurement Officer",
         "Researcher": "Researcher"
       },
+
       "table": {
         "username": "Username",
         "firstName": "First name",
@@ -51,14 +59,17 @@
         "actions": "Actions"
       }
     },
+
     "userDetails": {
       "title": "Account Details",
+
       "buttons": {
         "editDetails": "Edit Details",
         "changePassword": "Change Password",
         "editRole": "Edit Role",
         "deleteUser": "Delete User"
       },
+
       "snackBarMessages": {
         "password": {
           "success": "Password changed successfully",
@@ -77,9 +88,11 @@
           "error": "Failed to delete user"
         }
       },
+
       "modalMessages": {
         "confirmDelete": "Are you sure you want to delete this user?"
       },
+
       "requiredFields": {
         "firstName": "First name is required",
         "lastName": "Last name is required",
@@ -100,61 +113,75 @@
         }
       }
     },
+
     "addUserForm": {
       "title": "Add New User",
+
       "buttons": {
         "createUser": "Create User"
       },
+
       "snackBarMessages": {
         "success": "User added successfully",
         "error": "Failed to add user"
       },
+
       "requiredFields": {
         "username": {
           "label": "Username",
           "requiredMessage": "Username is required"
         },
+
         "firstName": {
           "label": "First name",
           "requiredMessage": "First name is required"
         },
+
         "lastName": {
           "label": "Last name",
           "requiredMessage": "Last name is required"
         },
+
         "email": {
           "label": "Email",
           "requiredMessage": "Email is required",
           "patternMessage": "Please provide a valid email"
         },
+
         "password": {
           "label": "Password",
           "requiredMessage": "Password is required",
           "minLengthMessage": "Password need to be not less than 8 character",
           "patternMessage": "Password must contain at least one uppercase letter"
         },
+
         "confirmPassword": {
           "label": "Confirm Password",
           "requiredMessage": "This field is required",
           "matchMessage": "Passwords need to match"
         },
+
         "role": {
           "label": "Select Role",
           "requiredMessage": "Please select a role"
         }
       }
     },
+
     "substances": {
       "title": "Substances",
+
       "buttons": {
         "addReagent": "Add reagent",
         "addSample": "Add sample",
         "addLoading": "Adding...",
         "chooseSubstance": "Choose Substance"
       },
+
       "errors": {
         "loadError": "Faild to load Reagents and Sample page, Please try later"
       },
+
       "filters": {
         "all": "All",
         "expired": "Expired",
@@ -165,6 +192,7 @@
           "Sample": "Sample"
         }
       },
+
       "table": {
         "name": "Name",
         "category": "Category",
@@ -174,9 +202,11 @@
         "storageLocation": "Storage location",
         "actions": "Actions"
       },
+
       "modalMessages": {
         "confirmDelete": "Are you sure you want to delete this substance?"
       },
+
       "snackBarMessages": {
         "delete": {
           "success": "Substance deleted successfully",
@@ -184,14 +214,17 @@
         }
       }
     },
+
     "addSubstanceForm": {
       "title": {
         "reagent": "Add New Reagent",
         "sample": "Add New Sample"
       },
+
       "buttons": {
         "createUser": "Create User"
       },
+
       "snackBarMessages": {
         "reagent": {
           "success": "Reagent added successfully",
@@ -202,6 +235,7 @@
           "error": "Failed to add sample"
         }
       },
+
       "requiredFields": {
         "name": {
           "label": "Name",
@@ -256,6 +290,7 @@
         }
       }
     },
+
     "substanceDetails": {
       "title": {
         "reagent": "Reagent Details",
@@ -263,10 +298,12 @@
         "editReagent": "Edit Reagent",
         "editSample": "Edit Sample"
       },
+
       "buttons": {
         "editDetails": "Edit Details",
         "saveChanges": "Save Changes"
       },
+
       "fields": {
         "substanceId": "Reagent ID",
         "name": "Name",
@@ -284,12 +321,16 @@
         "room": "Room",
         "location": "Location"
       },
+
       "currentLocation": " (current)",
+
       "quantityWarning": "Will be deleted, if quantity is 0",
+
       "errors": {
         "reagentLoadError": "Failed to load reagent details.",
         "sampleLoadError": "Failed to load reagent details."
       },
+
       "snackBarMessages": {
         "reagent": {
           "successDelete": "Reagent deleted successfully",
@@ -302,12 +343,14 @@
         "unexpectedError": "An unexpected error occurred"
       }
     },
+
     "storage": {
       "title": {
         "storage": "Storage Locations",
         "dashboardStorage": "Storage",
         "location": "Location Details"
       },
+
       "buttons": {
         "createLocation": "Create New Storage Location",
         "editRoom": "Edit Room",
@@ -315,12 +358,14 @@
         "creatingLocation": "Creating...",
         "changeLocation": "Change Location"
       },
+
       "errors": {
         "storageLoadError": "Failed to get storages",
         "emptyStorageError": "There isn't any storages",
         "locationLoadError": "Failed to get location",
         "noLocation": "There is no location here"
       },
+
       "fields": {
         "room": "Room",
         "roomId": "Room ID",
@@ -335,6 +380,7 @@
         "structure": "Structure",
         "emptyRoom": "No substances stored in this room"
       },
+
       "requiredFields": {
         "roomName": {
           "label": "Room Name",
@@ -345,9 +391,11 @@
           "requiredMessage": "Description is required"
         }
       },
+
       "modalMessages": {
         "confirmLocationChange": "Change location of this substance?"
       },
+
       "snackBarMessages": {
         "successEdit": "Room edited successfully!",
         "errorEdit": "Failed to edit room!",
@@ -359,16 +407,20 @@
         "creationError": "Failed to create storage location!"
       }
     },
+
     "orders": {
       "title": "Orders",
+
       "buttons": {
         "createOrder": "Create Order",
         "create": "Create"
       },
+
       "errors": {
         "loadError": "Failed to load orders",
         "emptyError": "Orders list is empty"
       },
+
       "statuses": {
         "status": "Status",
         "All": "All",
@@ -377,6 +429,7 @@
         "Fulfilled": "Fulfilled",
         "Canceled": "Canceled"
       },
+
       "table": {
         "Title": "Title",
         "Creation Date": "Creation Date",
@@ -390,18 +443,22 @@
         }
       }
     },
+
     "createOrderForm": {
       "buttons": {
         "removeReagentFromOrder": "Remove from order"
       },
+
       "errors": {
         "noReagentsOrder": "Add at least 1 reagent to the order"
       },
+
       "snackBarMessages": {
         "creation": {
           "success": "Order created successfully"
         }
       },
+
       "requiredFields": {
         "title": {
           "label": "Title*",
@@ -412,6 +469,7 @@
           "label": "Seller*",
           "requiredMessage": "Seller required"
         },
+
         "name": {
           "label": "Name*",
           "requiredMessage": "Name required"

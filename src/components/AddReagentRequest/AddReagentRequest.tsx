@@ -18,11 +18,13 @@ type ReagentRequestInput = {
 type AddReagentRequestProps = {
   modalOpen: boolean;
   onClose: () => void;
+  onAddRequestForm: (severity: "error" | "success") => void;
 };
 
 const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
   modalOpen,
   onClose,
+  onAddRequestForm,
 }) => {
   const {
     register,
@@ -39,14 +41,17 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
     },
   });
   const { t } = useTranslation();
-  const [addReagentRequest] = useAddReagentRequestMutation();
+  const [addReagentRequest, { isLoading }] = useAddReagentRequestMutation();
 
   const onSubmit = async (newReagentRequest: ReagentRequestInput) => {
     const { error } = await addReagentRequest(newReagentRequest);
 
-    if (!error) {
+    if (error) {
+      onAddRequestForm("error");
+    } else {
       reset();
       onClose();
+      onAddRequestForm("success");
     }
   };
 
@@ -100,8 +105,12 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
             {...register("userComment")}
           />
           <Box sx={{ display: "flex", gap: "5px", justifyContent: "end" }}>
-            <Button type="submit">{t("buttons.create")}</Button>
-            <Button onClick={onClose}>{t("buttons.cancel")}</Button>
+            <Button type="submit" disabled={isLoading}>
+              {t("buttons.create")}
+            </Button>
+            <Button onClick={onClose} disabled={isLoading}>
+              {t("buttons.cancel")}
+            </Button>
           </Box>
         </Stack>
       </form>
