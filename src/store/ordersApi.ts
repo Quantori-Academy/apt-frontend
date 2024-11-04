@@ -3,8 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL, prepareHeaders } from "@/api";
 import { BackendOrder, BackendOrderDetailPage, Order, OrderDetailPage, OrderInput } from "@/types";
 
-import { transformOrderData } from "./utils";
-import { transformOrderDetailResponse, transformOrderResponse } from "./utils/transformOrderResponse";
+import { transformOrderData, transformOrderDetailResponse, transformOrderResponse } from "./utils";
 
 export const ordersApi = createApi({
   reducerPath: "OrdersApi",
