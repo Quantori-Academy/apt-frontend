@@ -42,4 +42,4 @@ export {
 
 export { useGetReagentRequestsQuery, useDeclineReagentRequestQuery } from "./reagentRequestApi.ts";
 
-export { useGetOrdersQuery } from "./ordersApi.ts";
+export { useGetOrdersQuery, useCreateOrderMutation } from "./ordersApi.ts";

@@ -27,7 +27,8 @@ export const getOrdersRows = ({
   const lowerCaseQuery = searchQuery.toLowerCase();
   const filteredOrders = sortedOrders.filter((order) => {
     const matchesSearchQuery =
-      order.creationDate.includes(lowerCaseQuery) ||
+      order.createdAt.includes(lowerCaseQuery) ||
+      order.modifiedAt.includes(lowerCaseQuery) ||
       order.seller.toLowerCase().includes(lowerCaseQuery) ||
       order.title.toLowerCase().includes(lowerCaseQuery);
     const matchesStatus = statusFilter === "All" || order.status === statusFilter.toLowerCase();

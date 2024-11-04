@@ -12,14 +12,21 @@ import {
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import { Severity } from "@/hooks";
+import { useCreateOrderMutation } from "@/store";
 import { OrderInput } from "@/types";
 
 type AddOrderProps = {
   modalOpen: boolean;
   onClose: () => void;
+  openSnackbar: (severity: Severity, text: string) => void;
 };
 
-const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
+const AddOrder: React.FC<AddOrderProps> = ({
+  modalOpen,
+  onClose,
+  openSnackbar,
+}) => {
   const { t } = useTranslation();
 
   const {
@@ -33,14 +40,14 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
     defaultValues: {
       title: "",
       seller: "",
-      orderReagents: [
+      reagents: [
         {
-          name: "",
-          units: "",
+          reagentName: "",
+          unit: "",
           quantity: "",
-          price: "",
+          pricePerUnit: "",
           structure: "",
-          CAS: "",
+          CASNumber: "",
           producer: "",
           catalogId: "",
           catalogLink: "",
@@ -50,17 +57,36 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
   });
 
   const { fields, prepend, remove } = useFieldArray({
-    name: "orderReagents",
+    name: "reagents",
     control,
     rules: {
       required: t("createOrderForm.errors.noReagentsOrder"),
     },
   });
 
-  const onSubmit: SubmitHandler<OrderInput> = (data) => {
-    console.log(data);
-    onClose();
-    reset();
+  const [createOrder, { isLoading }] = useCreateOrderMutation();
+
+  const onSubmit: SubmitHandler<OrderInput> = async (data) => {
+    try {
+      await createOrder(data).unwrap();
+      openSnackbar(
+        "success",
+        t("createOrderForm.snackBarMessages.creation.success")
+      );
+      onClose();
+      reset();
+    } catch (err) {
+      if (typeof err === "object" && err !== null && "data" in err) {
+        const errorMessage = (err as { data: { message: string } }).data
+          .message;
+        openSnackbar("error", errorMessage);
+      } else {
+        openSnackbar(
+          "error",
+          t("substanceDetails.snackBarMessages.unexpectedError")
+        );
+      }
+    }
   };
 
   return (
@@ -109,12 +135,12 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
               type="button"
               onClick={() =>
                 prepend({
-                  name: "",
-                  units: "",
+                  reagentName: "",
+                  unit: "",
                   quantity: "",
-                  price: "",
+                  pricePerUnit: "",
                   structure: "",
-                  CAS: "",
+                  CASNumber: "",
                   producer: "",
                   catalogId: "",
                   catalogLink: "",
@@ -123,10 +149,12 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
             >
               {t("substances.buttons.addReagent")}
             </Button>
-            <Button type="submit">{t("buttons.create")}</Button>
+            <Button disabled={isLoading} type="submit">
+              {t("buttons.create")}
+            </Button>
           </Box>
           <FormHelperText error sx={{ mt: 1, fontSize: 14 }}>
-            {errors.orderReagents?.root?.message}
+            {errors.reagents?.root?.message}
           </FormHelperText>
           {fields.map((field, index, arr) => (
             <Stack spacing={3} mt={5} mb={3} key={field.id}>
@@ -147,82 +175,82 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
               </Divider>
               <TextField
                 label={t("createOrderForm.requiredFields.name.label")}
-                {...register(`orderReagents.${index}.name`, {
+                {...register(`reagents.${index}.reagentName`, {
                   required: t(
                     "createOrderForm.requiredFields.name.requiredMessage"
                   ),
                 })}
-                helperText={errors.orderReagents?.[index]?.name?.message}
-                error={!!errors.orderReagents?.[index]?.name}
+                helperText={errors.reagents?.[index]?.reagentName?.message}
+                error={!!errors.reagents?.[index]?.reagentName}
               />
               <Box sx={{ display: "flex", gap: 2 }}>
                 <TextField
                   label={t("createOrderForm.requiredFields.units.label")}
                   fullWidth
-                  {...register(`orderReagents.${index}.units`, {
+                  {...register(`reagents.${index}.unit`, {
                     required: t(
                       "createOrderForm.requiredFields.units.requiredMessage"
                     ),
                   })}
-                  helperText={errors.orderReagents?.[index]?.units?.message}
-                  error={!!errors.orderReagents?.[index]?.units}
+                  helperText={errors.reagents?.[index]?.unit?.message}
+                  error={!!errors.reagents?.[index]?.unit}
                 />
                 <TextField
                   label={t("createOrderForm.requiredFields.quantity.label")}
                   fullWidth
                   inputProps={{ min: 0 }}
                   type="number"
-                  {...register(`orderReagents.${index}.quantity`, {
+                  {...register(`reagents.${index}.quantity`, {
                     required: t(
                       "createOrderForm.requiredFields.quantity.requiredMessage"
                     ),
                   })}
-                  helperText={errors.orderReagents?.[index]?.quantity?.message}
-                  error={!!errors.orderReagents?.[index]?.quantity}
+                  helperText={errors.reagents?.[index]?.quantity?.message}
+                  error={!!errors.reagents?.[index]?.quantity}
                 />
                 <TextField
                   label={t("createOrderForm.requiredFields.price.label")}
                   fullWidth
                   inputProps={{ min: 0 }}
                   type="number"
-                  {...register(`orderReagents.${index}.price`, {
+                  {...register(`reagents.${index}.pricePerUnit`, {
                     required: t(
                       "createOrderForm.requiredFields.price.requiredMessage"
                     ),
                   })}
-                  helperText={errors.orderReagents?.[index]?.price?.message}
-                  error={!!errors.orderReagents?.[index]?.price}
+                  helperText={errors.reagents?.[index]?.pricePerUnit?.message}
+                  error={!!errors.reagents?.[index]?.pricePerUnit}
                 />
               </Box>
               <Box sx={{ display: "flex", gap: 2 }}>
                 <TextField
                   label={t("addSubstanceForm.requiredFields.CASNumber.label")}
                   fullWidth
-                  {...register(`orderReagents.${index}.CAS`)}
+                  {...register(`reagents.${index}.CASNumber`)}
                 />
                 <TextField
                   label={t("addSubstanceForm.requiredFields.producer.label")}
                   fullWidth
-                  {...register(`orderReagents.${index}.producer`)}
+                  {...register(`reagents.${index}.producer`)}
                 />
               </Box>
               <TextField
                 label={t("addSubstanceForm.requiredFields.structure.label")}
                 fullWidth
-                {...register(`orderReagents.${index}.structure`)}
+                {...register(`reagents.${index}.structure`)}
               />
               <Box sx={{ display: "flex", gap: 2 }}>
                 <TextField
                   label={t("addSubstanceForm.requiredFields.catalogLink.label")}
                   fullWidth
                   sx={{ flex: "1" }}
-                  {...register(`orderReagents.${index}.catalogLink`)}
+                  {...register(`reagents.${index}.catalogLink`)}
                 />
                 <TextField
                   label={t("addSubstanceForm.requiredFields.catalogId.label")}
                   fullWidth
                   sx={{ flex: "0 0 20%" }}
-                  {...register(`orderReagents.${index}.catalogId`)}
+                  {...register(`reagents.${index}.catalogId`)}
                 />
               </Box>
               <Button type="button" onClick={() => remove(index)}>

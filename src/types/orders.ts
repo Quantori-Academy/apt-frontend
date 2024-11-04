@@ -1,33 +1,51 @@
-type OrderStatus = "pending" | "submitted" | "fulfilled" | "canceled";
+type OrderStatus = "Pending" | "Submitted" | "Fulfilled" | "Cancelled";
 
 export type Order = {
-  id: number;
+  id: string;
   title: string;
-  creationDate: string;
   seller: string;
   status: OrderStatus;
+  createdAt: string;
+  modifiedAt: string;
 };
 
-export type BackendOrder = Omit<Order, "creationDate"> & {
-  creation_date: string;
+export type BackendOrder = Omit<Order, "createdAt" | "modifiedAt"> & {
+  created_at: string;
+  modified_at: string;
 };
 
 type OrderReagent = {
-  name: string;
-  units: string;
+  reagentName: string;
+  unit: string;
   quantity: string;
-  price: string;
+  pricePerUnit: string;
   structure?: string;
-  CAS?: string;
+  CASNumber?: string;
   producer?: string;
   catalogId?: string;
   catalogLink?: string;
 };
 
+export type BackendOrderReagent = {
+  reagent_name: string;
+  unit: string;
+  quantity: string;
+  price_per_unit: string;
+  structure?: string;
+  cas_number?: string;
+  producer?: string;
+  catalog_id?: string | null;
+  catalog_link?: string;
+};
+
 export type OrderInput = {
   title: string;
   seller: string;
-  orderReagents: OrderReagent[];
+  reagents: OrderReagent[];
+};
+
+export type BackendOrderInput = Omit<OrderInput, "reagents"> & {
+  reagents: BackendOrderReagent[];
 };
 
 export type SortType = "asc" | "desc";

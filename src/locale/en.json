@@ -433,6 +433,7 @@
       "table": {
         "Title": "Title",
         "Creation Date": "Creation Date",
+        "Modified Date": "Modified Date",
         "Seller": "Seller",
         "Status": "Status",
         "Pagantion": {
@@ -450,6 +451,12 @@
 
       "errors": {
         "noReagentsOrder": "Add at least 1 reagent to the order"
+      },
+
+      "snackBarMessages": {
+        "creation": {
+          "success": "Order created successfully"
+        }
       },
 
       "requiredFields": {

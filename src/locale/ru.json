@@ -433,6 +433,7 @@
       "table": {
         "Title": "Название",
         "Creation Date": "Дата создания",
+        "Modified Date": "Дата изменения",
         "Seller": "Продавец",
         "Status": "Статус",
         "Pagantion": {
@@ -450,6 +451,12 @@
 
       "errors": {
         "noReagentsOrder": "Добавьте хотя бы 1 реактив в заказ"
+      },
+
+      "snackBarMessages": {
+        "creation": {
+          "success": "Заказ успешно создан"
+        }
       },
 
       "requiredFields": {

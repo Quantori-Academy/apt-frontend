@@ -22,8 +22,9 @@ type HeadCell = {
 
 const headCells: readonly HeadCell[] = [
   { label: "Title", key: "title" },
-  { label: "Creation Date", key: "creationDate" },
   { label: "Seller", key: "seller" },
+  { label: "Creation Date", key: "createdAt" },
+  { label: "Modified Date", key: "modifiedAt" },
   { label: "Status", key: "status" },
 ];
 
