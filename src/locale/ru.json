@@ -314,7 +314,9 @@
         "unit": "Единица измерения",
         "pricePerUnit": "Цена за единицу",
         "totalQuantityLeft": "Остаток",
+        "quantity": "Количество",
         "catalogID": "ID каталога",
+        "catalogLink": "Ссылка каталога",
         "description": "Описание",
         "structure": "Структура",
         "addedSubstances": "Вещества",
@@ -409,7 +411,10 @@
     },
 
     "orders": {
-      "title": "Заказы",
+      "title": {
+        "OrdersPage": "Заказы",
+        "DetailPage": "Детали Заказа"
+      },
 
       "buttons": {
         "createOrder": "Создать заказ",
@@ -418,7 +423,8 @@
 
       "errors": {
         "loadError": "Не удалось загрузить заказы",
-        "emptyError": "Список заказов пуст"
+        "emptyError": "Список заказов пуст",
+        "detailedOrderError": "Не удалось загрузить заказ"
       },
 
       "statuses": {

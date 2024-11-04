@@ -314,7 +314,9 @@
         "unit": "Units",
         "pricePerUnit": "Price per unit",
         "totalQuantityLeft": "Quantity left",
+        "quantity": "Quantity",
         "catalogID": "Catalog ID",
+        "catalogLink": "Catalog Link",
         "description": "Description",
         "structure": "Structure",
         "addedSubstances": "Substances",
@@ -409,7 +411,10 @@
     },
 
     "orders": {
-      "title": "Orders",
+      "title": {
+        "OrdersPage": "Orders",
+        "DetailPage": "Order Details"
+      },
 
       "buttons": {
         "createOrder": "Create Order",
@@ -418,7 +423,8 @@
 
       "errors": {
         "loadError": "Failed to load orders",
-        "emptyError": "Orders list is empty"
+        "emptyError": "Orders list is empty",
+        "detailedOrderError": "Failed to load order details"
       },
 
       "statuses": {
@@ -441,7 +447,9 @@
           "of": "of",
           "moreThan": "more than"
         }
-      }
+      },
+
+      "detailTable": {}
     },
 
     "createOrderForm": {
