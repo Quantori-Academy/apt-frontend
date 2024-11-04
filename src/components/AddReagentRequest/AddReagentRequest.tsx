@@ -2,6 +2,7 @@ import { Box, Button, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import { BasicModal } from "@/components";
+import { useAddReagentRequestMutation } from "@/store";
 
 import style from "@/components/AddUserForm/AddUserForm.module.css";
 
@@ -37,11 +38,15 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
     },
   });
 
+  const [addReagentRequest] = useAddReagentRequestMutation();
+
   const onSubmit = async (newReagentRequest: ReagentRequestInput) => {
-    //TODO: implement after backend ready
-    console.log("am:", newReagentRequest);
-    reset();
-    onClose();
+    const { error } = await addReagentRequest(newReagentRequest);
+
+    if (!error) {
+      reset();
+      onClose();
+    }
   };
 
   return (
@@ -62,6 +67,7 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
           />
           <TextField label="CAS number" {...register("CAS")} />
           <TextField
+            type="number"
             label="Desired Quantity"
             {...register("desiredQuantity", {
               required: "Quantity is required",
