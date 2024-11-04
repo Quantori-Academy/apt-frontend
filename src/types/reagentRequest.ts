@@ -9,8 +9,8 @@ export type RequestedReagent = {
   CAS: string;
   desiredQuantity: string;
   status: RequestStatus;
-  userComments: string;
-  procurementComments: string;
+  userComment: string | null;
+  procurementComment: string | null;
   dateCreated: string;
   dateModified: string | null;
 };

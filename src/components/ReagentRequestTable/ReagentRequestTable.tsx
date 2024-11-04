@@ -107,8 +107,8 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{row.CAS}</TableCell>
                 <TableCell>{row.desiredQuantity}</TableCell>
                 <TableCell>{row.status}</TableCell>
-                <TableCell align="left">{row.userComments}</TableCell>
-                <TableCell align="left">{row.procurementComments}</TableCell>
+                <TableCell align="left">{row.userComment}</TableCell>
+                <TableCell align="left">{row.procurementComment}</TableCell>
                 <TableCell>{formatDate(row.dateCreated)}</TableCell>
                 <TableCell>{formatDate(row.dateModified)}</TableCell>
                 <TableCell>
