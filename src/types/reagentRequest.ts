@@ -21,16 +21,10 @@ export type RequestStatus = "Pending" | "Submitted" | "Canceled" | "Fulfilled";
 
 export type StatusFilterOption = RequestStatus | "All";
 
-export type RequestCommentBackend = {
-  id: string;
-  comment_text: string;
-  created_at: string;
-  modified_at: string | null;
-};
 export type RequestUserCommentBackend = {
   commenter_id: number;
   commenter_role: UserRole;
-  comment: RequestCommentBackend;
+  comment: string;
 };
 
 export type RequestedReagentBackend = {

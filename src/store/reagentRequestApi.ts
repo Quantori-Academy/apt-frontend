@@ -17,7 +17,6 @@ export const reagentRequestApi = createApi({
       transformResponse: (baseQueryReturnValue: Array<RequestedReagentBackend>) => {
         return transformRequestData(baseQueryReturnValue);
       },
-
       providesTags: ["Requests"],
     }),
     declineReagentRequest: builder.query<void, { requestId: number; declineMessage: string }>({
