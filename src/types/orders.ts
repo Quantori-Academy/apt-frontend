@@ -16,7 +16,8 @@ export type BackendOrder = Omit<Order, "createdAt" | "modifiedAt"> & {
   modified_at: string;
 };
 
-type OrderReagent = {
+export type OrderReagent = {
+  id: number;
   reagentName: string;
   quantity: string;
   unit: string;
@@ -28,14 +29,10 @@ type OrderReagent = {
   catalogLink?: string;
 };
 
-export type BackendOrderReagent = {
+export type BackendOrderReagent = Pick<OrderReagent, "id" | "quantity" | "unit" | "structure" | "producer"> & {
   reagent_name: string;
-  quantity: string;
-  unit: string;
   price_per_unit: string;
-  structure?: string;
   cas_number?: string;
-  producer?: string;
   catalog_id?: string | null;
   catalog_link?: string;
 };
@@ -43,11 +40,11 @@ export type BackendOrderReagent = {
 export type OrderInput = {
   title: string;
   seller: string;
-  reagents: OrderReagent[];
+  reagents: Omit<OrderReagent, "id">[];
 };
 
 export type BackendOrderInput = Omit<OrderInput, "reagents"> & {
-  reagents: BackendOrderReagent[];
+  reagents: Omit<BackendOrderReagent, "id">[];
 };
 
 export type OrderDetailPage = Order & {
