@@ -1,5 +1,6 @@
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {
-  Button,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -19,6 +20,7 @@ import {
   RequestsSortColumns,
   SortDirection,
 } from "@/types";
+import { formatDate } from "@/utils/formatDate.ts";
 
 type ReagentRequestTableProps = {
   sortColumn: RequestsSortColumns;
@@ -45,9 +47,9 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
     );
   };
 
-  const handleDecline = (id: number) => {
+  const handleDecline = (id: string) => {
     setModalOpen(true);
-    setRequestId(String(id));
+    setRequestId(id);
   };
 
   return (
@@ -105,12 +107,17 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{row.CAS}</TableCell>
                 <TableCell>{row.desiredQuantity}</TableCell>
                 <TableCell>{row.status}</TableCell>
-                <TableCell>{row.userComments}</TableCell>
-                <TableCell>{row.procurementComments}</TableCell>
-                <TableCell>{row.dateCreated}</TableCell>
-                <TableCell>{row.dateModified}</TableCell>
+                <TableCell align="left">{row.userComment}</TableCell>
+                <TableCell align="left">{row.procurementComment}</TableCell>
+                <TableCell>{formatDate(row.dateCreated)}</TableCell>
+                <TableCell>{formatDate(row.dateModified)}</TableCell>
                 <TableCell>
-                  <Button onClick={() => handleDecline(row.id)}>Decline</Button>
+                  <IconButton
+                    title="Decline"
+                    onClick={() => handleDecline(row.id)}
+                  >
+                    <HighlightOffIcon color="error" />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
@@ -120,7 +127,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
 
       <DeclineReagentRequest
         onDeclineSubmit={handleSubmit}
-        id={Number(requestId)}
+        id={requestId}
         onClose={() => setModalOpen(false)}
         modalOpen={modalOpen}
       />
