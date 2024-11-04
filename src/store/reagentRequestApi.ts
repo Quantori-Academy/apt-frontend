@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { ReagentRequests } from "@/types";
-
-import { reagentRequestsMock } from "../../mock/reagentRequestsMock.ts";
+import { transformRequestData } from "@/store/utils/transformRequestData.ts";
+import { ReagentRequests, RequestedReagentBackend } from "@/types";
 
 export const reagentRequestApi = createApi({
   reducerPath: "requestsApi",
@@ -14,11 +13,10 @@ export const reagentRequestApi = createApi({
   tagTypes: ["Requests"],
   endpoints: (builder) => ({
     getReagentRequests: builder.query<ReagentRequests, void>({
-      queryFn: async () => {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        return { data: reagentRequestsMock };
+      query: () => "/requests",
+      transformResponse: (baseQueryReturnValue: Array<RequestedReagentBackend>) => {
+        return transformRequestData(baseQueryReturnValue);
       },
-
       providesTags: ["Requests"],
     }),
     declineReagentRequest: builder.query<void, { requestId: number; declineMessage: string }>({

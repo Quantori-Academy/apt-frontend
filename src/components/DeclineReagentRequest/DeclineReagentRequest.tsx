@@ -6,7 +6,7 @@ import { BasicModal } from "@/components";
 type DeclineReagentRequestProps = {
   onDeclineSubmit: (severity: "error" | "success") => void;
   onClose: () => void;
-  id: number;
+  id: string;
   modalOpen: boolean;
 };
 

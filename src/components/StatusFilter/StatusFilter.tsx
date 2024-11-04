@@ -4,8 +4,9 @@ import { StatusFilterOption } from "@/types";
 
 const filterOptions: Array<StatusFilterOption> = [
   "Pending",
-  "Ordered",
-  "Declined",
+  "Submitted",
+  "Canceled",
+  "Fulfilled",
   "All",
 ];
 
