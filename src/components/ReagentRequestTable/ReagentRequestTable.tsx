@@ -20,7 +20,7 @@ import {
   RequestsSortColumns,
   SortDirection,
 } from "@/types";
-import { formatDate } from "@/utils/formatDate.ts";
+import { formatDate } from "@/utils";
 
 type ReagentRequestTableProps = {
   sortColumn: RequestsSortColumns;
