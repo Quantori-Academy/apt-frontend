@@ -9,8 +9,8 @@ export const transformRequestData = (requestedReagents: Array<RequestedReagentBa
       CAS: request.cas_number,
       desiredQuantity: request.quantity,
       status: request.status,
-      userComments: request.user_comment?.comment.comment_text,
-      procurementComments: request.procurement_comment?.comment.comment_text,
+      userComment: request.user_comment?.comment,
+      procurementComment: request.procurement_comment?.comment,
       dateCreated: request.created_at,
       dateModified: request.modified_at || "",
     };

@@ -57,6 +57,7 @@ const AddSamplePage: React.FC = () => {
     reagentData?.map((reagent) => ({
       id: Number(reagent.id),
       label: reagent.name,
+      consumption: reagent.quantityLeft,
     })) || [];
 
   const locationOptions =
