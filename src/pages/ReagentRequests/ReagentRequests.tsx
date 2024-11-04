@@ -1,5 +1,6 @@
 import { Box, Button, Container, Pagination, Typography } from "@mui/material";
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   AddReagentRequest,
@@ -27,6 +28,7 @@ const ReagentRequests: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
   const [modalOpen, setModalOpen] = useState(false);
 
+  const { t } = useTranslation();
   const { data: reagentRequests = [], isLoading } =
     useGetReagentRequestsQuery();
 
@@ -71,7 +73,7 @@ const ReagentRequests: React.FC = () => {
           setPage={setPage}
         />
         <Button onClick={() => setModalOpen(true)}>
-          Create Reagent Request
+          {t("createRequestForm.title")}
         </Button>
       </Box>
 

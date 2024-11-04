@@ -4,7 +4,6 @@
       "dashboard": "Панель управления",
       "accountSettings": "Настройки аккаунта"
     },
-
     "breadcrumbs": {
       "Dashboard": "Панель управления",
       "Users": "Пользователи",
@@ -15,7 +14,6 @@
       "Reagent Detail": "Детали реактива",
       "Sample Detail": "Детали образца"
     },
-
     "buttons": {
       "edit": "Редактировать",
       "save": "Сохранить",
@@ -25,30 +23,24 @@
       "logout": "Выйти",
       "create": "Создать"
     },
-
     "users": {
       "title": "Пользователи",
-
       "buttons": {
         "addUser": "Добавить пользователя"
       },
-
       "errors": {
         "loadError": "Не удалось загрузить пользователей."
       },
-
       "filters": {
         "search": "Поиск...",
         "role": "Роль"
       },
-
       "roles": {
         "All": "Все",
         "Administrator": "Администратор",
         "Procurement Officer": "Закупщик",
         "Researcher": "Исследователь"
       },
-
       "table": {
         "username": "Имя пользователя",
         "firstName": "Имя",
@@ -59,17 +51,14 @@
         "actions": "Действия"
       }
     },
-
     "userDetails": {
       "title": "Детали аккаунта",
-
       "buttons": {
         "editDetails": "Редактировать детали",
         "changePassword": "Изменить пароль",
         "editRole": "Редактировать роль",
         "deleteUser": "Удалить пользователя"
       },
-
       "snackBarMessages": {
         "password": {
           "success": "Пароль успешно изменён",
@@ -88,11 +77,9 @@
           "error": "Не удалось удалить пользователя"
         }
       },
-
       "modalMessages": {
         "confirmDelete": "Вы уверены, что хотите удалить этого пользователя?"
       },
-
       "requiredFields": {
         "firstName": "Имя обязательно",
         "lastName": "Фамилия обязательна",
@@ -113,75 +100,61 @@
         }
       }
     },
-
     "addUserForm": {
       "title": "Добавить нового пользователя",
-
       "buttons": {
         "createUser": "Создать пользователя"
       },
-
       "snackBarMessages": {
         "success": "Пользователь успешно добавлен",
         "error": "Не удалось добавить пользователя"
       },
-
       "requiredFields": {
         "username": {
           "label": "Имя пользователя",
           "requiredMessage": "Имя пользователя обязательно"
         },
-
         "firstName": {
           "label": "Имя",
           "requiredMessage": "Имя обязательно"
         },
-
         "lastName": {
           "label": "Фамилия",
           "requiredMessage": "Фамилия обязательна"
         },
-
         "email": {
           "label": "Электронная почта",
           "requiredMessage": "Электронная почта обязательна",
           "patternMessage": "Пожалуйста, введите корректный адрес электронной почты"
         },
-
         "password": {
           "label": "Пароль",
           "requiredMessage": "Пароль обязателен",
           "minLengthMessage": "Пароль должен быть не менее 8 символов",
           "patternMessage": "Пароль должен содержать хотя бы одну заглавную букву"
         },
-
         "confirmPassword": {
           "label": "Подтвердите пароль",
           "requiredMessage": "Это поле обязательно",
           "matchMessage": "Пароли должны совпадать"
         },
-
         "role": {
           "label": "Выберите роль",
           "requiredMessage": "Пожалуйста, выберите роль"
         }
       }
     },
-
     "substances": {
       "title": "Вещества",
-
       "buttons": {
         "addReagent": "Добавить реактив",
         "addSample": "Добавить образец",
         "addLoading": "Добавление...",
         "chooseSubstance": "Выбрать вещество"
       },
-
       "errors": {
         "loadError": "Не удалось загрузить страницу с реактивами и образцами. Пожалуйста, попробуйте позже"
       },
-
       "filters": {
         "all": "Все",
         "expired": "Просроченные",
@@ -192,7 +165,6 @@
           "Sample": "Образец"
         }
       },
-
       "table": {
         "name": "Название",
         "category": "Категория",
@@ -202,11 +174,9 @@
         "storageLocation": "Место хранения",
         "actions": "Действия"
       },
-
       "modalMessages": {
         "confirmDelete": "Вы уверены, что хотите удалить это вещество?"
       },
-
       "snackBarMessages": {
         "delete": {
           "success": "Вещество успешно удалено",
@@ -214,17 +184,14 @@
         }
       }
     },
-
     "addSubstanceForm": {
       "title": {
         "reagent": "Добавить новый реактив",
         "sample": "Добавить новый образец"
       },
-
       "buttons": {
         "createUser": "Создать пользователя"
       },
-
       "snackBarMessages": {
         "reagent": {
           "success": "Реактив успешно добавлен",
@@ -235,7 +202,6 @@
           "error": "Не удалось добавить образец"
         }
       },
-
       "requiredFields": {
         "name": {
           "label": "Название",
@@ -290,7 +256,6 @@
         }
       }
     },
-
     "substanceDetails": {
       "title": {
         "reagent": "Детали реактива",
@@ -298,12 +263,10 @@
         "editReagent": "Редактировать реактив",
         "editSample": "Редактировать образец"
       },
-
       "buttons": {
         "editDetails": "Редактировать детали",
         "saveChanges": "Сохранить изменения"
       },
-
       "fields": {
         "substanceId": "ID реактива",
         "name": "Название",
@@ -321,16 +284,12 @@
         "room": "Комната",
         "location": "Локация"
       },
-
       "currentLocation": " (текущая)",
-
       "quantityWarning": "Будет удалено, если количество равно 0",
-
       "errors": {
         "reagentLoadError": "Не удалось загрузить детали реактива.",
         "sampleLoadError": "Не удалось загрузить детали образца."
       },
-
       "snackBarMessages": {
         "reagent": {
           "successDelete": "Реактив успешно удалён",
@@ -343,14 +302,12 @@
         "unexpectedError": "Произошла непредвиденная ошибка"
       }
     },
-
     "storage": {
       "title": {
         "storage": "Места хранения",
         "dashboardStorage": "Хранилище",
         "location": "Детали локации"
       },
-
       "buttons": {
         "createLocation": "Создать новое место хранения",
         "editRoom": "Редактировать комнату",
@@ -358,14 +315,12 @@
         "creatingLocation": "Создание...",
         "changeLocation": "Изменить локацию"
       },
-
       "errors": {
         "storageLoadError": "Не удалось получить места хранения",
         "emptyStorageError": "Нет доступных мест хранения",
         "locationLoadError": "Не удалось получить локацию",
         "noLocation": "Здесь нет локации"
       },
-
       "fields": {
         "room": "Комната",
         "roomId": "ID комнаты",
@@ -380,7 +335,6 @@
         "structure": "Структура",
         "emptyRoom": "В этой комнате нет сохранённых веществ"
       },
-
       "requiredFields": {
         "roomName": {
           "label": "Название комнаты",
@@ -391,11 +345,9 @@
           "requiredMessage": "Описание обязательно"
         }
       },
-
       "modalMessages": {
         "confirmLocationChange": "Изменить локацию этого вещества?"
       },
-
       "snackBarMessages": {
         "successEdit": "Комната успешно отредактирована!",
         "errorEdit": "Не удалось отредактировать комнату!",
@@ -407,20 +359,16 @@
         "creationError": "Не удалось создать место хранения!"
       }
     },
-
     "orders": {
       "title": "Заказы",
-
       "buttons": {
         "createOrder": "Создать заказ",
         "create": "Создать"
       },
-
       "errors": {
         "loadError": "Не удалось загрузить заказы",
         "emptyError": "Список заказов пуст"
       },
-
       "statuses": {
         "status": "Статус",
         "All": "Все",
@@ -429,7 +377,6 @@
         "Fulfilled": "Выполнено",
         "Canceled": "Отменено"
       },
-
       "table": {
         "Title": "Название",
         "Creation Date": "Дата создания",
@@ -443,22 +390,18 @@
         }
       }
     },
-
     "createOrderForm": {
       "buttons": {
         "removeReagentFromOrder": "Удалить из заказа"
       },
-
       "errors": {
         "noReagentsOrder": "Добавьте хотя бы 1 реактив в заказ"
       },
-
       "snackBarMessages": {
         "creation": {
           "success": "Заказ успешно создан"
         }
       },
-
       "requiredFields": {
         "title": {
           "label": "Название*",
@@ -469,7 +412,6 @@
           "label": "Продавец*",
           "requiredMessage": "Продавец обязателен"
         },
-
         "name": {
           "label": "Название*",
           "requiredMessage": "Название обязательно"
@@ -485,6 +427,29 @@
         "price": {
           "label": "Цена*",
           "requiredMessage": "Цена обязательна"
+        }
+      }
+    },
+    "createRequestForm": {
+      "title": "Создать запрос на реагент",
+      "requiredFields": {
+        "name": {
+          "label": "Название*",
+          "requiredMessage": "Название обязательно"
+        },
+        "units": {
+          "label": "Единица измерения*",
+          "requiredMessage": "Единица измерения обязательны"
+        },
+        "quantity": {
+          "label": "Количество*",
+          "requiredMessage": "Количество обязательно"
+        },
+        "CASNumber": {
+          "label": "Номер CAS"
+        },
+        "comment": {
+          "label": "Комментарий"
         }
       }
     }
