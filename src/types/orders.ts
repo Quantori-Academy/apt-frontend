@@ -1,4 +1,6 @@
 type OrderStatus = "Pending" | "Submitted" | "Fulfilled" | "Cancelled";
+export type StatusFilter = Capitalize<OrderStatus> | "All";
+export type SortType = "asc" | "desc";
 
 export type Order = {
   id: string;
@@ -16,20 +18,20 @@ export type BackendOrder = Omit<Order, "createdAt" | "modifiedAt"> & {
 
 type OrderReagent = {
   reagentName: string;
-  unit: string;
   quantity: string;
+  unit: string;
   pricePerUnit: string;
   structure?: string;
   CASNumber?: string;
   producer?: string;
-  catalogId?: string;
+  catalogId?: string | null;
   catalogLink?: string;
 };
 
 export type BackendOrderReagent = {
   reagent_name: string;
-  unit: string;
   quantity: string;
+  unit: string;
   price_per_unit: string;
   structure?: string;
   cas_number?: string;
@@ -48,6 +50,10 @@ export type BackendOrderInput = Omit<OrderInput, "reagents"> & {
   reagents: BackendOrderReagent[];
 };
 
-export type SortType = "asc" | "desc";
+export type OrderDetailPage = Order & {
+  orderedReagents: OrderReagent[];
+};
 
-export type StatusFilter = Capitalize<OrderStatus> | "All";
+export type BackendOrderDetailPage = BackendOrder & {
+  ordered_reagents: BackendOrderReagent[];
+};
