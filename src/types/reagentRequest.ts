@@ -17,7 +17,7 @@ export type RequestedReagent = {
 
 export type RequestsSortColumns = "name" | "dateCreated" | "status";
 
-export type RequestStatus = "Pending" | "Ordered" | "Declined";
+export type RequestStatus = "Pending" | "Submitted" | "Canceled" | "Fulfilled";
 
 export type StatusFilterOption = RequestStatus | "All";
 
