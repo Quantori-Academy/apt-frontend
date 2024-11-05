@@ -68,13 +68,11 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                   {t("requests.table.name")}
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
-                {" "}
+              <TableCell align="left">
                 {t("requests.table.Structure")}
               </TableCell>
-              <TableCell align="right"> {t("requests.table.CAS")}</TableCell>
-              <TableCell align="right">
-                {" "}
+              <TableCell align="left"> {t("requests.table.CAS")}</TableCell>
+              <TableCell align="left">
                 {t("requests.table.Desired Quantity")}
               </TableCell>
               <TableCell>
@@ -86,10 +84,10 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                   {t("requests.table.Status")}
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="left">
                 {t("requests.table.UserComments")}
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="left">
                 {t("requests.table.ProcurementComments")}
               </TableCell>
               <TableCell>
@@ -101,10 +99,10 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                   {t("requests.table.CreationDate")}
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="left">
                 {t("requests.table.ModifiedDate")}
               </TableCell>
-              <TableCell align="right">{t("requests.table.Actions")}</TableCell>
+              <TableCell align="left">{t("requests.table.Actions")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

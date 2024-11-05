@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { transformRequestData } from "@/store/utils/transformRequestData.ts";
+import { transformRequestData } from "@/store/utils";
 import { ReagentRequests, RequestedReagentBackend } from "@/types";
 
 export const reagentRequestApi = createApi({
@@ -21,7 +21,6 @@ export const reagentRequestApi = createApi({
     }),
     declineReagentRequest: builder.mutation<void, { requestId: string; declineMessage: string }>({
       query: ({ requestId, declineMessage }) => {
-        console.log("am:", declineMessage);
         return {
           url: `/requests/${requestId}/decline`,
           method: "PATCH",
