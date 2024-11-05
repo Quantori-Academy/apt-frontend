@@ -1,4 +1,5 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import { useState } from "react";
 
 import { BasicModal } from "@/components";
 
@@ -13,15 +14,34 @@ const ReagentRequestDetails: React.FC<ReagentRequestDetailsProps> = ({
   modalOpen,
   // requestId,
 }) => {
+  const [isEditMode, setIsEditMode] = useState(false);
   return (
     <BasicModal
       isOpen={modalOpen}
       closeModal={onClose}
       title="Reagent Request Detail"
     >
-      Details
+      {!isEditMode && (
+        <Box
+          margin={5}
+          display="flex"
+          justifyContent="center"
+          gap={3}
+          flexDirection="column"
+        >
+          <Typography>Reagent Name: </Typography>
+          <Typography>CAS Number:</Typography>
+          <Typography>Desired Quantity:</Typography>
+          <Typography>Status:</Typography>
+          <Typography>User Comments:</Typography>
+          <Typography>Procurement Comments:</Typography>
+        </Box>
+      )}
+
       <Box>
-        <Button>Edit</Button>
+        {!isEditMode && (
+          <Button onClick={() => setIsEditMode(true)}>Edit</Button>
+        )}
       </Box>
     </BasicModal>
   );
