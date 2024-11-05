@@ -11,3 +11,4 @@ export { UserDetails } from "./UserDetails";
 export { SamplePage } from "./SamplePage";
 export { Orders } from "./Orders";
 export { ReagentRequests } from "./ReagentRequests";
+export { OrderPage } from "./OrderPage";
