@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { transformRequestData } from "@/store/utils/transformRequestData.ts";
+import { transformRequestData } from "@/store/utils";
 import { ReagentRequests, RequestedReagentBackend } from "@/types";
 
 export const reagentRequestApi = createApi({
@@ -19,30 +19,37 @@ export const reagentRequestApi = createApi({
       },
       providesTags: ["Requests"],
     }),
-    declineReagentRequest: builder.query<void, { requestId: number; declineMessage: string }>({
+    declineReagentRequest: builder.mutation<void, { requestId: string; declineMessage: string }>({
       query: ({ requestId, declineMessage }) => {
         return {
-          url: `/reagents/requests/${requestId}`,
-          method: "PUT",
+          url: `/requests/${requestId}/decline`,
+          method: "PATCH",
           body: {
-            declineMessage,
+            comment: declineMessage,
           },
         };
       },
-      providesTags: ["Requests"],
+      invalidatesTags: ["Requests"],
     }),
-    addReagentRequest: builder.query({
-      query: ({ newRequest }) => {
+    addReagentRequest: builder.mutation({
+      query: (newRequest) => {
         return {
-          url: `/reagents/requests`,
+          url: `/requests`,
           method: "POST",
           body: {
-            newRequest,
+            reagent_name: newRequest.reagentName,
+            structure: newRequest.structure,
+            cas_number: newRequest.CAS,
+            quantity: newRequest.desiredQuantity,
+            unit: newRequest.unit,
+            user_comment: newRequest.userComment,
           },
         };
       },
+      invalidatesTags: ["Requests"],
     }),
   }),
 });
 
-export const { useGetReagentRequestsQuery, useDeclineReagentRequestQuery } = reagentRequestApi;
+export const { useGetReagentRequestsQuery, useDeclineReagentRequestMutation, useAddReagentRequestMutation } =
+  reagentRequestApi;

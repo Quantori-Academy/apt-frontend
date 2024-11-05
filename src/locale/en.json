@@ -23,7 +23,8 @@
       "delete": "Delete",
       "login": "Login",
       "logout": "Logout",
-      "create": "Create"
+      "create": "Create",
+      "submit": "Submit"
     },
 
     "users": {
@@ -442,7 +443,7 @@
         "Modified Date": "Modified Date",
         "Seller": "Seller",
         "Status": "Status",
-        "Pagantion": {
+        "Pagination": {
           "RowsPerPage": "Rows per page:",
           "of": "of",
           "moreThan": "more than"
@@ -494,6 +495,66 @@
           "label": "Price*",
           "requiredMessage": "Price required"
         }
+      }
+    },
+
+    "createRequestForm": {
+      "title": "Create Reagent Request",
+      "requiredFields": {
+        "name": {
+          "label": "Reagent Name*",
+          "requiredMessage": "Reagent Name Is Required"
+        },
+        "units": {
+          "label": "Unit*",
+          "requiredMessage": "Unit Is Required"
+        },
+        "quantity": {
+          "label": "Quantity*",
+          "requiredMessage": "Quantity Is Required"
+        },
+        "CASNumber": {
+          "label": "CAS Number"
+        },
+        "comment": {
+          "label": "Comment"
+        }
+      }
+    },
+
+    "requests": {
+      "title": "Reagent Requests",
+      "table": {
+        "name": "Name",
+        "CreationDate": "Creation Date",
+        "ModifiedDate": "Modified Date",
+        "Desired Quantity": "Desired Quantity",
+        "Structure": "Structure",
+        "Status": "Status",
+        "CAS": "CAS",
+        "UserComments": "User Comments",
+        "ProcurementComments": "Procurement Comments",
+        "Actions": "Actions",
+        "Pagination": {
+          "RowsPerPage": "Rows per page:",
+          "of": "of",
+          "moreThan": "more than"
+        },
+        "actionButtons": {
+          "decline": "Decline"
+        }
+      },
+      "statusFilter": {
+        "All": "All",
+        "Pending": "Pending",
+        "Declined": "Declined",
+        "Ordered": "Ordered",
+        "Completed": "Completed"
+      },
+      "declineRequest": {
+        "title": "Decline Reagent Request",
+        "label": "Enter reason for decline",
+        "requiredField": "To decline request, comment is required"
       }
     }
   }

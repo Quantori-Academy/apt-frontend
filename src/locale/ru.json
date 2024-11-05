@@ -23,7 +23,8 @@
       "delete": "Удалить",
       "login": "Войти",
       "logout": "Выйти",
-      "create": "Создать"
+      "create": "Создать",
+      "submit": "Отправить"
     },
 
     "users": {
@@ -442,7 +443,7 @@
         "Modified Date": "Дата изменения",
         "Seller": "Продавец",
         "Status": "Статус",
-        "Pagantion": {
+        "Pagination": {
           "RowsPerPage": "Строк на странице:",
           "of": "из",
           "moreThan": "больше чем"
@@ -492,6 +493,66 @@
           "label": "Цена*",
           "requiredMessage": "Цена обязательна"
         }
+      }
+    },
+
+    "createRequestForm": {
+      "title": "Создать запрос на реагент",
+      "requiredFields": {
+        "name": {
+          "label": "Название*",
+          "requiredMessage": "Название обязательно"
+        },
+        "units": {
+          "label": "Единица измерения*",
+          "requiredMessage": "Единица измерения обязательны"
+        },
+        "quantity": {
+          "label": "Количество*",
+          "requiredMessage": "Количество обязательно"
+        },
+        "CASNumber": {
+          "label": "Номер CAS"
+        },
+        "comment": {
+          "label": "Комментарий"
+        }
+      }
+    },
+
+    "requests": {
+      "title": "Запросы на реагенты",
+      "table": {
+        "name": "Название",
+        "CreationDate": "Дата создания",
+        "ModifiedDate": "Дата изменения",
+        "Desired Quantity": "Желаемое количество",
+        "Structure": "Структура",
+        "Status": "Статус",
+        "CAS": "CAS",
+        "UserComments": "Комментарии пользователя",
+        "ProcurementComments": "Комментарии отдела закупок",
+        "Actions": "Действия",
+        "Pagination": {
+          "RowsPerPage": "Строк на странице:",
+          "of": "из",
+          "moreThan": "больше чем"
+        },
+        "actionButtons": {
+          "decline": "Отклонить"
+        }
+      },
+      "statusFilter": {
+        "All": "Все",
+        "Pending": "В ожидании",
+        "Declined": "Отклонено",
+        "Ordered": "Заказано",
+        "Completed": "Завершено"
+      },
+      "declineRequest": {
+        "title": "Отклонить запрос на реагент",
+        "label": "Укажите причину отклонения",
+        "requiredField": "Для отклонения запроса требуется комментарий"
       }
     }
   }

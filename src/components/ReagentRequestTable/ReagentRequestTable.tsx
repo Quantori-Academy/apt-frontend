@@ -11,6 +11,7 @@ import {
   TableSortLabel,
 } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { DeclineReagentRequest } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
@@ -29,6 +30,13 @@ type ReagentRequestTableProps = {
   visibleItems: ReagentRequests;
 };
 
+const statusColors = {
+  Declined: "#b22a00",
+  Pending: "#ff9800",
+  Ordered: "#4caf50",
+  Completed: "#4caf50",
+};
+
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   sortColumn,
   sortDirection,
@@ -37,7 +45,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
 }) => {
   const [requestId, setRequestId] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-
+  const { t } = useTranslation();
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const handleSubmit = (severity: "error" | "success") => {
@@ -64,34 +72,44 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                   direction={sortDirection}
                   onClick={() => onSortChange("name")}
                 >
-                  Name
+                  {t("requests.table.name")}
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">Structure</TableCell>
-              <TableCell align="right">CAS</TableCell>
-              <TableCell align="right">Desired Quantity</TableCell>
+              <TableCell align="left">
+                {t("requests.table.Structure")}
+              </TableCell>
+              <TableCell align="left"> {t("requests.table.CAS")}</TableCell>
+              <TableCell align="left">
+                {t("requests.table.Desired Quantity")}
+              </TableCell>
               <TableCell>
                 <TableSortLabel
                   active={sortColumn === "status"}
                   direction={sortDirection}
                   onClick={() => onSortChange("status")}
                 >
-                  Status
+                  {t("requests.table.Status")}
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">User Comments</TableCell>
-              <TableCell align="right">Procurement Comments</TableCell>
+              <TableCell align="left">
+                {t("requests.table.UserComments")}
+              </TableCell>
+              <TableCell align="left">
+                {t("requests.table.ProcurementComments")}
+              </TableCell>
               <TableCell>
                 <TableSortLabel
                   active={sortColumn === "dateCreated"}
                   direction={sortDirection}
                   onClick={() => onSortChange("dateCreated")}
                 >
-                  Date Created
+                  {t("requests.table.CreationDate")}
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">Date Modified</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell align="left">
+                {t("requests.table.ModifiedDate")}
+              </TableCell>
+              <TableCell align="left">{t("requests.table.Actions")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -106,14 +124,20 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{row.structure}</TableCell>
                 <TableCell>{row.CAS}</TableCell>
                 <TableCell>{row.desiredQuantity}</TableCell>
-                <TableCell>{row.status}</TableCell>
+                <TableCell
+                  sx={{
+                    color: statusColors[row.status],
+                  }}
+                >
+                  {row.status}
+                </TableCell>
                 <TableCell align="left">{row.userComment}</TableCell>
                 <TableCell align="left">{row.procurementComment}</TableCell>
                 <TableCell>{formatDate(row.dateCreated)}</TableCell>
                 <TableCell>{formatDate(row.dateModified)}</TableCell>
                 <TableCell>
                   <IconButton
-                    title="Decline"
+                    title={t("requests.table.actionButtons.decline")}
                     onClick={() => handleDecline(row.id)}
                   >
                     <HighlightOffIcon color="error" />

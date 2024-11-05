@@ -8,3 +8,4 @@ export { transformSampleData } from "./transformSampleData";
 export { transformReagentData } from "./transformReagentData";
 export { transformOrderData } from "./transformOrderData";
 export * from "./transformOrderResponse";
+export { transformRequestData } from "./transformRequestData";
