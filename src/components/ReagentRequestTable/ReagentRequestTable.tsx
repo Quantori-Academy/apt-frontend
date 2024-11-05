@@ -1,3 +1,4 @@
+import DescriptionIcon from "@mui/icons-material/Description";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {
   IconButton,
@@ -13,7 +14,7 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { DeclineReagentRequest } from "@/components";
+import { DeclineReagentRequest, ReagentRequestDetails } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import {
   ReagentRequests,
@@ -45,6 +46,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
 }) => {
   const [requestId, setRequestId] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const { t } = useTranslation();
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
@@ -142,6 +144,12 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                   >
                     <HighlightOffIcon color="error" />
                   </IconButton>
+                  <IconButton
+                    title="Details"
+                    onClick={() => setDetailsModalOpen(true)}
+                  >
+                    <DescriptionIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
@@ -154,6 +162,11 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
         id={requestId}
         onClose={() => setModalOpen(false)}
         modalOpen={modalOpen}
+      />
+      <ReagentRequestDetails
+        onClose={() => setDetailsModalOpen(false)}
+        modalOpen={detailsModalOpen}
+        requestId={requestId}
       />
 
       {SnackbarComponent()}
