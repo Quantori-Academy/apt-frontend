@@ -75,6 +75,7 @@ const OrderPage: React.FC = () => {
           reagent={reagent}
           expanded={expanded}
           setExpanded={setExpanded}
+          orderId={order.id}
         />
       ))}
     </>
