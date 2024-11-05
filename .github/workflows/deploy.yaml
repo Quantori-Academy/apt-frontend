@@ -45,8 +45,11 @@ jobs:
               run: |
                 echo "${SSH_KEY}" >> /tmp/ssh_key
                 chmod 400 /tmp/ssh_key
+                echo "VITE_APP_API_URL=${VITE_APP_API_URL}" >> .env
+                echo "VITE_APP_URL=${VITE_APP_URL}" >> .env
                 ssh -o KexAlgorithms=ecdh-sha2-nistp521 -o 'StrictHostKeyChecking no' -i /tmp/ssh_key ${SSH_USER}@${VM_IP} 'rm -rf ~/apt-frontend/*'
                 scp -o KexAlgorithms=ecdh-sha2-nistp521 -o 'StrictHostKeyChecking no' -i /tmp/ssh_key -r ./apt-frontend ${SSH_USER}@$VM_IP:~
+                scp -o KexAlgorithms=ecdh-sha2-nistp521 -o 'StrictHostKeyChecking no' -i /tmp/ssh_key -r .env ${SSH_USER}@$VM_IP:~/apt-frontend
 
             - name: Run latest version
               uses: appleboy/ssh-action@v1.0.3
