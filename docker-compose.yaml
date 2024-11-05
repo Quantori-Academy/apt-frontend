@@ -12,10 +12,12 @@ services:
   #     - apt-project
 
   frontend:
+    container_name: frontend
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: frontend
+    ports:
+      - "80:80"
     # env_file:
     #   - .env
 #     expose:
