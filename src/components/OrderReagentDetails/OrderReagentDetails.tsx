@@ -98,14 +98,18 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
                     {t("substanceDetails.fields.catalogLink")}:
                   </Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   {reagent.catalogLink !== undefined ? (
                     <Link
                       href={reagent.catalogLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       underline="hover"
-                      sx={{ display: "flex", alignItems: "center" }}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
                     >
                       <LinkIcon sx={{ mr: 1 }} />{" "}
                       {t("addSubstanceForm.requiredFields.catalogLink.label")}

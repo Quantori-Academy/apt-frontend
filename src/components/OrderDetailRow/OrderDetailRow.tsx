@@ -11,7 +11,7 @@ const OrderDetailRow: React.FC<OrderDetailRowProps> = ({ label, value }) => {
       <TableCell>
         <Typography fontWeight="bold">{label}:</Typography>
       </TableCell>
-      <TableCell>{value || "-"}</TableCell>
+      <TableCell align="center">{value || "-"}</TableCell>
     </TableRow>
   );
 };
