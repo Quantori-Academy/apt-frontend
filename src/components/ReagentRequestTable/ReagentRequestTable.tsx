@@ -129,7 +129,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                     color: statusColors[row.status],
                   }}
                 >
-                  {row.status}
+                  {t(`requests.statusFilter.${row.status}`)}
                 </TableCell>
                 <TableCell align="left">{row.userComment}</TableCell>
                 <TableCell align="left">{row.procurementComment}</TableCell>

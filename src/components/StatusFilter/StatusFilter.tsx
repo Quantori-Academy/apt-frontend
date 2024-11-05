@@ -3,6 +3,14 @@ import { useTranslation } from "react-i18next";
 
 import { StatusFilterOption } from "@/types";
 
+const filterOptions: Array<StatusFilterOption> = [
+  "All",
+  "Pending",
+  "Declined",
+  "Completed",
+  "Ordered",
+];
+
 type StatusFilterProps = {
   filter: StatusFilterOption;
   setFilter: (filter: StatusFilterOption) => void;
@@ -15,14 +23,6 @@ const StatusFilter: React.FC<StatusFilterProps> = ({
   setPage,
 }) => {
   const { t } = useTranslation();
-
-  const filterOptions = [
-    t("requests.statusFilter.Pending"),
-    t("requests.statusFilter.Completed"),
-    t("requests.statusFilter.Declined"),
-    t("requests.statusFilter.Ordered"),
-    t("requests.statusFilter.All"),
-  ];
 
   return (
     <FormControl size="small" sx={{ width: "20%", padding: "5px" }}>
@@ -41,7 +41,7 @@ const StatusFilter: React.FC<StatusFilterProps> = ({
       >
         {filterOptions.map((option) => (
           <MenuItem key={option} value={option}>
-            {option}
+            {t(`requests.statusFilter.${option}`)}
           </MenuItem>
         ))}
       </Select>
