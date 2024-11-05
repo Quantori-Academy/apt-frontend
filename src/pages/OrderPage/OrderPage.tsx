@@ -10,6 +10,7 @@ import {
   PageError,
   PageLoader,
 } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
 import { useGetOrderQuery } from "@/store";
 import { Order } from "@/types";
 import { formatDate } from "@/utils";
@@ -39,6 +40,8 @@ const OrderPage: React.FC = () => {
     isLoading: isOrderLoading,
     isError,
   } = useGetOrderQuery(orderId ? orderId : skipToken);
+
+  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   if (isOrderLoading) {
     return <PageLoader />;
@@ -76,8 +79,10 @@ const OrderPage: React.FC = () => {
           expanded={expanded}
           setExpanded={setExpanded}
           orderId={order.id}
+          openSnackbar={openSnackbar}
         />
       ))}
+      {SnackbarComponent()}
     </>
   );
 };

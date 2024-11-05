@@ -25,7 +25,7 @@ import {
   OrderAccordionButtons,
   ReagentDetailRow,
 } from "@/components";
-import { useAlertSnackbar } from "@/hooks";
+import { Severity } from "@/hooks";
 import {
   useDeleteReagentFromOrderMutation,
   useUpdateOrderReagentMutation,
@@ -58,6 +58,7 @@ type OrderReagentDetailsProps = {
   expanded: expand;
   setExpanded: (value: expand) => void;
   orderId: string;
+  openSnackbar: (severity: Severity, text: string) => void;
 };
 
 const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
@@ -65,13 +66,12 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   expanded,
   setExpanded,
   orderId,
+  openSnackbar,
 }) => {
   const { t } = useTranslation();
 
   const [isEditable, setIsEditable] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const {
     register,
@@ -253,7 +253,6 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
         onClose={() => setDeleteModalIsOpen(false)}
         onDelete={handleDelete}
       />
-      <SnackbarComponent />
     </>
   );
 };
