@@ -25,9 +25,7 @@ export const getListData = ({
   const sorted = sortListData(filtered, sortColumn, sortDirection);
   const paginated = paginateListData(sorted, page, pageSize);
 
-  const totalPages = Math.ceil(sorted.length / pageSize);
-
-  return { visibleItems: paginated, totalPages };
+  return { visibleItems: paginated, totalPages: sorted.length };
 };
 
 const filterListData = (
