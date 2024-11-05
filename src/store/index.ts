@@ -40,6 +40,10 @@ export {
   selectUserIsAuthenticated,
 } from "./slices/authSlice";
 
-export { useGetReagentRequestsQuery, useDeclineReagentRequestQuery } from "./reagentRequestApi.ts";
+export {
+  useGetReagentRequestsQuery,
+  useDeclineReagentRequestQuery,
+  useAddReagentRequestMutation,
+} from "./reagentRequestApi.ts";
 
 export { useGetOrdersQuery, useCreateOrderMutation } from "./ordersApi.ts";

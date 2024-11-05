@@ -1,5 +1,6 @@
 import { Box, Button, Container, Pagination, Typography } from "@mui/material";
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   AddReagentRequest,
@@ -8,6 +9,7 @@ import {
   ReagentRequestTable,
   StatusFilter,
 } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
 import { useGetReagentRequestsQuery } from "@/store";
 import {
   RequestsSortColumns,
@@ -27,6 +29,8 @@ const ReagentRequests: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
   const [modalOpen, setModalOpen] = useState(false);
 
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+  const { t } = useTranslation();
   const { data: reagentRequests = [], isLoading } =
     useGetReagentRequestsQuery();
 
@@ -54,6 +58,15 @@ const ReagentRequests: React.FC = () => {
     setSortColumn(property);
   };
 
+  const onAddRequestForm = (severity: "error" | "success") => {
+    openSnackbar(
+      severity,
+      severity === "error"
+        ? "Failed to add request"
+        : "Request Successfully Added"
+    );
+  };
+
   return (
     <Container
       sx={{
@@ -71,7 +84,7 @@ const ReagentRequests: React.FC = () => {
           setPage={setPage}
         />
         <Button onClick={() => setModalOpen(true)}>
-          Create Reagent Request
+          {t("createRequestForm.title")}
         </Button>
       </Box>
 
@@ -91,7 +104,9 @@ const ReagentRequests: React.FC = () => {
       <AddReagentRequest
         modalOpen={modalOpen}
         onClose={() => setModalOpen(false)}
+        onAddRequestForm={onAddRequestForm}
       />
+      {SnackbarComponent()}
     </Container>
   );
 };

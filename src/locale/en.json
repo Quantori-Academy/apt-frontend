@@ -487,6 +487,29 @@
           "requiredMessage": "Price required"
         }
       }
+    },
+    "createRequestForm": {
+      "title": "Create Reagent Request",
+      "requiredFields": {
+        "name": {
+          "label": "Reagent Name*",
+          "requiredMessage": "Reagent Name Is Required"
+        },
+        "units": {
+          "label": "Unit*",
+          "requiredMessage": "Unit Is Required"
+        },
+        "quantity": {
+          "label": "Quantity*",
+          "requiredMessage": "Quantity Is Required"
+        },
+        "CASNumber": {
+          "label": "CAS Number"
+        },
+        "comment": {
+          "label": "Comment"
+        }
+      }
     }
   }
 }

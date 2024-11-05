@@ -31,18 +31,26 @@ export const reagentRequestApi = createApi({
       },
       providesTags: ["Requests"],
     }),
-    addReagentRequest: builder.query({
-      query: ({ newRequest }) => {
+    addReagentRequest: builder.mutation({
+      query: (newRequest) => {
+        console.log("am:", newRequest);
         return {
-          url: `/reagents/requests`,
+          url: `/requests`,
           method: "POST",
           body: {
-            newRequest,
+            reagent_name: newRequest.reagentName,
+            structure: newRequest.structure,
+            cas_number: newRequest.CAS,
+            quantity: newRequest.desiredQuantity,
+            unit: newRequest.unit,
+            user_comment: newRequest.userComment,
           },
         };
       },
+      invalidatesTags: ["Requests"],
     }),
   }),
 });
 
-export const { useGetReagentRequestsQuery, useDeclineReagentRequestQuery } = reagentRequestApi;
+export const { useGetReagentRequestsQuery, useDeclineReagentRequestQuery, useAddReagentRequestMutation } =
+  reagentRequestApi;

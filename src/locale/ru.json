@@ -487,6 +487,30 @@
           "requiredMessage": "Цена обязательна"
         }
       }
+    },
+
+    "createRequestForm": {
+      "title": "Создать запрос на реагент",
+      "requiredFields": {
+        "name": {
+          "label": "Название*",
+          "requiredMessage": "Название обязательно"
+        },
+        "units": {
+          "label": "Единица измерения*",
+          "requiredMessage": "Единица измерения обязательны"
+        },
+        "quantity": {
+          "label": "Количество*",
+          "requiredMessage": "Количество обязательно"
+        },
+        "CASNumber": {
+          "label": "Номер CAS"
+        },
+        "comment": {
+          "label": "Комментарий"
+        }
+      }
     }
   }
 }
