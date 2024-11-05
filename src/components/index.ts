@@ -41,3 +41,4 @@ export { AddReagentRequest } from "./AddReagentRequest";
 export { AddOrder } from "./AddOrder";
 export { ReagentRequestDetails } from "./ReagentRequestDetails";
 export { ReagentRequestForm } from "./ReagentRequestForm";
+export { OrderDetailRow } from "./OrderDetailRow";

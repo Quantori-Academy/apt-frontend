@@ -1,4 +1,6 @@
 type OrderStatus = "Pending" | "Submitted" | "Fulfilled" | "Cancelled";
+export type StatusFilter = Capitalize<OrderStatus> | "All";
+export type SortType = "asc" | "desc";
 
 export type Order = {
   id: string;
@@ -14,26 +16,23 @@ export type BackendOrder = Omit<Order, "createdAt" | "modifiedAt"> & {
   modified_at: string;
 };
 
-type OrderReagent = {
+export type OrderReagent = {
+  id: number;
   reagentName: string;
-  unit: string;
   quantity: string;
+  unit: string;
   pricePerUnit: string;
   structure?: string;
   CASNumber?: string;
   producer?: string;
-  catalogId?: string;
+  catalogId?: string | null;
   catalogLink?: string;
 };
 
-export type BackendOrderReagent = {
+export type BackendOrderReagent = Pick<OrderReagent, "id" | "quantity" | "unit" | "structure" | "producer"> & {
   reagent_name: string;
-  unit: string;
-  quantity: string;
   price_per_unit: string;
-  structure?: string;
   cas_number?: string;
-  producer?: string;
   catalog_id?: string | null;
   catalog_link?: string;
 };
@@ -41,13 +40,17 @@ export type BackendOrderReagent = {
 export type OrderInput = {
   title: string;
   seller: string;
-  reagents: OrderReagent[];
+  reagents: Omit<OrderReagent, "id">[];
 };
 
 export type BackendOrderInput = Omit<OrderInput, "reagents"> & {
-  reagents: BackendOrderReagent[];
+  reagents: Omit<BackendOrderReagent, "id">[];
 };
 
-export type SortType = "asc" | "desc";
+export type OrderDetailPage = Order & {
+  orderedReagents: OrderReagent[];
+};
 
-export type StatusFilter = Capitalize<OrderStatus> | "All";
+export type BackendOrderDetailPage = BackendOrder & {
+  ordered_reagents: BackendOrderReagent[];
+};

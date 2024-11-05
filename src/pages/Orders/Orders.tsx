@@ -61,7 +61,7 @@ const Orders = () => {
           marginY: "30px",
         }}
       >
-        <Typography variant="h3">{t("orders.title")}</Typography>
+        <Typography variant="h3">{t("orders.title.OrdersPage")}</Typography>
         <Button variant="outlined" onClick={() => setIsOrderModalOpen(true)}>
           {t("orders.buttons.createOrder")}
         </Button>
