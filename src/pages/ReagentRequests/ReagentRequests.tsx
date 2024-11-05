@@ -76,7 +76,7 @@ const ReagentRequests: React.FC = () => {
         height: "100%",
       }}
     >
-      <Typography variant="h3">Reagent Requests</Typography>
+      <Typography variant="h3">{t("requests.title")}</Typography>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <StatusFilter
           filter={statusFilter}
