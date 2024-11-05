@@ -23,7 +23,8 @@
       "delete": "Delete",
       "login": "Login",
       "logout": "Logout",
-      "create": "Create"
+      "create": "Create",
+      "submit": "Submit"
     },
 
     "users": {
@@ -436,7 +437,7 @@
         "Modified Date": "Modified Date",
         "Seller": "Seller",
         "Status": "Status",
-        "Pagantion": {
+        "Pagination": {
           "RowsPerPage": "Rows per page:",
           "of": "of",
           "moreThan": "more than"
@@ -488,6 +489,7 @@
         }
       }
     },
+
     "createRequestForm": {
       "title": "Create Reagent Request",
       "requiredFields": {
@@ -509,6 +511,42 @@
         "comment": {
           "label": "Comment"
         }
+      }
+    },
+
+    "requests": {
+      "title": "Reagent Requests",
+      "table": {
+        "name": "Name",
+        "CreationDate": "Creation Date",
+        "ModifiedDate": "Modified Date",
+        "Desired Quantity": "Desired Quantity",
+        "Structure": "Structure",
+        "Status": "Status",
+        "CAS": "CAS",
+        "UserComments": "User Comments",
+        "ProcurementComments": "Procurement Comments",
+        "Actions": "Actions",
+        "Pagination": {
+          "RowsPerPage": "Rows per page:",
+          "of": "of",
+          "moreThan": "more than"
+        },
+        "actionButtons": {
+          "decline": "Decline"
+        }
+      },
+      "statusFilter": {
+        "All": "All",
+        "Pending": "Pending",
+        "Canceled": "Canceled",
+        "Fulfilled": "Fulfilled",
+        "Submitted": "Submitted"
+      },
+      "declineRequest": {
+        "title": "Decline Reagent Request",
+        "label": "Enter reason for decline",
+        "requiredField": "To decline request, comment is required"
       }
     }
   }

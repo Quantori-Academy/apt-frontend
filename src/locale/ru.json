@@ -23,7 +23,8 @@
       "delete": "Удалить",
       "login": "Войти",
       "logout": "Выйти",
-      "create": "Создать"
+      "create": "Создать",
+      "submit": "Отправить"
     },
 
     "users": {
@@ -436,7 +437,7 @@
         "Modified Date": "Дата изменения",
         "Seller": "Продавец",
         "Status": "Статус",
-        "Pagantion": {
+        "Pagination": {
           "RowsPerPage": "Строк на странице:",
           "of": "из",
           "moreThan": "больше чем"
@@ -510,6 +511,42 @@
         "comment": {
           "label": "Комментарий"
         }
+      }
+    },
+
+    "requests": {
+      "title": "Запросы на реагенты",
+      "table": {
+        "name": "Название",
+        "CreationDate": "Дата создания",
+        "ModifiedDate": "Дата изменения",
+        "Desired Quantity": "Желаемое количество",
+        "Structure": "Структура",
+        "Status": "Статус",
+        "CAS": "CAS",
+        "UserComments": "Комментарии пользователя",
+        "ProcurementComments": "Комментарии отдела закупок",
+        "Actions": "Действия",
+        "Pagination": {
+          "RowsPerPage": "Строк на странице:",
+          "of": "из",
+          "moreThan": "больше чем"
+        },
+        "actionButtons": {
+          "decline": "Отклонить"
+        }
+      },
+      "statusFilter": {
+        "All": "Все",
+        "Pending": "В ожидании",
+        "Canceled": "Отменено",
+        "Fulfilled": "Выполнено",
+        "Submitted": "Отправлено"
+      },
+      "declineRequest": {
+        "title": "Отклонить запрос на реагент",
+        "label": "Укажите причину отклонения",
+        "requiredField": "Для отклонения запроса требуется комментарий"
       }
     }
   }

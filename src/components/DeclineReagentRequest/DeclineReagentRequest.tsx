@@ -1,5 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { BasicModal } from "@/components";
 
@@ -20,6 +21,7 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
   id,
   modalOpen,
 }) => {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -40,7 +42,7 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
 
   return (
     <BasicModal
-      title="Decline Reagent Request"
+      title={t("requests.declineRequest.title")}
       closeModal={onClose}
       isOpen={modalOpen}
     >
@@ -50,23 +52,23 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
             display: "flex",
             flexDirection: "column",
             gap: "10px",
-            marginTop: "10px",
+            marginTop: "18px",
           }}
         >
           <TextField
-            label="Enter reason for decline"
+            label={t("requests.declineRequest.label")}
             multiline
             variant="outlined"
             rows={4}
             {...register("declineComment", {
-              required: "To decline request, comment is required",
+              required: t("requests.declineRequest.requiredField"),
             })}
             error={!!errors.declineComment}
             helperText={errors.declineComment?.message}
           />
           <Box sx={{ display: "flex", gap: "5px", justifyContent: "end" }}>
-            <Button type="submit">Submit</Button>
-            <Button onClick={() => onClose()}>Cancel</Button>
+            <Button type="submit">{t("buttons.submit")}</Button>
+            <Button onClick={() => onClose()}>{t("buttons.cancel")}</Button>
           </Box>
         </Box>
       </form>
