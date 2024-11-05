@@ -434,7 +434,7 @@
         "Pending": "Pending",
         "Submitted": "Submitted",
         "Fulfilled": "Fulfilled",
-        "Canceled": "Canceled"
+        "Cancelled": "Cancelled"
       },
 
       "table": {

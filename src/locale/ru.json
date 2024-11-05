@@ -434,7 +434,7 @@
         "Pending": "В ожидании",
         "Submitted": "Отправлено",
         "Fulfilled": "Выполнено",
-        "Canceled": "Отменено"
+        "Cancelled": "Отменено"
       },
 
       "table": {
