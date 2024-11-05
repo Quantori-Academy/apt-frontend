@@ -19,21 +19,21 @@ export const reagentRequestApi = createApi({
       },
       providesTags: ["Requests"],
     }),
-    declineReagentRequest: builder.query<void, { requestId: number; declineMessage: string }>({
+    declineReagentRequest: builder.mutation<void, { requestId: string; declineMessage: string }>({
       query: ({ requestId, declineMessage }) => {
+        console.log("am:", declineMessage);
         return {
-          url: `/reagents/requests/${requestId}`,
-          method: "PUT",
+          url: `/requests/${requestId}/decline`,
+          method: "PATCH",
           body: {
-            declineMessage,
+            comment: declineMessage,
           },
         };
       },
-      providesTags: ["Requests"],
+      invalidatesTags: ["Requests"],
     }),
     addReagentRequest: builder.mutation({
       query: (newRequest) => {
-        console.log("am:", newRequest);
         return {
           url: `/requests`,
           method: "POST",
@@ -52,5 +52,5 @@ export const reagentRequestApi = createApi({
   }),
 });
 
-export const { useGetReagentRequestsQuery, useDeclineReagentRequestQuery, useAddReagentRequestMutation } =
+export const { useGetReagentRequestsQuery, useDeclineReagentRequestMutation, useAddReagentRequestMutation } =
   reagentRequestApi;

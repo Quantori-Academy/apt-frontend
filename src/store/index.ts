@@ -42,7 +42,7 @@ export {
 
 export {
   useGetReagentRequestsQuery,
-  useDeclineReagentRequestQuery,
+  useDeclineReagentRequestMutation,
   useAddReagentRequestMutation,
 } from "./reagentRequestApi.ts";
 

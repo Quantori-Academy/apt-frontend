@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { BasicModal } from "@/components";
+import { useDeclineReagentRequestMutation } from "@/store";
 
 type DeclineReagentRequestProps = {
   onDeclineSubmit: (severity: "error" | "success") => void;
@@ -32,12 +33,20 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
     },
   });
 
+  const [declineReagentRequest] = useDeclineReagentRequestMutation();
+
   const onSubmit = async (message: DeclineMessage) => {
-    //TODO: waiting for the backend to use id and message
-    console.log("am:", message);
-    console.log("am:", id);
-    onDeclineSubmit("success");
-    onClose();
+    const { error } = await declineReagentRequest({
+      requestId: id,
+      declineMessage: message.declineComment,
+    });
+
+    if (error) {
+      onDeclineSubmit("error");
+    } else {
+      onDeclineSubmit("success");
+      onClose();
+    }
   };
 
   return (
