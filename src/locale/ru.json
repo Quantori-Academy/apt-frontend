@@ -539,9 +539,9 @@
       "statusFilter": {
         "All": "Все",
         "Pending": "В ожидании",
-        "Canceled": "Отменено",
-        "Fulfilled": "Выполнено",
-        "Submitted": "Отправлено"
+        "Declined": "Отклонено",
+        "Ordered": "Заказано",
+        "Completed": "Завершено"
       },
       "declineRequest": {
         "title": "Отклонить запрос на реагент",

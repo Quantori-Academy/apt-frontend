@@ -30,6 +30,13 @@ type ReagentRequestTableProps = {
   visibleItems: ReagentRequests;
 };
 
+const statusColors = {
+  Declined: "#b22a00",
+  Pending: "#ff9800",
+  Ordered: "#4caf50",
+  Completed: "#4caf50",
+};
+
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   sortColumn,
   sortDirection,
@@ -117,7 +124,13 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{row.structure}</TableCell>
                 <TableCell>{row.CAS}</TableCell>
                 <TableCell>{row.desiredQuantity}</TableCell>
-                <TableCell>{row.status}</TableCell>
+                <TableCell
+                  sx={{
+                    color: statusColors[row.status],
+                  }}
+                >
+                  {row.status}
+                </TableCell>
                 <TableCell align="left">{row.userComment}</TableCell>
                 <TableCell align="left">{row.procurementComment}</TableCell>
                 <TableCell>{formatDate(row.dateCreated)}</TableCell>

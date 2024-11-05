@@ -18,9 +18,9 @@ const StatusFilter: React.FC<StatusFilterProps> = ({
 
   const filterOptions = [
     t("requests.statusFilter.Pending"),
-    t("requests.statusFilter.Submitted"),
-    t("requests.statusFilter.Canceled"),
-    t("requests.statusFilter.Fulfilled"),
+    t("requests.statusFilter.Completed"),
+    t("requests.statusFilter.Declined"),
+    t("requests.statusFilter.Ordered"),
     t("requests.statusFilter.All"),
   ];
 
