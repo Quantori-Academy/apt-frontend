@@ -1,27 +1,27 @@
 services:
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./.nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - frontend
-    networks:
-      - apt-project
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nginx
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./.nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+  #   depends_on:
+  #     - frontend
+  #   networks:
+  #     - apt-project
 
   frontend:
     build:
-      context: ../apt-frontend
+      context: .
       dockerfile: Dockerfile
     container_name: frontend
-    env_file:
-      - ../apt-frontend/.env
-    expose:
-      - "80"
-    networks:
-      - apt-project
-networks:
-  apt-project:
-    external: true
+    # env_file:
+    #   - .env
+#     expose:
+#       - "80"
+#     networks:
+#       - apt-project
+# networks:
+#   apt-project:
+#     external: true

@@ -63,12 +63,16 @@ jobs:
                 key: ${{secrets.SSH_KEY}}
                 script: |
                   cd ~/apt-frontend
-                  sudo docker compose down
-                  sudo docker rm -f frontend
-                  sudo docker rm -f nginx
-                  sudo docker compose build
-                  sudo docker compose up -d
-                  docker network create apt-project
-                  docker network connect apt-project frontend 
-                  docker network connect apt-project nginx
+                  sudo docker compose stop
+                  sudo docker compose up -d --build
                   rm -rf ./.git
+
+                  # sudo docker compose down
+                  # sudo docker rm -f frontend
+                  # sudo docker rm -f nginx
+                  # sudo docker compose build
+                  # sudo docker compose up -d
+                  # docker network create apt-project
+                  # docker network connect apt-project frontend 
+                  # docker network connect apt-project nginx
+                  # rm -rf ./.git
