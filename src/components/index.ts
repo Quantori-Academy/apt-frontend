@@ -40,3 +40,4 @@ export { DeclineReagentRequest } from "./DeclineReagentRequest";
 export { AddReagentRequest } from "./AddReagentRequest";
 export { AddOrder } from "./AddOrder";
 export { OrderDetailRow } from "./OrderDetailRow";
+export { OrderReagentDetails } from "./OrderReagentDetails";
