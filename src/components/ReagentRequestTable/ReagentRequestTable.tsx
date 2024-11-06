@@ -18,12 +18,7 @@ import { useTranslation } from "react-i18next";
 import { DeclineReagentRequest, PageError } from "@/components";
 import { EditReagentRequest } from "@/components/EditReagentRequest";
 import { userRoles } from "@/constants";
-import {
-  Severity,
-  useAlertSnackbar,
-  useAppSelector,
-  useCheckedRows,
-} from "@/hooks";
+import { Severity, useAlertSnackbar, useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
 import {
   ReagentRequests,
@@ -38,6 +33,10 @@ type ReagentRequestTableProps = {
   sortDirection: SortDirection;
   onSortChange: (property: RequestsSortColumns) => void;
   visibleItems: ReagentRequests;
+  selected: Array<string>;
+  isSelected: (id: string) => boolean;
+  handleSelectAllClick: (isChecked: boolean) => void;
+  handleCheckboxClick: (id: string) => void;
 };
 
 const statusColors = {
@@ -52,6 +51,10 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   sortDirection,
   onSortChange,
   visibleItems,
+  selected,
+  isSelected,
+  handleSelectAllClick,
+  handleCheckboxClick,
 }) => {
   const [requestId, setRequestId] = useState("");
   const [editRequest, setEditRequest] = useState<RequestedReagent>({
@@ -74,9 +77,6 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   const role = useAppSelector(selectUserRole);
 
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
-
-  const { selected, isSelected, handleSelectAllClick, handleCheckboxClick } =
-    useCheckedRows(visibleItems);
 
   const handleSubmit = (severity: Severity, errorMessage: string) => {
     openSnackbar(severity, errorMessage);
@@ -106,21 +106,24 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell padding="checkbox">
-                <Checkbox
-                  color="primary"
-                  indeterminate={
-                    selected.length > 0 && selected.length < visibleItems.length
-                  }
-                  checked={
-                    visibleItems.length > 0 &&
-                    selected.length === visibleItems.length
-                  }
-                  onChange={(event) =>
-                    handleSelectAllClick(event.target.checked)
-                  }
-                />
-              </TableCell>
+              {role === userRoles.ProcurementOfficer && (
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    color="primary"
+                    indeterminate={
+                      selected.length > 0 &&
+                      selected.length < visibleItems.length
+                    }
+                    checked={
+                      visibleItems.length > 0 &&
+                      selected.length === visibleItems.length
+                    }
+                    onChange={(event) =>
+                      handleSelectAllClick(event.target.checked)
+                    }
+                  />
+                </TableCell>
+              )}
               <TableCell>
                 <TableSortLabel
                   active={sortColumn === "name"}
@@ -175,9 +178,11 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 onClick={() => handleCheckboxClick(row.id)}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell padding="checkbox">
-                  <Checkbox color="primary" checked={isSelected(row.id)} />
-                </TableCell>
+                {role === userRoles.ProcurementOfficer && (
+                  <TableCell padding="checkbox">
+                    <Checkbox color="primary" checked={isSelected(row.id)} />
+                  </TableCell>
+                )}
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
