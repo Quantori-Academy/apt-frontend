@@ -29,6 +29,10 @@ export type OrderReagent = {
   catalogLink?: string;
 };
 
+export type UpdatedReagent = OrderReagent & {
+  orderId: string;
+};
+
 export type BackendOrderReagent = Pick<OrderReagent, "id" | "quantity" | "unit" | "structure" | "producer"> & {
   reagent_name: string;
   price_per_unit: string;

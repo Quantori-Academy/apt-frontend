@@ -313,7 +313,8 @@
         "producer": "Производитель",
         "locationId": "Место хранения",
         "unit": "Единица измерения",
-        "pricePerUnit": "Цена за единицу",
+        "units": "Единица измерения",
+        "price": "Цена за единицу",
         "totalQuantityLeft": "Остаток",
         "quantity": "Количество",
         "catalogID": "ID каталога",
@@ -434,7 +435,7 @@
         "Pending": "В ожидании",
         "Submitted": "Отправлено",
         "Fulfilled": "Выполнено",
-        "Canceled": "Отменено"
+        "Cancelled": "Отменено"
       },
 
       "table": {
