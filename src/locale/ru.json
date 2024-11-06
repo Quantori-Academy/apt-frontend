@@ -13,7 +13,10 @@
       "Storage Detail": "Детали хранения",
       "Substances": "Вещества",
       "Reagent Detail": "Детали реактива",
-      "Sample Detail": "Детали образца"
+      "Sample Detail": "Детали образца",
+      "Orders": "Заказы",
+      "Order Details": "Детали заказа",
+      "Reagent Requests": "Запросы на реагенты"
     },
 
     "buttons": {

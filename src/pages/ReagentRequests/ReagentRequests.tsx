@@ -9,6 +9,7 @@ import {
   ReagentRequestTable,
   StatusFilter,
 } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { userRoles } from "@/constants";
 import { useAlertSnackbar, useAppSelector, useCheckedRows } from "@/hooks";
 import {
@@ -113,6 +114,7 @@ const ReagentRequests: React.FC = () => {
         height: "100%",
       }}
     >
+      <DashboardBreadcrumbs />
       <Typography variant="h3">{t("requests.title")}</Typography>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <StatusFilter
