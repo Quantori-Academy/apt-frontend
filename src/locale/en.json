@@ -310,10 +310,11 @@
         "name": "Name",
         "category": "Category",
         "CASNumber": "CAS Number",
-        "producer": "producer",
+        "producer": "Producer",
         "locationId": "Storage location",
         "unit": "Units",
-        "pricePerUnit": "Price per unit",
+        "units": "Units",
+        "price": "Price per unit",
         "totalQuantityLeft": "Quantity left",
         "quantity": "Quantity",
         "catalogID": "Catalog ID",
@@ -434,7 +435,7 @@
         "Pending": "Pending",
         "Submitted": "Submitted",
         "Fulfilled": "Fulfilled",
-        "Canceled": "Canceled"
+        "Cancelled": "Cancelled"
       },
 
       "table": {

@@ -48,4 +48,10 @@ export {
   useEditReagentRequestMutation,
 } from "./reagentRequestApi.ts";
 
-export { useGetOrdersQuery, useCreateOrderMutation, useGetOrderQuery } from "./ordersApi.ts";
+export {
+  useGetOrdersQuery,
+  useCreateOrderMutation,
+  useGetOrderQuery,
+  useUpdateOrderReagentMutation,
+  useDeleteReagentFromOrderMutation,
+} from "./ordersApi.ts";
