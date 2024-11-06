@@ -2,25 +2,22 @@ import { Box, Button, Stack, TextField } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import { ReagentRequestInput } from "@/types";
+
 import style from "@/components/AddUserForm/AddUserForm.module.css";
 
-export type ReagentRequestInput = {
-  reagentName: string;
-  CAS: string;
-  desiredQuantity: number | null;
-  userComment: string;
-  unit: string;
-};
 type ReagentRequestFormProps = {
   onSubmit: (newReagentRequest: ReagentRequestInput) => void;
   isLoading: boolean;
   onClose: () => void;
+  isEdit: boolean;
 };
 
 const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
   onSubmit,
   isLoading,
   onClose,
+  isEdit,
 }) => {
   const { t } = useTranslation();
   const {
@@ -74,9 +71,15 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
           {...register("userComment")}
         />
         <Box sx={{ display: "flex", gap: "5px", justifyContent: "end" }}>
-          <Button type="submit" disabled={isLoading}>
-            {t("buttons.create")}
-          </Button>
+          {isEdit ? (
+            <Button type="submit" disabled={isLoading}>
+              {t("buttons.edit")}
+            </Button>
+          ) : (
+            <Button type="submit" disabled={isLoading}>
+              {t("buttons.create")}
+            </Button>
+          )}
           <Button onClick={onClose} disabled={isLoading}>
             {t("buttons.cancel")}
           </Button>

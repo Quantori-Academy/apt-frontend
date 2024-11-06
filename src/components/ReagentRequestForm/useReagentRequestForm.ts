@@ -1,16 +1,10 @@
 import { useForm } from "react-hook-form";
 
-import { ReagentRequestInput } from "./ReagentRequestForm";
+import { ReagentRequestInput } from "@/types";
 
-function useReagentRequestForm() {
+function useReagentRequestForm(defaultValues: ReagentRequestInput) {
   return useForm<ReagentRequestInput>({
-    defaultValues: {
-      reagentName: "",
-      CAS: "",
-      desiredQuantity: null,
-      userComment: "",
-      unit: "",
-    },
+    values: defaultValues,
   });
 }
 

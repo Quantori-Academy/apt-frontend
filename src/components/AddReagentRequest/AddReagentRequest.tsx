@@ -9,7 +9,7 @@ type ReagentRequestInput = {
   reagentName: string;
   CAS: string;
   desiredQuantity: number | null;
-  userComment: string;
+  userComment: string | null;
   unit: string;
 };
 
@@ -26,7 +26,13 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const formMethods = useReagentRequestForm();
+  const formMethods = useReagentRequestForm({
+    reagentName: "",
+    CAS: "",
+    desiredQuantity: null,
+    userComment: "",
+    unit: "",
+  });
 
   const [addReagentRequest, { isLoading }] = useAddReagentRequestMutation();
 
@@ -50,6 +56,7 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
     >
       <FormProvider {...formMethods}>
         <ReagentRequestForm
+          isEdit={false}
           onSubmit={onSubmit}
           isLoading={isLoading}
           onClose={onClose}

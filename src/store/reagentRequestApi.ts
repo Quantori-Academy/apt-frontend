@@ -12,8 +12,15 @@ export const reagentRequestApi = createApi({
   }),
   tagTypes: ["Requests"],
   endpoints: (builder) => ({
-    getReagentRequests: builder.query<ReagentRequests, void>({
+    getAllReagentRequests: builder.query<ReagentRequests, void>({
       query: () => "/requests",
+      transformResponse: (baseQueryReturnValue: Array<RequestedReagentBackend>) => {
+        return transformRequestData(baseQueryReturnValue);
+      },
+      providesTags: ["Requests"],
+    }),
+    getOwnReagentRequests: builder.query<ReagentRequests, string>({
+      query: (userId) => `/requests/${userId}`,
       transformResponse: (baseQueryReturnValue: Array<RequestedReagentBackend>) => {
         return transformRequestData(baseQueryReturnValue);
       },
@@ -48,8 +55,29 @@ export const reagentRequestApi = createApi({
       },
       invalidatesTags: ["Requests"],
     }),
+    editReagentRequest: builder.mutation({
+      query: ({ editedRequest, requestId }) => {
+        return {
+          url: `requests/${requestId}`,
+          method: "PUT",
+          body: {
+            reagent_name: editedRequest.reagentName,
+            structure: editedRequest.structure,
+            cas_number: editedRequest.CAS,
+            quantity: editedRequest.desiredQuantity,
+            unit: editedRequest.unit,
+          },
+        };
+      },
+      invalidatesTags: ["Requests"],
+    }),
   }),
 });
 
-export const { useGetReagentRequestsQuery, useDeclineReagentRequestMutation, useAddReagentRequestMutation } =
-  reagentRequestApi;
+export const {
+  useGetAllReagentRequestsQuery,
+  useDeclineReagentRequestMutation,
+  useAddReagentRequestMutation,
+  useEditReagentRequestMutation,
+  useGetOwnReagentRequestsQuery,
+} = reagentRequestApi;

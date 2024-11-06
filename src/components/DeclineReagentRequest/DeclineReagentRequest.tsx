@@ -6,7 +6,10 @@ import { BasicModal } from "@/components";
 import { useDeclineReagentRequestMutation } from "@/store";
 
 type DeclineReagentRequestProps = {
-  onDeclineSubmit: (severity: "error" | "success") => void;
+  onDeclineSubmit: (
+    severity: "error" | "success",
+    errorMessage: string
+  ) => void;
   onClose: () => void;
   id: string;
   modalOpen: boolean;
@@ -42,9 +45,9 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
     });
 
     if (error) {
-      onDeclineSubmit("error");
+      onDeclineSubmit("error", "Failed to Decline Request");
     } else {
-      onDeclineSubmit("success");
+      onDeclineSubmit("success", "Request Declined Successfully");
       onClose();
     }
   };
