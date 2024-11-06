@@ -34,6 +34,7 @@ const EditReagentRequest: React.FC<ReagentRequestDetailsProps> = ({
   const [editReagentRequest] = useEditReagentRequestMutation();
 
   const onSubmit = async (editedRequest: ReagentRequestInput) => {
+    console.log("am:", editedRequest.userComment);
     const { error } = await editReagentRequest({
       requestId,
       editedRequest,
