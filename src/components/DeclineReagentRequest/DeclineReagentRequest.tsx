@@ -3,13 +3,11 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { BasicModal } from "@/components";
+import { Severity } from "@/hooks";
 import { useDeclineReagentRequestMutation } from "@/store";
 
 type DeclineReagentRequestProps = {
-  onDeclineSubmit: (
-    severity: "error" | "success",
-    errorMessage: string
-  ) => void;
+  onDeclineSubmit: (severity: Severity, errorMessage: string) => void;
   onClose: () => void;
   id: string;
   modalOpen: boolean;

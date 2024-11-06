@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { BasicModal, ReagentRequestForm } from "@/components";
 import { useReagentRequestForm } from "@/components/ReagentRequestForm";
+import { Severity } from "@/hooks";
 import { useAddReagentRequestMutation } from "@/store";
 
 type ReagentRequestInput = {
@@ -16,7 +17,7 @@ type ReagentRequestInput = {
 type AddReagentRequestProps = {
   modalOpen: boolean;
   onClose: () => void;
-  onAddRequestForm: (severity: "error" | "success") => void;
+  onAddRequestForm: (severity: Severity) => void;
 };
 
 const AddReagentRequest: React.FC<AddReagentRequestProps> = ({

@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 
 import { DeclineReagentRequest, PageError } from "@/components";
 import { EditReagentRequest } from "@/components/EditReagentRequest";
-import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import { Severity, useAlertSnackbar, useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
 import {
   ReagentRequests,
@@ -65,10 +65,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   const { t } = useTranslation();
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
-  const handleSubmit = (
-    severity: "error" | "success",
-    errorMessage: string
-  ) => {
+  const handleSubmit = (severity: Severity, errorMessage: string) => {
     openSnackbar(severity, errorMessage);
   };
 

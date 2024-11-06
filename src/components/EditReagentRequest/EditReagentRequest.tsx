@@ -2,6 +2,7 @@ import { FormProvider } from "react-hook-form";
 
 import { BasicModal, ReagentRequestForm } from "@/components";
 import { useReagentRequestForm } from "@/components/ReagentRequestForm";
+import { Severity } from "@/hooks";
 import { useEditReagentRequestMutation } from "@/store";
 import { ReagentRequestInput, RequestedReagent } from "@/types";
 
@@ -10,7 +11,7 @@ type ReagentRequestDetailsProps = {
   modalOpen: boolean;
   request: RequestedReagent;
   requestId: string;
-  onEditSubmit: (severity: "error" | "success", errorMessage: string) => void;
+  onEditSubmit: (severity: Severity, errorMessage: string) => void;
 };
 
 const EditReagentRequest: React.FC<ReagentRequestDetailsProps> = ({
