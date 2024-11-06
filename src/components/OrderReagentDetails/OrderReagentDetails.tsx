@@ -154,6 +154,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
       <Accordion
         sx={{
           boxShadow: `0px -1px 1px #00695f, 0px 1px 3px #00695f`,
+          marginBottom: 2,
         }}
         expanded={expanded === reagent.reagentName + reagent.quantity}
         onChange={handleChange(reagent.reagentName + reagent.quantity)}
