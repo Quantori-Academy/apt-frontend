@@ -1,8 +1,8 @@
 import { Box, Modal, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { AddUserForm, AddUserStatus } from "@/components/AddUserForm";
-import { useAlertSnackbar } from "@/hooks";
+import { AddUserForm } from "@/components/AddUserForm";
+import { Severity, useAlertSnackbar } from "@/hooks";
 
 import style from "./AddUserModal.module.css";
 
@@ -16,7 +16,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
 
   const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
-  function handleFormSubmit(status: AddUserStatus) {
+  function handleFormSubmit(status: Severity) {
     if (status === "success") {
       openSnackbar("success", t("addUserForm.snackBarMessages.success"));
       onClose();

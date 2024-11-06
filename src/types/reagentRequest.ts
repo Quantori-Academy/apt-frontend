@@ -39,3 +39,11 @@ export type RequestedReagentBackend = {
   user_comment: RequestUserCommentBackend;
   procurement_comment: RequestUserCommentBackend;
 };
+
+export type ReagentRequestInput = {
+  reagentName: string;
+  CAS: string;
+  desiredQuantity: number | null;
+  userComment: string | null;
+  unit: string;
+};

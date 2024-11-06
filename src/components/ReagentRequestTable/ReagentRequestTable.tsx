@@ -1,3 +1,4 @@
+import EditIcon from "@mui/icons-material/Edit";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {
   IconButton,
@@ -10,11 +11,14 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { DeclineReagentRequest } from "@/components";
-import { useAlertSnackbar } from "@/hooks";
+import { DeclineReagentRequest, PageError } from "@/components";
+import { EditReagentRequest } from "@/components/EditReagentRequest";
+import { userRoles } from "@/constants";
+import { Severity, useAlertSnackbar, useAppSelector } from "@/hooks";
+import { selectUserRole } from "@/store";
 import {
   ReagentRequests,
   RequestedReagent,
@@ -44,21 +48,46 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   visibleItems,
 }) => {
   const [requestId, setRequestId] = useState("");
+  const [editRequest, setEditRequest] = useState<RequestedReagent>({
+    id: "",
+    name: "",
+    structure: "",
+    CAS: "",
+    desiredQuantity: "",
+    status: "Pending",
+    userComment: "",
+    procurementComment: "",
+    dateCreated: "",
+    dateModified: "",
+  });
+
   const [modalOpen, setModalOpen] = useState(false);
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const { t } = useTranslation();
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
-  const handleSubmit = (severity: "error" | "success") => {
-    openSnackbar(
-      severity,
-      severity === "success" ? "Request Declined" : "Failed to decline request"
-    );
+  const handleSubmit = (severity: Severity, errorMessage: string) => {
+    openSnackbar(severity, errorMessage);
   };
 
   const handleDecline = (id: string) => {
     setModalOpen(true);
     setRequestId(id);
   };
+
+  const handleEdit = useCallback(
+    (index: number, id: string) => {
+      setDetailsModalOpen(true);
+      setEditRequest(visibleItems[index]);
+      setRequestId(id);
+    },
+    [visibleItems, setDetailsModalOpen, setEditRequest]
+  );
+
+  const role = useAppSelector(selectUserRole);
+
+  if (visibleItems.length === 0)
+    return <PageError text="There is no reagent request" />;
 
   return (
     <>
@@ -113,7 +142,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {visibleItems?.map((row: RequestedReagent) => (
+            {visibleItems?.map((row: RequestedReagent, index) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -129,19 +158,31 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                     color: statusColors[row.status],
                   }}
                 >
-                  {row.status}
+                  {t(`requests.statusFilter.${row.status}`)}
                 </TableCell>
                 <TableCell align="left">{row.userComment}</TableCell>
                 <TableCell align="left">{row.procurementComment}</TableCell>
                 <TableCell>{formatDate(row.dateCreated)}</TableCell>
                 <TableCell>{formatDate(row.dateModified)}</TableCell>
                 <TableCell>
-                  <IconButton
-                    title={t("requests.table.actionButtons.decline")}
-                    onClick={() => handleDecline(row.id)}
-                  >
-                    <HighlightOffIcon color="error" />
-                  </IconButton>
+                  {role === userRoles.ProcurementOfficer &&
+                    row.status !== "Declined" && (
+                      <IconButton
+                        title={t("requests.table.actionButtons.decline")}
+                        onClick={() => handleDecline(row.id)}
+                      >
+                        <HighlightOffIcon color="error" />
+                      </IconButton>
+                    )}
+                  {role === userRoles.Researcher &&
+                    row.status === "Pending" && (
+                      <IconButton
+                        title="Edit"
+                        onClick={() => handleEdit(index, row.id)}
+                      >
+                        <EditIcon color="disabled" />
+                      </IconButton>
+                    )}
                 </TableCell>
               </TableRow>
             ))}
@@ -154,6 +195,13 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
         id={requestId}
         onClose={() => setModalOpen(false)}
         modalOpen={modalOpen}
+      />
+      <EditReagentRequest
+        onClose={() => setDetailsModalOpen(false)}
+        modalOpen={detailsModalOpen}
+        request={editRequest}
+        requestId={requestId}
+        onEditSubmit={handleSubmit}
       />
 
       {SnackbarComponent()}

@@ -41,9 +41,11 @@ export {
 } from "./slices/authSlice";
 
 export {
-  useGetReagentRequestsQuery,
+  useGetAllReagentRequestsQuery,
+  useGetOwnReagentRequestsQuery,
   useDeclineReagentRequestMutation,
   useAddReagentRequestMutation,
+  useEditReagentRequestMutation,
 } from "./reagentRequestApi.ts";
 
 export {

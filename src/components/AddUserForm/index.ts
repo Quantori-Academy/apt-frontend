@@ -1,1 +1,1 @@
-export { default as AddUserForm, type AddUserStatus } from "./AddUserForm";
+export { default as AddUserForm } from "./AddUserForm";

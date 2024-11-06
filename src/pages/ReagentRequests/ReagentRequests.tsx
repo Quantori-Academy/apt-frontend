@@ -9,8 +9,14 @@ import {
   ReagentRequestTable,
   StatusFilter,
 } from "@/components";
-import { useAlertSnackbar } from "@/hooks";
-import { useGetReagentRequestsQuery } from "@/store";
+import { userRoles } from "@/constants";
+import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import {
+  selectUserId,
+  selectUserRole,
+  useGetAllReagentRequestsQuery,
+  useGetOwnReagentRequestsQuery,
+} from "@/store";
 import {
   RequestsSortColumns,
   SortDirection,
@@ -29,26 +35,49 @@ const ReagentRequests: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
   const [modalOpen, setModalOpen] = useState(false);
 
+  const userId = useAppSelector(selectUserId);
+  const role = useAppSelector(selectUserRole);
+
   const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+
   const { t } = useTranslation();
-  const { data: reagentRequests = [], isLoading } =
-    useGetReagentRequestsQuery();
+
+  const {
+    data: reagentRequestsOfficer = [],
+    isLoading: isOfficerRequestsLoading,
+  } = useGetAllReagentRequestsQuery();
+
+  const {
+    data: reagentRequestsResearcher = [],
+    isLoading: isResearcherRequestsLoading,
+  } = useGetOwnReagentRequestsQuery(userId!);
 
   const { visibleItems, totalPages } = useMemo(
     () =>
       getRequestsListData({
-        items: reagentRequests,
+        items:
+          role !== userRoles.Researcher
+            ? reagentRequestsOfficer
+            : reagentRequestsResearcher,
         sortColumn,
         sortDirection,
         page,
         pageSize: PAGE_SIZE,
         statusFilter,
       }),
-    [reagentRequests, sortColumn, sortDirection, page, statusFilter]
+    [
+      reagentRequestsOfficer,
+      sortColumn,
+      sortDirection,
+      page,
+      statusFilter,
+      reagentRequestsResearcher,
+    ]
   );
 
-  if (isLoading) return <PageLoader />;
-  if (!reagentRequests) {
+  if (isOfficerRequestsLoading || isResearcherRequestsLoading)
+    return <PageLoader />;
+  if (!reagentRequestsOfficer || !reagentRequestsResearcher) {
     return <PageError text="There are no reagent request to show" />;
   }
 
@@ -83,9 +112,11 @@ const ReagentRequests: React.FC = () => {
           setFilter={setStatusFilter}
           setPage={setPage}
         />
-        <Button onClick={() => setModalOpen(true)}>
-          {t("createRequestForm.title")}
-        </Button>
+        {role !== userRoles.Administrator && (
+          <Button onClick={() => setModalOpen(true)}>
+            {t("createRequestForm.title")}
+          </Button>
+        )}
       </Box>
 
       <ReagentRequestTable

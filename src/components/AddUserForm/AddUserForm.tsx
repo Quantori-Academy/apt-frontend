@@ -3,15 +3,14 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { PASSWORD_REGEX, userRoles } from "@/constants";
+import { Severity } from "@/hooks";
 import { useAddUserMutation } from "@/store";
 import { UserRegisterData, UserRegisterInput } from "@/types";
 
 import style from "./AddUserForm.module.css";
 
-export type AddUserStatus = "error" | "success";
-
 type AddUserFormProps = {
-  onFormSubmit: (status: AddUserStatus) => void;
+  onFormSubmit: (status: Severity) => void;
 };
 
 const roles = Object.values(userRoles);
