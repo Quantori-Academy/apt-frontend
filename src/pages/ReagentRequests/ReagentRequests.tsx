@@ -55,7 +55,7 @@ const ReagentRequests: React.FC = () => {
     () =>
       getRequestsListData({
         items:
-          role === "Procurement Officer"
+          role !== "Researcher"
             ? reagentRequestsOfficer
             : reagentRequestsResearcher,
         sortColumn,
