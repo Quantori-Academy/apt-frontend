@@ -1,5 +1,5 @@
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import { AppBar, Box, Button, IconButton } from "@mui/material";
+import { AppBar, Box, Button, IconButton, Typography } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { useAppSelector } from "@/hooks";
 import { RoutePublicPath } from "@/router/publicRoutesRouterConfig.tsx";
 import { selectUserIsAuthenticated } from "@/store";
+import { selectUsername } from "@/store/slices";
 
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { Logo } from "../Logo";
@@ -29,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
   };
 
   const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
-
+  const username = useAppSelector(selectUsername);
   const displayLanguageValue = currentLanguage === "ENG" ? "ENG" : "РУС";
 
   return (
@@ -47,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
         justifyContent: "space-between",
         gap: "5px",
         alignItems: "center",
-        height: "60px",
+        height: "70px",
       }}
     >
       <Logo />
@@ -59,21 +60,31 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
         }}
       >
         {isAuthenticated ? (
-          <IconButton
-            color="inherit"
-            sx={{ p: 0, mr: 2 }}
-            onClick={(e) => onClick(e)}
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="space-between"
+            margin={3}
+            textAlign="center"
           >
-            <PermIdentityIcon
-              sx={{
-                width: 40,
-                height: 40,
-                border: "2px solid white",
-                borderRadius: "50%",
-                padding: "5px",
-              }}
-            />
-          </IconButton>
+            <IconButton
+              color="inherit"
+              sx={{ padding: 0 }}
+              onClick={(e) => onClick(e)}
+            >
+              <PermIdentityIcon
+                sx={{
+                  width: 40,
+                  height: 40,
+                  border: "2px solid white",
+                  borderRadius: "50%",
+                  padding: "5px",
+                }}
+              />
+            </IconButton>
+            <Typography textAlign="center">{username}</Typography>
+          </Box>
         ) : (
           <Button component={NavLink} to={RoutePublicPath.login}>
             {t("buttons.login")}

@@ -61,6 +61,7 @@ export const authSlice = createReducerSlice({
     selectUserRole: (state) => state.user?.role,
     selectUserId: (state) => state.user?.id,
     selectUserIsAuthenticated: (state) => state.isAuthenticated,
+    selectUsername: (state) => state.user?.username,
   },
 
   extraReducers: (builder) => {
@@ -83,5 +84,11 @@ export const authSlice = createReducerSlice({
 });
 
 export const { logout } = authSlice.actions;
-export const { selectErrorMessage, selectLoading, selectUserRole, selectUserId, selectUserIsAuthenticated } =
-  authSlice.selectors;
+export const {
+  selectErrorMessage,
+  selectLoading,
+  selectUserRole,
+  selectUserId,
+  selectUserIsAuthenticated,
+  selectUsername,
+} = authSlice.selectors;
