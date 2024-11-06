@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 
 import { DeclineReagentRequest, PageError } from "@/components";
 import { EditReagentRequest } from "@/components/EditReagentRequest";
+import { userRoles } from "@/constants";
 import { Severity, useAlertSnackbar, useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
 import {
@@ -164,7 +165,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{formatDate(row.dateCreated)}</TableCell>
                 <TableCell>{formatDate(row.dateModified)}</TableCell>
                 <TableCell>
-                  {role === "Procurement Officer" &&
+                  {role === userRoles.ProcurementOfficer &&
                     row.status !== "Declined" && (
                       <IconButton
                         title={t("requests.table.actionButtons.decline")}
@@ -173,14 +174,15 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                         <HighlightOffIcon color="error" />
                       </IconButton>
                     )}
-                  {role === "Researcher" && row.status === "Pending" && (
-                    <IconButton
-                      title="Edit"
-                      onClick={() => handleEdit(index, row.id)}
-                    >
-                      <EditIcon color="disabled" />
-                    </IconButton>
-                  )}
+                  {role === userRoles.Researcher &&
+                    row.status === "Pending" && (
+                      <IconButton
+                        title="Edit"
+                        onClick={() => handleEdit(index, row.id)}
+                      >
+                        <EditIcon color="disabled" />
+                      </IconButton>
+                    )}
                 </TableCell>
               </TableRow>
             ))}

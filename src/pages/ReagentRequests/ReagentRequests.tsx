@@ -9,6 +9,7 @@ import {
   ReagentRequestTable,
   StatusFilter,
 } from "@/components";
+import { userRoles } from "@/constants";
 import { useAlertSnackbar, useAppSelector } from "@/hooks";
 import {
   selectUserId,
@@ -55,7 +56,7 @@ const ReagentRequests: React.FC = () => {
     () =>
       getRequestsListData({
         items:
-          role !== "Researcher"
+          role !== userRoles.Researcher
             ? reagentRequestsOfficer
             : reagentRequestsResearcher,
         sortColumn,
@@ -111,7 +112,7 @@ const ReagentRequests: React.FC = () => {
           setFilter={setStatusFilter}
           setPage={setPage}
         />
-        {role !== "Administrator" && (
+        {role !== userRoles.Administrator && (
           <Button onClick={() => setModalOpen(true)}>
             {t("createRequestForm.title")}
           </Button>
