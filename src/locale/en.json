@@ -420,13 +420,21 @@
 
       "buttons": {
         "createOrder": "Create Order",
-        "create": "Create"
+        "create": "Create",
+        "updateStatus": "Update Status",
+        "chooseLocation": "Choose Location"
       },
 
       "errors": {
         "loadError": "Failed to load orders",
         "emptyError": "Orders list is empty",
         "detailedOrderError": "Failed to load order details"
+      },
+
+      "snackBarMessages": {
+        "editing": {
+          "success": "Order updated successfully"
+        }
       },
 
       "statuses": {

@@ -420,13 +420,21 @@
 
       "buttons": {
         "createOrder": "Создать заказ",
-        "create": "Создать"
+        "create": "Создать",
+        "updateStatus": "Обновить Статус",
+        "chooseLocation": "Выбрать Локацию"
       },
 
       "errors": {
         "loadError": "Не удалось загрузить заказы",
         "emptyError": "Список заказов пуст",
         "detailedOrderError": "Не удалось загрузить заказ"
+      },
+
+      "snackBarMessages": {
+        "editing": {
+          "success": "Заказ успешно обновлен"
+        }
       },
 
       "statuses": {
