@@ -1,7 +1,7 @@
-import { Button, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { ORDER_STATUSES } from "@/constants";
+import { OrderActionButtons, SaveCancelButtons } from "@/components";
 import { OrderStatus } from "@/types";
 
 type OrderUpdateButtonsProps = {
@@ -28,35 +28,28 @@ const OrderUpdateButtons: React.FC<OrderUpdateButtonsProps> = ({
   return (
     <Stack direction="row" spacing={1}>
       {isEditable ? (
-        <>
-          <Button key="submitEditing" type="submit">
-            {t("buttons.save")}
-          </Button>
-          <Button key="cancelEditing" type="button" onClick={onCancelEditable}>
-            {t("buttons.cancel")}
-          </Button>
-        </>
+        <SaveCancelButtons
+          key="editOrder"
+          saveText={t("buttons.save")}
+          cancelText={t("buttons.cancel")}
+          onClickCancel={onCancelEditable}
+        />
       ) : isUpdatingStatus ? (
-        <>
-          <Button key="submitUpdating" type="submit">
-            {t("buttons.save")}
-          </Button>
-          <Button key="cancelUpdating" type="button" onClick={onCancelUpdating}>
-            {t("buttons.cancel")}
-          </Button>
-        </>
+        <SaveCancelButtons
+          key="editOrder"
+          saveText={t("buttons.save")}
+          cancelText={t("buttons.cancel")}
+          onClickCancel={onCancelUpdating}
+        />
       ) : (
-        <>
-          <Button key="edit" type="button" onClick={onEdit}>
-            {t("buttons.edit")}
-          </Button>
-          <Button key="update" type="button" onClick={onUpdate}>
-            {t("orders.buttons.updateStatus")}
-          </Button>
-          {status === ORDER_STATUSES.Fulfilled && (
-            <Button type="button">{t("orders.buttons.chooseLocation")}</Button>
-          )}
-        </>
+        <OrderActionButtons
+          editText={t("buttons.edit")}
+          updateText={t("orders.buttons.updateStatus")}
+          chooseLocationText={t("orders.buttons.chooseLocation")}
+          onClickEdit={onEdit}
+          onClickUpdate={onUpdate}
+          status={status}
+        />
       )}
     </Stack>
   );
