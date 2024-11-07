@@ -1,6 +1,7 @@
 import EditIcon from "@mui/icons-material/Edit";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {
+  Checkbox,
   IconButton,
   Paper,
   Table,
@@ -32,6 +33,10 @@ type ReagentRequestTableProps = {
   sortDirection: SortDirection;
   onSortChange: (property: RequestsSortColumns) => void;
   visibleItems: ReagentRequests;
+  selected: Array<string>;
+  isSelected: (id: string) => boolean;
+  handleSelectAllClick: (isChecked: boolean) => void;
+  handleCheckboxClick: (id: string) => void;
 };
 
 const statusColors = {
@@ -46,6 +51,10 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   sortDirection,
   onSortChange,
   visibleItems,
+  selected,
+  isSelected,
+  handleSelectAllClick,
+  handleCheckboxClick,
 }) => {
   const [requestId, setRequestId] = useState("");
   const [editRequest, setEditRequest] = useState<RequestedReagent>({
@@ -63,7 +72,10 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
 
   const [modalOpen, setModalOpen] = useState(false);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
+
   const { t } = useTranslation();
+  const role = useAppSelector(selectUserRole);
+
   const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
 
   const handleSubmit = (severity: Severity, errorMessage: string) => {
@@ -84,10 +96,9 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
     [visibleItems, setDetailsModalOpen, setEditRequest]
   );
 
-  const role = useAppSelector(selectUserRole);
-
-  if (visibleItems.length === 0)
+  if (visibleItems.length === 0) {
     return <PageError text="There is no reagent request" />;
+  }
 
   return (
     <>
@@ -95,6 +106,24 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+              {role === userRoles.ProcurementOfficer && (
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    color="primary"
+                    indeterminate={
+                      selected.length > 0 &&
+                      selected.length < visibleItems.length
+                    }
+                    checked={
+                      visibleItems.length > 0 &&
+                      selected.length === visibleItems.length
+                    }
+                    onChange={(event) =>
+                      handleSelectAllClick(event.target.checked)
+                    }
+                  />
+                </TableCell>
+              )}
               <TableCell>
                 <TableSortLabel
                   active={sortColumn === "name"}
@@ -145,8 +174,15 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
             {visibleItems?.map((row: RequestedReagent, index) => (
               <TableRow
                 key={row.id}
+                selected={isSelected(row.id)}
+                onClick={() => handleCheckboxClick(row.id)}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
+                {role === userRoles.ProcurementOfficer && (
+                  <TableCell padding="checkbox">
+                    <Checkbox color="primary" checked={isSelected(row.id)} />
+                  </TableCell>
+                )}
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
