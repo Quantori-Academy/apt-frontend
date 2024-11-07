@@ -10,7 +10,7 @@ import {
   StatusFilter,
 } from "@/components";
 import { userRoles } from "@/constants";
-import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import { useAlertSnackbar, useAppSelector, useCheckedRows } from "@/hooks";
 import {
   selectUserId,
   selectUserRole,
@@ -75,6 +75,9 @@ const ReagentRequests: React.FC = () => {
     ]
   );
 
+  const { selected, isSelected, handleSelectAllClick, handleCheckboxClick } =
+    useCheckedRows(visibleItems);
+
   if (isOfficerRequestsLoading || isResearcherRequestsLoading)
     return <PageLoader />;
   if (!reagentRequestsOfficer || !reagentRequestsResearcher) {
@@ -96,6 +99,11 @@ const ReagentRequests: React.FC = () => {
     );
   };
 
+  const handleCreateOrder = () => {
+    //TODO: Implement Create Order
+    console.log(selected);
+  };
+
   return (
     <Container
       sx={{
@@ -112,11 +120,18 @@ const ReagentRequests: React.FC = () => {
           setFilter={setStatusFilter}
           setPage={setPage}
         />
-        {role !== userRoles.Administrator && (
-          <Button onClick={() => setModalOpen(true)}>
-            {t("createRequestForm.title")}
-          </Button>
-        )}
+        <Box sx={{ display: "flex", gap: "10px" }}>
+          {role !== userRoles.Administrator && (
+            <Button onClick={() => setModalOpen(true)}>
+              {t("createRequestForm.title")}
+            </Button>
+          )}
+          {role === userRoles.ProcurementOfficer && (
+            <Button disabled={!selected.length} onClick={handleCreateOrder}>
+              Create Order
+            </Button>
+          )}
+        </Box>
       </Box>
 
       <ReagentRequestTable
@@ -124,6 +139,10 @@ const ReagentRequests: React.FC = () => {
         sortDirection={sortDirection}
         onSortChange={handleSortChange}
         visibleItems={visibleItems}
+        selected={selected}
+        isSelected={isSelected}
+        handleSelectAllClick={handleSelectAllClick}
+        handleCheckboxClick={handleCheckboxClick}
       />
       <Box className={style.pagination}>
         <Pagination
