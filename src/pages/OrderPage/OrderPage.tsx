@@ -103,7 +103,8 @@ const OrderPage: React.FC = () => {
     });
 
     if (error && "message" in error) {
-      openSnackbar("error", error.message as string);
+      console.log(error.message);
+      openSnackbar("error", t(`orders.snackBarMessages.${error.message}`));
     } else {
       openSnackbar("success", t("orders.snackBarMessages.editing.success"));
     }
@@ -117,7 +118,7 @@ const OrderPage: React.FC = () => {
     });
 
     if (error && "message" in error) {
-      openSnackbar("error", error.message as string);
+      openSnackbar("error", t(`orders.snackBarMessages.${error.message}`));
     } else {
       openSnackbar("success", t("orders.snackBarMessages.editing.success"));
     }
