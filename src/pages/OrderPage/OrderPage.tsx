@@ -127,6 +127,7 @@ const OrderPage: React.FC = () => {
       openSnackbar("success", t("orders.snackBarMessages.editing.success"));
     }
     setIsUpdatingStatus(false);
+    resetUpdating();
   };
 
   return (
