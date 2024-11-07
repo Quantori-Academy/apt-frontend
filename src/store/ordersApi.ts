@@ -35,6 +35,11 @@ type UpdateOrderStatus = {
   status: StatusForm;
 };
 
+type Allocation = {
+  orderId: string;
+  locationId: string;
+};
+
 export const ordersApi = createApi({
   reducerPath: "OrdersApi",
   baseQuery: fetchBaseQuery({
@@ -95,6 +100,17 @@ export const ordersApi = createApi({
       },
     }),
 
+    chooseLocation: builder.mutation<void, Allocation>({
+      query: ({ orderId, locationId }) => ({
+        url: `orders/${orderId}/allocate`,
+        method: "POST",
+        body: {
+          location_id: locationId,
+        },
+      }),
+      invalidatesTags: ["Order"],
+    }),
+
     updateOrderReagent: builder.mutation<void, UpdatedReagent>({
       query: (updatedReagent) => ({
         url: `/orders/${updatedReagent.orderId}/reagent/${updatedReagent.id}`,
@@ -122,4 +138,5 @@ export const {
   useDeleteReagentFromOrderMutation,
   useEditOrderTitleSellerMutation,
   useUpdateOrderStatusMutation,
+  useChooseLocationMutation,
 } = ordersApi;
