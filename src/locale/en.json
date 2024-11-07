@@ -438,7 +438,8 @@
         "Order with same title already exists.": "Order with same title already exists",
         "Can't change status for Cancelled or Fulfilled orders.": "Can't change status for Cancelled or Fulfilled orders",
         "Order details can be modified if and only if its status is set to 'Pending'.": "Order details can be modified if and only if its status is set to 'Pending'",
-        "Can't set Cancelled or Fulfilled status for Pending orders.": "Can't set Cancelled or Fulfilled status for Pending orders"
+        "Can't set Cancelled or Fulfilled status for Pending orders.": "Can't set Cancelled or Fulfilled status for Pending orders",
+        "An unexpected error occurred": "An unexpected error occurred"
       },
 
       "statuses": {
