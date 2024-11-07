@@ -44,3 +44,4 @@ export { OrderReagentDetails } from "./OrderReagentDetails";
 export { OrderAccordionButtons } from "./OrderAccordionButtons";
 export { EditReagentRequest } from "./EditReagentRequest";
 export { ReagentRequestForm } from "./ReagentRequestForm";
+export { OrderFromRequest } from "./OrderFromRequest";
