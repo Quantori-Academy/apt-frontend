@@ -439,7 +439,8 @@
         "Can't change status for Cancelled or Fulfilled orders.": "Невозможно изменить статус для отменённых или выполненных заказов",
         "Order details can be modified if and only if its status is set to 'Pending'.": "Детали заказа можно изменить только в том случае, если его статус установлен как \"В ожидании\"",
         "Can't set Cancelled or Fulfilled status for Pending orders.": "Невозможно установить статус \"Отменён\" или \"Выполнен\" для заказов со статусом \"В ожидании\"",
-        "An unexpected error occurred": "Произошла непредвиденная ошибка"
+        "An unexpected error occurred": "Произошла непредвиденная ошибка",
+        "allocated": "Реактивы успешно распределены"
       },
 
       "statuses": {
