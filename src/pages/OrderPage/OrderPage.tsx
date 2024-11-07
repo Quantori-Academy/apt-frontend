@@ -15,9 +15,11 @@ import { useGetOrderQuery } from "@/store";
 import { Order } from "@/types";
 import { formatDate } from "@/utils";
 
+type OrderPageNoId = Omit<Order, "requestId">;
+
 type OrderRow = {
   label: string;
-  key: keyof Order;
+  key: keyof OrderPageNoId;
 };
 
 const OrderRows: readonly OrderRow[] = [
@@ -63,10 +65,10 @@ const OrderPage: React.FC = () => {
             label={t(`orders.table.${label}`)}
             value={
               key === "createdAt" || key === "modifiedAt"
-                ? formatDate(order[key as keyof Order])
+                ? formatDate(order[key as keyof OrderPageNoId])
                 : key === "status"
-                  ? t(`orders.statuses.${order[key as keyof Order]}`)
-                  : order[key as keyof Order] || "-"
+                  ? t(`orders.statuses.${order[key as keyof OrderPageNoId]}`)
+                  : order[key as keyof OrderPageNoId] || "-"
             }
           />
         ))}
