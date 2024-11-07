@@ -48,5 +48,6 @@ export const useCheckedRows = (rows: ReagentRequests) => {
     isSelected,
     handleCheckboxClick,
     handleSelectAllClick,
+    setSelected,
   };
 };
