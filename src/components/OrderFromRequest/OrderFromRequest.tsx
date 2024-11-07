@@ -20,6 +20,7 @@ type AddOrderProps = {
   onClose: () => void;
   openSnackbar: (severity: Severity, text: string) => void;
   requests: ReagentRequests;
+  onCreateOrder: () => void;
 };
 
 const OrderFromRequest: React.FC<AddOrderProps> = ({
@@ -27,6 +28,7 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
   onClose,
   openSnackbar,
   requests,
+  onCreateOrder,
 }) => {
   const { t } = useTranslation();
 
@@ -88,6 +90,8 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
           t("substanceDetails.snackBarMessages.unexpectedError")
         );
       }
+    } finally {
+      onCreateOrder();
     }
   };
 
