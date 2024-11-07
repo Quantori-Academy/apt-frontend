@@ -48,3 +48,4 @@ export { OrderUpdateButtons } from "./OrderUpdateButtons";
 export { OrderStatusRow } from "./OrderStatusRow";
 export { SaveCancelButtons } from "./SaveCancelButtons";
 export { OrderActionButtons } from "./OrderActionButtons";
+export { ChooseReagentsLocationForm } from "./ChooseReagentsLocationForm";
