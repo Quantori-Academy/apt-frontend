@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import {
   AddReagentRequest,
+  OrderFromRequest,
   PageError,
   PageLoader,
   ReagentRequestTable,
@@ -34,6 +35,8 @@ const ReagentRequests: React.FC = () => {
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   const userId = useAppSelector(selectUserId);
   const role = useAppSelector(selectUserRole);
@@ -75,8 +78,14 @@ const ReagentRequests: React.FC = () => {
     ]
   );
 
-  const { selected, isSelected, handleSelectAllClick, handleCheckboxClick } =
-    useCheckedRows(visibleItems);
+  const {
+    selected,
+    selectedRows,
+    isSelected,
+    handleSelectAllClick,
+    handleCheckboxClick,
+    setSelected,
+  } = useCheckedRows(visibleItems);
 
   if (isOfficerRequestsLoading || isResearcherRequestsLoading)
     return <PageLoader />;
@@ -100,8 +109,7 @@ const ReagentRequests: React.FC = () => {
   };
 
   const handleCreateOrder = () => {
-    //TODO: Implement Create Order
-    console.log(selected);
+    setIsOrderModalOpen(true);
   };
 
   return (
@@ -151,6 +159,15 @@ const ReagentRequests: React.FC = () => {
           onChange={(_, page) => setPage(page)}
         />
       </Box>
+      {isOrderModalOpen && (
+        <OrderFromRequest
+          modalOpen={isOrderModalOpen}
+          onClose={() => setIsOrderModalOpen(false)}
+          openSnackbar={openSnackbar}
+          requests={selectedRows}
+          onCreateOrder={() => setSelected([])}
+        />
+      )}
       <AddReagentRequest
         modalOpen={modalOpen}
         onClose={() => setModalOpen(false)}
