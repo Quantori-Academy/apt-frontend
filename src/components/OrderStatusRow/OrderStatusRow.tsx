@@ -27,7 +27,7 @@ const OrderStatusRow: React.FC<EditableDetailRowProps> = ({
   currentStatus,
 }) => {
   const { t } = useTranslation();
-  console.log(currentStatus, "curr");
+
   return (
     <TableRow>
       <TableCell>
