@@ -33,7 +33,7 @@ const StorageLocationDetailPage: React.FC = () => {
     useDeleteStorageLocationMutation();
 
   const [modalIsOpened, setModalIsOpened] = useState(false);
-  console.log("am:", locationDetails);
+
   const handleDelete = async () => {
     if (locationDetails?.substances.length === 0) {
       const { error } = await deleteStorageLocation(Number(locationId));
