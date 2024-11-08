@@ -119,12 +119,12 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.SAMPLE_ADD_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_PAGE],
     element: <AddSamplePage />,
-    roles: [userRoles.Researcher],
+    roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.REAGENT_ADD_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_PAGE],
     element: <AddReagentPage />,
-    roles: [userRoles.Researcher],
+    roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.REAGENT_REQUESTS]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_REQUESTS],
