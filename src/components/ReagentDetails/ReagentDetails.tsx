@@ -19,10 +19,11 @@ const reagentDetailsRows: ReagentDetailRow[] = [
   { label: "name", key: "name" },
   { label: "totalQuantityLeft", key: "totalQuantityLeft" },
   { label: "price", key: "pricePerUnit" },
+  { label: "locationId", key: "locationId" },
   { label: "CASNumber", key: "CASNumber" },
   { label: "producer", key: "producer" },
-  { label: "locationId", key: "locationId" },
   { label: "catalogID", key: "catalogID" },
+  { label: "catalogLink", key: "catalogLink" },
   { label: "description", key: "description" },
 ];
 
@@ -42,7 +43,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   const { t } = useTranslation();
 
   const role = useAppSelector(selectUserRole);
-
+  console.log(reagentDetails);
   return (
     <Card sx={{ background: "#0080800f" }}>
       <CardContent>
@@ -53,12 +54,31 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             {reagentDetailsRows.map(({ label, key }) => {
-              const value =
-                key === "totalQuantityLeft"
-                  ? `${reagentDetails[key]} ${reagentDetails.unit || "-"}`
-                  : key === "locationId"
-                    ? `${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`
-                    : reagentDetails[key] || "-";
+              let value;
+              if (key === "totalQuantityLeft") {
+                value = `${reagentDetails[key]} ${reagentDetails.unit || "-"}`;
+              } else if (key === "locationId") {
+                value = `${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`;
+              } else if (key === "catalogLink" && reagentDetails.catalogLink) {
+                value = (
+                  <Link
+                    href={reagentDetails.catalogLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    underline="hover"
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <LinkIcon sx={{ mr: 1 }} />
+                    {t("addSubstanceForm.requiredFields.catalogLink.label")}
+                  </Link>
+                );
+              } else {
+                value = reagentDetails[key] || "-";
+              }
               return (
                 <DetailItem
                   key={label}
@@ -67,16 +87,6 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
                 />
               );
             })}
-            <Link
-              href={reagentDetails.catalogLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="hover"
-              sx={{ display: "flex", alignItems: "center" }}
-            >
-              <LinkIcon sx={{ mr: 1 }} />{" "}
-              {t("addSubstanceForm.requiredFields.catalogLink.label")}
-            </Link>
           </Grid>
 
           <Grid item xs={12} sm={6}>
