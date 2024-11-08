@@ -2,12 +2,10 @@ import { Autocomplete, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { PageLoader, SaveCancelButtons } from "@/components";
 import { Severity } from "@/hooks";
 import { useChooseLocationMutation, useGetStorageRoomsQuery } from "@/store";
 import { RoomLocationBrief, StorageRoomsBrief } from "@/types";
-
-import { PageLoader } from "../PageLoader";
-import { SaveCancelButtons } from "../SaveCancelButtons";
 
 type ChooseReagentsLocationFormProps = {
   onClose: () => void;
