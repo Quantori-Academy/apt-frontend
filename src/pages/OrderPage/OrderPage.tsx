@@ -33,9 +33,11 @@ import {
 import { Order, StatusForm } from "@/types";
 import { formatDate } from "@/utils";
 
+type OrderPageNoId = Omit<Order, "requestId">;
+
 type OrderRow = {
   label: string;
-  key: keyof Order;
+  key: keyof OrderPageNoId;
 };
 
 const OrderRows: readonly OrderRow[] = [
@@ -156,8 +158,8 @@ const OrderPage: React.FC = () => {
                       label={t(`orders.table.${label}`)}
                       value={
                         key === "createdAt" || key === "modifiedAt"
-                          ? formatDate(order[key as keyof Order])
-                          : order[key as keyof Order] || "-"
+                          ? formatDate(order[key as keyof OrderPageNoId])
+                          : order[key as keyof OrderPageNoId] || "-"
                       }
                       register={registerEditing}
                       errors={errors}
@@ -174,7 +176,7 @@ const OrderPage: React.FC = () => {
                     <OrderStatusRow
                       key={key}
                       label={t("orders.table.Status")}
-                      value={order[key as keyof Order]}
+                      value={order[key as keyof OrderPageNoId]}
                       isUpdating={isUpdatingStatus}
                       register={registerUpdating}
                       currentStatus={order.status}
