@@ -16,17 +16,14 @@ type ReagentDetailRow = {
 };
 
 const reagentDetailsRows: ReagentDetailRow[] = [
-  { label: "Reagent ID", key: "substanceId" },
-  { label: "Name", key: "name" },
-  { label: "Category", key: "category" },
-  { label: "CAS Number", key: "CASNumber" },
-  { label: "Producer", key: "producer" },
-  { label: "Storage location", key: "locationId" },
-  { label: "Units", key: "unit" },
-  { label: "Price per unit", key: "pricePerUnit" },
-  { label: "Quantity left", key: "totalQuantityLeft" },
-  { label: "Catalog ID", key: "catalogID" },
-  { label: "Description", key: "description" },
+  { label: "name", key: "name" },
+  { label: "totalQuantityLeft", key: "totalQuantityLeft" },
+  { label: "price", key: "pricePerUnit" },
+  { label: "CASNumber", key: "CASNumber" },
+  { label: "producer", key: "producer" },
+  { label: "locationId", key: "locationId" },
+  { label: "catalogID", key: "catalogID" },
+  { label: "description", key: "description" },
 ];
 
 type ReagentDetailsProps = {
@@ -55,25 +52,21 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            {reagentDetailsRows.map(({ label, key }) =>
-              key !== "locationId" ? (
+            {reagentDetailsRows.map(({ label, key }) => {
+              const value =
+                key === "totalQuantityLeft"
+                  ? `${reagentDetails[key]} ${reagentDetails.unit || "-"}`
+                  : key === "locationId"
+                    ? `${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`
+                    : reagentDetails[key] || "-";
+              return (
                 <DetailItem
                   key={label}
-                  label={t(`substanceDetails.fields.${key}`)}
-                  value={
-                    key === "category"
-                      ? t(`substances.filters.options.${reagentDetails[key]}`)
-                      : reagentDetails[key]
-                  }
+                  label={t(`substanceDetails.fields.${label}`)}
+                  value={value}
                 />
-              ) : (
-                <DetailItem
-                  key={label}
-                  label={t(`substanceDetails.fields.${key}`)}
-                  value={`${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`}
-                />
-              )
-            )}
+              );
+            })}
             <Link
               href={reagentDetails.catalogLink}
               target="_blank"
@@ -87,6 +80,9 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Typography gutterBottom sx={{ textAlign: "center" }}>
+              {t("substanceDetails.fields.structure")}
+            </Typography>
             <SmilesImage
               smiles={reagentDetails.structure}
               svgOptions={{ width: 185, height: 185 }}
