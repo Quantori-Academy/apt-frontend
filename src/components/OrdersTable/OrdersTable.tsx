@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 import { RouteProtectedPath } from "@/router";
 import { Order, SortType, StatusFilter } from "@/types";
-import { getOrdersRows } from "@/utils";
+import { formatDate, getOrdersRows } from "@/utils";
 
 type HeadCell = {
   label: string;
@@ -122,7 +122,11 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                   <TableCell key={cell.key}>
                     {cell.key === "status"
                       ? t(`orders.statuses.${order[cell.key]}`)
-                      : order[cell.key as keyof typeof order]}
+                      : cell.key === "createdAt" || cell.key === "modifiedAt"
+                        ? formatDate(
+                            order[cell.key as keyof typeof order] || null
+                          )
+                        : order[cell.key as keyof typeof order] || "-"}
                   </TableCell>
                 ))}
               </TableRow>
