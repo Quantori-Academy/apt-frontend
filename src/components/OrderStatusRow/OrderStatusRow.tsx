@@ -28,6 +28,17 @@ const OrderStatusRow: React.FC<EditableDetailRowProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  let defaultMenuValue;
+  const menuToShow = Object.values(ORDER_STATUSES).filter((status) => {
+    if (currentStatus === ORDER_STATUSES.Pending) {
+      defaultMenuValue = ORDER_STATUSES.Submitted;
+      return status === ORDER_STATUSES.Submitted;
+    } else if (currentStatus === ORDER_STATUSES.Submitted) {
+      defaultMenuValue = status;
+      return status === ORDER_STATUSES.Cancelled;
+    }
+  });
+
   return (
     <TableRow>
       <TableCell>
@@ -38,10 +49,10 @@ const OrderStatusRow: React.FC<EditableDetailRowProps> = ({
           <TextField
             select
             size="small"
-            defaultValue={currentStatus}
+            defaultValue={defaultMenuValue}
             {...register("status")}
           >
-            {Object.values(ORDER_STATUSES).map((status) => (
+            {menuToShow.map((status) => (
               <MenuItem key={status} value={status}>
                 {t(`orders.statuses.${status}`)}
               </MenuItem>

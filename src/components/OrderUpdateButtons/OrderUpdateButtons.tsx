@@ -12,6 +12,7 @@ type OrderUpdateButtonsProps = {
   onUpdate: () => void;
   onCancelEditable: () => void;
   onCancelUpdating: () => void;
+  onChooseLocation: () => void;
 };
 
 const OrderUpdateButtons: React.FC<OrderUpdateButtonsProps> = ({
@@ -22,6 +23,7 @@ const OrderUpdateButtons: React.FC<OrderUpdateButtonsProps> = ({
   onUpdate,
   onCancelEditable,
   onCancelUpdating,
+  onChooseLocation,
 }) => {
   const { t } = useTranslation();
 
@@ -48,6 +50,7 @@ const OrderUpdateButtons: React.FC<OrderUpdateButtonsProps> = ({
           chooseLocationText={t("orders.buttons.chooseLocation")}
           onClickEdit={onEdit}
           onClickUpdate={onUpdate}
+          onClickChooseLocation={onChooseLocation}
           status={status}
         />
       )}

@@ -14,6 +14,8 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import {
+  BasicModal,
+  ChooseReagentsLocationForm,
   EditableDetailRow,
   OrderReagentDetails,
   OrderStatusRow,
@@ -53,6 +55,7 @@ const OrderPage: React.FC = () => {
 
   const [isEditable, setIsEditable] = useState(false);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [isChoosingLocation, setIsChoosingLocation] = useState(false);
 
   const {
     register: registerEditing,
@@ -110,6 +113,7 @@ const OrderPage: React.FC = () => {
       openSnackbar("success", t("orders.snackBarMessages.editing.success"));
     }
     setIsEditable(false);
+    resetEditing();
   };
 
   const onSubmitUpdatingStatus = async (data: StatusForm) => {
@@ -124,6 +128,7 @@ const OrderPage: React.FC = () => {
       openSnackbar("success", t("orders.snackBarMessages.editing.success"));
     }
     setIsUpdatingStatus(false);
+    resetUpdating();
   };
 
   return (
@@ -188,8 +193,22 @@ const OrderPage: React.FC = () => {
           onUpdate={() => setIsUpdatingStatus(true)}
           onCancelEditable={handleCancelEdit}
           onCancelUpdating={handleCancelUpdateStatus}
+          onChooseLocation={() => setIsChoosingLocation(true)}
         />
       </Box>
+      {isChoosingLocation && (
+        <BasicModal
+          title="Choose location"
+          isOpen={isChoosingLocation}
+          closeModal={() => setIsChoosingLocation(false)}
+        >
+          <ChooseReagentsLocationForm
+            orderId={order.id}
+            onClose={() => setIsChoosingLocation(false)}
+            openSnackbar={openSnackbar}
+          />
+        </BasicModal>
+      )}
       <Divider style={{ margin: "16px 0" }} />
       {order.orderedReagents.map((reagent) => (
         <OrderReagentDetails
@@ -199,6 +218,7 @@ const OrderPage: React.FC = () => {
           setExpanded={setExpanded}
           orderId={order.id}
           openSnackbar={openSnackbar}
+          status={order.status}
         />
       ))}
       {SnackbarComponent()}

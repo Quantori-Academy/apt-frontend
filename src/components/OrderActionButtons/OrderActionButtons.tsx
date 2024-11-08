@@ -9,7 +9,7 @@ type OrderActionButtonsProps = {
   chooseLocationText: string;
   onClickEdit: () => void;
   onClickUpdate: () => void;
-  onClickChooseLocation?: () => void;
+  onClickChooseLocation: () => void;
   status: OrderStatus;
 };
 
@@ -24,13 +24,26 @@ const OrderActionButtons: React.FC<OrderActionButtonsProps> = ({
 }) => {
   return (
     <>
-      <Button type="button" onClick={onClickEdit}>
+      <Button
+        disabled={status !== ORDER_STATUSES.Pending}
+        type="button"
+        onClick={onClickEdit}
+      >
         {editText}
       </Button>
-      <Button type="button" onClick={onClickUpdate}>
-        {updateText}
-      </Button>
-      {status === ORDER_STATUSES.Fulfilled && (
+      {
+        <Button
+          disabled={
+            status === ORDER_STATUSES.Cancelled ||
+            status === ORDER_STATUSES.Fulfilled
+          }
+          type="button"
+          onClick={onClickUpdate}
+        >
+          {updateText}
+        </Button>
+      }
+      {status === ORDER_STATUSES.Submitted && (
         <Button type="button" onClick={onClickChooseLocation}>
           {chooseLocationText}
         </Button>

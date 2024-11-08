@@ -56,4 +56,5 @@ export {
   useDeleteReagentFromOrderMutation,
   useEditOrderTitleSellerMutation,
   useUpdateOrderStatusMutation,
+  useChooseLocationMutation,
 } from "./ordersApi.ts";
