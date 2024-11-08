@@ -1,6 +1,6 @@
-import { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 
-import { Home, Login } from "@/pages";
+import { Login } from "@/pages";
 
 import { loginLoader } from "./utils/loginLoader";
 
@@ -20,7 +20,7 @@ export const RoutePublicPath: Record<AppPublicRoutes, string> = {
 export const publicRoutesRouterConfig: Record<AppPublicRoutes, RouteObject> = {
   [AppPublicRoutes.HOME]: {
     path: RoutePublicPath[AppPublicRoutes.HOME],
-    element: <Home />,
+    element: <Navigate to="/dashboard" replace />,
   },
   [AppPublicRoutes.LOGIN]: {
     path: RoutePublicPath[AppPublicRoutes.LOGIN],
