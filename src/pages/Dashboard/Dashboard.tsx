@@ -1,6 +1,7 @@
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ScienceIcon from "@mui/icons-material/Science";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import { Box, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
@@ -21,6 +22,7 @@ const Dashboard = () => {
   const { t } = useTranslation();
 
   const role = useAppSelector(selectUserRole);
+  console.log("role", role);
 
   const userCard = (
     <CardContent sx={{ textAlign: "center" }}>
@@ -54,6 +56,14 @@ const Dashboard = () => {
       <WorkHistoryIcon sx={{ ...iconStyles, color: "#8d6e63" }} />
       <Typography color="#2c387e" variant="h6">
         Reagent Requests
+      </Typography>
+    </CardContent>
+  );
+  const ordersCard = (
+    <CardContent sx={{ textAlign: "center" }}>
+      <StorefrontIcon sx={{ ...iconStyles, color: "#90a4ae" }} />
+      <Typography color="#2c387e" variant="h6">
+        Orders
       </Typography>
     </CardContent>
   );
@@ -100,6 +110,11 @@ const Dashboard = () => {
         >
           <DashboardCard dashboardCard={reagentRequestCard} bgColor="#efebe9" />
         </NavLink>
+        {role === userRoles.ProcurementOfficer && (
+          <NavLink to={RouteProtectedPath.orders} className={style.navLink}>
+            <DashboardCard dashboardCard={ordersCard} bgColor="#eceff1" />
+          </NavLink>
+        )}
       </Box>
     </Box>
   );

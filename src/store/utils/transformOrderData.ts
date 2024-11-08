@@ -13,7 +13,7 @@ export const transformOrderData = (orderData: OrderInput): BackendOrderInput => 
     structure: reagent.structure,
     cas_number: reagent.CASNumber,
     producer: reagent.producer,
-    catalog_id: reagent.catalogId || null,
+    catalog_id: reagent.catalogId || "0",
     catalog_link: reagent.catalogLink,
   })),
 });
