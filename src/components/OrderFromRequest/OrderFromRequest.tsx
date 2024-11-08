@@ -64,7 +64,7 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
     control,
     name: "reagents",
   });
-  console.log(fields, "fields");
+
   const [createOrderFromRequests] = useCreateOrderFromRequestsMutation();
 
   const onSubmit: SubmitHandler<OrderInput> = async (data) => {
