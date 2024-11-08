@@ -67,11 +67,14 @@ export const substancesApi = createApi({
       invalidatesTags: ["Substances"],
     }),
     createSample: builder.mutation({
-      query: (sample: SampleData) => ({
-        url: "/substances/samples",
-        method: "POST",
-        body: transformSampleData(sample),
-      }),
+      query: (sample: SampleData) => {
+        return {
+          url: "/substances/samples",
+          method: "POST",
+          body: transformSampleData(sample),
+        };
+      },
+      invalidatesTags: ["Substances"],
     }),
     updateSubstance: builder.mutation<MutationSubstanceResponse, MutationPatchSubstance>({
       query: (updatedSubstanceDetails) => ({

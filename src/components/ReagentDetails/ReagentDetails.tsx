@@ -16,17 +16,15 @@ type ReagentDetailRow = {
 };
 
 const reagentDetailsRows: ReagentDetailRow[] = [
-  { label: "Reagent ID", key: "substanceId" },
-  { label: "Name", key: "name" },
-  { label: "Category", key: "category" },
-  { label: "CAS Number", key: "CASNumber" },
-  { label: "Producer", key: "producer" },
-  { label: "Storage location", key: "locationId" },
-  { label: "Units", key: "unit" },
-  { label: "Price per unit", key: "pricePerUnit" },
-  { label: "Quantity left", key: "totalQuantityLeft" },
-  { label: "Catalog ID", key: "catalogID" },
-  { label: "Description", key: "description" },
+  { label: "name", key: "name" },
+  { label: "totalQuantityLeft", key: "totalQuantityLeft" },
+  { label: "price", key: "pricePerUnit" },
+  { label: "locationId", key: "locationId" },
+  { label: "CASNumber", key: "CASNumber" },
+  { label: "producer", key: "producer" },
+  { label: "catalogID", key: "catalogID" },
+  { label: "catalogLink", key: "catalogLink" },
+  { label: "description", key: "description" },
 ];
 
 type ReagentDetailsProps = {
@@ -45,7 +43,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   const { t } = useTranslation();
 
   const role = useAppSelector(selectUserRole);
-
+  console.log(reagentDetails);
   return (
     <Card sx={{ background: "#0080800f" }}>
       <CardContent>
@@ -55,38 +53,46 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
 
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            {reagentDetailsRows.map(({ label, key }) =>
-              key !== "locationId" ? (
+            {reagentDetailsRows.map(({ label, key }) => {
+              let value;
+              if (key === "totalQuantityLeft") {
+                value = `${reagentDetails[key]} ${reagentDetails.unit || "-"}`;
+              } else if (key === "locationId") {
+                value = `${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`;
+              } else if (key === "catalogLink" && reagentDetails.catalogLink) {
+                value = (
+                  <Link
+                    href={reagentDetails.catalogLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    underline="hover"
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <LinkIcon sx={{ mr: 1 }} />
+                    {t("addSubstanceForm.requiredFields.catalogLink.label")}
+                  </Link>
+                );
+              } else {
+                value = reagentDetails[key] || "-";
+              }
+              return (
                 <DetailItem
                   key={label}
-                  label={t(`substanceDetails.fields.${key}`)}
-                  value={
-                    key === "category"
-                      ? t(`substances.filters.options.${reagentDetails[key]}`)
-                      : reagentDetails[key]
-                  }
+                  label={t(`substanceDetails.fields.${label}`)}
+                  value={value}
                 />
-              ) : (
-                <DetailItem
-                  key={label}
-                  label={t(`substanceDetails.fields.${key}`)}
-                  value={`${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`}
-                />
-              )
-            )}
-            <Link
-              href={reagentDetails.catalogLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="hover"
-              sx={{ display: "flex", alignItems: "center" }}
-            >
-              <LinkIcon sx={{ mr: 1 }} />{" "}
-              {t("addSubstanceForm.requiredFields.catalogLink.label")}
-            </Link>
+              );
+            })}
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Typography gutterBottom sx={{ textAlign: "center" }}>
+              {t("substanceDetails.fields.structure")}
+            </Typography>
             <SmilesImage
               smiles={reagentDetails.structure}
               svgOptions={{ width: 185, height: 185 }}

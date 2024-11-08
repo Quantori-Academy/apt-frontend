@@ -18,14 +18,10 @@ type ReagentDetailRow = {
 };
 
 const sampleDetailsRows: ReagentDetailRow[] = [
-  { label: "Reagent ID", key: "substanceId" },
   { label: "Name", key: "name" },
-  { label: "Category", key: "category" },
   { label: "Substances", key: "addedSubstances" },
-  { label: "Storage location", key: "locationId" },
-  { label: "Units", key: "unit" },
-  { label: "Price per unit", key: "pricePerUnit" },
   { label: "Quantity left", key: "totalQuantityLeft" },
+  { label: "Storage location", key: "locationId" },
   { label: "Description", key: "description" },
 ];
 
@@ -56,16 +52,13 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             {sampleDetailsRows.map(({ label, key }) => {
-              if (key === "locationId") {
-                return (
-                  <DetailItem
-                    key={label}
-                    label={t(`substanceDetails.fields.${key}`)}
-                    value={`${sampleLocationDetails.roomName}, ${sampleLocationDetails.locationName}`}
-                  />
-                );
+              let value;
+              if (key === "totalQuantityLeft") {
+                value = `${sampleDetails[key]} ${sampleDetails.unit || "-"}`;
+              } else if (key === "locationId") {
+                value = `${sampleLocationDetails.roomName}, ${sampleLocationDetails.locationName}`;
               } else if (key === "addedSubstances") {
-                return (
+                value = (
                   <Typography key={label}>
                     <Typography
                       component="span"
@@ -97,15 +90,14 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
                   </Typography>
                 );
               } else {
+                value = sampleDetails[key] || "-";
+              }
+              {
                 return (
                   <DetailItem
                     key={label}
                     label={t(`substanceDetails.fields.${key}`)}
-                    value={
-                      key === "category"
-                        ? t(`substances.filters.options.${sampleDetails[key]}`)
-                        : sampleDetails[key]
-                    }
+                    value={value}
                   />
                 );
               }
@@ -113,6 +105,9 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Typography gutterBottom sx={{ textAlign: "center" }}>
+              {t("substanceDetails.fields.structure")}
+            </Typography>
             <SmilesImage
               smiles={sampleDetails.structure}
               svgOptions={{ width: 185, height: 185 }}
