@@ -104,12 +104,12 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.ORDERS]: {
     path: RouteProtectedPath[AppProtectedRoutes.ORDERS],
     element: <Orders />,
-    roles: Object.values(userRoles),
+    roles: [userRoles.ProcurementOfficer],
   },
   [AppProtectedRoutes.ORDER_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.ORDER_PAGE],
     element: <OrderPage />,
-    roles: Object.values(userRoles),
+    roles: [userRoles.ProcurementOfficer],
   },
   [AppProtectedRoutes.DASHBOARD]: {
     path: RouteProtectedPath[AppProtectedRoutes.DASHBOARD],
@@ -119,12 +119,12 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.SAMPLE_ADD_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_PAGE],
     element: <AddSamplePage />,
-    roles: Object.values(userRoles),
+    roles: [userRoles.Researcher],
   },
   [AppProtectedRoutes.REAGENT_ADD_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_PAGE],
     element: <AddReagentPage />,
-    roles: Object.values(userRoles),
+    roles: [userRoles.Researcher],
   },
   [AppProtectedRoutes.REAGENT_REQUESTS]: {
     path: RouteProtectedPath[AppProtectedRoutes.REAGENT_REQUESTS],
