@@ -47,6 +47,7 @@ This project utilizes the following tools and libraries:
 - **MUI** for building responsive, accessible, and modern UI components.
 - **Smiles Drawer** for parsing and rendering SMILES strings into graphical representations of chemical structures.
 - **Vite** for fast builds and hot module replacement during development.
+- **i18n** for handling app localization and supporting multiple languages.
 
 ## Diagrams
 
@@ -184,8 +185,7 @@ classDef green fill:#166e07, color:#ffffff;
 classDef yellow fill:#fcca03, color:#ffffff;
 classDef grey fill:#575757, color:#ffffff;
 
-class U,ADM,RSR,PRCR,SL,R,S green;
-class O,RR yellow;
+class U,ADM,RSR,PRCR,SL,R,S,RR,O green;
 class dashboard grey;
 ```
 
