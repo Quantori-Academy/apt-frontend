@@ -47,7 +47,7 @@ This project utilizes the following tools and libraries:
 - **MUI** for building responsive, accessible, and modern UI components.
 - **Smiles Drawer** for parsing and rendering SMILES strings into graphical representations of chemical structures.
 - **Vite** for fast builds and hot module replacement during development.
-- **i18n** for handling app localization and supporting multiple languages.
+- **React-i18n** for handling app localization and supporting multiple languages.
 
 ## Diagrams
 
