@@ -22,7 +22,6 @@ const Dashboard = () => {
   const { t } = useTranslation();
 
   const role = useAppSelector(selectUserRole);
-  console.log("role", role);
 
   const userCard = (
     <CardContent sx={{ textAlign: "center" }}>
