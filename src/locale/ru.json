@@ -544,6 +544,10 @@
         }
       },
 
+      "errors": {
+        "emptyError": "Нет запросов на реактивы для отображения"
+      },
+
       "snackBarMessages": {
         "failedAdd": "Failed to add request",
         "added": "Request added successfully"

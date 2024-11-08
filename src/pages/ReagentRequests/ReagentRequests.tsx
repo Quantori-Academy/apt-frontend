@@ -90,7 +90,7 @@ const ReagentRequests: React.FC = () => {
   if (isOfficerRequestsLoading || isResearcherRequestsLoading)
     return <PageLoader />;
   if (!reagentRequestsOfficer || !reagentRequestsResearcher) {
-    return <PageError text="There are no reagent request to show" />;
+    return <PageError text={t("requests.errors.emptyError")} />;
   }
 
   const handleSortChange = (property: RequestsSortColumns) => {

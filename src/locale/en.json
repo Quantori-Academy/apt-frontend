@@ -544,6 +544,10 @@
         }
       },
 
+      "errors": {
+        "emptyError": "There are no reagent request to show"
+      },
+
       "snackBarMessages": {
         "failedAdd": "Не удалось добавить запрос",
         "added": "Запрос успешно добавлен"
@@ -556,6 +560,7 @@
         "Ordered": "Ordered",
         "Completed": "Completed"
       },
+
       "declineRequest": {
         "title": "Decline Reagent Request",
         "label": "Enter reason for decline",
