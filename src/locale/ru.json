@@ -326,7 +326,8 @@
         "structure": "Структура",
         "addedSubstances": "Вещества",
         "room": "Комната",
-        "location": "Локация"
+        "location": "Локация",
+        "noStructure": "Данные о структуре не указаны"
       },
 
       "currentLocation": " (текущая)",

@@ -89,15 +89,17 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
             })}
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <Typography gutterBottom sx={{ textAlign: "center" }}>
-              {t("substanceDetails.fields.structure")}
-            </Typography>
-            <SmilesImage
-              smiles={reagentDetails.structure}
-              svgOptions={{ width: 185, height: 185 }}
-            />
-          </Grid>
+          {reagentDetails.structure && (
+            <Grid item xs={12} sm={6}>
+              <Typography gutterBottom sx={{ textAlign: "center" }}>
+                {t("substanceDetails.fields.structure")}
+              </Typography>
+              <SmilesImage
+                smiles={reagentDetails.structure}
+                svgOptions={{ width: 185, height: 185 }}
+              />
+            </Grid>
+          )}
         </Grid>
         {role === userRoles.Researcher && (
           <EditDeleteButtons

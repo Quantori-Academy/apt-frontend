@@ -131,7 +131,7 @@ const ReagentRequests: React.FC = () => {
           setPage={setPage}
         />
         <Box sx={{ display: "flex", gap: "10px" }}>
-          {role !== userRoles.Administrator && (
+          {role === userRoles.Researcher && (
             <Button onClick={() => setModalOpen(true)}>
               {t("createRequestForm.title")}
             </Button>

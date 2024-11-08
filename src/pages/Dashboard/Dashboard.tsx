@@ -54,7 +54,7 @@ const Dashboard = () => {
     <CardContent sx={{ textAlign: "center" }}>
       <WorkHistoryIcon sx={{ ...iconStyles, color: "#8d6e63" }} />
       <Typography color="#2c387e" variant="h6">
-        Reagent Requests
+        {t("requests.title")}
       </Typography>
     </CardContent>
   );
@@ -62,7 +62,7 @@ const Dashboard = () => {
     <CardContent sx={{ textAlign: "center" }}>
       <StorefrontIcon sx={{ ...iconStyles, color: "#90a4ae" }} />
       <Typography color="#2c387e" variant="h6">
-        Orders
+        {t("orders.title.OrdersPage")}
       </Typography>
     </CardContent>
   );
