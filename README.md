@@ -194,88 +194,147 @@ class dashboard grey;
 
 ```mermaid
 erDiagram
-
-    %% Types (Role and Compound as Enum)
-    role {
+    ROLE {
         enum Administrator
-        enum ProcurementOfficer
+        enum Procurement_Officer
         enum Researcher
     }
 
-    compound {
+    COMPOUND {
         enum Reagent
         enum Sample
     }
 
-    %% Tables
-    substance {
-        serial id PK "Unique identifier for each reagent"
+    REQUEST_STATUS {
+        enum Pending
+        enum Ordered
+        enum Declined
+        enum Completed
+    }
+
+    ORDER_STATUS {
+        enum Pending
+        enum Cancelled
+        enum Submitted
+        enum Fulfilled
+    }
+
+    SUBSTANCE {
+        int id PK "Unique identifier for each reagent"
         varchar name "Name of the reagent"
         text description "Description of the reagent"
         text structure "Unique structure of the reagent"
-        compound category "Category of the substance, either Reagent or Sample"
+        COMPOUND category "Category of the substance"
         date expiration_date "Expiration date of the substance"
-        boolean is_expired "Indicates whether the substance is expired"
+        boolean is_expired "Indicates if the substance is expired"
     }
 
-    storage {
-        serial id PK "Unique identifier for each storage location"
+    STORAGE {
+        int id PK "Unique identifier for each storage location"
         varchar room "Room where reagents are stored"
         text description "Description of the storage room"
     }
 
-    storage_location {
-        serial id PK "Unique identifier for each storage location"
-        integer room_id FK "References the storage room"
+    STORAGE_LOCATION {
+        int id PK "Unique identifier for each storage location"
+        int room_id FK "References the storage room"
         varchar location "Specific location within the storage room"
     }
 
-    storage_content {
-        serial id PK "Unique identifier for each storage content entry"
-        integer location_id FK "References the specific location within the storage room"
-        integer substance_id FK "References the substance"
-        integer quantity_left "Quantity of the substance left in stock"
-        varchar unit "The amount of space a substance occupies"
-        numeric price_per_unit "Price of substance per unit"
+    STORAGE_CONTENT {
+        int id PK "Unique identifier for each storage content entry"
+        int location_id FK "References the specific storage location"
+        int substance_id FK "References the reagent being stored"
+        int quantity_left "Quantity of the substance left in stock"
+        varchar unit "Measurement unit"
+        numeric price_per_unit "Price per unit of the substance"
     }
 
-    users {
-        serial id PK "Unique identifier for each user"
+    USERS {
+        int id PK "Unique identifier for each user"
         varchar username "Unique username for each user"
         varchar first_name "First name of the user"
         varchar last_name "Last name of the user"
         varchar email "Email address of the user"
         char password_hash "Hashed password of the user"
-        role role "Role of the user in the system"
-        timestamp created_at "Timestamp when the user was created"
-        timestamptz last_login "Timestamp of the user's last login"
+        ROLE role "Role of the user in the system"
+        timestamp created_at "Creation timestamp"
+        timestamptz last_login "Timestamp of last login"
     }
 
-    reagent {
-        integer substance_id PK, FK "Reference to specific chemical substance"
+    REAGENT {
+        int substance_id PK "Reference to specific chemical substance"
         varchar cas_number "CAS number of the reagent"
         varchar producer "Producer of the reagent"
-        integer catalog_id "ID of the reagent in the producer's catalog"
-        text catalog_link "Link to the catalog page for the reagent"
+        int catalog_id "ID in producer's catalog"
+        text catalog_link "Catalog page link for the reagent"
     }
 
-    sample {
-        integer substance_id PK, FK "Reference to specific chemical substance"
-        integer added_substance_id PK, FK "Added chemical to the given sample"
+    SAMPLE {
+        int substance_id FK "Reference to specific chemical substance"
+        int added_substance_id FK "Added chemical to the sample"
     }
 
-    %% Relationships
-    storage ||--o{ storage_location : "has many"
-    storage_location ||--o{ storage_content : "contains"
-    storage_content ||--o| substance : "stores"
-    substance ||--o| compound : "is categorized as"
+    REAGENT_REQUEST {
+        uuid id PK "Unique identifier for each request"
+        int created_by FK "Id of user who created the request"
+        varchar reagent_name "Name of the reagent"
+        text structure "Unique structure of the reagent"
+        varchar cas_number "CAS number of the reagent"
+        int quantity "Quantity of the requested reagent"
+        varchar unit "Measurement unit for quantity"
+        REQUEST_STATUS status "Status of the request"
+        timestamp created_at "Creation timestamp"
+        timestamp modified_at "Modification timestamp"
+    }
 
-    substance ||--|{ reagent : "is"
-    substance ||--|{ sample : "is"
-    sample ||--o| substance : "has added"
+    REAGENT_REQUEST_COMMENT {
+        uuid id PK "Unique identifier for each request comment"
+        uuid request_id FK "Reference to specific reagent request"
+        int commenter_id FK "Id of the commenter"
+        text comment_text "Content of comment"
+    }
 
-    %% Users (not related in the schema but included for completeness)
-    users ||--|{ role : "has role"
-    users ||--|{ storage: "has access to"
+    REAGENT_ORDER {
+        uuid id PK "Unique identifier for each order"
+        int created_by FK "User who created the order"
+        varchar title "Title of the order"
+        varchar seller "Name of the seller"
+        ORDER_STATUS status "Current status of the order"
+        uuid request_id FK "Reference to request (if applicable)"
+        timestamp created_at "Creation timestamp"
+        timestamp modified_at "Modification timestamp"
+    }
+
+    REAGENT_ORDER_ITEM {
+        int id PK "Unique identifier for each order item"
+        uuid order_id FK "Identifier of the order"
+        varchar reagent_name "Name of the reagent"
+        text structure "Unique structure of the reagent"
+        varchar cas_number "CAS number of the reagent"
+        varchar producer "Producer of the reagent"
+        int catalog_id "ID in producer's catalog"
+        text catalog_link "Catalog link"
+        int quantity "Quantity of the reagent ordered"
+        varchar unit "Measurement unit"
+        numeric price_per_unit "Price per unit of the reagent"
+    }
+
+    USERS ||--o{ STORAGE : "have access to"
+    STORAGE ||--o{ STORAGE_LOCATION : "has"
+    STORAGE_LOCATION ||--o{ STORAGE_CONTENT : "contains"
+    SUBSTANCE ||--o{ STORAGE_CONTENT : "stored_in"
+    USERS ||--o{ REAGENT_REQUEST : "created_by"
+    REAGENT_REQUEST ||--o{ REAGENT_REQUEST_COMMENT : "has"
+    USERS ||--o{ REAGENT_REQUEST_COMMENT : "commented_by"
+    USERS ||--o{ REAGENT_ORDER : "created_by"
+    REAGENT_ORDER ||--o{ REAGENT_ORDER_ITEM : "includes"
+    SUBSTANCE ||--|| REAGENT : "is_a"
+    SUBSTANCE ||--|| SAMPLE : "is_a"
+    REAGENT_ORDER ||--|o REAGENT_REQUEST : "from"
+    REAGENT_ORDER ||--o{ ORDER_STATUS : "has"
+    REAGENT_REQUEST ||--o{ REQUEST_STATUS : "has"
+    USERS ||--o{ROLE: "have"
+    SUBSTANCE ||--o{COMPOUND: "is"
 ```
 
