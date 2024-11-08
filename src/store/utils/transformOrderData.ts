@@ -4,6 +4,7 @@ import { BackendOrderReagent, UpdatedReagent } from "@/types";
 export const transformOrderData = (orderData: OrderInput): BackendOrderInput => ({
   title: orderData.title,
   seller: orderData.seller,
+  ...(orderData.requestId && { request_id: orderData.requestId }),
   reagents: orderData.reagents.map((reagent) => ({
     reagent_name: reagent.reagentName,
     unit: reagent.unit,
@@ -12,7 +13,7 @@ export const transformOrderData = (orderData: OrderInput): BackendOrderInput => 
     structure: reagent.structure,
     cas_number: reagent.CASNumber,
     producer: reagent.producer,
-    catalog_id: reagent.catalogId || null,
+    catalog_id: reagent.catalogId || "0",
     catalog_link: reagent.catalogLink,
   })),
 });

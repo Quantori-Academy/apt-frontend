@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { ReagentRequests } from "@/types";
 
@@ -37,10 +37,17 @@ export const useCheckedRows = (rows: ReagentRequests) => {
     }
   };
 
+  const selectedRows = useMemo(
+    () => rows.filter((row) => selected.includes(row.id)),
+    [rows, selected]
+  );
+
   return {
     selected,
+    selectedRows,
     isSelected,
     handleCheckboxClick,
     handleSelectAllClick,
+    setSelected,
   };
 };

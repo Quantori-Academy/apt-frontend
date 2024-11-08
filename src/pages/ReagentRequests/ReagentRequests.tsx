@@ -4,11 +4,13 @@ import { useTranslation } from "react-i18next";
 
 import {
   AddReagentRequest,
+  OrderFromRequest,
   PageError,
   PageLoader,
   ReagentRequestTable,
   StatusFilter,
 } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { userRoles } from "@/constants";
 import { useAlertSnackbar, useAppSelector, useCheckedRows } from "@/hooks";
 import {
@@ -34,6 +36,8 @@ const ReagentRequests: React.FC = () => {
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   const userId = useAppSelector(selectUserId);
   const role = useAppSelector(selectUserRole);
@@ -75,13 +79,19 @@ const ReagentRequests: React.FC = () => {
     ]
   );
 
-  const { selected, isSelected, handleSelectAllClick, handleCheckboxClick } =
-    useCheckedRows(visibleItems);
+  const {
+    selected,
+    selectedRows,
+    isSelected,
+    handleSelectAllClick,
+    handleCheckboxClick,
+    setSelected,
+  } = useCheckedRows(visibleItems);
 
   if (isOfficerRequestsLoading || isResearcherRequestsLoading)
     return <PageLoader />;
   if (!reagentRequestsOfficer || !reagentRequestsResearcher) {
-    return <PageError text="There are no reagent request to show" />;
+    return <PageError text={t("requests.errors.emptyError")} />;
   }
 
   const handleSortChange = (property: RequestsSortColumns) => {
@@ -94,14 +104,13 @@ const ReagentRequests: React.FC = () => {
     openSnackbar(
       severity,
       severity === "error"
-        ? "Failed to add request"
-        : "Request Successfully Added"
+        ? t("requests.snackBarMessages.failedAdd")
+        : t("requests.snackBarMessages.added")
     );
   };
 
   const handleCreateOrder = () => {
-    //TODO: Implement Create Order
-    console.log(selected);
+    setIsOrderModalOpen(true);
   };
 
   return (
@@ -113,6 +122,7 @@ const ReagentRequests: React.FC = () => {
         height: "100%",
       }}
     >
+      <DashboardBreadcrumbs />
       <Typography variant="h3">{t("requests.title")}</Typography>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <StatusFilter
@@ -128,7 +138,7 @@ const ReagentRequests: React.FC = () => {
           )}
           {role === userRoles.ProcurementOfficer && (
             <Button disabled={!selected.length} onClick={handleCreateOrder}>
-              Create Order
+              {t("orders.buttons.createOrder")}
             </Button>
           )}
         </Box>
@@ -151,6 +161,15 @@ const ReagentRequests: React.FC = () => {
           onChange={(_, page) => setPage(page)}
         />
       </Box>
+      {isOrderModalOpen && (
+        <OrderFromRequest
+          modalOpen={isOrderModalOpen}
+          onClose={() => setIsOrderModalOpen(false)}
+          openSnackbar={openSnackbar}
+          requests={selectedRows}
+          onCreateOrder={() => setSelected([])}
+        />
+      )}
       <AddReagentRequest
         modalOpen={modalOpen}
         onClose={() => setModalOpen(false)}

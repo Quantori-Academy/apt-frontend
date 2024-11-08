@@ -13,7 +13,10 @@
       "Storage Detail": "Storage Detail",
       "Substances": "Substances",
       "Reagent Detail": "Reagent Detail",
-      "Sample Detail": "Sample Detail"
+      "Sample Detail": "Sample Detail",
+      "Orders": "Orders",
+      "Order Details": "Order Details",
+      "Reagent Requests": "Reagent Requests"
     },
 
     "buttons": {
@@ -420,13 +423,27 @@
 
       "buttons": {
         "createOrder": "Create Order",
-        "create": "Create"
+        "create": "Create",
+        "updateStatus": "Update Status",
+        "chooseLocation": "Choose Location"
       },
 
       "errors": {
         "loadError": "Failed to load orders",
         "emptyError": "Orders list is empty",
         "detailedOrderError": "Failed to load order details"
+      },
+
+      "snackBarMessages": {
+        "editing": {
+          "success": "Order updated successfully"
+        },
+        "Order with same title already exists.": "Order with same title already exists",
+        "Can't change status for Cancelled or Fulfilled orders.": "Can't change status for Cancelled or Fulfilled orders",
+        "Order details can be modified if and only if its status is set to 'Pending'.": "Order details can be modified if and only if its status is set to 'Pending'",
+        "Can't set Cancelled or Fulfilled status for Pending orders.": "Can't set Cancelled or Fulfilled status for Pending orders",
+        "An unexpected error occurred": "An unexpected error occurred",
+        "allocated": "Reagents allocated successfully"
       },
 
       "statuses": {
@@ -449,9 +466,7 @@
           "of": "of",
           "moreThan": "more than"
         }
-      },
-
-      "detailTable": {}
+      }
     },
 
     "createOrderForm": {
@@ -545,6 +560,16 @@
           "decline": "Decline"
         }
       },
+
+      "errors": {
+        "emptyError": "There are no reagent request to show"
+      },
+
+      "snackBarMessages": {
+        "failedAdd": "Не удалось добавить запрос",
+        "added": "Запрос успешно добавлен"
+      },
+
       "statusFilter": {
         "All": "All",
         "Pending": "Pending",
@@ -552,6 +577,7 @@
         "Ordered": "Ordered",
         "Completed": "Completed"
       },
+
       "declineRequest": {
         "title": "Decline Reagent Request",
         "label": "Enter reason for decline",

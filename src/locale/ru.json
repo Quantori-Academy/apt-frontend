@@ -13,7 +13,10 @@
       "Storage Detail": "Детали хранения",
       "Substances": "Вещества",
       "Reagent Detail": "Детали реактива",
-      "Sample Detail": "Детали образца"
+      "Sample Detail": "Детали образца",
+      "Orders": "Заказы",
+      "Order Details": "Детали заказа",
+      "Reagent Requests": "Запросы на реагенты"
     },
 
     "buttons": {
@@ -420,13 +423,27 @@
 
       "buttons": {
         "createOrder": "Создать заказ",
-        "create": "Создать"
+        "create": "Создать",
+        "updateStatus": "Обновить Статус",
+        "chooseLocation": "Выбрать Локацию"
       },
 
       "errors": {
         "loadError": "Не удалось загрузить заказы",
         "emptyError": "Список заказов пуст",
         "detailedOrderError": "Не удалось загрузить заказ"
+      },
+
+      "snackBarMessages": {
+        "editing": {
+          "success": "Заказ успешно обновлен"
+        },
+        "Order with same title already exists.": "Заказ с таким же названием уже существует",
+        "Can't change status for Cancelled or Fulfilled orders.": "Невозможно изменить статус для отменённых или выполненных заказов",
+        "Order details can be modified if and only if its status is set to 'Pending'.": "Детали заказа можно изменить только в том случае, если его статус установлен как \"В ожидании\"",
+        "Can't set Cancelled or Fulfilled status for Pending orders.": "Невозможно установить статус \"Отменён\" или \"Выполнен\" для заказов со статусом \"В ожидании\"",
+        "An unexpected error occurred": "Произошла непредвиденная ошибка",
+        "allocated": "Реактивы успешно распределены"
       },
 
       "statuses": {
@@ -543,6 +560,16 @@
           "decline": "Отклонить"
         }
       },
+
+      "errors": {
+        "emptyError": "Нет запросов на реактивы для отображения"
+      },
+
+      "snackBarMessages": {
+        "failedAdd": "Failed to add request",
+        "added": "Request added successfully"
+      },
+
       "statusFilter": {
         "All": "Все",
         "Pending": "В ожидании",

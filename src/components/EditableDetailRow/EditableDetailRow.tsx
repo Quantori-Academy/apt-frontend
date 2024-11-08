@@ -1,20 +1,26 @@
 import { TableCell, TableRow, TextField, Typography } from "@mui/material";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import {
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+} from "react-hook-form";
 
-import { OrderReagent } from "@/types";
+type EditableDetailTextFieldType = "text" | "number";
 
-type ReagentDetailRowProps = {
+type EditableDetailRowProps<T extends FieldValues> = {
   label: string;
   value: string | number | null | undefined;
-  isEditable: boolean;
-  register: UseFormRegister<OrderReagent>;
-  fieldName: keyof OrderReagent;
-  errors?: FieldErrors;
+  isEditable?: boolean;
+  register: UseFormRegister<T>;
+  fieldName: Path<T>;
+  errors?: FieldErrors<T>;
   requiredFields?: boolean;
   requiredMessage?: string;
+  TextFieldType?: EditableDetailTextFieldType;
 };
 
-const ReagentDetailRow: React.FC<ReagentDetailRowProps> = ({
+const EditableDetailRow = <T extends FieldValues>({
   label,
   value,
   isEditable,
@@ -23,7 +29,8 @@ const ReagentDetailRow: React.FC<ReagentDetailRowProps> = ({
   errors,
   requiredFields = false,
   requiredMessage,
-}) => {
+  TextFieldType = "text",
+}: EditableDetailRowProps<T>) => {
   return (
     <TableRow>
       <TableCell>
@@ -32,6 +39,8 @@ const ReagentDetailRow: React.FC<ReagentDetailRowProps> = ({
       <TableCell align="center">
         {isEditable ? (
           <TextField
+            size="small"
+            type={TextFieldType}
             {...register(fieldName, {
               ...(requiredFields && {
                 required: requiredMessage,
@@ -50,4 +59,4 @@ const ReagentDetailRow: React.FC<ReagentDetailRowProps> = ({
   );
 };
 
-export default ReagentDetailRow;
+export default EditableDetailRow;

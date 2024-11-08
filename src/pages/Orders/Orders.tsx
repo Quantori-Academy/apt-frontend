@@ -11,6 +11,7 @@ import {
   PageLoader,
   SearchBar,
 } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useAlertSnackbar } from "@/hooks";
 import { useGetOrdersQuery } from "@/store";
 import { StatusFilter } from "@/types";
@@ -53,6 +54,7 @@ const Orders = () => {
 
   return (
     <Container>
+      <DashboardBreadcrumbs />
       <Box
         sx={{
           display: "flex",
