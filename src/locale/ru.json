@@ -543,6 +543,12 @@
           "decline": "Отклонить"
         }
       },
+
+      "snackBarMessages": {
+        "failedAdd": "Failed to add request",
+        "added": "Request added successfully"
+      },
+
       "statusFilter": {
         "All": "Все",
         "Pending": "В ожидании",

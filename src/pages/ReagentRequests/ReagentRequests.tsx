@@ -103,8 +103,8 @@ const ReagentRequests: React.FC = () => {
     openSnackbar(
       severity,
       severity === "error"
-        ? "Failed to add request"
-        : "Request Successfully Added"
+        ? t("requests.snackBarMessages.failedAdd")
+        : t("requests.snackBarMessages.added")
     );
   };
 
@@ -136,7 +136,7 @@ const ReagentRequests: React.FC = () => {
           )}
           {role === userRoles.ProcurementOfficer && (
             <Button disabled={!selected.length} onClick={handleCreateOrder}>
-              Create Order
+              {t("orders.buttons.createOrder")}
             </Button>
           )}
         </Box>

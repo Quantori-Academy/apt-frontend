@@ -449,9 +449,7 @@
           "of": "of",
           "moreThan": "more than"
         }
-      },
-
-      "detailTable": {}
+      }
     },
 
     "createOrderForm": {
@@ -545,6 +543,12 @@
           "decline": "Decline"
         }
       },
+
+      "snackBarMessages": {
+        "failedAdd": "Не удалось добавить запрос",
+        "added": "Запрос успешно добавлен"
+      },
+
       "statusFilter": {
         "All": "All",
         "Pending": "Pending",
