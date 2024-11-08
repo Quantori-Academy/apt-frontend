@@ -1,7 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { BackendOrder, BackendOrderDetailPage, Order, OrderDetailPage, OrderInput, UpdatedReagent } from "@/types";
+import {
+  BackendOrder,
+  BackendOrderDetailPage,
+  MutationResponse,
+  Order,
+  OrderDetailPage,
+  OrderInput,
+  StatusForm,
+  UpdatedReagent,
+} from "@/types";
 
 import {
   transformOrderData,
@@ -13,6 +22,17 @@ import {
 type DeleteReagentIds = {
   orderId: string;
   reagentId: number;
+};
+
+type EditTitleSeller = {
+  orderId: string;
+  title: string;
+  seller: string;
+};
+
+type UpdateOrderStatus = {
+  orderId: string;
+  status: StatusForm;
 };
 
 export const ordersApi = createApi({
@@ -44,6 +64,37 @@ export const ordersApi = createApi({
       providesTags: ["Order"],
     }),
 
+    editOrderTitleSeller: builder.mutation<void, EditTitleSeller>({
+      query: ({ orderId, title, seller }) => ({
+        url: `/orders/${orderId}`,
+        method: "PATCH",
+        body: {
+          title,
+          seller,
+        },
+      }),
+      invalidatesTags: ["Order"],
+      transformErrorResponse: (response: MutationResponse) => {
+        return {
+          message: response.data?.message || "An unexpected error occurred.",
+        };
+      },
+    }),
+
+    updateOrderStatus: builder.mutation<void, UpdateOrderStatus>({
+      query: ({ orderId, status }) => ({
+        url: `/orders/${orderId}/status`,
+        method: "PATCH",
+        body: status,
+      }),
+      invalidatesTags: ["Order"],
+      transformErrorResponse: (response: MutationResponse) => {
+        return {
+          message: response.data?.message || "An unexpected error occurred.",
+        };
+      },
+    }),
+
     updateOrderReagent: builder.mutation<void, UpdatedReagent>({
       query: (updatedReagent) => ({
         url: `/orders/${updatedReagent.orderId}/reagent/${updatedReagent.id}`,
@@ -69,4 +120,6 @@ export const {
   useGetOrderQuery,
   useUpdateOrderReagentMutation,
   useDeleteReagentFromOrderMutation,
+  useEditOrderTitleSellerMutation,
+  useUpdateOrderStatusMutation,
 } = ordersApi;

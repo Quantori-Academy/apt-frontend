@@ -22,8 +22,8 @@ import { useTranslation } from "react-i18next";
 
 import {
   ConfirmRemoving,
+  EditableDetailRow,
   OrderAccordionButtons,
-  ReagentDetailRow,
 } from "@/components";
 import { Severity } from "@/hooks";
 import {
@@ -154,6 +154,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
       <Accordion
         sx={{
           boxShadow: `0px -1px 1px #00695f, 0px 1px 3px #00695f`,
+          marginBottom: 2,
         }}
         expanded={expanded === reagent.reagentName + reagent.quantity}
         onChange={handleChange(reagent.reagentName + reagent.quantity)}
@@ -171,7 +172,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
               <Table>
                 <TableBody>
                   {OrderReagentMainRows.map(({ label, key }) => (
-                    <ReagentDetailRow
+                    <EditableDetailRow
                       key={key}
                       label={t(`substanceDetails.fields.${label}`)}
                       value={reagent[key as keyof OrderReagent]}
@@ -179,6 +180,11 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
                       errors={errors}
                       isEditable={isEditable}
                       fieldName={key}
+                      TextFieldType={
+                        key === "pricePerUnit" || key === "quantity"
+                          ? "number"
+                          : "text"
+                      }
                       requiredMessage={t(
                         `createOrderForm.requiredFields.${label}.requiredMessage`
                       )}
@@ -186,7 +192,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
                     />
                   ))}
                   {OrderReagentSecondaryRows.map(({ label, key }) => (
-                    <ReagentDetailRow
+                    <EditableDetailRow
                       key={key}
                       label={t(`substanceDetails.fields.${label}`)}
                       value={reagent[key as keyof OrderReagent]}
@@ -204,6 +210,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
                     <TableCell align="center">
                       {isEditable ? (
                         <TextField
+                          size="small"
                           {...register("catalogLink")}
                           defaultValue={reagent.catalogLink}
                           error={!!errors.catalogLink}
