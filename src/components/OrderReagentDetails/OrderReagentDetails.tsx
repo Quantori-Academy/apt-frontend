@@ -69,6 +69,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   setExpanded,
   orderId,
   openSnackbar,
+  status,
 }) => {
   const { t } = useTranslation();
 
