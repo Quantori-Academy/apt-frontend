@@ -1,6 +1,7 @@
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ScienceIcon from "@mui/icons-material/Science";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import { Box, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
@@ -57,6 +58,14 @@ const Dashboard = () => {
       </Typography>
     </CardContent>
   );
+  const ordersCard = (
+    <CardContent sx={{ textAlign: "center" }}>
+      <StorefrontIcon sx={{ ...iconStyles, color: "#90a4ae" }} />
+      <Typography color="#2c387e" variant="h6">
+        Orders
+      </Typography>
+    </CardContent>
+  );
 
   return (
     <Box maxWidth="sm">
@@ -100,6 +109,11 @@ const Dashboard = () => {
         >
           <DashboardCard dashboardCard={reagentRequestCard} bgColor="#efebe9" />
         </NavLink>
+        {role === userRoles.ProcurementOfficer && (
+          <NavLink to={RouteProtectedPath.orders} className={style.navLink}>
+            <DashboardCard dashboardCard={ordersCard} bgColor="#eceff1" />
+          </NavLink>
+        )}
       </Box>
     </Box>
   );

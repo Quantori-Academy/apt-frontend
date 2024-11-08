@@ -10,6 +10,7 @@ import {
   PageError,
   PageLoader,
 } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useAlertSnackbar } from "@/hooks";
 import { useGetOrderQuery } from "@/store";
 import { Order } from "@/types";
@@ -53,6 +54,7 @@ const OrderPage: React.FC = () => {
 
   return (
     <>
+      <DashboardBreadcrumbs />
       <Typography variant="h2" gutterBottom>
         {t("orders.title.DetailPage")}
       </Typography>

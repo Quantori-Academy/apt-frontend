@@ -59,11 +59,24 @@ const DashboardBreadcrumbs: React.FC = () => {
         path: RouteProtectedPath.samplePage,
       },
     ],
+    [RouteProtectedPath.orders]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+      { label: "Orders", path: RouteProtectedPath.orders },
+    ],
+    [RouteProtectedPath.orderPage]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+      { label: "Orders", path: RouteProtectedPath.orders },
+      { label: "Order Details", path: RouteProtectedPath.orderPage },
+    ],
+    [RouteProtectedPath.reagentRequests]: [
+      { label: "Dashboard", path: RouteProtectedPath.dashboard },
+      { label: "Reagent Requests", path: RouteProtectedPath.reagentRequests },
+    ],
   };
 
   const breadcrumbTrail = Object.entries(breadcrumbsRoutes).find(
     ([routePath]) => {
-      const regex = new RegExp(`^${routePath.replace(/:\w+/g, "\\w+")}$`);
+      const regex = new RegExp(`^${routePath.replace(/:\w+/g, "[\\w-]+")}$`);
       return regex.test(path);
     }
   );
