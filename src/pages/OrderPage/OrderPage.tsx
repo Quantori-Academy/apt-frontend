@@ -23,6 +23,7 @@ import {
   PageError,
   PageLoader,
 } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useAlertSnackbar } from "@/hooks";
 import {
   useEditOrderTitleSellerMutation,
@@ -132,6 +133,7 @@ const OrderPage: React.FC = () => {
 
   return (
     <>
+      <DashboardBreadcrumbs />
       <Typography variant="h2" gutterBottom>
         {t("orders.title.DetailPage")}
       </Typography>

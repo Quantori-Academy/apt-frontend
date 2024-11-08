@@ -13,7 +13,10 @@
       "Storage Detail": "Storage Detail",
       "Substances": "Substances",
       "Reagent Detail": "Reagent Detail",
-      "Sample Detail": "Sample Detail"
+      "Sample Detail": "Sample Detail",
+      "Orders": "Orders",
+      "Order Details": "Order Details",
+      "Reagent Requests": "Reagent Requests"
     },
 
     "buttons": {
