@@ -1,94 +1,68 @@
-import { Box, Button, Stack, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
-import { BasicModal } from "@/components";
-
-import style from "@/components/AddUserForm/AddUserForm.module.css";
+import { BasicModal, ReagentRequestForm } from "@/components";
+import { useReagentRequestForm } from "@/components/ReagentRequestForm";
+import { Severity } from "@/hooks";
+import { useAddReagentRequestMutation } from "@/store";
 
 type ReagentRequestInput = {
   reagentName: string;
   CAS: string;
   desiredQuantity: number | null;
-  userComment: string;
+  userComment: string | null;
   unit: string;
 };
 
 type AddReagentRequestProps = {
   modalOpen: boolean;
   onClose: () => void;
+  onAddRequestForm: (severity: Severity) => void;
 };
 
 const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
   modalOpen,
   onClose,
+  onAddRequestForm,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<ReagentRequestInput>({
-    defaultValues: {
-      reagentName: "",
-      CAS: "",
-      desiredQuantity: null,
-      userComment: "",
-      unit: "",
-    },
+  const { t } = useTranslation();
+
+  const formMethods = useReagentRequestForm({
+    reagentName: "",
+    CAS: "",
+    desiredQuantity: null,
+    userComment: "",
+    unit: "",
   });
 
+  const [addReagentRequest, { isLoading }] = useAddReagentRequestMutation();
+
   const onSubmit = async (newReagentRequest: ReagentRequestInput) => {
-    //TODO: implement after backend ready
-    console.log("am:", newReagentRequest);
-    reset();
-    onClose();
+    const { error } = await addReagentRequest(newReagentRequest);
+
+    if (error) {
+      onAddRequestForm("error");
+    } else {
+      formMethods.reset();
+      onClose();
+      onAddRequestForm("success");
+    }
   };
 
   return (
     <BasicModal
-      title="Create Reagent request"
+      title={t("createRequestForm.title")}
       closeModal={onClose}
       isOpen={modalOpen}
     >
-      <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
-        <Stack spacing={2} width={300} sx={{ padding: "20px" }}>
-          <TextField
-            label="Reagent Name"
-            {...register("reagentName", {
-              required: "Reagent Name is required",
-            })}
-            helperText={errors.reagentName?.message}
-            error={!!errors.reagentName}
-          />
-          <TextField label="CAS number" {...register("CAS")} />
-          <TextField
-            label="Desired Quantity"
-            {...register("desiredQuantity", {
-              required: "Quantity is required",
-            })}
-            helperText={errors.desiredQuantity?.message}
-            error={!!errors.desiredQuantity}
-          />
-          <TextField
-            label="Unit"
-            {...register("unit", {
-              required: "Unit is required",
-            })}
-            helperText={errors.unit?.message}
-            error={!!errors.unit}
-          />
-          <TextField
-            multiline
-            rows={4}
-            label="Comment"
-            {...register("userComment")}
-          />
-          <Box sx={{ display: "flex", gap: "5px", justifyContent: "end" }}>
-            <Button type="submit">Submit</Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </Box>
-        </Stack>
-      </form>
+      <FormProvider {...formMethods}>
+        <ReagentRequestForm
+          isEdit={false}
+          onSubmit={onSubmit}
+          isLoading={isLoading}
+          onClose={onClose}
+        />
+      </FormProvider>
     </BasicModal>
   );
 };

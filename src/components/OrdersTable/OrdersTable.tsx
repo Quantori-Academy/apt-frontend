@@ -11,9 +11,11 @@ import {
 } from "@mui/material";
 import { ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
+import { RouteProtectedPath } from "@/router";
 import { Order, SortType, StatusFilter } from "@/types";
-import { getOrdersRows } from "@/utils";
+import { formatDate, getOrdersRows } from "@/utils";
 
 type HeadCell = {
   label: string;
@@ -22,8 +24,9 @@ type HeadCell = {
 
 const headCells: readonly HeadCell[] = [
   { label: "Title", key: "title" },
-  { label: "Creation Date", key: "creationDate" },
   { label: "Seller", key: "seller" },
+  { label: "Creation Date", key: "createdAt" },
+  { label: "Modified Date", key: "modifiedAt" },
   { label: "Status", key: "status" },
 ];
 
@@ -48,6 +51,8 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
   const [orderBy, setOrderBy] = useState<keyof Order>("title");
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const navigate = useNavigate();
 
   const handleRequestSort = (property: keyof Order) => {
     const isAsc = orderBy === property && order === "asc";
@@ -102,19 +107,30 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {visibleRows.map((order) => {
-              return (
-                <TableRow hover key={order.id}>
-                  {headCells.map((cell) => (
-                    <TableCell key={cell.key}>
-                      {cell.key === "status"
-                        ? t(`orders.statuses.${order[cell.key]}`)
-                        : order[cell.key as keyof typeof order]}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              );
-            })}
+            {visibleRows.map((order) => (
+              <TableRow
+                hover
+                onClick={() =>
+                  navigate(
+                    RouteProtectedPath.orderPage.replace(":id", order.id)
+                  )
+                }
+                key={order.id}
+                sx={{ cursor: "pointer" }}
+              >
+                {headCells.map((cell) => (
+                  <TableCell key={cell.key}>
+                    {cell.key === "status"
+                      ? t(`orders.statuses.${order[cell.key]}`)
+                      : cell.key === "createdAt" || cell.key === "modifiedAt"
+                        ? formatDate(
+                            order[cell.key as keyof typeof order] || null
+                          )
+                        : order[cell.key as keyof typeof order] || "-"}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
             {emptyRows > 0 && (
               <TableRow
                 style={{
@@ -135,10 +151,10 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
         page={page}
         onPageChange={(_, newPage) => setPage(newPage)}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage={t("orders.table.Pagantion.RowsPerPage")}
+        labelRowsPerPage={t("orders.table.Pagination.RowsPerPage")}
         labelDisplayedRows={({ from, to, count }) =>
-          `${from}-${to} ${t("orders.table.Pagantion.of")} ${count !== -1 ? count : `${t("orders.table.Pagantion.moreThan")} ${to}`}`
-        } // Customize this text
+          `${from}-${to} ${t("orders.table.Pagination.of")} ${count !== -1 ? count : `${t("orders.table.Pagantion.moreThan")} ${to}`}`
+        }
       />
     </Paper>
   );

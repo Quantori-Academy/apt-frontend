@@ -3,3 +3,4 @@ export * from "./getReagentsListData";
 export * from "./getOrdersRows";
 export * from "./getPaginatedStorageLocations";
 export * from "./getReagentRequestsData";
+export * from "./formatDate";

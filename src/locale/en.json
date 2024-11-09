@@ -13,7 +13,10 @@
       "Storage Detail": "Storage Detail",
       "Substances": "Substances",
       "Reagent Detail": "Reagent Detail",
-      "Sample Detail": "Sample Detail"
+      "Sample Detail": "Sample Detail",
+      "Orders": "Orders",
+      "Order Details": "Order Details",
+      "Reagent Requests": "Reagent Requests"
     },
 
     "buttons": {
@@ -23,7 +26,8 @@
       "delete": "Delete",
       "login": "Login",
       "logout": "Logout",
-      "create": "Create"
+      "create": "Create",
+      "submit": "Submit"
     },
 
     "users": {
@@ -310,17 +314,21 @@
         "name": "Name",
         "category": "Category",
         "CASNumber": "CAS Number",
-        "producer": "producer",
+        "producer": "Producer",
         "locationId": "Storage location",
         "unit": "Units",
-        "pricePerUnit": "Price per unit",
+        "units": "Units",
+        "price": "Price per unit",
         "totalQuantityLeft": "Quantity left",
+        "quantity": "Quantity",
         "catalogID": "Catalog ID",
+        "catalogLink": "Link",
         "description": "Description",
         "structure": "Structure",
         "addedSubstances": "Substances",
         "room": "Room",
-        "location": "Location"
+        "location": "Location",
+        "noStructure": "Structure is not provided"
       },
 
       "currentLocation": " (current)",
@@ -410,16 +418,34 @@
     },
 
     "orders": {
-      "title": "Orders",
+      "title": {
+        "OrdersPage": "Orders",
+        "DetailPage": "Order Details"
+      },
 
       "buttons": {
         "createOrder": "Create Order",
-        "create": "Create"
+        "create": "Create",
+        "updateStatus": "Update Status",
+        "chooseLocation": "Choose Location"
       },
 
       "errors": {
         "loadError": "Failed to load orders",
-        "emptyError": "Orders list is empty"
+        "emptyError": "Orders list is empty",
+        "detailedOrderError": "Failed to load order details"
+      },
+
+      "snackBarMessages": {
+        "editing": {
+          "success": "Order updated successfully"
+        },
+        "Order with same title already exists.": "Order with same title already exists",
+        "Can't change status for Cancelled or Fulfilled orders.": "Can't change status for Cancelled or Fulfilled orders",
+        "Order details can be modified if and only if its status is set to 'Pending'.": "Order details can be modified if and only if its status is set to 'Pending'",
+        "Can't set Cancelled or Fulfilled status for Pending orders.": "Can't set Cancelled or Fulfilled status for Pending orders",
+        "An unexpected error occurred": "An unexpected error occurred",
+        "allocated": "Reagents allocated successfully"
       },
 
       "statuses": {
@@ -428,15 +454,16 @@
         "Pending": "Pending",
         "Submitted": "Submitted",
         "Fulfilled": "Fulfilled",
-        "Canceled": "Canceled"
+        "Cancelled": "Cancelled"
       },
 
       "table": {
         "Title": "Title",
         "Creation Date": "Creation Date",
+        "Modified Date": "Modified Date",
         "Seller": "Seller",
         "Status": "Status",
-        "Pagantion": {
+        "Pagination": {
           "RowsPerPage": "Rows per page:",
           "of": "of",
           "moreThan": "more than"
@@ -451,6 +478,12 @@
 
       "errors": {
         "noReagentsOrder": "Add at least 1 reagent to the order"
+      },
+
+      "snackBarMessages": {
+        "creation": {
+          "success": "Order created successfully"
+        }
       },
 
       "requiredFields": {
@@ -480,6 +513,77 @@
           "label": "Price*",
           "requiredMessage": "Price required"
         }
+      }
+    },
+
+    "createRequestForm": {
+      "title": "Create Reagent Request",
+      "requiredFields": {
+        "name": {
+          "label": "Reagent Name*",
+          "requiredMessage": "Reagent Name Is Required"
+        },
+        "units": {
+          "label": "Unit*",
+          "requiredMessage": "Unit Is Required"
+        },
+        "quantity": {
+          "label": "Quantity*",
+          "requiredMessage": "Quantity Is Required"
+        },
+        "CASNumber": {
+          "label": "CAS Number"
+        },
+        "comment": {
+          "label": "Comment"
+        }
+      }
+    },
+
+    "requests": {
+      "title": "Reagent Requests",
+      "table": {
+        "name": "Name",
+        "CreationDate": "Creation Date",
+        "ModifiedDate": "Modified Date",
+        "Desired Quantity": "Desired Quantity",
+        "Structure": "Structure",
+        "Status": "Status",
+        "CAS": "CAS",
+        "UserComments": "User Comments",
+        "ProcurementComments": "Procurement Comments",
+        "Actions": "Actions",
+        "Pagination": {
+          "RowsPerPage": "Rows per page:",
+          "of": "of",
+          "moreThan": "more than"
+        },
+        "actionButtons": {
+          "decline": "Decline"
+        }
+      },
+
+      "errors": {
+        "emptyError": "There are no reagent request to show"
+      },
+
+      "snackBarMessages": {
+        "failedAdd": "Не удалось добавить запрос",
+        "added": "Запрос успешно добавлен"
+      },
+
+      "statusFilter": {
+        "All": "All",
+        "Pending": "Pending",
+        "Declined": "Declined",
+        "Ordered": "Ordered",
+        "Completed": "Completed"
+      },
+
+      "declineRequest": {
+        "title": "Decline Reagent Request",
+        "label": "Enter reason for decline",
+        "requiredField": "To decline request, comment is required"
       }
     }
   }

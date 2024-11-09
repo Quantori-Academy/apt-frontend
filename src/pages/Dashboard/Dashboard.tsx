@@ -1,6 +1,7 @@
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ScienceIcon from "@mui/icons-material/Science";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import { Box, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
@@ -53,7 +54,15 @@ const Dashboard = () => {
     <CardContent sx={{ textAlign: "center" }}>
       <WorkHistoryIcon sx={{ ...iconStyles, color: "#8d6e63" }} />
       <Typography color="#2c387e" variant="h6">
-        Reagent Requests
+        {t("requests.title")}
+      </Typography>
+    </CardContent>
+  );
+  const ordersCard = (
+    <CardContent sx={{ textAlign: "center" }}>
+      <StorefrontIcon sx={{ ...iconStyles, color: "#90a4ae" }} />
+      <Typography color="#2c387e" variant="h6">
+        {t("orders.title.OrdersPage")}
       </Typography>
     </CardContent>
   );
@@ -94,16 +103,15 @@ const Dashboard = () => {
             <DashboardCard dashboardCard={storageCard} bgColor="#e0f2f1" />
           </NavLink>
         )}
-        {/*TODO: change it to procurementOfficer*/}
-        {role === userRoles.Administrator && (
-          <NavLink
-            to={RouteProtectedPath.reagentRequests}
-            className={style.navLink}
-          >
-            <DashboardCard
-              dashboardCard={reagentRequestCard}
-              bgColor="#efebe9"
-            />
+        <NavLink
+          to={RouteProtectedPath.reagentRequests}
+          className={style.navLink}
+        >
+          <DashboardCard dashboardCard={reagentRequestCard} bgColor="#efebe9" />
+        </NavLink>
+        {role === userRoles.ProcurementOfficer && (
+          <NavLink to={RouteProtectedPath.orders} className={style.navLink}>
+            <DashboardCard dashboardCard={ordersCard} bgColor="#eceff1" />
           </NavLink>
         )}
       </Box>

@@ -103,12 +103,17 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
                   {t(`substances.filters.options.${reagent.category}`)}
                 </TableCell>
                 <TableCell align="right">
-                  <SmilesImage
-                    smiles={reagent.structure}
-                    svgOptions={{ width: 100, height: 100 }}
-                  />
+                  {reagent.structure ? (
+                    <SmilesImage
+                      smiles={reagent.structure}
+                      svgOptions={{ width: 100, height: 100 }}
+                      align="flex-end"
+                    />
+                  ) : (
+                    t("substanceDetails.fields.noStructure")
+                  )}
                 </TableCell>
-                <TableCell align="left">{reagent.description}</TableCell>
+                <TableCell align="center">{reagent.description}</TableCell>
                 <TableCell align="right">{reagent.quantityLeft}</TableCell>
                 <TableCell align="right">{reagent.storageLocation}</TableCell>
                 <TableCell align="right">

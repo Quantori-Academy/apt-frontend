@@ -1,3 +1,4 @@
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,11 +11,15 @@ import {
   PageLoader,
   SearchBar,
 } from "@/components";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
+import { useAlertSnackbar } from "@/hooks";
 import { useGetOrdersQuery } from "@/store";
 import { StatusFilter } from "@/types";
 
 const Orders = () => {
   const { t } = useTranslation();
+
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
@@ -37,10 +42,6 @@ const Orders = () => {
     return <PageError text={t("orders.errors.loadError")} />;
   }
 
-  if (!orders?.length) {
-    return <PageError text={t("orders.errors.emptyError")} />;
-  }
-
   const handleStatusChange = (value: StatusFilter) => {
     setStatusFilter(value);
     setPage(0);
@@ -53,6 +54,7 @@ const Orders = () => {
 
   return (
     <Container>
+      <DashboardBreadcrumbs />
       <Box
         sx={{
           display: "flex",
@@ -61,43 +63,62 @@ const Orders = () => {
           marginY: "30px",
         }}
       >
-        <Typography variant="h3">{t("orders.title")}</Typography>
+        <Typography variant="h3">{t("orders.title.OrdersPage")}</Typography>
         <Button variant="outlined" onClick={() => setIsOrderModalOpen(true)}>
           {t("orders.buttons.createOrder")}
         </Button>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          gap: "10px",
-          marginBottom: "15px",
-          alignItems: "center",
-        }}
-      >
-        <Box sx={{ flex: 1, height: "60px" }}>
-          <OrdersFilter
-            statusFilter={statusFilter}
-            handleStatusChange={handleStatusChange}
-          />
+      {!orders?.length ? (
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          height="50vh"
+          sx={{ textAlign: "center", color: "grey.500" }}
+        >
+          <ShoppingCartOutlinedIcon sx={{ fontSize: 60, mb: 2 }} />
+          <Typography variant="h6">{t("orders.errors.emptyError")}</Typography>
         </Box>
-        <Box sx={{ flex: 4, height: "60px" }}>
-          <SearchBar
+      ) : (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              gap: "10px",
+              marginBottom: "15px",
+              alignItems: "center",
+            }}
+          >
+            <Box sx={{ flex: 1, height: "60px" }}>
+              <OrdersFilter
+                statusFilter={statusFilter}
+                handleStatusChange={handleStatusChange}
+              />
+            </Box>
+            <Box sx={{ flex: 4, height: "60px" }}>
+              <SearchBar
+                searchQuery={searchQuery}
+                setSearchQuery={handleSearchQuery}
+              />
+            </Box>
+          </Box>
+          <OrdersTable
             searchQuery={searchQuery}
-            setSearchQuery={handleSearchQuery}
+            statusFilter={statusFilter}
+            page={page}
+            setPage={setPage}
+            orders={orders}
           />
-        </Box>
-      </Box>
-      <OrdersTable
-        searchQuery={searchQuery}
-        statusFilter={statusFilter}
-        page={page}
-        setPage={setPage}
-        orders={orders}
-      />
+        </>
+      )}
+
       <AddOrder
         modalOpen={isOrderModalOpen}
         onClose={() => setIsOrderModalOpen(false)}
+        openSnackbar={openSnackbar}
       />
+      <SnackbarComponent />
     </Container>
   );
 };

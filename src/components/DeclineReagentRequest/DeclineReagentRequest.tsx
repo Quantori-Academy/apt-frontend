@@ -1,12 +1,15 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { BasicModal } from "@/components";
+import { Severity } from "@/hooks";
+import { useDeclineReagentRequestMutation } from "@/store";
 
 type DeclineReagentRequestProps = {
-  onDeclineSubmit: (severity: "error" | "success") => void;
+  onDeclineSubmit: (severity: Severity, errorMessage: string) => void;
   onClose: () => void;
-  id: number;
+  id: string;
   modalOpen: boolean;
 };
 
@@ -20,6 +23,7 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
   id,
   modalOpen,
 }) => {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -30,17 +34,25 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
     },
   });
 
+  const [declineReagentRequest] = useDeclineReagentRequestMutation();
+
   const onSubmit = async (message: DeclineMessage) => {
-    //TODO: waiting for the backend to use id and message
-    console.log("am:", message);
-    console.log("am:", id);
-    onDeclineSubmit("success");
-    onClose();
+    const { error } = await declineReagentRequest({
+      requestId: id,
+      declineMessage: message.declineComment,
+    });
+
+    if (error) {
+      onDeclineSubmit("error", "Failed to Decline Request");
+    } else {
+      onDeclineSubmit("success", "Request Declined Successfully");
+      onClose();
+    }
   };
 
   return (
     <BasicModal
-      title="Decline Reagent Request"
+      title={t("requests.declineRequest.title")}
       closeModal={onClose}
       isOpen={modalOpen}
     >
@@ -50,23 +62,23 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
             display: "flex",
             flexDirection: "column",
             gap: "10px",
-            marginTop: "10px",
+            marginTop: "18px",
           }}
         >
           <TextField
-            label="Enter reason for decline"
+            label={t("requests.declineRequest.label")}
             multiline
             variant="outlined"
             rows={4}
             {...register("declineComment", {
-              required: "To decline request, comment is required",
+              required: t("requests.declineRequest.requiredField"),
             })}
             error={!!errors.declineComment}
             helperText={errors.declineComment?.message}
           />
           <Box sx={{ display: "flex", gap: "5px", justifyContent: "end" }}>
-            <Button type="submit">Submit</Button>
-            <Button onClick={() => onClose()}>Cancel</Button>
+            <Button type="submit">{t("buttons.submit")}</Button>
+            <Button onClick={() => onClose()}>{t("buttons.cancel")}</Button>
           </Box>
         </Box>
       </form>

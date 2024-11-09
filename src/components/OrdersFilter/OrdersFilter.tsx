@@ -13,7 +13,7 @@ const statuses: StatusFilter[] = [
   "Pending",
   "Submitted",
   "Fulfilled",
-  "Canceled",
+  "Cancelled",
 ];
 
 const OrdersFilter: React.FC<OrdersFilterProps> = ({

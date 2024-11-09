@@ -1,14 +1,24 @@
 import { Box, Button, Container, Pagination, Typography } from "@mui/material";
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   AddReagentRequest,
+  OrderFromRequest,
   PageError,
   PageLoader,
   ReagentRequestTable,
   StatusFilter,
 } from "@/components";
-import { useGetReagentRequestsQuery } from "@/store";
+import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
+import { userRoles } from "@/constants";
+import { useAlertSnackbar, useAppSelector, useCheckedRows } from "@/hooks";
+import {
+  selectUserId,
+  selectUserRole,
+  useGetAllReagentRequestsQuery,
+  useGetOwnReagentRequestsQuery,
+} from "@/store";
 import {
   RequestsSortColumns,
   SortDirection,
@@ -27,31 +37,80 @@ const ReagentRequests: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
   const [modalOpen, setModalOpen] = useState(false);
 
-  const { data: reagentRequests = [], isLoading } =
-    useGetReagentRequestsQuery();
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+
+  const userId = useAppSelector(selectUserId);
+  const role = useAppSelector(selectUserRole);
+
+  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+
+  const { t } = useTranslation();
+
+  const {
+    data: reagentRequestsOfficer = [],
+    isLoading: isOfficerRequestsLoading,
+  } = useGetAllReagentRequestsQuery();
+
+  const {
+    data: reagentRequestsResearcher = [],
+    isLoading: isResearcherRequestsLoading,
+  } = useGetOwnReagentRequestsQuery(userId!);
 
   const { visibleItems, totalPages } = useMemo(
     () =>
       getRequestsListData({
-        items: reagentRequests,
+        items:
+          role !== userRoles.Researcher
+            ? reagentRequestsOfficer
+            : reagentRequestsResearcher,
         sortColumn,
         sortDirection,
         page,
         pageSize: PAGE_SIZE,
         statusFilter,
       }),
-    [reagentRequests, sortColumn, sortDirection, page, statusFilter]
+    [
+      reagentRequestsOfficer,
+      sortColumn,
+      sortDirection,
+      page,
+      statusFilter,
+      reagentRequestsResearcher,
+    ]
   );
 
-  if (isLoading) return <PageLoader />;
-  if (!reagentRequests) {
-    return <PageError text="There are no reagent request to show" />;
+  const {
+    selected,
+    selectedRows,
+    isSelected,
+    handleSelectAllClick,
+    handleCheckboxClick,
+    setSelected,
+  } = useCheckedRows(visibleItems);
+
+  if (isOfficerRequestsLoading || isResearcherRequestsLoading)
+    return <PageLoader />;
+  if (!reagentRequestsOfficer || !reagentRequestsResearcher) {
+    return <PageError text={t("requests.errors.emptyError")} />;
   }
 
   const handleSortChange = (property: RequestsSortColumns) => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
     setSortDirection(isAsc ? "asc" : "desc");
     setSortColumn(property);
+  };
+
+  const onAddRequestForm = (severity: "error" | "success") => {
+    openSnackbar(
+      severity,
+      severity === "error"
+        ? t("requests.snackBarMessages.failedAdd")
+        : t("requests.snackBarMessages.added")
+    );
+  };
+
+  const handleCreateOrder = () => {
+    setIsOrderModalOpen(true);
   };
 
   return (
@@ -63,16 +122,26 @@ const ReagentRequests: React.FC = () => {
         height: "100%",
       }}
     >
-      <Typography variant="h3">Reagent Requests</Typography>
+      <DashboardBreadcrumbs />
+      <Typography variant="h3">{t("requests.title")}</Typography>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <StatusFilter
           filter={statusFilter}
           setFilter={setStatusFilter}
           setPage={setPage}
         />
-        <Button onClick={() => setModalOpen(true)}>
-          Create Reagent Request
-        </Button>
+        <Box sx={{ display: "flex", gap: "10px" }}>
+          {role === userRoles.Researcher && (
+            <Button onClick={() => setModalOpen(true)}>
+              {t("createRequestForm.title")}
+            </Button>
+          )}
+          {role === userRoles.ProcurementOfficer && (
+            <Button disabled={!selected.length} onClick={handleCreateOrder}>
+              {t("orders.buttons.createOrder")}
+            </Button>
+          )}
+        </Box>
       </Box>
 
       <ReagentRequestTable
@@ -80,6 +149,10 @@ const ReagentRequests: React.FC = () => {
         sortDirection={sortDirection}
         onSortChange={handleSortChange}
         visibleItems={visibleItems}
+        selected={selected}
+        isSelected={isSelected}
+        handleSelectAllClick={handleSelectAllClick}
+        handleCheckboxClick={handleCheckboxClick}
       />
       <Box className={style.pagination}>
         <Pagination
@@ -88,10 +161,21 @@ const ReagentRequests: React.FC = () => {
           onChange={(_, page) => setPage(page)}
         />
       </Box>
+      {isOrderModalOpen && (
+        <OrderFromRequest
+          modalOpen={isOrderModalOpen}
+          onClose={() => setIsOrderModalOpen(false)}
+          openSnackbar={openSnackbar}
+          requests={selectedRows}
+          onCreateOrder={() => setSelected([])}
+        />
+      )}
       <AddReagentRequest
         modalOpen={modalOpen}
         onClose={() => setModalOpen(false)}
+        onAddRequestForm={onAddRequestForm}
       />
+      {SnackbarComponent()}
     </Container>
   );
 };

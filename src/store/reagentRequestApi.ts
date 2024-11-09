@@ -1,9 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { ReagentRequests } from "@/types";
+import { transformOrderData, transformRequestData } from "@/store/utils";
+import { OrderInput, ReagentRequests, RequestedReagentBackend } from "@/types";
 
-import { reagentRequestsMock } from "../../mock/reagentRequestsMock.ts";
+type OrderFromRequest = OrderInput & {
+  requestId: string;
+};
 
 export const reagentRequestApi = createApi({
   reducerPath: "requestsApi",
@@ -13,38 +16,83 @@ export const reagentRequestApi = createApi({
   }),
   tagTypes: ["Requests"],
   endpoints: (builder) => ({
-    getReagentRequests: builder.query<ReagentRequests, void>({
-      queryFn: async () => {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        return { data: reagentRequestsMock };
+    getAllReagentRequests: builder.query<ReagentRequests, void>({
+      query: () => "/requests",
+      transformResponse: (baseQueryReturnValue: Array<RequestedReagentBackend>) => {
+        return transformRequestData(baseQueryReturnValue);
       },
-
       providesTags: ["Requests"],
     }),
-    declineReagentRequest: builder.query<void, { requestId: number; declineMessage: string }>({
+    getOwnReagentRequests: builder.query<ReagentRequests, string>({
+      query: (userId) => `/requests/${userId}`,
+      transformResponse: (baseQueryReturnValue: Array<RequestedReagentBackend>) => {
+        return transformRequestData(baseQueryReturnValue);
+      },
+      providesTags: ["Requests"],
+    }),
+    declineReagentRequest: builder.mutation<void, { requestId: string; declineMessage: string }>({
       query: ({ requestId, declineMessage }) => {
         return {
-          url: `/reagents/requests/${requestId}`,
-          method: "PUT",
+          url: `/requests/${requestId}/decline`,
+          method: "PATCH",
           body: {
-            declineMessage,
+            comment: declineMessage,
           },
         };
       },
-      providesTags: ["Requests"],
+      invalidatesTags: ["Requests"],
     }),
-    addReagentRequest: builder.query({
-      query: ({ newRequest }) => {
+    addReagentRequest: builder.mutation({
+      query: (newRequest) => {
         return {
-          url: `/reagents/requests`,
+          url: `/requests`,
           method: "POST",
           body: {
-            newRequest,
+            reagent_name: newRequest.reagentName,
+            structure: newRequest.structure,
+            cas_number: newRequest.CAS,
+            quantity: newRequest.desiredQuantity,
+            unit: newRequest.unit,
+            user_comment: newRequest.userComment,
           },
         };
       },
+      invalidatesTags: ["Requests"],
+    }),
+    editReagentRequest: builder.mutation({
+      query: ({ editedRequest, requestId }) => {
+        return {
+          url: `requests/${requestId}`,
+          method: "PUT",
+          body: {
+            reagent_name: editedRequest.reagentName,
+            structure: editedRequest.structure,
+            cas_number: editedRequest.CAS,
+            quantity: editedRequest.desiredQuantity,
+            unit: editedRequest.unit,
+            user_comment: editedRequest.userComment,
+          },
+        };
+      },
+      invalidatesTags: ["Requests"],
+    }),
+
+    createOrderFromRequests: builder.mutation<void, OrderFromRequest>({
+      query: (orderData) => ({
+        url: "/orders",
+        method: "POST",
+        body: transformOrderData(orderData),
+      }),
+      invalidatesTags: ["Requests"],
     }),
   }),
 });
 
-export const { useGetReagentRequestsQuery, useDeclineReagentRequestQuery } = reagentRequestApi;
+export const {
+  useGetAllReagentRequestsQuery,
+  useDeclineReagentRequestMutation,
+  useAddReagentRequestMutation,
+  useEditReagentRequestMutation,
+  useGetOwnReagentRequestsQuery,
+  useCreateOrderFromRequestsMutation,
+} = reagentRequestApi;

@@ -40,6 +40,22 @@ export {
   selectUserIsAuthenticated,
 } from "./slices/authSlice";
 
-export { useGetReagentRequestsQuery, useDeclineReagentRequestQuery } from "./reagentRequestApi.ts";
+export {
+  useGetAllReagentRequestsQuery,
+  useGetOwnReagentRequestsQuery,
+  useDeclineReagentRequestMutation,
+  useAddReagentRequestMutation,
+  useEditReagentRequestMutation,
+  useCreateOrderFromRequestsMutation,
+} from "./reagentRequestApi.ts";
 
-export { useGetOrdersQuery } from "./ordersApi.ts";
+export {
+  useGetOrdersQuery,
+  useCreateOrderMutation,
+  useGetOrderQuery,
+  useUpdateOrderReagentMutation,
+  useDeleteReagentFromOrderMutation,
+  useEditOrderTitleSellerMutation,
+  useUpdateOrderStatusMutation,
+  useChooseLocationMutation,
+} from "./ordersApi.ts";

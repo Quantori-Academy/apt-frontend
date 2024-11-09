@@ -13,7 +13,10 @@
       "Storage Detail": "Детали хранения",
       "Substances": "Вещества",
       "Reagent Detail": "Детали реактива",
-      "Sample Detail": "Детали образца"
+      "Sample Detail": "Детали образца",
+      "Orders": "Заказы",
+      "Order Details": "Детали заказа",
+      "Reagent Requests": "Запросы на реагенты"
     },
 
     "buttons": {
@@ -23,7 +26,8 @@
       "delete": "Удалить",
       "login": "Войти",
       "logout": "Выйти",
-      "create": "Создать"
+      "create": "Создать",
+      "submit": "Отправить"
     },
 
     "users": {
@@ -313,14 +317,18 @@
         "producer": "Производитель",
         "locationId": "Место хранения",
         "unit": "Единица измерения",
-        "pricePerUnit": "Цена за единицу",
+        "units": "Единица измерения",
+        "price": "Цена за единицу",
         "totalQuantityLeft": "Остаток",
+        "quantity": "Количество",
         "catalogID": "ID каталога",
+        "catalogLink": "Ссылка",
         "description": "Описание",
         "structure": "Структура",
         "addedSubstances": "Вещества",
         "room": "Комната",
-        "location": "Локация"
+        "location": "Локация",
+        "noStructure": "Данные о структуре не указаны"
       },
 
       "currentLocation": " (текущая)",
@@ -410,16 +418,34 @@
     },
 
     "orders": {
-      "title": "Заказы",
+      "title": {
+        "OrdersPage": "Заказы",
+        "DetailPage": "Детали Заказа"
+      },
 
       "buttons": {
         "createOrder": "Создать заказ",
-        "create": "Создать"
+        "create": "Создать",
+        "updateStatus": "Обновить Статус",
+        "chooseLocation": "Выбрать Локацию"
       },
 
       "errors": {
         "loadError": "Не удалось загрузить заказы",
-        "emptyError": "Список заказов пуст"
+        "emptyError": "Список заказов пуст",
+        "detailedOrderError": "Не удалось загрузить заказ"
+      },
+
+      "snackBarMessages": {
+        "editing": {
+          "success": "Заказ успешно обновлен"
+        },
+        "Order with same title already exists.": "Заказ с таким же названием уже существует",
+        "Can't change status for Cancelled or Fulfilled orders.": "Невозможно изменить статус для отменённых или выполненных заказов",
+        "Order details can be modified if and only if its status is set to 'Pending'.": "Детали заказа можно изменить только в том случае, если его статус установлен как \"В ожидании\"",
+        "Can't set Cancelled or Fulfilled status for Pending orders.": "Невозможно установить статус \"Отменён\" или \"Выполнен\" для заказов со статусом \"В ожидании\"",
+        "An unexpected error occurred": "Произошла непредвиденная ошибка",
+        "allocated": "Реактивы успешно распределены"
       },
 
       "statuses": {
@@ -428,15 +454,16 @@
         "Pending": "В ожидании",
         "Submitted": "Отправлено",
         "Fulfilled": "Выполнено",
-        "Canceled": "Отменено"
+        "Cancelled": "Отменено"
       },
 
       "table": {
         "Title": "Название",
         "Creation Date": "Дата создания",
+        "Modified Date": "Дата изменения",
         "Seller": "Продавец",
         "Status": "Статус",
-        "Pagantion": {
+        "Pagination": {
           "RowsPerPage": "Строк на странице:",
           "of": "из",
           "moreThan": "больше чем"
@@ -451,6 +478,12 @@
 
       "errors": {
         "noReagentsOrder": "Добавьте хотя бы 1 реактив в заказ"
+      },
+
+      "snackBarMessages": {
+        "creation": {
+          "success": "Заказ успешно создан"
+        }
       },
 
       "requiredFields": {
@@ -480,6 +513,76 @@
           "label": "Цена*",
           "requiredMessage": "Цена обязательна"
         }
+      }
+    },
+
+    "createRequestForm": {
+      "title": "Создать запрос на реагент",
+      "requiredFields": {
+        "name": {
+          "label": "Название*",
+          "requiredMessage": "Название обязательно"
+        },
+        "units": {
+          "label": "Единица измерения*",
+          "requiredMessage": "Единица измерения обязательны"
+        },
+        "quantity": {
+          "label": "Количество*",
+          "requiredMessage": "Количество обязательно"
+        },
+        "CASNumber": {
+          "label": "Номер CAS"
+        },
+        "comment": {
+          "label": "Комментарий"
+        }
+      }
+    },
+
+    "requests": {
+      "title": "Запросы на реагенты",
+      "table": {
+        "name": "Название",
+        "CreationDate": "Дата создания",
+        "ModifiedDate": "Дата изменения",
+        "Desired Quantity": "Желаемое количество",
+        "Structure": "Структура",
+        "Status": "Статус",
+        "CAS": "CAS",
+        "UserComments": "Комментарии пользователя",
+        "ProcurementComments": "Комментарии отдела закупок",
+        "Actions": "Действия",
+        "Pagination": {
+          "RowsPerPage": "Строк на странице:",
+          "of": "из",
+          "moreThan": "больше чем"
+        },
+        "actionButtons": {
+          "decline": "Отклонить"
+        }
+      },
+
+      "errors": {
+        "emptyError": "Нет запросов на реактивы для отображения"
+      },
+
+      "snackBarMessages": {
+        "failedAdd": "Failed to add request",
+        "added": "Request added successfully"
+      },
+
+      "statusFilter": {
+        "All": "Все",
+        "Pending": "В ожидании",
+        "Declined": "Отклонено",
+        "Ordered": "Заказано",
+        "Completed": "Завершено"
+      },
+      "declineRequest": {
+        "title": "Отклонить запрос на реагент",
+        "label": "Укажите причину отклонения",
+        "requiredField": "Для отклонения запроса требуется комментарий"
       }
     }
   }

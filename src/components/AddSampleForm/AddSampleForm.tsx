@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -51,6 +51,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
     register,
     handleSubmit: handleFormSubmit,
     setValue,
+    control,
     formState: { errors },
   } = useForm<SampleData>({
     defaultValues: {
@@ -115,13 +116,6 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
     setSelectedRoom(value);
   };
 
-  const handleLocationChange = (
-    _event: React.ChangeEvent<unknown>,
-    value: LocationOption | null
-  ) => {
-    const val = value?.locationId;
-    setValue("locationId", Number(val));
-  };
   const navigate = useNavigate();
   const onSubmit = async (data: SampleData) => {
     await handleSubmit(data);
@@ -229,7 +223,41 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
+            <Controller
+              name="locationId"
+              control={control}
+              rules={{
+                required: t(
+                  "addSubstanceForm.requiredFields.location.requiredMessage"
+                ),
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <Autocomplete
+                  id="location-select"
+                  options={locationOptions}
+                  getOptionLabel={({ room }) => room}
+                  onChange={(_event, value) =>
+                    field.onChange(value ? value.id : 0)
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label={t(
+                        "addSubstanceForm.requiredFields.location.label"
+                      )}
+                      placeholder="Select location"
+                      fullWidth
+                      margin="normal"
+                      error={!!error}
+                      helperText={error?.message}
+                    />
+                  )}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12}>
             <TextField
               label={t("addSubstanceForm.requiredFields.quantity.label")}
               type="number"
@@ -281,7 +309,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               disabled={!selectedRoom}
               options={autocompleteOption}
               getOptionLabel={({ locationName }) => locationName}
-              onChange={handleLocationChange}
+              // onChange={handleLocationChange}
               renderInput={(params) => (
                 <TextField
                   {...params}

@@ -7,13 +7,18 @@ import styles from "./SmilesImage.module.css";
 
 type SmilesImageProps = {
   smiles: string;
+  align?: string;
   svgOptions: {
     width: number;
     height: number;
   };
 };
 
-const SmilesImage: React.FC<SmilesImageProps> = ({ smiles, svgOptions }) => {
+const SmilesImage: React.FC<SmilesImageProps> = ({
+  smiles,
+  svgOptions,
+  align = "center",
+}) => {
   useEffect(() => {
     const drawer = new SmilesDrawer.SvgDrawer(svgOptions);
     SmilesDrawer.parse(smiles, function (tree: unknown) {
@@ -22,9 +27,7 @@ const SmilesImage: React.FC<SmilesImageProps> = ({ smiles, svgOptions }) => {
   }, [smiles]);
 
   return (
-    <Box
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: align }}>
       <svg
         className={styles.smilesSvg}
         {...svgOptions}
