@@ -51,3 +51,4 @@ export { SaveCancelButtons } from "./SaveCancelButtons";
 export { OrderActionButtons } from "./OrderActionButtons";
 export { ChooseReagentsLocationForm } from "./ChooseReagentsLocationForm";
 export { AuthenticatedHeader } from "./AuthenticatedHeader";
+export { NotificationMenu } from "./NotificationMenu";

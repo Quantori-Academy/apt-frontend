@@ -1,9 +1,11 @@
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { Box, IconButton, Typography } from "@mui/material";
 import * as React from "react";
-import { useTranslation } from "react-i18next";
 
-import { useAppSelector } from "@/hooks";
+import { NotificationMenu } from "@/components";
+import { userRoles } from "@/constants";
+import { useAppSelector, useMenu } from "@/hooks";
 import { selectUserRole, selectUsername } from "@/store/slices";
 
 type AuthenticatedHeaderProps = {
@@ -13,13 +15,12 @@ type AuthenticatedHeaderProps = {
 const AuthenticatedHeader: React.FC<AuthenticatedHeaderProps> = ({
   onOpenMenu,
 }) => {
-  const { t } = useTranslation();
   const username = useAppSelector(selectUsername);
   const role = useAppSelector(selectUserRole);
+  const { anchorEl, open, handleOpen, handleClose } = useMenu();
 
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between">
-      <Typography>{t(`users.roles.${role}`)}</Typography>
       <Box
         display="flex"
         flexDirection="column"
@@ -45,6 +46,21 @@ const AuthenticatedHeader: React.FC<AuthenticatedHeaderProps> = ({
         </IconButton>
         <Typography textAlign="center">{username}</Typography>
       </Box>
+      {role !== userRoles.Administrator && (
+        <>
+          <IconButton onClick={handleOpen}>
+            <NotificationsNoneIcon />
+          </IconButton>
+          <NotificationMenu
+            notificationText={
+              "You need to change your password, or you'll locked out"
+            }
+            anchorEl={anchorEl}
+            handleClose={handleClose}
+            open={open}
+          />
+        </>
+      )}
     </Box>
   );
 };
