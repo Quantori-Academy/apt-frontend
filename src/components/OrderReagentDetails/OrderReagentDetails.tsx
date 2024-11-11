@@ -25,12 +25,13 @@ import {
   EditableDetailRow,
   OrderAccordionButtons,
 } from "@/components";
+import { ORDER_STATUSES } from "@/constants";
 import { Severity } from "@/hooks";
 import {
   useDeleteReagentFromOrderMutation,
   useUpdateOrderReagentMutation,
 } from "@/store";
-import { OrderReagent } from "@/types";
+import { OrderReagent, OrderStatus } from "@/types";
 
 type OrderReagentRow = {
   label: string;
@@ -59,6 +60,7 @@ type OrderReagentDetailsProps = {
   setExpanded: (value: expand) => void;
   orderId: string;
   openSnackbar: (severity: Severity, text: string) => void;
+  status: OrderStatus;
 };
 
 const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
@@ -67,6 +69,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   setExpanded,
   orderId,
   openSnackbar,
+  status,
 }) => {
   const { t } = useTranslation();
 
@@ -243,14 +246,16 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
               </Table>
             </TableContainer>
           </AccordionDetails>
-          <AccordionActions sx={{ padding: "0px 16px 16px" }}>
-            <OrderAccordionButtons
-              isEditable={isEditable}
-              onEdit={handleEdit}
-              onCancel={handleCancel}
-              onDelete={() => setDeleteModalIsOpen(true)}
-            />
-          </AccordionActions>
+          {status === ORDER_STATUSES.Pending && (
+            <AccordionActions sx={{ padding: "0px 16px 16px" }}>
+              <OrderAccordionButtons
+                isEditable={isEditable}
+                onEdit={handleEdit}
+                onCancel={handleCancel}
+                onDelete={() => setDeleteModalIsOpen(true)}
+              />
+            </AccordionActions>
+          )}
         </Box>
       </Accordion>
       <ConfirmRemoving

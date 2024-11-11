@@ -321,12 +321,13 @@
         "totalQuantityLeft": "Quantity left",
         "quantity": "Quantity",
         "catalogID": "Catalog ID",
-        "catalogLink": "Catalog Link",
+        "catalogLink": "Link",
         "description": "Description",
         "structure": "Structure",
         "addedSubstances": "Substances",
         "room": "Room",
-        "location": "Location"
+        "location": "Location",
+        "noStructure": "Structure is not provided"
       },
 
       "currentLocation": " (current)",
@@ -442,7 +443,8 @@
         "Can't change status for Cancelled or Fulfilled orders.": "Can't change status for Cancelled or Fulfilled orders",
         "Order details can be modified if and only if its status is set to 'Pending'.": "Order details can be modified if and only if its status is set to 'Pending'",
         "Can't set Cancelled or Fulfilled status for Pending orders.": "Can't set Cancelled or Fulfilled status for Pending orders",
-        "An unexpected error occurred": "An unexpected error occurred"
+        "An unexpected error occurred": "An unexpected error occurred",
+        "allocated": "Reagents allocated successfully"
       },
 
       "statuses": {
@@ -465,9 +467,7 @@
           "of": "of",
           "moreThan": "more than"
         }
-      },
-
-      "detailTable": {}
+      }
     },
 
     "createOrderForm": {
@@ -561,6 +561,16 @@
           "decline": "Decline"
         }
       },
+
+      "errors": {
+        "emptyError": "There are no reagent request to show"
+      },
+
+      "snackBarMessages": {
+        "failedAdd": "Не удалось добавить запрос",
+        "added": "Запрос успешно добавлен"
+      },
+
       "statusFilter": {
         "All": "All",
         "Pending": "Pending",
@@ -568,6 +578,7 @@
         "Ordered": "Ordered",
         "Completed": "Completed"
       },
+
       "declineRequest": {
         "title": "Decline Reagent Request",
         "label": "Enter reason for decline",

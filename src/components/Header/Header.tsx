@@ -1,7 +1,7 @@
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { AppBar, Box, Button, IconButton, Typography } from "@mui/material";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
@@ -22,12 +22,23 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
     i18n: { changeLanguage, language },
   } = useTranslation();
 
-  const [currentLanguage, setCurrentLanguage] = useState(language);
+  const [currentLanguage, setCurrentLanguage] = useState(() => {
+    return localStorage.getItem("appLanguage") || language;
+  });
 
   const handleChangeLanguage = async (value: string) => {
     setCurrentLanguage(value);
     await changeLanguage(value);
+    localStorage.setItem("appLanguage", value);
   };
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("appLanguage");
+    if (savedLanguage) {
+      setCurrentLanguage(savedLanguage);
+      changeLanguage(savedLanguage);
+    }
+  }, [changeLanguage]);
 
   const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
   const username = useAppSelector(selectUsername);
@@ -66,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Typography>{role}</Typography>
+            <Typography>{t(`users.roles.${role}`)}</Typography>
             <Box
               display="flex"
               flexDirection="column"

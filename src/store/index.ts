@@ -46,6 +46,7 @@ export {
   useDeclineReagentRequestMutation,
   useAddReagentRequestMutation,
   useEditReagentRequestMutation,
+  useCreateOrderFromRequestsMutation,
 } from "./reagentRequestApi.ts";
 
 export {
@@ -56,4 +57,5 @@ export {
   useDeleteReagentFromOrderMutation,
   useEditOrderTitleSellerMutation,
   useUpdateOrderStatusMutation,
+  useChooseLocationMutation,
 } from "./ordersApi.ts";

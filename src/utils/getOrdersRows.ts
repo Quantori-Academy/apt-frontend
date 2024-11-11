@@ -31,7 +31,7 @@ export const getOrdersRows = ({
       order.modifiedAt.includes(lowerCaseQuery) ||
       order.seller.toLowerCase().includes(lowerCaseQuery) ||
       order.title.toLowerCase().includes(lowerCaseQuery);
-    const matchesStatus = statusFilter === "All" || order.status === statusFilter.toLowerCase();
+    const matchesStatus = statusFilter === "All" || order.status === statusFilter;
     return matchesSearchQuery && matchesStatus;
   });
 

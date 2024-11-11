@@ -14,6 +14,8 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import {
+  BasicModal,
+  ChooseReagentsLocationForm,
   EditableDetailRow,
   OrderReagentDetails,
   OrderStatusRow,
@@ -31,9 +33,11 @@ import {
 import { Order, StatusForm } from "@/types";
 import { formatDate } from "@/utils";
 
+type OrderPageNoId = Omit<Order, "requestId">;
+
 type OrderRow = {
   label: string;
-  key: keyof Order;
+  key: keyof OrderPageNoId;
 };
 
 const OrderRows: readonly OrderRow[] = [
@@ -53,6 +57,7 @@ const OrderPage: React.FC = () => {
 
   const [isEditable, setIsEditable] = useState(false);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [isChoosingLocation, setIsChoosingLocation] = useState(false);
 
   const {
     register: registerEditing,
@@ -110,6 +115,7 @@ const OrderPage: React.FC = () => {
       openSnackbar("success", t("orders.snackBarMessages.editing.success"));
     }
     setIsEditable(false);
+    resetEditing();
   };
 
   const onSubmitUpdatingStatus = async (data: StatusForm) => {
@@ -124,6 +130,7 @@ const OrderPage: React.FC = () => {
       openSnackbar("success", t("orders.snackBarMessages.editing.success"));
     }
     setIsUpdatingStatus(false);
+    resetUpdating();
   };
 
   return (
@@ -151,8 +158,8 @@ const OrderPage: React.FC = () => {
                       label={t(`orders.table.${label}`)}
                       value={
                         key === "createdAt" || key === "modifiedAt"
-                          ? formatDate(order[key as keyof Order])
-                          : order[key as keyof Order] || "-"
+                          ? formatDate(order[key as keyof OrderPageNoId])
+                          : order[key as keyof OrderPageNoId] || "-"
                       }
                       register={registerEditing}
                       errors={errors}
@@ -169,7 +176,7 @@ const OrderPage: React.FC = () => {
                     <OrderStatusRow
                       key={key}
                       label={t("orders.table.Status")}
-                      value={order[key as keyof Order]}
+                      value={order[key as keyof OrderPageNoId]}
                       isUpdating={isUpdatingStatus}
                       register={registerUpdating}
                       currentStatus={order.status}
@@ -188,8 +195,22 @@ const OrderPage: React.FC = () => {
           onUpdate={() => setIsUpdatingStatus(true)}
           onCancelEditable={handleCancelEdit}
           onCancelUpdating={handleCancelUpdateStatus}
+          onChooseLocation={() => setIsChoosingLocation(true)}
         />
       </Box>
+      {isChoosingLocation && (
+        <BasicModal
+          title="Choose location"
+          isOpen={isChoosingLocation}
+          closeModal={() => setIsChoosingLocation(false)}
+        >
+          <ChooseReagentsLocationForm
+            orderId={order.id}
+            onClose={() => setIsChoosingLocation(false)}
+            openSnackbar={openSnackbar}
+          />
+        </BasicModal>
+      )}
       <Divider style={{ margin: "16px 0" }} />
       {order.orderedReagents.map((reagent) => (
         <OrderReagentDetails
@@ -199,6 +220,7 @@ const OrderPage: React.FC = () => {
           setExpanded={setExpanded}
           orderId={order.id}
           openSnackbar={openSnackbar}
+          status={order.status}
         />
       ))}
       {SnackbarComponent()}

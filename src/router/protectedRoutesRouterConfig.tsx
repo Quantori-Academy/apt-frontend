@@ -104,12 +104,12 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.ORDERS]: {
     path: RouteProtectedPath[AppProtectedRoutes.ORDERS],
     element: <Orders />,
-    roles: Object.values(userRoles),
+    roles: [userRoles.ProcurementOfficer],
   },
   [AppProtectedRoutes.ORDER_PAGE]: {
     path: RouteProtectedPath[AppProtectedRoutes.ORDER_PAGE],
     element: <OrderPage />,
-    roles: Object.values(userRoles),
+    roles: [userRoles.ProcurementOfficer],
   },
   [AppProtectedRoutes.DASHBOARD]: {
     path: RouteProtectedPath[AppProtectedRoutes.DASHBOARD],

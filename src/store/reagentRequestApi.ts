@@ -1,8 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { transformRequestData } from "@/store/utils";
-import { ReagentRequests, RequestedReagentBackend } from "@/types";
+import { transformOrderData, transformRequestData } from "@/store/utils";
+import { OrderInput, ReagentRequests, RequestedReagentBackend } from "@/types";
+
+type OrderFromRequest = OrderInput & {
+  requestId: string;
+};
 
 export const reagentRequestApi = createApi({
   reducerPath: "requestsApi",
@@ -72,6 +76,15 @@ export const reagentRequestApi = createApi({
       },
       invalidatesTags: ["Requests"],
     }),
+
+    createOrderFromRequests: builder.mutation<void, OrderFromRequest>({
+      query: (orderData) => ({
+        url: "/orders",
+        method: "POST",
+        body: transformOrderData(orderData),
+      }),
+      invalidatesTags: ["Requests"],
+    }),
   }),
 });
 
@@ -81,4 +94,5 @@ export const {
   useAddReagentRequestMutation,
   useEditReagentRequestMutation,
   useGetOwnReagentRequestsQuery,
+  useCreateOrderFromRequestsMutation,
 } = reagentRequestApi;

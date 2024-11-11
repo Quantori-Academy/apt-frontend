@@ -1,12 +1,12 @@
 import { Typography } from "@mui/material";
 
 type DetailItemProps = {
-  label: string;
-  value: string | number;
+  label?: string;
+  value: React.ReactNode;
 };
 
 const DetailItem: React.FC<DetailItemProps> = ({ label, value }) => (
-  <Typography>
+  <Typography sx={{ display: "flex" }}>
     <Typography component="span" fontWeight="bold" marginRight={1}>
       {label}:
     </Typography>

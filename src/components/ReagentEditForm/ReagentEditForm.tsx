@@ -138,10 +138,20 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
             type="number"
             fullWidth
             error={quantityLeft === "0"}
+            sx={{
+              marginBottom: "20px",
+              "& .MuiOutlinedInput-root.Mui-error": {
+                "& fieldset": {
+                  borderColor: "#B8860B",
+                },
+              },
+              "& .MuiFormHelperText-root.Mui-error": {
+                color: "#B8860B",
+              },
+            }}
             helperText={
               quantityLeft === "0" && t("substanceDetails.quantityWarning")
             }
-            sx={{ marginBottom: "20px" }}
           />
           <Autocomplete
             sx={{ marginBottom: "20px" }}
