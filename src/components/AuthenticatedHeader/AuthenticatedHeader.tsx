@@ -3,21 +3,21 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { Box, IconButton, Typography } from "@mui/material";
 import * as React from "react";
 
-import { NotificationMenu } from "@/components";
+import { AccountMenu, NotificationMenu } from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector, useMenu } from "@/hooks";
 import { selectUserRole, selectUsername } from "@/store/slices";
 
-type AuthenticatedHeaderProps = {
-  onOpenMenu: (event: React.MouseEvent<HTMLElement>) => void | null;
-};
-
-const AuthenticatedHeader: React.FC<AuthenticatedHeaderProps> = ({
-  onOpenMenu,
-}) => {
+const AuthenticatedHeader: React.FC = () => {
   const username = useAppSelector(selectUsername);
   const role = useAppSelector(selectUserRole);
   const { anchorEl, open, handleOpen, handleClose } = useMenu();
+  const {
+    anchorEl: accountAnchorEl,
+    open: accountOpen,
+    handleOpen: handleAccountOpen,
+    handleClose: handleAccountClose,
+  } = useMenu();
 
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -32,7 +32,7 @@ const AuthenticatedHeader: React.FC<AuthenticatedHeaderProps> = ({
         <IconButton
           color="inherit"
           sx={{ padding: 0 }}
-          onClick={(e) => onOpenMenu(e)}
+          onClick={(e) => handleAccountOpen(e)}
         >
           <PermIdentityIcon
             sx={{
@@ -45,6 +45,11 @@ const AuthenticatedHeader: React.FC<AuthenticatedHeaderProps> = ({
           />
         </IconButton>
         <Typography textAlign="center">{username}</Typography>
+        <AccountMenu
+          anchorEl={accountAnchorEl}
+          open={accountOpen}
+          onClose={handleAccountClose}
+        />
       </Box>
       {role !== userRoles.Administrator && (
         <>

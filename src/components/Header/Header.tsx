@@ -12,10 +12,7 @@ import { selectUserIsAuthenticated } from "@/store";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { Logo } from "../Logo";
 
-type HeaderProps = {
-  onOpenMenu: (event: React.MouseEvent<HTMLElement>) => void | null;
-};
-const Header: React.FC<HeaderProps> = ({ onOpenMenu }) => {
+const Header: React.FC = () => {
   const {
     t,
     i18n: { changeLanguage, language },
@@ -73,7 +70,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenMenu }) => {
         }}
       >
         {isAuthenticated ? (
-          <AuthenticatedHeader onOpenMenu={onOpenMenu} />
+          <AuthenticatedHeader />
         ) : (
           path !== "/login" && (
             <Button component={NavLink} to={RoutePublicPath.login}>
