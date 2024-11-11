@@ -43,7 +43,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   const { t } = useTranslation();
 
   const role = useAppSelector(selectUserRole);
-  console.log(reagentDetails);
+
   return (
     <Card sx={{ background: "#0080800f" }}>
       <CardContent>

@@ -3,7 +3,7 @@ import { AppBar, Box, Button, IconButton, Typography } from "@mui/material";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import { useAppSelector } from "@/hooks";
 import { RoutePublicPath } from "@/router/publicRoutesRouterConfig.tsx";
@@ -44,6 +44,9 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const username = useAppSelector(selectUsername);
   const role = useAppSelector(selectUserRole);
   const displayLanguageValue = currentLanguage === "ENG" ? "ENG" : "РУС";
+
+  const location = useLocation();
+  const path = location.pathname;
 
   return (
     <AppBar
@@ -105,9 +108,11 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
             </Box>
           </Box>
         ) : (
-          <Button component={NavLink} to={RoutePublicPath.login}>
-            {t("buttons.login")}
-          </Button>
+          path !== "/login" && (
+            <Button component={NavLink} to={RoutePublicPath.login}>
+              {t("buttons.login")}
+            </Button>
+          )
         )}
         <LanguageSwitcher
           handleChangeLanguage={handleChangeLanguage}
