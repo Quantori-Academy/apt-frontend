@@ -11,7 +11,6 @@ const AppLayout = () => {
   const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -19,10 +18,11 @@ const AppLayout = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   if (!isAuthenticated) {
     return (
       <>
-        <Header onClick={handleClick} />
+        <Header onOpenMenu={handleClick} />
         <Container
           sx={{
             height: "100%",
@@ -38,8 +38,12 @@ const AppLayout = () => {
   }
   return (
     <Box>
-      <Header onClick={handleClick} />
-      <AccountMenu anchorEl={anchorEl} open={open} onClose={handleClose} />
+      <Header onOpenMenu={handleClick} />
+      <AccountMenu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      />
 
       <Container
         sx={{
