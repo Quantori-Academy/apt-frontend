@@ -78,13 +78,19 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
             {isAccountPassword && (
               <RevealableField
                 name="currentPassword"
-                label="Current Password"
+                label={t("userDetails.requiredFields.currentPassword.label")}
                 register={register}
-                errorMessage={error ? "Incorrect Password" : ""}
+                errorMessage={
+                  error
+                    ? t(
+                        "userDetails.requiredFields.currentPassword.incorrectPasswordMessage"
+                      )
+                    : ""
+                }
                 error={errors.currentPassword}
                 options={{
                   required: t(
-                    "userDetails.requiredFields.password.requiredMessage"
+                    "userDetails.requiredFields.currentPassword.requiredMessage"
                   ),
                 }}
               />
