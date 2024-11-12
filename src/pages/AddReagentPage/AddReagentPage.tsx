@@ -38,7 +38,7 @@ const AddReagentPage: React.FC = () => {
     storageRooms?.flatMap((room) =>
       room.locations.map((location) => ({
         id: location.locationId,
-        label: location.locationName,
+        label: `${room.room} - ${location.locationName}`,
       }))
     ) || [];
 

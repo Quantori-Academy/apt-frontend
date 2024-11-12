@@ -64,7 +64,7 @@ const AddSamplePage: React.FC = () => {
     storageRooms?.flatMap((room) =>
       room.locations.map((location) => ({
         id: Number(location.locationId),
-        label: location.locationName,
+        label: `${room.room} - ${location.locationName}`,
       }))
     ) || [];
 
