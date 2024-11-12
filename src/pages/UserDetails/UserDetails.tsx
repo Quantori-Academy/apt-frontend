@@ -41,7 +41,7 @@ const UserDetails: React.FC = () => {
       <Typography variant="h3" gutterBottom margin={3}>
         {t("userDetails.title")}
       </Typography>
-      <ResetPassword userId={id} />
+      <ResetPassword isAccountPassword={false} userId={id} />
       <Divider sx={{ my: 3 }} />
       <EditUserRole userId={id} />
       <Divider sx={{ my: 3 }} />
