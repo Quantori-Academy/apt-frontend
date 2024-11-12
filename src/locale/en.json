@@ -61,6 +61,11 @@
         "role": "Role",
         "lastLogin": "Last login",
         "actions": "Actions"
+      },
+
+      "statusLocked":{
+        "title": "Warning!",
+        "text": "You need to change your password, or you'll be locked out."
       }
     },
 

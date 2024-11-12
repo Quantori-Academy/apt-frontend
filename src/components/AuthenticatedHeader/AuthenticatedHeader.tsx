@@ -1,20 +1,28 @@
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import { Box, IconButton, Typography } from "@mui/material";
-import * as React from "react";
+import { Box, IconButton, Link, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link as RouterLink } from "react-router-dom";
 
-import { AccountMenu, NotificationMenu, PageLoader } from "@/components";
+import {
+  AccountMenu,
+  BasicModal,
+  NotificationMenu,
+  PageLoader,
+} from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector, useMenu } from "@/hooks";
+import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
 import { selectUserId, useGetUserPasswordStatusQuery } from "@/store";
 import { selectUserRole, selectUsername } from "@/store/slices";
-import { userStatus } from "@/types";
 
 const AuthenticatedHeader: React.FC = () => {
   const username = useAppSelector(selectUsername);
   const role = useAppSelector(selectUserRole);
   const userId = useAppSelector(selectUserId);
-
+  const [modalOpen, setModalOpen] = useState(false);
+  const { t } = useTranslation();
   const { handleClose, open, handleOpen, anchorEl } = useMenu();
   const {
     anchorEl: accountAnchorEl,
@@ -24,12 +32,17 @@ const AuthenticatedHeader: React.FC = () => {
   } = useMenu();
 
   const { data, isLoading } = useGetUserPasswordStatusQuery(userId);
+  const passwordStatus = data?.status;
+
+  useEffect(() => {
+    if (passwordStatus === "Locked") {
+      setModalOpen(true);
+    }
+  }, [passwordStatus]);
 
   if (!data) return null;
   if (isLoading) return <PageLoader />;
 
-  const passwordStatus: userStatus = data.status;
-  console.log(passwordStatus);
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between">
       <Box
@@ -68,13 +81,29 @@ const AuthenticatedHeader: React.FC = () => {
             <NotificationsActiveIcon color="error" />
           </IconButton>
           <NotificationMenu
-            notificationText={
-              "You need to change your password, or you'll be locked out."
-            }
+            notificationText={t("users.statusLocked.text")}
             anchorEl={anchorEl}
             handleClose={handleClose}
             open={open}
           />
+          <BasicModal
+            isOpen={modalOpen}
+            closeModal={() => setModalOpen(false)}
+            title={t("users.statusLocked.title")}
+            titleColor={"error"}
+          >
+            <Typography marginTop={4}>
+              {t("users.statusLocked.text")}
+            </Typography>
+            <Link
+              component={RouterLink}
+              to={RouteProtectedPath.accountSettings}
+              marginTop={5}
+              onClick={() => setModalOpen(false)}
+            >
+              Account Settings
+            </Link>
+          </BasicModal>
         </>
       )}
     </Box>
