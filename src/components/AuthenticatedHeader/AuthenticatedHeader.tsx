@@ -1,17 +1,21 @@
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { Box, IconButton, Typography } from "@mui/material";
 import * as React from "react";
 
-import { AccountMenu, NotificationMenu } from "@/components";
+import { AccountMenu, NotificationMenu, PageLoader } from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector, useMenu } from "@/hooks";
+import { selectUserId, useGetUserPasswordStatusQuery } from "@/store";
 import { selectUserRole, selectUsername } from "@/store/slices";
+import { userStatus } from "@/types";
 
 const AuthenticatedHeader: React.FC = () => {
   const username = useAppSelector(selectUsername);
   const role = useAppSelector(selectUserRole);
-  const { anchorEl, open, handleOpen, handleClose } = useMenu();
+  const userId = useAppSelector(selectUserId);
+
+  const { handleClose, open, handleOpen, anchorEl } = useMenu();
   const {
     anchorEl: accountAnchorEl,
     open: accountOpen,
@@ -19,6 +23,13 @@ const AuthenticatedHeader: React.FC = () => {
     handleClose: handleAccountClose,
   } = useMenu();
 
+  const { data, isLoading } = useGetUserPasswordStatusQuery(userId);
+
+  if (!data) return null;
+  if (isLoading) return <PageLoader />;
+
+  const passwordStatus: userStatus = data.status;
+  console.log(passwordStatus);
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between">
       <Box
@@ -51,14 +62,14 @@ const AuthenticatedHeader: React.FC = () => {
           onClose={handleAccountClose}
         />
       </Box>
-      {role !== userRoles.Administrator && (
+      {role !== userRoles.Administrator && passwordStatus === "Locked" && (
         <>
           <IconButton onClick={handleOpen}>
-            <NotificationsNoneIcon />
+            <NotificationsActiveIcon color="error" />
           </IconButton>
           <NotificationMenu
             notificationText={
-              "You need to change your password, or you'll locked out"
+              "You need to change your password, or you'll be locked out."
             }
             anchorEl={anchorEl}
             handleClose={handleClose}

@@ -31,3 +31,5 @@ export type UserFrontendDetails = Omit<UserBase, "password"> & {
 export type UserRole = (typeof userRoles)[keyof typeof userRoles];
 
 export type UserRegisterData = Omit<UserRegisterInput, "confirmPassword">;
+
+export type userStatus = "Active" | "Locked" | "Password Reset" | "Pre-Locked";

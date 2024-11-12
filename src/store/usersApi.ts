@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData, UserRole } from "@/types";
+import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData, UserRole, userStatus } from "@/types";
 
 import { transformUserResponse } from "./utils";
 
@@ -88,7 +88,13 @@ export const usersApi = createApi({
       }),
       providesTags: ["Users"],
     }),
-
+    getUserPasswordStatus: builder.query({
+      query: (userId) => `/users/${userId}/status`,
+      transformResponse: (baseQueryReturnValue: { status: userStatus }) => ({
+        status: baseQueryReturnValue.status,
+      }),
+      providesTags: ["Users"],
+    }),
     updateUserDetails: builder.mutation({
       query: (updatedUserDetails) => {
         return {
@@ -140,4 +146,5 @@ export const {
   useGetUserDetailsQuery,
   useUpdateUserDetailsMutation,
   useResetPasswordMutation,
+  useGetUserPasswordStatusQuery,
 } = usersApi;

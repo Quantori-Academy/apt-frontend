@@ -9,6 +9,7 @@ export {
   useUpdateRoleMutation,
   useResetPasswordMutation,
   useDeleteUserMutation,
+  useGetUserPasswordStatusQuery,
 } from "./usersApi";
 
 export {
