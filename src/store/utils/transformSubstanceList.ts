@@ -2,7 +2,6 @@ import { SubstancesDetails, SubstancesResponse } from "@/types";
 
 export const transformSubstanceData = (substances: SubstancesResponse): Array<SubstancesDetails> => {
   return substances.map((substance) => {
-    console.log(substances, "subs");
     return {
       id: substance.id,
       category: substance.category,

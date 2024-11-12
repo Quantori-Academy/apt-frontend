@@ -53,3 +53,4 @@ export { ChooseReagentsLocationForm } from "./ChooseReagentsLocationForm";
 export { AuthenticatedHeader } from "./AuthenticatedHeader";
 export { NotificationMenu } from "./NotificationMenu";
 export { AccountMenu } from "./AccountMenu";
+export { UserStatusLocked } from "./UserStatusLocked";
