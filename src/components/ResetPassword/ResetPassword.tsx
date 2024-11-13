@@ -13,18 +13,23 @@ import style from "./ResetPassword.module.css";
 type ResetPasswordFields = {
   confirmPassword: string;
   password: string;
+  currentPassword: string;
 };
 
 type ResetPasswordProps = {
   userId: string;
+  isAccountPassword: boolean;
 };
 
-const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
+const ResetPassword: React.FC<ResetPasswordProps> = ({
+  userId,
+  isAccountPassword,
+}) => {
   const { t } = useTranslation();
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  const [resetPassword, { isLoading, error }] = useResetPasswordMutation();
 
   const {
     register,
@@ -36,13 +41,16 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
     values: {
       password: "",
       confirmPassword: "",
+      currentPassword: "",
     },
   });
+
   const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
   const onSubmit = async (formData: ResetPasswordFields) => {
     const { error } = await resetPassword({
       userId,
+      currentPassword: formData.currentPassword,
       newPassword: formData.password,
     });
 
@@ -67,6 +75,26 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {isEditMode ? (
           <Box className={style.inputBox}>
+            {isAccountPassword && (
+              <RevealableField
+                name="currentPassword"
+                label={t("userDetails.requiredFields.currentPassword.label")}
+                register={register}
+                errorMessage={
+                  error
+                    ? t(
+                        "userDetails.requiredFields.currentPassword.incorrectPasswordMessage"
+                      )
+                    : ""
+                }
+                error={errors.currentPassword}
+                options={{
+                  required: t(
+                    "userDetails.requiredFields.currentPassword.requiredMessage"
+                  ),
+                }}
+              />
+            )}
             <RevealableField
               name="password"
               label={t("userDetails.requiredFields.password.label")}
@@ -90,6 +118,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ userId }) => {
                 },
               }}
             />
+
             <RevealableField
               name="confirmPassword"
               label={t("userDetails.requiredFields.confirmPassword.label")}

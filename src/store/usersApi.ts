@@ -113,10 +113,10 @@ export const usersApi = createApi({
     }),
 
     resetPassword: builder.mutation({
-      query: ({ userId, newPassword }) => ({
+      query: ({ userId, newPassword, currentPassword }) => ({
         url: `/users/${userId}`,
         method: "PUT",
-        body: { new_password: newPassword },
+        body: { current_password: currentPassword, new_password: newPassword },
       }),
       invalidatesTags: ["Users"],
     }),

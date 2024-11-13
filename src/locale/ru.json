@@ -119,6 +119,11 @@
           "label": "Подтвердите пароль",
           "requiredMessage": "Это поле обязательно",
           "matchMessage": "Пароли должны совпадать"
+        },
+        "currentPassword": {
+          "label": "Текущий пароль",
+          "requiredMessage": "Это поле обязательно для заполнения",
+          "incorrectPasswordMessage": "Пароль неверен"
         }
       }
     },

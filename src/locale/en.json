@@ -119,6 +119,11 @@
           "label": "Confirm Password",
           "requiredMessage": "This field is required",
           "matchMessage": "Passwords need to match"
+        },
+        "currentPassword": {
+          "label": "Current Password",
+          "requiredMessage": "This field is required",
+          "incorrectPasswordMessage": "Passwords is incorrect"
         }
       }
     },
