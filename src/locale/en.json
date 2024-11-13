@@ -473,6 +473,8 @@
     },
 
     "createOrderForm": {
+      "title": "Add reagents to the order",
+
       "buttons": {
         "removeReagentFromOrder": "Remove from order"
       },
@@ -484,6 +486,10 @@
       "snackBarMessages": {
         "creation": {
           "success": "Order created successfully"
+        },
+        "addingReagents": {
+          "success": "Reagents added successfully",
+          "error": "Falied to add reagents"
         }
       },
 

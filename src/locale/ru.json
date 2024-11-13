@@ -473,6 +473,8 @@
     },
 
     "createOrderForm": {
+      "title": "Добавьте реактивы к заказу",
+
       "buttons": {
         "removeReagentFromOrder": "Удалить из заказа"
       },
@@ -484,6 +486,10 @@
       "snackBarMessages": {
         "creation": {
           "success": "Заказ успешно создан"
+        },
+        "addingReagents": {
+          "success": "Реактивы успешно добавлен",
+          "error": "Не удалось добавить реактивы"
         }
       },
 
