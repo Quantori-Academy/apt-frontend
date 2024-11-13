@@ -38,7 +38,7 @@
       },
 
       "errors": {
-        "loadError": "Не удалось загрузить пользователей."
+        "loadError": "Не удалось загрузить пользователей"
       },
 
       "filters": {
@@ -65,7 +65,7 @@
 
       "statusLocked": {
         "title": "Предупреждение!",
-        "text": "Вам нужно сменить пароль, иначе ваш доступ будет заблокирован."
+        "text": "Вам нужно сменить пароль, иначе ваш доступ будет заблокирован"
       }
     },
 
@@ -340,8 +340,8 @@
       "quantityWarning": "Будет удалено, если количество равно 0",
 
       "errors": {
-        "reagentLoadError": "Не удалось загрузить детали реактива.",
-        "sampleLoadError": "Не удалось загрузить детали образца."
+        "reagentLoadError": "Не удалось загрузить детали реактива",
+        "sampleLoadError": "Не удалось загрузить детали образца"
       },
 
       "snackBarMessages": {
@@ -572,8 +572,8 @@
       },
 
       "snackBarMessages": {
-        "failedAdd": "Failed to add request",
-        "added": "Request added successfully"
+        "failedAdd": "Не удалось добавить запрос",
+        "added": "Запрос успешно добавлен"
       },
 
       "statusFilter": {

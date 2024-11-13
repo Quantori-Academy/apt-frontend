@@ -6,6 +6,7 @@ type NotificationMenuProps = {
   handleClose: () => void;
   open: boolean;
 };
+
 const NotificationMenu: React.FC<NotificationMenuProps> = ({
   notificationText,
   anchorEl,
@@ -39,7 +40,7 @@ const NotificationMenu: React.FC<NotificationMenuProps> = ({
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: "background.paper",
+              backgroundColor: "background.paper",
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },

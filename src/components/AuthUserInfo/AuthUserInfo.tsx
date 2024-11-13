@@ -3,9 +3,9 @@ import { Box, IconButton, Typography } from "@mui/material";
 
 import { AccountMenu, UserStatusLocked } from "@/components";
 import { useAppSelector, useMenu } from "@/hooks";
-import { selectUsername } from "@/store/slices";
+import { selectUsername } from "@/store";
 
-const AuthenticatedHeader: React.FC = () => {
+const AuthUserInfo: React.FC = () => {
   const username = useAppSelector(selectUsername);
 
   const {
@@ -52,4 +52,4 @@ const AuthenticatedHeader: React.FC = () => {
   );
 };
 
-export default AuthenticatedHeader;
+export default AuthUserInfo;

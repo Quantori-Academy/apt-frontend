@@ -1,10 +1,9 @@
 import { AppBar, Box, Button } from "@mui/material";
-import * as React from "react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router-dom";
 
-import { AuthenticatedHeader } from "@/components";
+import { AuthUserInfo } from "@/components";
 import { useAppSelector } from "@/hooks";
 import { RoutePublicPath } from "@/router/publicRoutesRouterConfig.tsx";
 import { selectUserIsAuthenticated } from "@/store";
@@ -70,7 +69,7 @@ const Header: React.FC = () => {
         }}
       >
         {isAuthenticated ? (
-          <AuthenticatedHeader />
+          <AuthUserInfo />
         ) : (
           path !== "/login" && (
             <Button component={NavLink} to={RoutePublicPath.login}>
