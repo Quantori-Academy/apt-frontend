@@ -61,7 +61,7 @@ const AddOrder: React.FC<AddOrderProps> = ({
     ],
   };
 
-  return modalOpen ? (
+  return (
     <OrderForm
       modalOpen={modalOpen}
       onClose={onClose}
@@ -69,7 +69,7 @@ const AddOrder: React.FC<AddOrderProps> = ({
       onSubmit={onSubmit}
       isLoading={isLoading}
     />
-  ) : null;
+  );
 };
 
 export default AddOrder;
