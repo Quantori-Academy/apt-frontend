@@ -567,8 +567,8 @@
       },
 
       "snackBarMessages": {
-        "failedAdd": "Не удалось добавить запрос",
-        "added": "Запрос успешно добавлен"
+        "failedAdd": "Failed to add request",
+        "added": "Request successfully added"
       },
 
       "statusFilter": {
