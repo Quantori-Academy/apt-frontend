@@ -16,8 +16,8 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { DeclineReagentRequest, PageError } from "@/components";
-import { EditReagentRequest } from "@/components/EditReagentRequest";
-import { userRoles } from "@/constants";
+import { EditReagentRequest } from "@/components";
+import { statusColors, userRoles } from "@/constants";
 import { Severity, useAlertSnackbar, useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
 import {
@@ -39,13 +39,6 @@ type ReagentRequestTableProps = {
   handleCheckboxClick: (id: string) => void;
 };
 
-const statusColors = {
-  Declined: "#b22a00",
-  Pending: "#ff9800",
-  Ordered: "#4caf50",
-  Completed: "#4caf50",
-};
-
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   sortColumn,
   sortDirection,
@@ -56,6 +49,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   handleSelectAllClick,
   handleCheckboxClick,
 }) => {
+  //TODO: Refactor editRequest default state
   const [requestId, setRequestId] = useState("");
   const [editRequest, setEditRequest] = useState<RequestedReagent>({
     id: "",
@@ -178,11 +172,15 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 onClick={() => handleCheckboxClick(row.id)}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                {role === userRoles.ProcurementOfficer && (
-                  <TableCell padding="checkbox">
-                    <Checkbox color="primary" checked={isSelected(row.id)} />
-                  </TableCell>
-                )}
+                {role === userRoles.ProcurementOfficer &&
+                  (row.status === "Pending" ? (
+                    <TableCell padding="checkbox">
+                      <Checkbox color="primary" checked={isSelected(row.id)} />
+                    </TableCell>
+                  ) : (
+                    <TableCell />
+                  ))}
+
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
