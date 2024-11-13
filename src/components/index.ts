@@ -51,3 +51,5 @@ export { SaveCancelButtons } from "./SaveCancelButtons";
 export { OrderActionButtons } from "./OrderActionButtons";
 export { ChooseReagentsLocationForm } from "./ChooseReagentsLocationForm";
 export { OrderForm } from "./OrderForm";
+export { AddReagentsToOrder } from "./AddReagentsToOrder";
+export { DashboardBreadcrumbs } from "./DashboardBreadcrumbs";
