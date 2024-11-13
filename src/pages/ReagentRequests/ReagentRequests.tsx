@@ -170,11 +170,13 @@ const ReagentRequests: React.FC = () => {
           onCreateOrder={() => setSelected([])}
         />
       )}
-      <AddReagentRequest
-        modalOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onAddRequestForm={onAddRequestForm}
-      />
+      {modalOpen && (
+        <AddReagentRequest
+          modalOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onAddRequestForm={onAddRequestForm}
+        />
+      )}
       {SnackbarComponent()}
     </Container>
   );

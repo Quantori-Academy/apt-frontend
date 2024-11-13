@@ -113,11 +113,13 @@ const Orders = () => {
         </>
       )}
 
-      <AddOrder
-        modalOpen={isOrderModalOpen}
-        onClose={() => setIsOrderModalOpen(false)}
-        openSnackbar={openSnackbar}
-      />
+      {isOrderModalOpen && (
+        <AddOrder
+          modalOpen={isOrderModalOpen}
+          onClose={() => setIsOrderModalOpen(false)}
+          openSnackbar={openSnackbar}
+        />
+      )}
       <SnackbarComponent />
     </Container>
   );
