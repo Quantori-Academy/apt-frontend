@@ -20,6 +20,7 @@ type OrderFormProps = {
   initialValues: OrderInput;
   onSubmit: SubmitHandler<OrderInput>;
   isLoading?: boolean;
+  orderCreation?: boolean;
 };
 
 const OrderForm: React.FC<OrderFormProps> = ({
@@ -28,6 +29,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
   initialValues,
   onSubmit,
   isLoading,
+  orderCreation = true,
 }) => {
   const { t } = useTranslation();
 
@@ -51,7 +53,11 @@ const OrderForm: React.FC<OrderFormProps> = ({
 
   return (
     <Dialog open={modalOpen} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>{t("orders.buttons.createOrder")}</DialogTitle>
+      <DialogTitle>
+        {orderCreation
+          ? t("orders.buttons.createOrder")
+          : t("createOrderForm.title")}
+      </DialogTitle>
       <DialogContent
         sx={{
           "&.MuiDialogContent-root": {
@@ -60,36 +66,38 @@ const OrderForm: React.FC<OrderFormProps> = ({
         }}
       >
         <Box onSubmit={handleSubmit(onSubmit)} component="form">
-          <Stack spacing={3} mb={3}>
-            <TextField
-              label={t("createOrderForm.requiredFields.title.label")}
-              {...register("title", {
-                required: t(
-                  "createOrderForm.requiredFields.title.requiredMessage"
-                ),
-                maxLength: {
-                  value: 200,
-                  message: t(
-                    "createOrderForm.requiredFields.title.maxLengthMessage"
+          {orderCreation && (
+            <Stack spacing={3} mb={3}>
+              <TextField
+                label={t("createOrderForm.requiredFields.title.label")}
+                {...register("title", {
+                  required: t(
+                    "createOrderForm.requiredFields.title.requiredMessage"
                   ),
-                },
-              })}
-              fullWidth
-              helperText={errors.title?.message}
-              error={!!errors.title}
-            />
-            <TextField
-              label={t("createOrderForm.requiredFields.seller.label")}
-              {...register("seller", {
-                required: t(
-                  "createOrderForm.requiredFields.seller.requiredMessage"
-                ),
-              })}
-              fullWidth
-              helperText={errors.seller?.message}
-              error={!!errors.seller}
-            />
-          </Stack>
+                  maxLength: {
+                    value: 200,
+                    message: t(
+                      "createOrderForm.requiredFields.title.maxLengthMessage"
+                    ),
+                  },
+                })}
+                fullWidth
+                helperText={errors.title?.message}
+                error={!!errors.title}
+              />
+              <TextField
+                label={t("createOrderForm.requiredFields.seller.label")}
+                {...register("seller", {
+                  required: t(
+                    "createOrderForm.requiredFields.seller.requiredMessage"
+                  ),
+                })}
+                fullWidth
+                helperText={errors.seller?.message}
+                error={!!errors.seller}
+              />
+            </Stack>
+          )}
           <Box sx={{ display: "flex", gap: 1 }}>
             <Button
               type="button"
@@ -110,7 +118,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
               {t("substances.buttons.addReagent")}
             </Button>
             <Button disabled={isLoading} type="submit">
-              {t("buttons.create")}
+              {orderCreation ? t("buttons.create") : t("buttons.save")}
             </Button>
           </Box>
           <FormHelperText error sx={{ mt: 1, fontSize: 14 }}>
