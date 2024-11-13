@@ -1,22 +1,17 @@
-import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import { AppBar, Box, Button, IconButton, Typography } from "@mui/material";
-import * as React from "react";
+import { AppBar, Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
+import { AuthUserInfo } from "@/components";
 import { useAppSelector } from "@/hooks";
 import { RoutePublicPath } from "@/router/publicRoutesRouterConfig.tsx";
-import { selectUserIsAuthenticated, selectUserRole } from "@/store";
-import { selectUsername } from "@/store/slices";
+import { selectUserIsAuthenticated } from "@/store";
 
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { Logo } from "../Logo";
 
-type HeaderProps = {
-  onClick: (event: React.MouseEvent<HTMLElement>) => void | null;
-};
-const Header: React.FC<HeaderProps> = ({ onClick }) => {
+const Header: React.FC = () => {
   const {
     t,
     i18n: { changeLanguage, language },
@@ -41,9 +36,11 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
   }, [changeLanguage]);
 
   const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
-  const username = useAppSelector(selectUsername);
-  const role = useAppSelector(selectUserRole);
+
   const displayLanguageValue = currentLanguage === "ENG" ? "ENG" : "РУС";
+
+  const location = useLocation();
+  const path = location.pathname;
 
   return (
     <AppBar
@@ -72,42 +69,13 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
         }}
       >
         {isAuthenticated ? (
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Typography>{t(`users.roles.${role}`)}</Typography>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="space-between"
-              margin={3}
-              textAlign="center"
-            >
-              <IconButton
-                color="inherit"
-                sx={{ padding: 0 }}
-                onClick={(e) => onClick(e)}
-              >
-                <PermIdentityIcon
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    border: "2px solid white",
-                    borderRadius: "50%",
-                    padding: "5px",
-                  }}
-                />
-              </IconButton>
-              <Typography textAlign="center">{username}</Typography>
-            </Box>
-          </Box>
+          <AuthUserInfo />
         ) : (
-          <Button component={NavLink} to={RoutePublicPath.login}>
-            {t("buttons.login")}
-          </Button>
+          path !== "/login" && (
+            <Button component={NavLink} to={RoutePublicPath.login}>
+              {t("buttons.login")}
+            </Button>
+          )
         )}
         <LanguageSwitcher
           handleChangeLanguage={handleChangeLanguage}

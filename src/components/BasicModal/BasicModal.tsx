@@ -1,10 +1,12 @@
-import { Box, Modal, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { Box, IconButton, Modal, Typography } from "@mui/material";
 
 type BasicModalProps = {
   title: string;
   children: React.ReactNode;
   isOpen: boolean;
   closeModal: () => void;
+  titleColor?: string;
 };
 
 const BasicModal: React.FC<BasicModalProps> = ({
@@ -12,6 +14,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
   children,
   isOpen,
   closeModal,
+  titleColor = "primary",
 }) => {
   return (
     <Modal open={isOpen} onClose={closeModal}>
@@ -28,7 +31,20 @@ const BasicModal: React.FC<BasicModalProps> = ({
           transform: "translate(-50%, -50%)",
         }}
       >
-        <Typography variant="h5">{title}</Typography>
+        <IconButton
+          onClick={closeModal}
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 8,
+            color: "grey.500",
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h5" color={titleColor}>
+          {title}
+        </Typography>
         {children}
       </Box>
     </Modal>

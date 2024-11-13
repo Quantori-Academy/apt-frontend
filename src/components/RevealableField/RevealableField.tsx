@@ -12,6 +12,7 @@ type RevealableFieldProps<T extends FieldValues> = {
   error: FieldError | undefined;
   label: string;
   options: RegisterOptions<T>;
+  errorMessage?: string;
 };
 
 const RevealableField = <T extends FieldValues>({
@@ -20,20 +21,21 @@ const RevealableField = <T extends FieldValues>({
   error,
   label,
   options,
+  errorMessage,
 }: RevealableFieldProps<T>) => {
   const { isFieldShown, toggleFieldVisibility, inputRef } =
     useFieldVisibility();
 
   return (
     <TextField
-      error={!!error}
+      error={!!errorMessage || !!error}
       sx={{ width: "100%" }}
       label={label}
       type={isFieldShown ? "text" : "password"}
       variant="outlined"
       size="small"
       inputRef={inputRef}
-      helperText={error?.message}
+      helperText={error?.message || errorMessage}
       {...register(name, options)}
       InputProps={{
         endAdornment: (

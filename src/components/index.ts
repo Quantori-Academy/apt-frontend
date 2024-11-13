@@ -53,3 +53,7 @@ export { ChooseReagentsLocationForm } from "./ChooseReagentsLocationForm";
 export { OrderForm } from "./OrderForm";
 export { AddReagentsToOrder } from "./AddReagentsToOrder";
 export { DashboardBreadcrumbs } from "./DashboardBreadcrumbs";
+export { AuthUserInfo } from "./AuthUserInfo";
+export { NotificationMenu } from "./NotificationMenu";
+export { AccountMenu } from "./AccountMenu";
+export { UserStatusLocked } from "./UserStatusLocked";

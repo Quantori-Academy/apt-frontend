@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData, UserRole } from "@/types";
+import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData, UserRole, UserStatus } from "@/types";
 
 import { transformUserResponse } from "./utils";
 
@@ -89,6 +89,14 @@ export const usersApi = createApi({
       providesTags: ["Users"],
     }),
 
+    getUserPasswordStatus: builder.query({
+      query: (userId) => `/users/${userId}/status`,
+      transformResponse: (baseQueryReturnValue: { status: UserStatus }) => ({
+        status: baseQueryReturnValue.status,
+      }),
+      providesTags: ["Users"],
+    }),
+
     updateUserDetails: builder.mutation({
       query: (updatedUserDetails) => {
         return {
@@ -105,10 +113,10 @@ export const usersApi = createApi({
     }),
 
     resetPassword: builder.mutation({
-      query: ({ userId, newPassword }) => ({
+      query: ({ userId, newPassword, currentPassword }) => ({
         url: `/users/${userId}`,
         method: "PUT",
-        body: { new_password: newPassword },
+        body: { current_password: currentPassword, new_password: newPassword },
       }),
       invalidatesTags: ["Users"],
     }),
@@ -140,4 +148,5 @@ export const {
   useGetUserDetailsQuery,
   useUpdateUserDetailsMutation,
   useResetPasswordMutation,
+  useGetUserPasswordStatusQuery,
 } = usersApi;

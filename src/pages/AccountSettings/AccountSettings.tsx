@@ -1,7 +1,7 @@
 import { Container, Divider, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { AccountDetails } from "@/components";
+import { AccountDetails, ResetPassword } from "@/components";
 import { useAppSelector } from "@/hooks";
 import { selectUserId, selectUserRole } from "@/store";
 
@@ -36,6 +36,9 @@ const AccountSettings: React.FC = () => {
         {t("users.table.role")}: {t(`users.roles.${userRole}`)}
       </Typography>
       <Divider sx={{ my: 3 }} />
+      <ResetPassword isAccountPassword={true} userId={userId} />
+      <Divider sx={{ my: 3 }} />
+
       <AccountDetails userId={userId} />
     </Container>
   );
