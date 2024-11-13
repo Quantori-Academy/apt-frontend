@@ -21,6 +21,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
       openSnackbar("success", t("addUserForm.snackBarMessages.success"));
       onClose();
     } else {
+      //TODO: error from backend,
       openSnackbar("error", t("addUserForm.snackBarMessages.error"));
     }
   }

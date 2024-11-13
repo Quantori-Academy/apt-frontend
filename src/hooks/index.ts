@@ -5,3 +5,4 @@ export { useLoginForm } from "./useLoginForm";
 export { useLocationQuantityDetails } from "./useLocationQuantityDetails";
 export { type Severity, useAlertSnackbar } from "./useAlertSnackbar.tsx";
 export { useCheckedRows } from "./useCheckedRows";
+export { useMenu } from "./useMenu.ts";

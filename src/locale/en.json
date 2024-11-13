@@ -61,6 +61,11 @@
         "role": "Role",
         "lastLogin": "Last login",
         "actions": "Actions"
+      },
+
+      "statusLocked":{
+        "title": "Warning!",
+        "text": "You need to change your password, or you'll be locked out"
       }
     },
 
@@ -335,8 +340,8 @@
       "quantityWarning": "Will be deleted, if quantity is 0",
 
       "errors": {
-        "reagentLoadError": "Failed to load reagent details.",
-        "sampleLoadError": "Failed to load reagent details."
+        "reagentLoadError": "Failed to load reagent details",
+        "sampleLoadError": "Failed to load reagent details"
       },
 
       "snackBarMessages": {
@@ -567,8 +572,8 @@
       },
 
       "snackBarMessages": {
-        "failedAdd": "Не удалось добавить запрос",
-        "added": "Запрос успешно добавлен"
+        "failedAdd": "Failed to add request",
+        "added": "Request added successfully"
       },
 
       "statusFilter": {
