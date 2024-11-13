@@ -38,6 +38,7 @@ export {
   selectUserId,
   selectLoading,
   selectErrorMessage,
+  selectUsername,
   selectUserIsAuthenticated,
 } from "./slices/authSlice";
 

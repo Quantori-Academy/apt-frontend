@@ -50,7 +50,7 @@ export { OrderStatusRow } from "./OrderStatusRow";
 export { SaveCancelButtons } from "./SaveCancelButtons";
 export { OrderActionButtons } from "./OrderActionButtons";
 export { ChooseReagentsLocationForm } from "./ChooseReagentsLocationForm";
-export { AuthenticatedHeader } from "./AuthenticatedHeader";
+export { AuthUserInfo } from "./AuthUserInfo";
 export { NotificationMenu } from "./NotificationMenu";
 export { AccountMenu } from "./AccountMenu";
 export { UserStatusLocked } from "./UserStatusLocked";

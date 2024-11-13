@@ -88,6 +88,7 @@ export const usersApi = createApi({
       }),
       providesTags: ["Users"],
     }),
+
     getUserPasswordStatus: builder.query({
       query: (userId) => `/users/${userId}/status`,
       transformResponse: (baseQueryReturnValue: { status: UserStatus }) => ({
@@ -95,6 +96,7 @@ export const usersApi = createApi({
       }),
       providesTags: ["Users"],
     }),
+
     updateUserDetails: builder.mutation({
       query: (updatedUserDetails) => {
         return {
