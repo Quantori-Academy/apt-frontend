@@ -4,12 +4,12 @@ import { useParams } from "react-router-dom";
 
 import {
   AccountDetails,
+  DashboardBreadcrumbs,
   DeleteUser,
   EditUserRole,
+  PageError,
   ResetPassword,
 } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
-import { PageError } from "@/components/PageError";
 import { useGetUserDetailsQuery } from "@/store";
 
 const UserDetails: React.FC = () => {

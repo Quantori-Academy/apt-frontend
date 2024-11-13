@@ -4,13 +4,13 @@ import { useTranslation } from "react-i18next";
 
 import {
   AddReagentRequest,
+  DashboardBreadcrumbs,
   OrderFromRequest,
   PageError,
   PageLoader,
   ReagentRequestTable,
   StatusFilter,
 } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { userRoles } from "@/constants";
 import { useAlertSnackbar, useAppSelector, useCheckedRows } from "@/hooks";
 import {

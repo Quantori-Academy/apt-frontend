@@ -4,12 +4,12 @@ import { useTranslation } from "react-i18next";
 
 import {
   AddStorageDialog,
+  DashboardBreadcrumbs,
   EditStorage,
   PageError,
   PageLoader,
   StorageLocationsList,
 } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useGetStorageRoomsQuery } from "@/store";
 import { paginateStorages } from "@/utils";
 

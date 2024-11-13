@@ -4,13 +4,13 @@ import { useTranslation } from "react-i18next";
 
 import {
   AddUserModal,
+  DashboardBreadcrumbs,
   PageError,
   PageLoader,
   RoleFilter,
   SearchBar,
   UsersTable,
 } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useGetUsersQuery } from "@/store";
 import { UserRole } from "@/types";
 import { getFilteredUsers } from "@/utils";

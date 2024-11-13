@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 
 import {
   AddOrder,
+  DashboardBreadcrumbs,
   OrdersFilter,
   OrdersTable,
   PageError,
   PageLoader,
   SearchBar,
 } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useAlertSnackbar } from "@/hooks";
 import { useGetOrdersQuery } from "@/store";
 import { StatusFilter } from "@/types";
