@@ -70,6 +70,7 @@ const ReagentRequests: React.FC = () => {
         statusFilter,
       }),
     [
+      role,
       reagentRequestsOfficer,
       sortColumn,
       sortDirection,
@@ -152,7 +153,9 @@ const ReagentRequests: React.FC = () => {
         selected={selected}
         isSelected={isSelected}
         handleSelectAllClick={handleSelectAllClick}
-        handleCheckboxClick={handleCheckboxClick}
+        handleCheckboxClick={
+          role === userRoles.ProcurementOfficer ? handleCheckboxClick : null
+        }
       />
       <Box className={style.pagination}>
         <Pagination

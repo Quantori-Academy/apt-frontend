@@ -36,7 +36,7 @@ type ReagentRequestTableProps = {
   selected: Array<string>;
   isSelected: (id: string) => boolean;
   handleSelectAllClick: (isChecked: boolean) => void;
-  handleCheckboxClick: (id: string) => void;
+  handleCheckboxClick: ((id: string) => void) | null;
 };
 
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
@@ -169,7 +169,11 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
               <TableRow
                 key={row.id}
                 selected={isSelected(row.id)}
-                onClick={() => handleCheckboxClick(row.id)}
+                onClick={
+                  handleCheckboxClick
+                    ? () => handleCheckboxClick(row.id)
+                    : undefined
+                }
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 {role === userRoles.ProcurementOfficer &&
