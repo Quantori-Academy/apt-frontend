@@ -51,8 +51,8 @@ export type BackendOrderReagent = Pick<OrderReagent, "id" | "quantity" | "unit" 
 };
 
 export type OrderInput = {
-  title: string;
-  seller: string;
+  title?: string;
+  seller?: string;
   requestId?: string;
   reagents: Omit<OrderReagent, "id">[];
 };
