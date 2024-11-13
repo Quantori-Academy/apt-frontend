@@ -27,7 +27,8 @@
       "login": "Войти",
       "logout": "Выйти",
       "create": "Создать",
-      "submit": "Отправить"
+      "submit": "Отправить",
+      "add": "Добавить"
     },
 
     "users": {
@@ -426,7 +427,8 @@
         "createOrder": "Создать заказ",
         "create": "Создать",
         "updateStatus": "Обновить Статус",
-        "chooseLocation": "Выбрать Локацию"
+        "chooseLocation": "Выбрать Локацию",
+        "addReagents": "Добавить реактивы"
       },
 
       "errors": {

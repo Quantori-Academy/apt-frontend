@@ -27,7 +27,8 @@
       "login": "Login",
       "logout": "Logout",
       "create": "Create",
-      "submit": "Submit"
+      "submit": "Submit",
+      "add": "Add"
     },
 
     "users": {
@@ -426,6 +427,7 @@
         "createOrder": "Create Order",
         "create": "Create",
         "updateStatus": "Update Status",
+        "addReagents": "Add Reagents",
         "chooseLocation": "Choose Location"
       },
 
