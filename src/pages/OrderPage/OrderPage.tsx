@@ -228,10 +228,10 @@ const OrderPage: React.FC = () => {
           key={reagent.id}
           reagent={reagent}
           expanded={expanded}
-          setExpanded={setExpanded}
           orderId={order.id}
-          openSnackbar={openSnackbar}
           status={order.status}
+          setExpanded={setExpanded}
+          openSnackbar={openSnackbar}
         />
       ))}
       {SnackbarComponent()}
