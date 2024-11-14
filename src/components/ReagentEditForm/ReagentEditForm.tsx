@@ -11,8 +11,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { PageLoader } from "@/components";
-import { Severity, useLocationQuantityDetails } from "@/hooks";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import { useAlertSnackbar, useLocationQuantityDetails } from "@/hooks";
+import { RouteProtectedPath } from "@/router";
 import {
   useDeleteSubstanceMutation,
   useGetStorageRoomsQuery,
@@ -26,7 +26,6 @@ type ReagentEditFormProps = {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   substanceDetails: Reagent | Sample;
   substanceLocationDetails: RoomData;
-  openSnackbar: (severite: Severity, text: string) => void;
 };
 
 const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
@@ -35,11 +34,12 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
   substanceDetails,
   substanceLocationDetails,
   substanceType,
-  openSnackbar,
 }) => {
   const { t } = useTranslation();
 
   const { data: rooms, isLoading } = useGetStorageRoomsQuery();
+
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const [updateSubstance] = useUpdateSubstanceMutation();
 
@@ -69,8 +69,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
       if (quantityLeft === "0") {
         await deleteSubstance(substanceDetails.substanceId).unwrap();
 
-        openSnackbar(
-          "success",
+        showSuccess(
           t(
             `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.successDelete" : "sample.successDelete"}`
           )
@@ -86,8 +85,7 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
         };
 
         await updateSubstance(updatedDetails);
-        openSnackbar(
-          "success",
+        showSuccess(
           t(
             `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.successUpdate" : "sample.successUpdate"}`
           )
@@ -98,12 +96,9 @@ const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
       if (typeof err === "object" && err !== null && "data" in err) {
         const errorMessage = (err as { data: { message: string } }).data
           .message;
-        openSnackbar("error", errorMessage);
+        showError(errorMessage);
       } else {
-        openSnackbar(
-          "error",
-          t("substanceDetails.snackBarMessages.unexpectedError")
-        );
+        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
       }
     }
   };

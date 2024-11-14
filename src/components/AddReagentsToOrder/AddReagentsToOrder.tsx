@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { OrderForm } from "@/components";
-import { Severity } from "@/hooks";
+import { useAlertSnackbar } from "@/hooks";
 import { useAddReagentsToOrderMutation } from "@/store";
 import { OrderInput } from "@/types";
 
@@ -9,18 +9,18 @@ type AddReagentsToOrderProps = {
   onClose: () => void;
   isOpen: boolean;
   orderId: string;
-  openSnackbar: (severity: Severity, text: string) => void;
 };
 
 const AddReagentsToOrder: React.FC<AddReagentsToOrderProps> = ({
   onClose,
   isOpen,
   orderId,
-  openSnackbar,
 }) => {
   const { t } = useTranslation();
 
   const [addReagentsToOrder, { isLoading }] = useAddReagentsToOrderMutation();
+
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const initialValues: OrderInput = {
     reagents: [
@@ -44,15 +44,9 @@ const AddReagentsToOrder: React.FC<AddReagentsToOrderProps> = ({
       ...data,
     });
     if (error) {
-      openSnackbar(
-        "error",
-        t("createOrderForm.snackBarMessages.addingReagents.error")
-      );
+      showError(t("createOrderForm.snackBarMessages.addingReagents.error"));
     } else {
-      openSnackbar(
-        "success",
-        t("createOrderForm.snackBarMessages.addingReagents.success")
-      );
+      showSuccess(t("createOrderForm.snackBarMessages.addingReagents.success"));
       onClose();
     }
   };

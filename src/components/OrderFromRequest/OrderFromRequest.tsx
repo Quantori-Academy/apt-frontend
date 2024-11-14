@@ -1,16 +1,14 @@
 import { SubmitHandler } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { Severity } from "@/hooks";
+import { OrderForm } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
 import { useCreateOrderFromRequestsMutation } from "@/store";
 import { OrderInput, ReagentRequests } from "@/types";
-
-import { OrderForm } from "../OrderForm";
 
 type AddOrderProps = {
   modalOpen: boolean;
   onClose: () => void;
-  openSnackbar: (severity: Severity, text: string) => void;
   requests: ReagentRequests;
   onCreateOrder: () => void;
 };
@@ -18,11 +16,12 @@ type AddOrderProps = {
 const OrderFromRequest: React.FC<AddOrderProps> = ({
   modalOpen,
   onClose,
-  openSnackbar,
   requests,
   onCreateOrder,
 }) => {
   const { t } = useTranslation();
+
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const initialValues: OrderInput = {
     title: "",
@@ -52,21 +51,15 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
         requestId: requests[0].id,
         ...data,
       }).unwrap();
-      openSnackbar(
-        "success",
-        t("createOrderForm.snackBarMessages.creation.success")
-      );
+      showSuccess(t("createOrderForm.snackBarMessages.creation.success"));
       onClose();
     } catch (err) {
       if (typeof err === "object" && err !== null && "data" in err) {
         const errorMessage = (err as { data: { message: string } }).data
           .message;
-        openSnackbar("error", errorMessage);
+        showError(errorMessage);
       } else {
-        openSnackbar(
-          "error",
-          t("substanceDetails.snackBarMessages.unexpectedError")
-        );
+        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
       }
     } finally {
       onCreateOrder();

@@ -80,7 +80,7 @@ const OrderPage: React.FC = () => {
     isError,
   } = useGetOrderQuery(orderId ? orderId : skipToken);
 
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const [editOrderTitleSeller] = useEditOrderTitleSellerMutation();
 
@@ -111,10 +111,9 @@ const OrderPage: React.FC = () => {
     });
 
     if (error && "message" in error) {
-      console.log(error.message);
-      openSnackbar("error", t(`orders.snackBarMessages.${error.message}`));
+      showError(t(`orders.snackBarMessages.${error.message}`));
     } else {
-      openSnackbar("success", t("orders.snackBarMessages.editing.success"));
+      showSuccess(t("orders.snackBarMessages.editing.success"));
     }
     setIsEditable(false);
     resetEditing();
@@ -127,9 +126,9 @@ const OrderPage: React.FC = () => {
     });
 
     if (error && "message" in error) {
-      openSnackbar("error", t(`orders.snackBarMessages.${error.message}`));
+      showError(t(`orders.snackBarMessages.${error.message}`));
     } else {
-      openSnackbar("success", t("orders.snackBarMessages.editing.success"));
+      showSuccess(t("orders.snackBarMessages.editing.success"));
     }
     setIsUpdatingStatus(false);
     resetUpdating();
@@ -206,7 +205,6 @@ const OrderPage: React.FC = () => {
           onClose={() => setIsAddingReagents(false)}
           isOpen={isAddingReagents}
           orderId={order.id}
-          openSnackbar={openSnackbar}
         />
       )}
       {isChoosingLocation && (
@@ -218,7 +216,6 @@ const OrderPage: React.FC = () => {
           <ChooseReagentsLocationForm
             orderId={order.id}
             onClose={() => setIsChoosingLocation(false)}
-            openSnackbar={openSnackbar}
           />
         </BasicModal>
       )}
@@ -230,11 +227,9 @@ const OrderPage: React.FC = () => {
           expanded={expanded}
           setExpanded={setExpanded}
           orderId={order.id}
-          openSnackbar={openSnackbar}
           status={order.status}
         />
       ))}
-      {SnackbarComponent()}
     </>
   );
 };

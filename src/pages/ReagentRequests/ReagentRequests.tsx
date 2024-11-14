@@ -12,7 +12,12 @@ import {
   StatusFilter,
 } from "@/components";
 import { userRoles } from "@/constants";
-import { useAlertSnackbar, useAppSelector, useCheckedRows } from "@/hooks";
+import {
+  Severity,
+  useAlertSnackbar,
+  useAppSelector,
+  useCheckedRows,
+} from "@/hooks";
 import {
   selectUserId,
   selectUserRole,
@@ -42,7 +47,7 @@ const ReagentRequests: React.FC = () => {
   const userId = useAppSelector(selectUserId);
   const role = useAppSelector(selectUserRole);
 
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const { t } = useTranslation();
 
@@ -100,13 +105,12 @@ const ReagentRequests: React.FC = () => {
     setSortColumn(property);
   };
 
-  const onAddRequestForm = (severity: "error" | "success") => {
-    openSnackbar(
-      severity,
-      severity === "error"
-        ? t("requests.snackBarMessages.failedAdd")
-        : t("requests.snackBarMessages.added")
-    );
+  const onAddRequestForm = (severity: Severity) => {
+    if (severity === "error")
+      showError(t("requests.snackBarMessages.failedAdd"));
+    else {
+      showSuccess(t("requests.snackBarMessages.added"));
+    }
   };
 
   const handleCreateOrder = () => {
@@ -165,7 +169,6 @@ const ReagentRequests: React.FC = () => {
         <OrderFromRequest
           modalOpen={isOrderModalOpen}
           onClose={() => setIsOrderModalOpen(false)}
-          openSnackbar={openSnackbar}
           requests={selectedRows}
           onCreateOrder={() => setSelected([])}
         />
@@ -177,7 +180,6 @@ const ReagentRequests: React.FC = () => {
           onAddRequestForm={onAddRequestForm}
         />
       )}
-      {SnackbarComponent()}
     </Container>
   );
 };

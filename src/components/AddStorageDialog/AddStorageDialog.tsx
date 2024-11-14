@@ -34,7 +34,7 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
   const [createStorageRoom, { isLoading: isCreating }] =
     useCreateStorageRoomMutation();
 
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const handleCreateSubmit = async () => {
     const { error } = await createStorageRoom({
@@ -46,8 +46,9 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
       onClose();
       setSelectedRoomId("0");
       setLocationName("");
+      showSuccess(t("storage.snackBarMessages.creationSuccess"));
     } else {
-      openSnackbar("error", t("storage.snackBarMessages.creationError"));
+      showError(t("storage.snackBarMessages.creationError"));
     }
   };
 
@@ -101,7 +102,6 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
           </Button>
         </DialogActions>
       </Dialog>
-      {SnackbarComponent()}
     </>
   );
 };

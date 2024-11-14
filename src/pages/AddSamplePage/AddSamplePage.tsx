@@ -1,13 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { PageLoader } from "@/components";
-import { AddSampleForm } from "@/components/AddSampleForm";
-import useAlertSnackbar from "@/hooks/useAlertSnackbar";
-import { useCreateSampleMutation } from "@/store";
-import { useGetStorageRoomsQuery } from "@/store/storageApi";
-import { useGetSubstancesQuery } from "@/store/substancesApi";
-import { SampleData } from "@/types/sampleData";
+import { AddSampleForm, PageLoader } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
+import {
+  useCreateSampleMutation,
+  useGetStorageRoomsQuery,
+  useGetSubstancesQuery,
+} from "@/store";
+import { SampleData } from "@/types/";
 
 const defaultSampleData: SampleData = {
   name: "",
@@ -31,21 +32,15 @@ const AddSamplePage: React.FC = () => {
 
   const [createSample, { isLoading }] = useCreateSampleMutation();
 
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const handleSubmit = async (sampleData: SampleData) => {
     try {
       await createSample(sampleData).unwrap();
-      openSnackbar(
-        "success",
-        t("addSubstanceForm.snackBarMessages.sample.success")
-      );
+      showSuccess(t("addSubstanceForm.snackBarMessages.sample.success"));
     } catch (error) {
       console.error("Failed to create sample:", error);
-      openSnackbar(
-        "error",
-        t("addSubstanceForm.snackBarMessages.sample.error")
-      );
+      showError(t("addSubstanceForm.snackBarMessages.sample.error"));
     }
   };
 
@@ -77,7 +72,6 @@ const AddSamplePage: React.FC = () => {
         locationOptions={locationOptions}
         initialSampleData={defaultSampleData}
       />
-      <SnackbarComponent />
     </div>
   );
 };

@@ -45,7 +45,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
     },
   });
 
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const onSubmit = async (formData: ResetPasswordFields) => {
     const { error } = await resetPassword({
@@ -55,12 +55,9 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
     });
 
     if (error) {
-      openSnackbar("error", t("userDetails.snackBarMessages.password.error"));
+      showError(t("userDetails.snackBarMessages.password.error"));
     } else {
-      openSnackbar(
-        "success",
-        t("userDetails.snackBarMessages.password.success")
-      );
+      showSuccess(t("userDetails.snackBarMessages.password.success"));
       setIsEditMode(false);
     }
   };
@@ -168,7 +165,6 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
           </Button>
         )}
       </form>
-      {SnackbarComponent()}
     </Container>
   );
 };
