@@ -1,11 +1,10 @@
 import { SubmitHandler } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import { OrderForm } from "@/components";
 import { Severity } from "@/hooks";
 import { useCreateOrderFromRequestsMutation } from "@/store";
 import { OrderInput, ReagentRequests } from "@/types";
-
-import { OrderForm } from "../OrderForm";
 
 type AddOrderProps = {
   modalOpen: boolean;
