@@ -203,9 +203,9 @@ const OrderPage: React.FC = () => {
       </Box>
       {isAddingReagents && (
         <AddReagentsToOrder
-          onClose={() => setIsAddingReagents(false)}
-          isOpen={isAddingReagents}
           orderId={order.id}
+          isOpen={isAddingReagents}
+          onClose={() => setIsAddingReagents(false)}
           openSnackbar={openSnackbar}
         />
       )}

@@ -57,19 +57,19 @@ type expand = string | false;
 type OrderReagentDetailsProps = {
   reagent: OrderReagent;
   expanded: expand;
-  setExpanded: (value: expand) => void;
   orderId: string;
-  openSnackbar: (severity: Severity, text: string) => void;
   status: OrderStatus;
+  setExpanded: (value: expand) => void;
+  openSnackbar: (severity: Severity, text: string) => void;
 };
 
 const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   reagent,
   expanded,
-  setExpanded,
   orderId,
-  openSnackbar,
   status,
+  setExpanded,
+  openSnackbar,
 }) => {
   const { t } = useTranslation();
 

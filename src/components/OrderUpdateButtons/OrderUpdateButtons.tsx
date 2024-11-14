@@ -51,11 +51,11 @@ const OrderUpdateButtons: React.FC<OrderUpdateButtonsProps> = ({
           updateText={t("orders.buttons.updateStatus")}
           addReagentText={t("orders.buttons.addReagents")}
           chooseLocationText={t("orders.buttons.chooseLocation")}
+          status={status}
           onClickEdit={onEdit}
           onClickUpdate={onUpdate}
           onClickAddReagents={onAdd}
           onClickChooseLocation={onChooseLocation}
-          status={status}
         />
       )}
     </Stack>
