@@ -32,16 +32,16 @@ const headCells: readonly HeadCell[] = [
 
 type OrdersTableProps = {
   searchQuery: string;
-  statusFilter: StatusFilter;
   page: number;
+  statusFilter: StatusFilter;
   orders: Order[];
   setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const OrdersTable: React.FC<OrdersTableProps> = ({
   searchQuery,
-  statusFilter,
   page,
+  statusFilter,
   orders,
   setPage,
 }) => {
