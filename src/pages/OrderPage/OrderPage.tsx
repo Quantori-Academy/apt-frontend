@@ -177,10 +177,10 @@ const OrderPage: React.FC = () => {
                     <OrderStatusRow
                       key={key}
                       label={t("orders.table.Status")}
-                      value={order[key as keyof OrderPageNoId]}
                       isUpdating={isUpdatingStatus}
-                      register={registerUpdating}
+                      value={order[key as keyof OrderPageNoId]}
                       currentStatus={order.status}
+                      register={registerUpdating}
                     />
                   )
                 )}

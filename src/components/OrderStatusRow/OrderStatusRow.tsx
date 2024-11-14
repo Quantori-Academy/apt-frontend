@@ -13,18 +13,18 @@ import { OrderStatus, StatusForm } from "@/types";
 
 type EditableDetailRowProps = {
   label: string;
-  value: string | number | null | undefined;
   isUpdating: boolean;
-  register: UseFormRegister<StatusForm>;
+  value?: string | number | null;
   currentStatus: OrderStatus;
+  register: UseFormRegister<StatusForm>;
 };
 
 const OrderStatusRow: React.FC<EditableDetailRowProps> = ({
   label,
-  value,
   isUpdating,
-  register,
+  value,
   currentStatus,
+  register,
 }) => {
   const { t } = useTranslation();
 
