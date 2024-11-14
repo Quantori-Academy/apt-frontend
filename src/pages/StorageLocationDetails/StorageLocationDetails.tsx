@@ -20,7 +20,7 @@ import {
   StoredSubstances,
 } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
+import { RouteProtectedPath } from "@/router";
 import {
   useDeleteStorageLocationMutation,
   useGetStorageLocationDetailQuery,
@@ -32,7 +32,8 @@ const StorageLocationDetails: React.FC = () => {
   const [selectedSubstanceId, setSelectedSubstanceId] = useState("");
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const {
     data: locationDetails,
@@ -50,13 +51,13 @@ const StorageLocationDetails: React.FC = () => {
       const { error } = await deleteStorageLocation(Number(locationId));
 
       if (!error) {
-        openSnackbar("success", t("storage.snackBarMessages.successDelete"));
+        showSuccess(t("storage.snackBarMessages.successDelete"));
         navigate(RouteProtectedPath.storageLocation);
       } else {
-        openSnackbar("error", t("storage.snackBarMessages.errorDelete"));
+        showError(t("storage.snackBarMessages.errorDelete"));
       }
     } else {
-      openSnackbar("error", t("storage.snackBarMessages.notEmptyError"));
+      showError(t("storage.snackBarMessages.notEmptyError"));
     }
   };
 
@@ -129,7 +130,6 @@ const StorageLocationDetails: React.FC = () => {
         locationDetails={locationDetails}
         selectedSubstanceId={selectedSubstanceId}
       />
-      {SnackbarComponent()}
     </Box>
   );
 };

@@ -1,62 +1,30 @@
-import Alert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar";
-import { useState } from "react";
+import { useAppDispatch } from "@/hooks";
+import { showSnackbar } from "@/store";
 
 export type Severity = "success" | "error";
-type SnackbarState = {
-  isOpen: boolean;
-  severity: Severity;
-  text: string;
-};
 
-const defaultInitialState: SnackbarState = {
-  isOpen: false,
-  severity: "success",
-  text: "",
-};
+export const useAlertSnackbar = () => {
+  const dispatch = useAppDispatch();
 
-export const useAlertSnackbar = (
-  initialState: SnackbarState = defaultInitialState
-) => {
-  const { isOpen, severity, text } = initialState;
-  const [snackbarState, setSnackbarState] = useState<SnackbarState>({
-    isOpen,
-    severity,
-    text,
-  });
-
-  const openSnackbar = (severity: Severity, text: string) => {
-    setSnackbarState({
-      isOpen: true,
-      severity,
-      text,
-    });
+  const showSuccess = (message: string) => {
+    dispatch(
+      showSnackbar({
+        severity: "success",
+        message,
+      })
+    );
   };
 
-  const closeSnackbar = () => {
-    setSnackbarState((prevState) => ({
-      ...prevState,
-      isOpen: false,
-    }));
+  const showError = (message: string) => {
+    dispatch(
+      showSnackbar({
+        severity: "error",
+        message,
+      })
+    );
   };
 
-  const SnackbarComponent = () => (
-    <Snackbar
-      open={snackbarState.isOpen}
-      autoHideDuration={3000}
-      onClose={closeSnackbar}
-    >
-      <Alert
-        onClose={closeSnackbar}
-        severity={snackbarState.severity}
-        sx={{ width: "100%" }}
-      >
-        {snackbarState.text}
-      </Alert>
-    </Snackbar>
-  );
-
-  return { openSnackbar, closeSnackbar, SnackbarComponent };
+  return { showSuccess, showError };
 };
 
 export default useAlertSnackbar;
