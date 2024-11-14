@@ -28,7 +28,7 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
     if (error) {
       showError(t("userDetails.snackBarMessages.delete.error"));
     } else {
-      showSuccess(t("userDetails.snackBarMessages.delete.error"));
+      showSuccess(t("userDetails.snackBarMessages.delete.success"));
       navigate("/users");
     }
   };
