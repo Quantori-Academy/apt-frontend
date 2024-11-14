@@ -34,16 +34,16 @@ type OrdersTableProps = {
   searchQuery: string;
   statusFilter: StatusFilter;
   page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
   orders: Order[];
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const OrdersTable: React.FC<OrdersTableProps> = ({
   searchQuery,
   statusFilter,
   page,
-  setPage,
   orders,
+  setPage,
 }) => {
   const { t } = useTranslation();
 
