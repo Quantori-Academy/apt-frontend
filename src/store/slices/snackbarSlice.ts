@@ -1,6 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 
-import { createReducerSlice } from "@/store";
+import { createReducerSlice } from "../createReducerSlice";
 
 type SnackbarStatus = "success" | "error";
 
