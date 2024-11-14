@@ -1,8 +1,13 @@
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
-import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
-import { FieldValues, Path } from "react-hook-form";
+import {
+  FieldError,
+  FieldValues,
+  Path,
+  RegisterOptions,
+  UseFormRegister,
+} from "react-hook-form";
 
 import { useFieldVisibility } from "@/hooks";
 

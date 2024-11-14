@@ -1,9 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import DescriptionIcon from "@mui/icons-material/Description";
 import EditIcon from "@mui/icons-material/Edit";
-import { ListItem, Menu } from "@mui/material";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import MenuItem from "@mui/material/MenuItem";
+import { ListItem, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import style from "./ActionsMenu.module.css";

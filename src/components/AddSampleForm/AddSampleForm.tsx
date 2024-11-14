@@ -12,8 +12,8 @@ import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import { SampleData } from "@/types/sampleData.ts";
+import { RouteProtectedPath } from "@/router";
+import { SampleData } from "@/types";
 
 type LocationOption = {
   id: number;

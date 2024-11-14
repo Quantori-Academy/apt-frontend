@@ -7,7 +7,7 @@ import {
   PageLoader,
   SubstanceDetails,
 } from "@/components";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import { RouteProtectedPath } from "@/router";
 import { useGetSampleDetailsQuery } from "@/store";
 
 const SamplePage: React.FC = () => {

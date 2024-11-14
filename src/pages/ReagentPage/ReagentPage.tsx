@@ -8,7 +8,7 @@ import {
   PageLoader,
   SubstanceDetails,
 } from "@/components";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import { RouteProtectedPath } from "@/router";
 import { useGetReagentDetailsQuery } from "@/store";
 
 const ReagentPage: React.FC = () => {

@@ -1,11 +1,9 @@
 import { NavigateNext } from "@mui/icons-material";
-import { Link } from "@mui/material";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import * as React from "react";
+import { Breadcrumbs, Link } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
+import { RouteProtectedPath } from "@/router";
 
 const DashboardBreadcrumbs: React.FC = () => {
   const { t } = useTranslation();

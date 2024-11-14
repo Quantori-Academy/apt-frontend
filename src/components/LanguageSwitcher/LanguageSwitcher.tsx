@@ -7,7 +7,7 @@ type LanguageSwitcherProps = {
   language: string;
 };
 
-export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
+const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   language,
   handleChangeLanguage,
 }) => {
@@ -46,3 +46,5 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
     </Box>
   );
 };
+
+export default LanguageSwitcher;

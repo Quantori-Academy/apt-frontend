@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { SmilesImage } from "@/components";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import { RouteProtectedPath } from "@/router";
 import {
   SortColumn,
   SortDirection,

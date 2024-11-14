@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import { RouteProtectedPath } from "@/router";
 import { selectUserRole } from "@/store";
 import { RoomData, Sample } from "@/types";
 
