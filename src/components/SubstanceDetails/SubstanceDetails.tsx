@@ -71,7 +71,7 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
       await deleteSubstance(substanceId).unwrap();
       showSuccess(
         t(
-          `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.success" : "sample.success"}`
+          `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.successDelete" : "sample.successDelete"}`
         )
       );
 
