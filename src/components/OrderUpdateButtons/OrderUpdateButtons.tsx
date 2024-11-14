@@ -5,9 +5,9 @@ import { OrderActionButtons, SaveCancelButtons } from "@/components";
 import { OrderStatus } from "@/types";
 
 type OrderUpdateButtonsProps = {
-  status: OrderStatus;
   isEditable: boolean;
   isUpdatingStatus: boolean;
+  status: OrderStatus;
   onEdit: () => void;
   onUpdate: () => void;
   onAdd: () => void;
@@ -17,9 +17,9 @@ type OrderUpdateButtonsProps = {
 };
 
 const OrderUpdateButtons: React.FC<OrderUpdateButtonsProps> = ({
-  status,
   isEditable,
   isUpdatingStatus,
+  status,
   onEdit,
   onUpdate,
   onAdd,
