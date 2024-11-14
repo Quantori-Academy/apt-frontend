@@ -62,3 +62,11 @@ export {
   useChooseLocationMutation,
   useAddReagentsToOrderMutation,
 } from "./ordersApi.ts";
+
+export {
+  showSnackbar,
+  hideSnackbar,
+  selectIsSnackBarOpen,
+  selectSnackbarMessage,
+  selectSnackbarStatus,
+} from "./slices/snackbarSlice.ts";
