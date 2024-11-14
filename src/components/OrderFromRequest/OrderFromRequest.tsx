@@ -10,16 +10,16 @@ type AddOrderProps = {
   modalOpen: boolean;
   requests: ReagentRequests;
   onClose: () => void;
-  openSnackbar: (severity: Severity, text: string) => void;
   onCreateOrder: () => void;
+  openSnackbar: (severity: Severity, text: string) => void;
 };
 
 const OrderFromRequest: React.FC<AddOrderProps> = ({
   modalOpen,
   requests,
   onClose,
-  openSnackbar,
   onCreateOrder,
+  openSnackbar,
 }) => {
   const { t } = useTranslation();
 
