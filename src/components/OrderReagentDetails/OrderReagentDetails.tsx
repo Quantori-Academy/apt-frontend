@@ -55,18 +55,18 @@ const OrderReagentSecondaryRows: readonly OrderReagentRow[] = [
 type expand = string | false;
 
 type OrderReagentDetailsProps = {
+  orderId: string;
   reagent: OrderReagent;
   expanded: expand;
-  orderId: string;
   status: OrderStatus;
   setExpanded: (value: expand) => void;
   openSnackbar: (severity: Severity, text: string) => void;
 };
 
 const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
+  orderId,
   reagent,
   expanded,
-  orderId,
   status,
   setExpanded,
   openSnackbar,
