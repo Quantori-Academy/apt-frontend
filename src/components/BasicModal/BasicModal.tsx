@@ -7,6 +7,8 @@ type BasicModalProps = {
   isOpen: boolean;
   closeModal: () => void;
   titleColor?: string;
+  width?: string | number;
+  height?: string | number;
 };
 
 const BasicModal: React.FC<BasicModalProps> = ({
@@ -15,6 +17,8 @@ const BasicModal: React.FC<BasicModalProps> = ({
   isOpen,
   closeModal,
   titleColor = "primary",
+  width = 400,
+  height = "auto",
 }) => {
   return (
     <Modal open={isOpen} onClose={closeModal}>
@@ -24,11 +28,15 @@ const BasicModal: React.FC<BasicModalProps> = ({
           padding: 4,
           borderRadius: 1,
           outline: "none",
-          maxWidth: 400,
+          width,
+          height,
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
+          boxShadow: 24,
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <IconButton
@@ -42,10 +50,18 @@ const BasicModal: React.FC<BasicModalProps> = ({
         >
           <CloseIcon />
         </IconButton>
-        <Typography variant="h5" color={titleColor}>
+        <Typography variant="h5" color={titleColor} sx={{ mb: 2 }}>
           {title}
         </Typography>
-        {children}
+        <Box
+          sx={{
+            overflowY: "auto",
+            maxHeight: height,
+            paddingRight: 2,
+          }}
+        >
+          {children}
+        </Box>
       </Box>
     </Modal>
   );
