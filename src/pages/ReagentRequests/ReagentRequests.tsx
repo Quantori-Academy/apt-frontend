@@ -168,8 +168,8 @@ const ReagentRequests: React.FC = () => {
       {isOrderModalOpen && (
         <OrderFromRequest
           modalOpen={isOrderModalOpen}
-          onClose={() => setIsOrderModalOpen(false)}
           requests={selectedRows}
+          onClose={() => setIsOrderModalOpen(false)}
           onCreateOrder={() => setSelected([])}
         />
       )}
