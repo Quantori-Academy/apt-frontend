@@ -36,7 +36,13 @@ const AddSampleModal: React.FC = () => {
 
   const handleCreateSample = async (sampleData: SampleData) => {
     try {
-      await createSample(sampleData).unwrap();
+      const processedSampleData = {
+        ...sampleData,
+        structure: sampleData.structure?.trim() || undefined,
+      };
+
+      await createSample(processedSampleData).unwrap();
+
       openSnackbar(
         "success",
         t("addSubstanceForm.snackBarMessages.sample.success")
