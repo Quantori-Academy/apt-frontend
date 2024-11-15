@@ -5,7 +5,6 @@ import {
   Container,
   Grid,
   TextField,
-  Typography,
 } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -67,9 +66,6 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>
-        {t("addSubstanceForm.title.reagent")}
-      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
