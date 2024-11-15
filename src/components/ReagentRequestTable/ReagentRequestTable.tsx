@@ -34,9 +34,9 @@ import { formatDate } from "@/utils";
 type ReagentRequestTableProps = {
   sortColumn: RequestsSortColumns;
   sortDirection: SortDirection;
-  onSortChange: (property: RequestsSortColumns) => void;
   visibleItems: ReagentRequests;
   selected: Array<string>;
+  onSortChange: (property: RequestsSortColumns) => void;
   isSelected: (id: string) => boolean;
   handleSelectAllClick: (isChecked: boolean) => void;
   handleCheckboxClick: (id: string) => void;
@@ -52,9 +52,9 @@ const statusColors = {
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   sortColumn,
   sortDirection,
-  onSortChange,
   visibleItems,
   selected,
+  onSortChange,
   isSelected,
   handleSelectAllClick,
   handleCheckboxClick,
@@ -234,16 +234,16 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
       </TableContainer>
 
       <DeclineReagentRequest
-        onDeclineSubmit={handleSubmit}
         id={requestId}
-        onClose={() => setModalOpen(false)}
         modalOpen={modalOpen}
+        onDeclineSubmit={handleSubmit}
+        onClose={() => setModalOpen(false)}
       />
       <EditReagentRequest
-        onClose={() => setDetailsModalOpen(false)}
         modalOpen={detailsModalOpen}
         request={editRequest}
         requestId={requestId}
+        onClose={() => setDetailsModalOpen(false)}
         onEditSubmit={handleSubmit}
       />
     </>

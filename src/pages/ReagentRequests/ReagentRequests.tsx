@@ -151,9 +151,9 @@ const ReagentRequests: React.FC = () => {
       <ReagentRequestTable
         sortColumn={sortColumn}
         sortDirection={sortDirection}
-        onSortChange={handleSortChange}
         visibleItems={visibleItems}
         selected={selected}
+        onSortChange={handleSortChange}
         isSelected={isSelected}
         handleSelectAllClick={handleSelectAllClick}
         handleCheckboxClick={handleCheckboxClick}

@@ -7,18 +7,18 @@ import { useEditReagentRequestMutation } from "@/store";
 import { ReagentRequestInput, RequestedReagent } from "@/types";
 
 type ReagentRequestDetailsProps = {
-  onClose: () => void;
+  requestId: string;
   modalOpen: boolean;
   request: RequestedReagent;
-  requestId: string;
+  onClose: () => void;
   onEditSubmit: (severity: Severity, errorMessage: string) => void;
 };
 
 const EditReagentRequest: React.FC<ReagentRequestDetailsProps> = ({
-  onClose,
+  requestId,
   modalOpen,
   request,
-  requestId,
+  onClose,
   onEditSubmit,
 }) => {
   const [desiredQuantity, unit] = request.desiredQuantity.split(" ");
@@ -49,15 +49,15 @@ const EditReagentRequest: React.FC<ReagentRequestDetailsProps> = ({
 
   return (
     <BasicModal
+      title="Reagent Request Detail"
       isOpen={modalOpen}
       closeModal={onClose}
-      title="Reagent Request Detail"
     >
       <FormProvider {...formMethods}>
         <ReagentRequestForm
           isEdit={true}
-          onSubmit={onSubmit}
           isLoading={false}
+          onSubmit={onSubmit}
           onClose={onClose}
         />
       </FormProvider>
