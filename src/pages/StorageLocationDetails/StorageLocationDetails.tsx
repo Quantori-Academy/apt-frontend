@@ -13,12 +13,12 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import {
   ChangeLocationDialog,
+  DashboardBreadcrumbs,
   PageError,
   PageLoader,
   StorageLocationDetail,
   StoredSubstances,
 } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useAlertSnackbar } from "@/hooks";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
 import {

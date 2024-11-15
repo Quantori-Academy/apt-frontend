@@ -2,8 +2,12 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
-import { PageError, PageLoader, SubstanceDetails } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
+import {
+  DashboardBreadcrumbs,
+  PageError,
+  PageLoader,
+  SubstanceDetails,
+} from "@/components";
 import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
 import { useGetReagentDetailsQuery } from "@/store";
 

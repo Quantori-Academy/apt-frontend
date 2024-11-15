@@ -24,6 +24,10 @@ type DeleteReagentIds = {
   reagentId: number;
 };
 
+type AddReagentsToOrder = OrderInput & {
+  orderId: string;
+};
+
 type EditTitleSeller = {
   orderId: string;
   title: string;
@@ -113,16 +117,25 @@ export const ordersApi = createApi({
 
     updateOrderReagent: builder.mutation<void, UpdatedReagent>({
       query: (updatedReagent) => ({
-        url: `/orders/${updatedReagent.orderId}/reagent/${updatedReagent.id}`,
+        url: `/orders/${updatedReagent.orderId}/reagents/${updatedReagent.id}`,
         method: "PUT",
         body: transformOrderReagentData(updatedReagent),
       }),
       invalidatesTags: ["Order"],
     }),
 
+    addReagentsToOrder: builder.mutation<void, AddReagentsToOrder>({
+      query: (newReagentsData) => ({
+        url: `/orders/${newReagentsData.orderId}/reagents`,
+        method: "POST",
+        body: transformOrderData(newReagentsData).reagents,
+      }),
+      invalidatesTags: ["Order"],
+    }),
+
     deleteReagentFromOrder: builder.mutation<void, DeleteReagentIds>({
       query: ({ orderId, reagentId }) => ({
-        url: `/orders/${orderId}/reagent/${reagentId}`,
+        url: `/orders/${orderId}/reagents/${reagentId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Order"],
@@ -139,4 +152,5 @@ export const {
   useEditOrderTitleSellerMutation,
   useUpdateOrderStatusMutation,
   useChooseLocationMutation,
+  useAddReagentsToOrderMutation,
 } = ordersApi;

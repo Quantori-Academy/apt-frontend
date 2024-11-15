@@ -11,10 +11,14 @@ import React, { ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { PageLoader, SearchBar, SubstancesTable } from "@/components";
-import { CategoryFilter } from "@/components/CategoryFilter";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
-import { PageError } from "@/components/PageError";
+import {
+  CategoryFilter,
+  DashboardBreadcrumbs,
+  PageError,
+  PageLoader,
+  SearchBar,
+  SubstancesTable,
+} from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
 import { RouteProtectedPath } from "@/router";

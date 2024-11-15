@@ -6,44 +6,46 @@ import { OrderStatus } from "@/types";
 type OrderActionButtonsProps = {
   editText: string;
   updateText: string;
+  addReagentText: string;
   chooseLocationText: string;
+  status: OrderStatus;
   onClickEdit: () => void;
   onClickUpdate: () => void;
   onClickChooseLocation: () => void;
-  status: OrderStatus;
+  onClickAddReagents: () => void;
 };
 
 const OrderActionButtons: React.FC<OrderActionButtonsProps> = ({
   editText,
   updateText,
+  addReagentText,
   chooseLocationText,
+  status,
   onClickEdit,
   onClickUpdate,
+  onClickAddReagents,
   onClickChooseLocation,
-  status,
 }) => {
+  const canEdit = status === ORDER_STATUSES.Pending;
+  const canUpdateStatus =
+    status === ORDER_STATUSES.Pending || status === ORDER_STATUSES.Submitted;
+  const canAllocate = status === ORDER_STATUSES.Submitted;
+
   return (
     <>
-      <Button
-        disabled={status !== ORDER_STATUSES.Pending}
-        type="button"
-        onClick={onClickEdit}
-      >
+      <Button disabled={!canEdit} type="button" onClick={onClickEdit}>
         {editText}
       </Button>
-      {
-        <Button
-          disabled={
-            status === ORDER_STATUSES.Cancelled ||
-            status === ORDER_STATUSES.Fulfilled
-          }
-          type="button"
-          onClick={onClickUpdate}
-        >
-          {updateText}
-        </Button>
-      }
-      {status === ORDER_STATUSES.Submitted && (
+
+      <Button disabled={!canUpdateStatus} type="button" onClick={onClickUpdate}>
+        {updateText}
+      </Button>
+
+      <Button disabled={!canEdit} type="button" onClick={onClickAddReagents}>
+        {addReagentText}
+      </Button>
+
+      {canAllocate && (
         <Button type="button" onClick={onClickChooseLocation}>
           {chooseLocationText}
         </Button>
