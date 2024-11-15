@@ -1,16 +1,18 @@
-import React from "react";
+import { Button } from "@mui/material";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { PageLoader } from "@/components";
 import { AddReagentForm } from "@/components/AddReagentForm";
+import { BasicModal } from "@/components/BasicModal";
 import useAlertSnackbar from "@/hooks/useAlertSnackbar";
 import { useCreateReagentMutation, useGetStorageRoomsQuery } from "@/store";
 import { ReagentData } from "@/types/reagentData";
 
-const AddReagentPage: React.FC = () => {
+const AddReagentModal: React.FC = () => {
   const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const { data: storageRooms, isLoading } = useGetStorageRoomsQuery();
+  const { data: storageRooms } = useGetStorageRoomsQuery();
   const [createReagent] = useCreateReagentMutation();
   const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
@@ -21,6 +23,7 @@ const AddReagentPage: React.FC = () => {
         "success",
         t("addSubstanceForm.snackBarMessages.reagent.success")
       );
+      setIsOpen(false);
     } catch (error) {
       console.error("Error adding reagent:", error);
       openSnackbar(
@@ -30,9 +33,8 @@ const AddReagentPage: React.FC = () => {
     }
   };
 
-  if (isLoading) {
-    return <PageLoader />;
-  }
+  const handleOpenModal = () => setIsOpen(true);
+  const handleCloseModal = () => setIsOpen(false);
 
   const locationOptions =
     storageRooms?.flatMap((room) =>
@@ -44,13 +46,26 @@ const AddReagentPage: React.FC = () => {
 
   return (
     <div>
-      <AddReagentForm
-        handleCreateReagent={handleCreateReagent}
-        locationOptions={locationOptions}
-      />
+      <Button variant="contained" onClick={handleOpenModal}>
+        {t("substances.buttons.addReagent")}
+      </Button>
+
+      <BasicModal
+        title={t("addSubstanceForm.title.reagent")}
+        isOpen={isOpen}
+        closeModal={handleCloseModal}
+        width="700px"
+        height="600px"
+      >
+        <AddReagentForm
+          handleCreateReagent={handleCreateReagent}
+          locationOptions={locationOptions}
+        />
+      </BasicModal>
+
       <SnackbarComponent />
     </div>
   );
 };
 
-export default AddReagentPage;
+export default AddReagentModal;
