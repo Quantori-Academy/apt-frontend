@@ -92,12 +92,14 @@ const SubstancesList: React.FC = () => {
         {t("substances.title")}
       </Typography>
       {role === userRoles.Researcher && (
-        <Box className={style.buttonBox}>
-          <AddReagentModal />
-
-          <AddSampleModal />
-        </Box>
+        <>
+          <Box className={style.buttonBox} sx={{ display: "flex", gap: 2 }}>
+            <AddReagentModal />
+            <AddSampleModal />
+          </Box>
+        </>
       )}
+
       <Box display="flex" gap={2} marginBottom={2}>
         <CategoryFilter
           filter={categoryFilter}
