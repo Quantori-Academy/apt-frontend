@@ -16,20 +16,20 @@ import { OrderInput } from "@/types";
 
 type OrderFormProps = {
   modalOpen: boolean;
-  onClose: () => void;
   initialValues: OrderInput;
-  onSubmit: SubmitHandler<OrderInput>;
   isLoading?: boolean;
   orderCreation?: boolean;
+  onClose: () => void;
+  onSubmit: SubmitHandler<OrderInput>;
 };
 
 const OrderForm: React.FC<OrderFormProps> = ({
   modalOpen,
-  onClose,
   initialValues,
-  onSubmit,
   isLoading,
   orderCreation = true,
+  onClose,
+  onSubmit,
 }) => {
   const { t } = useTranslation();
 

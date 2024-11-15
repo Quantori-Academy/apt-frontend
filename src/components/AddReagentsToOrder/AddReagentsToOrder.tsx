@@ -6,15 +6,15 @@ import { useAddReagentsToOrderMutation } from "@/store";
 import { OrderInput } from "@/types";
 
 type AddReagentsToOrderProps = {
-  onClose: () => void;
   isOpen: boolean;
   orderId: string;
+  onClose: () => void;
 };
 
 const AddReagentsToOrder: React.FC<AddReagentsToOrderProps> = ({
-  onClose,
   isOpen,
   orderId,
+  onClose,
 }) => {
   const { t } = useTranslation();
 
@@ -54,11 +54,11 @@ const AddReagentsToOrder: React.FC<AddReagentsToOrderProps> = ({
   return (
     <OrderForm
       modalOpen={isOpen}
-      onClose={onClose}
       initialValues={initialValues}
       orderCreation={false}
-      onSubmit={onSubmit}
       isLoading={isLoading}
+      onClose={onClose}
+      onSubmit={onSubmit}
     />
   );
 };

@@ -104,8 +104,8 @@ const Orders = () => {
             searchQuery={searchQuery}
             statusFilter={statusFilter}
             page={page}
-            setPage={setPage}
             orders={orders}
+            setPage={setPage}
           />
         </>
       )}

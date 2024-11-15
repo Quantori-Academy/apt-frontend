@@ -55,19 +55,19 @@ const OrderReagentSecondaryRows: readonly OrderReagentRow[] = [
 type expand = string | false;
 
 type OrderReagentDetailsProps = {
+  orderId: string;
   reagent: OrderReagent;
   expanded: expand;
-  setExpanded: (value: expand) => void;
-  orderId: string;
   status: OrderStatus;
+  setExpanded: (value: expand) => void;
 };
 
 const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
+  orderId,
   reagent,
   expanded,
-  setExpanded,
-  orderId,
   status,
+  setExpanded,
 }) => {
   const { t } = useTranslation();
 

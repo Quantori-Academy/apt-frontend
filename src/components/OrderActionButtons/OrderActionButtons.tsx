@@ -8,11 +8,11 @@ type OrderActionButtonsProps = {
   updateText: string;
   addReagentText: string;
   chooseLocationText: string;
+  status: OrderStatus;
   onClickEdit: () => void;
   onClickUpdate: () => void;
   onClickChooseLocation: () => void;
   onClickAddReagents: () => void;
-  status: OrderStatus;
 };
 
 const OrderActionButtons: React.FC<OrderActionButtonsProps> = ({
@@ -20,11 +20,11 @@ const OrderActionButtons: React.FC<OrderActionButtonsProps> = ({
   updateText,
   addReagentText,
   chooseLocationText,
+  status,
   onClickEdit,
   onClickUpdate,
   onClickAddReagents,
   onClickChooseLocation,
-  status,
 }) => {
   const canEdit = status === ORDER_STATUSES.Pending;
   const canUpdateStatus =

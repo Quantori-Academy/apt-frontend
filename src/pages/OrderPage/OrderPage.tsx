@@ -202,9 +202,9 @@ const OrderPage: React.FC = () => {
       </Box>
       {isAddingReagents && (
         <AddReagentsToOrder
-          onClose={() => setIsAddingReagents(false)}
-          isOpen={isAddingReagents}
           orderId={order.id}
+          isOpen={isAddingReagents}
+          onClose={() => setIsAddingReagents(false)}
         />
       )}
       {isChoosingLocation && (
@@ -225,9 +225,9 @@ const OrderPage: React.FC = () => {
           key={reagent.id}
           reagent={reagent}
           expanded={expanded}
-          setExpanded={setExpanded}
           orderId={order.id}
           status={order.status}
+          setExpanded={setExpanded}
         />
       ))}
     </>

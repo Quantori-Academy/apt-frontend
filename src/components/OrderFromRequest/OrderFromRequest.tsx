@@ -8,15 +8,15 @@ import { OrderInput, ReagentRequests } from "@/types";
 
 type AddOrderProps = {
   modalOpen: boolean;
-  onClose: () => void;
   requests: ReagentRequests;
+  onClose: () => void;
   onCreateOrder: () => void;
 };
 
 const OrderFromRequest: React.FC<AddOrderProps> = ({
   modalOpen,
-  onClose,
   requests,
+  onClose,
   onCreateOrder,
 }) => {
   const { t } = useTranslation();
@@ -69,10 +69,10 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
   return (
     <OrderForm
       modalOpen={modalOpen}
-      onClose={onClose}
       initialValues={initialValues}
-      onSubmit={onSubmit}
       isLoading={isLoading}
+      onClose={onClose}
+      onSubmit={onSubmit}
     />
   );
 };
