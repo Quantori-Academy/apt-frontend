@@ -36,7 +36,8 @@ type ReagentRequestTableProps = {
   selected: Array<string>;
   isSelected: (id: string) => boolean;
   handleSelectAllClick: (isChecked: boolean) => void;
-  handleCheckboxClick: ((id: string) => void) | null;
+  toggleCheckbox: (id: string) => void;
+  pendingItems: ReagentRequests;
 };
 
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
@@ -47,9 +48,9 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   selected,
   isSelected,
   handleSelectAllClick,
-  handleCheckboxClick,
+  toggleCheckbox,
+  pendingItems,
 }) => {
-  //TODO: Refactor editRequest default state
   const [requestId, setRequestId] = useState("");
   const [editRequest, setEditRequest] = useState<RequestedReagent>({
     id: "",
@@ -100,24 +101,27 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {role === userRoles.ProcurementOfficer && (
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    color="primary"
-                    indeterminate={
-                      selected.length > 0 &&
-                      selected.length < visibleItems.length
-                    }
-                    checked={
-                      visibleItems.length > 0 &&
-                      selected.length === visibleItems.length
-                    }
-                    onChange={(event) =>
-                      handleSelectAllClick(event.target.checked)
-                    }
-                  />
-                </TableCell>
-              )}
+              {role === userRoles.ProcurementOfficer &&
+                (pendingItems.length !== 0 ? (
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      color="primary"
+                      indeterminate={
+                        selected.length > 0 &&
+                        selected.length < pendingItems.length
+                      }
+                      checked={
+                        pendingItems.length > 0 &&
+                        selected.length === pendingItems.length
+                      }
+                      onChange={(event) =>
+                        handleSelectAllClick(event.target.checked)
+                      }
+                    />
+                  </TableCell>
+                ) : (
+                  <TableCell />
+                ))}
               <TableCell>
                 <TableSortLabel
                   active={sortColumn === "name"}
@@ -168,10 +172,11 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
             {visibleItems?.map((row: RequestedReagent, index) => (
               <TableRow
                 key={row.id}
-                selected={isSelected(row.id)}
+                selected={row.status === "Pending" ? isSelected(row.id) : false}
                 onClick={
-                  handleCheckboxClick
-                    ? () => handleCheckboxClick(row.id)
+                  role === userRoles.ProcurementOfficer &&
+                  row.status === "Pending"
+                    ? () => toggleCheckbox(row.id)
                     : undefined
                 }
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -204,7 +209,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{formatDate(row.dateModified)}</TableCell>
                 <TableCell>
                   {role === userRoles.ProcurementOfficer &&
-                    row.status !== "Declined" && (
+                    row.status === "Pending" && (
                       <IconButton
                         title={t("requests.table.actionButtons.decline")}
                         onClick={() => handleDecline(row.id)}
