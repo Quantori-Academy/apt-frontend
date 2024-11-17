@@ -75,6 +75,7 @@ const ReagentRequests: React.FC = () => {
         statusFilter,
       }),
     [
+      role,
       reagentRequestsOfficer,
       sortColumn,
       sortDirection,
@@ -83,15 +84,16 @@ const ReagentRequests: React.FC = () => {
       reagentRequestsResearcher,
     ]
   );
+  const pendingItems = visibleItems.filter((item) => item.status === "Pending");
 
   const {
     selected,
     selectedRows,
     isSelected,
     handleSelectAllClick,
-    handleCheckboxClick,
+    toggleCheckbox,
     setSelected,
-  } = useCheckedRows(visibleItems);
+  } = useCheckedRows(pendingItems);
 
   if (isOfficerRequestsLoading || isResearcherRequestsLoading)
     return <PageLoader />;
@@ -156,7 +158,8 @@ const ReagentRequests: React.FC = () => {
         onSortChange={handleSortChange}
         isSelected={isSelected}
         handleSelectAllClick={handleSelectAllClick}
-        handleCheckboxClick={handleCheckboxClick}
+        toggleCheckbox={toggleCheckbox}
+        pendingItems={pendingItems}
       />
       <Box className={style.pagination}>
         <Pagination
@@ -170,7 +173,7 @@ const ReagentRequests: React.FC = () => {
           modalOpen={isOrderModalOpen}
           requests={selectedRows}
           onClose={() => setIsOrderModalOpen(false)}
-          onCreateOrder={() => setSelected([])}
+          onCreateOrder={() => setSelected(new Set())}
         />
       )}
       {modalOpen && (
