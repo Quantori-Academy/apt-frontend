@@ -14,8 +14,10 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import {
+  AddReagentsToOrder,
   BasicModal,
   ChooseReagentsLocationForm,
+  DashboardBreadcrumbs,
   EditableDetailRow,
   OrderReagentDetails,
   OrderStatusRow,
@@ -23,7 +25,6 @@ import {
   PageError,
   PageLoader,
 } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { useAlertSnackbar } from "@/hooks";
 import {
   useEditOrderTitleSellerMutation,
@@ -57,6 +58,7 @@ const OrderPage: React.FC = () => {
 
   const [isEditable, setIsEditable] = useState(false);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [isAddingReagents, setIsAddingReagents] = useState(false);
   const [isChoosingLocation, setIsChoosingLocation] = useState(false);
 
   const {
@@ -193,11 +195,20 @@ const OrderPage: React.FC = () => {
           isUpdatingStatus={isUpdatingStatus}
           onEdit={() => setIsEditable(true)}
           onUpdate={() => setIsUpdatingStatus(true)}
+          onAdd={() => setIsAddingReagents(true)}
           onCancelEditable={handleCancelEdit}
           onCancelUpdating={handleCancelUpdateStatus}
           onChooseLocation={() => setIsChoosingLocation(true)}
         />
       </Box>
+      {isAddingReagents && (
+        <AddReagentsToOrder
+          orderId={order.id}
+          isOpen={isAddingReagents}
+          onClose={() => setIsAddingReagents(false)}
+          openSnackbar={openSnackbar}
+        />
+      )}
       {isChoosingLocation && (
         <BasicModal
           title="Choose location"
@@ -217,10 +228,10 @@ const OrderPage: React.FC = () => {
           key={reagent.id}
           reagent={reagent}
           expanded={expanded}
-          setExpanded={setExpanded}
           orderId={order.id}
-          openSnackbar={openSnackbar}
           status={order.status}
+          setExpanded={setExpanded}
+          openSnackbar={openSnackbar}
         />
       ))}
       {SnackbarComponent()}

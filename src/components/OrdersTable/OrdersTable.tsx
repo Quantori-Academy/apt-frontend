@@ -32,18 +32,18 @@ const headCells: readonly HeadCell[] = [
 
 type OrdersTableProps = {
   searchQuery: string;
-  statusFilter: StatusFilter;
   page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  statusFilter: StatusFilter;
   orders: Order[];
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const OrdersTable: React.FC<OrdersTableProps> = ({
   searchQuery,
-  statusFilter,
   page,
-  setPage,
+  statusFilter,
   orders,
+  setPage,
 }) => {
   const { t } = useTranslation();
 

@@ -5,22 +5,24 @@ import { OrderActionButtons, SaveCancelButtons } from "@/components";
 import { OrderStatus } from "@/types";
 
 type OrderUpdateButtonsProps = {
-  status: OrderStatus;
   isEditable: boolean;
   isUpdatingStatus: boolean;
+  status: OrderStatus;
   onEdit: () => void;
   onUpdate: () => void;
+  onAdd: () => void;
   onCancelEditable: () => void;
   onCancelUpdating: () => void;
   onChooseLocation: () => void;
 };
 
 const OrderUpdateButtons: React.FC<OrderUpdateButtonsProps> = ({
-  status,
   isEditable,
   isUpdatingStatus,
+  status,
   onEdit,
   onUpdate,
+  onAdd,
   onCancelEditable,
   onCancelUpdating,
   onChooseLocation,
@@ -38,7 +40,7 @@ const OrderUpdateButtons: React.FC<OrderUpdateButtonsProps> = ({
         />
       ) : isUpdatingStatus ? (
         <SaveCancelButtons
-          key="editOrder"
+          key="editOrderStatus"
           saveText={t("buttons.save")}
           cancelText={t("buttons.cancel")}
           onClickCancel={onCancelUpdating}
@@ -47,11 +49,13 @@ const OrderUpdateButtons: React.FC<OrderUpdateButtonsProps> = ({
         <OrderActionButtons
           editText={t("buttons.edit")}
           updateText={t("orders.buttons.updateStatus")}
+          addReagentText={t("orders.buttons.addReagents")}
           chooseLocationText={t("orders.buttons.chooseLocation")}
+          status={status}
           onClickEdit={onEdit}
           onClickUpdate={onUpdate}
+          onClickAddReagents={onAdd}
           onClickChooseLocation={onChooseLocation}
-          status={status}
         />
       )}
     </Stack>

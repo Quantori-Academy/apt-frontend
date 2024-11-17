@@ -27,7 +27,8 @@
       "login": "Войти",
       "logout": "Выйти",
       "create": "Создать",
-      "submit": "Отправить"
+      "submit": "Отправить",
+      "add": "Добавить"
     },
 
     "users": {
@@ -436,7 +437,8 @@
         "createOrder": "Создать заказ",
         "create": "Создать",
         "updateStatus": "Обновить Статус",
-        "chooseLocation": "Выбрать Локацию"
+        "chooseLocation": "Выбрать Локацию",
+        "addReagents": "Добавить реактивы"
       },
 
       "errors": {
@@ -481,6 +483,8 @@
     },
 
     "createOrderForm": {
+      "title": "Добавьте реактивы к заказу",
+
       "buttons": {
         "removeReagentFromOrder": "Удалить из заказа"
       },
@@ -492,6 +496,10 @@
       "snackBarMessages": {
         "creation": {
           "success": "Заказ успешно создан"
+        },
+        "addingReagents": {
+          "success": "Реактивы успешно добавлен",
+          "error": "Не удалось добавить реактивы"
         }
       },
 
