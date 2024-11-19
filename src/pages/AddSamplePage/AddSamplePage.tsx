@@ -8,7 +8,7 @@ import {
   useGetStorageRoomsQuery,
   useGetSubstancesQuery,
 } from "@/store";
-import { SampleData } from "@/types/";
+import { SampleData } from "@/types";
 
 const defaultSampleData: SampleData = {
   name: "",

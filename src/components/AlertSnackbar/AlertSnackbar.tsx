@@ -6,7 +6,7 @@ import {
   selectIsSnackBarOpen,
   selectSnackbarMessage,
   selectSnackbarStatus,
-} from "@/store/";
+} from "@/store";
 
 const AlertSnackbar: React.FC = () => {
   const dispatch = useAppDispatch();
