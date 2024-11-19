@@ -1,5 +1,4 @@
 export { PageLoader } from "./PageLoader";
-export { StatusChecker } from "./StatusChecker";
 export { UsersTable } from "./UsersTable";
 export { RevealableField } from "./RevealableField";
 export { AddUserModal } from "./AddUserModal";
