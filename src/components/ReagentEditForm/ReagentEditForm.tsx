@@ -23,17 +23,17 @@ import { Reagent, RoomData, Sample, SubstancesCategory } from "@/types";
 type ReagentEditFormProps = {
   substanceType: SubstancesCategory;
   isEditing: boolean;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   substanceDetails: Reagent | Sample;
   substanceLocationDetails: RoomData;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ReagentEditForm: React.FC<ReagentEditFormProps> = ({
   isEditing,
-  setIsEditing,
   substanceDetails,
   substanceLocationDetails,
   substanceType,
+  setIsEditing,
 }) => {
   const { t } = useTranslation();
 

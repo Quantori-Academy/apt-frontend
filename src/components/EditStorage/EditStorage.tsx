@@ -15,8 +15,8 @@ import { useUpdateStorageRoomMutation } from "@/store";
 
 type EditStorageProps = {
   open: boolean;
-  onClose: () => void;
   id: string;
+  onClose: () => void;
 };
 
 type editRoomSelect = {
@@ -24,7 +24,7 @@ type editRoomSelect = {
   roomDescription: string;
 };
 
-const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, id }) => {
+const EditStorage: React.FC<EditStorageProps> = ({ open, id, onClose }) => {
   const { t } = useTranslation();
 
   const [updateStorageRoom, { isLoading: isUpdating }] =

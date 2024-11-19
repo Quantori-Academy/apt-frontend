@@ -19,13 +19,13 @@ import { StorageRoomsBrief } from "@/types";
 
 type AddStorageDialogProps = {
   open: boolean;
-  onClose: () => void;
   storages: Array<StorageRoomsBrief>;
+  onClose: () => void;
 };
 const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
   open,
-  onClose,
   storages,
+  onClose,
 }) => {
   const { t } = useTranslation();
 

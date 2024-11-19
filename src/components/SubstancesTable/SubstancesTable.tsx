@@ -25,14 +25,14 @@ import {
 type ReagentSampleTableProps = {
   sortColumn: SortColumn;
   sortDirection: SortDirection;
-  onSortChange: (property: SortColumn) => void;
   visibleItems: Array<SubstancesDetails>;
+  onSortChange: (property: SortColumn) => void;
 };
 const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   sortColumn,
-  onSortChange,
   sortDirection,
   visibleItems,
+  onSortChange,
 }) => {
   const { t } = useTranslation();
 

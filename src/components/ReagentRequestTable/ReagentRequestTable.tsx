@@ -36,11 +36,11 @@ type ReagentRequestTableProps = {
   sortDirection: SortDirection;
   visibleItems: ReagentRequests;
   selected: Array<string>;
+  pendingItems: ReagentRequests;
   onSortChange: (property: RequestsSortColumns) => void;
   isSelected: (id: string) => boolean;
   handleSelectAllClick: (isChecked: boolean) => void;
   toggleCheckbox: (id: string) => void;
-  pendingItems: ReagentRequests;
 };
 
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
@@ -48,11 +48,11 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   sortDirection,
   visibleItems,
   selected,
+  pendingItems,
   onSortChange,
   isSelected,
   handleSelectAllClick,
   toggleCheckbox,
-  pendingItems,
 }) => {
   const [requestId, setRequestId] = useState("");
   const [editRequest, setEditRequest] = useState<RequestedReagent>({

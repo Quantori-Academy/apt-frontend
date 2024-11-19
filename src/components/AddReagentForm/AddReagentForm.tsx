@@ -21,13 +21,13 @@ type LocationOption = {
 };
 
 type AddReagentFormProps = {
-  handleCreateReagent: (reagentData: ReagentData) => Promise<void>;
   locationOptions: LocationOption[];
+  handleCreateReagent: (reagentData: ReagentData) => Promise<void>;
 };
 
 const AddReagentForm: React.FC<AddReagentFormProps> = ({
-  handleCreateReagent,
   locationOptions,
+  handleCreateReagent,
 }) => {
   const { t } = useTranslation();
 

@@ -28,17 +28,17 @@ type ReagentOption = {
 
 type AddSampleFormProps = {
   initialSampleData: SampleData;
-  handleSubmit: (sampleData: SampleData) => Promise<void>;
   isLoading: boolean;
   reagentOptions: ReagentOption[];
   locationOptions: LocationOption[];
+  handleSubmit: (sampleData: SampleData) => Promise<void>;
 };
 
 const AddSampleForm: React.FC<AddSampleFormProps> = ({
-  handleSubmit,
   isLoading,
   reagentOptions,
   locationOptions,
+  handleSubmit,
 }) => {
   const { t } = useTranslation();
 

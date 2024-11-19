@@ -18,16 +18,16 @@ import { LocationDetails } from "@/types";
 
 type ChangeLocationDialogProps = {
   open: boolean;
-  onClose: () => void;
   locationDetails: LocationDetails;
   selectedSubstanceId: string;
+  onClose: () => void;
 };
 
 const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
   open,
-  onClose,
   locationDetails,
   selectedSubstanceId,
+  onClose,
 }) => {
   const { t } = useTranslation();
 

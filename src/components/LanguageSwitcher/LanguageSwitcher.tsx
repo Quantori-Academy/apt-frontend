@@ -3,8 +3,8 @@ import { Box, IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 
 type LanguageSwitcherProps = {
-  handleChangeLanguage: (value: string) => void;
   language: string;
+  handleChangeLanguage: (value: string) => void;
 };
 
 const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
