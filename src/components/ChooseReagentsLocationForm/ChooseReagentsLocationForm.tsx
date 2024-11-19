@@ -8,13 +8,13 @@ import { useChooseLocationMutation, useGetStorageRoomsQuery } from "@/store";
 import { RoomLocationBrief, StorageRoomsBrief } from "@/types";
 
 type ChooseReagentsLocationFormProps = {
-  onClose: () => void;
   orderId: string;
+  onClose: () => void;
 };
 
 const ChooseReagentsLocationForm: React.FC<ChooseReagentsLocationFormProps> = ({
-  onClose,
   orderId,
+  onClose,
 }) => {
   const { t } = useTranslation();
 
