@@ -12,8 +12,8 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import { ReagentData } from "@/types/reagentData";
+import { RouteProtectedPath } from "@/router";
+import { ReagentData } from "@/types";
 
 type LocationOption = {
   id: string;
@@ -21,13 +21,13 @@ type LocationOption = {
 };
 
 type AddReagentFormProps = {
-  handleCreateReagent: (reagentData: ReagentData) => Promise<void>;
   locationOptions: LocationOption[];
+  handleCreateReagent: (reagentData: ReagentData) => Promise<void>;
 };
 
 const AddReagentForm: React.FC<AddReagentFormProps> = ({
-  handleCreateReagent,
   locationOptions,
+  handleCreateReagent,
 }) => {
   const { t } = useTranslation();
 

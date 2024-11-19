@@ -1,11 +1,10 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import { loginUser } from "@/store/slices";
+import { useAppDispatch } from "@/hooks";
+import { RouteProtectedPath } from "@/router";
+import { loginUser } from "@/store";
 import { UserLoginInput } from "@/types";
-
-import { useAppDispatch } from "./useAppDispatch";
 
 export const useLoginForm = () => {
   const dispatch = useAppDispatch();

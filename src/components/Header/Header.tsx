@@ -3,13 +3,10 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router-dom";
 
-import { AuthUserInfo } from "@/components";
+import { AuthUserInfo, LanguageSwitcher, Logo } from "@/components";
 import { useAppSelector } from "@/hooks";
-import { RoutePublicPath } from "@/router/publicRoutesRouterConfig.tsx";
+import { RoutePublicPath } from "@/router";
 import { selectUserIsAuthenticated } from "@/store";
-
-import { LanguageSwitcher } from "../LanguageSwitcher";
-import { Logo } from "../Logo";
 
 const Header: React.FC = () => {
   const {

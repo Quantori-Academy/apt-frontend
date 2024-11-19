@@ -18,9 +18,9 @@ type DeleteModalProps = {
 
 const DeleteModal: React.FC<DeleteModalProps> = ({
   open,
-  onClose,
   modalTitle,
   modalText,
+  onClose,
   onDelete,
 }) => {
   const { t } = useTranslation();

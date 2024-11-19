@@ -20,15 +20,15 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
   const navigate = useNavigate();
   const currentUserId = useAppSelector(selectUserId);
 
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const handleDeleteUser = async () => {
     const { error } = await deleteUser(userId);
 
     if (error) {
-      openSnackbar("error", t("userDetails.snackBarMessages.delete.error"));
+      showError(t("userDetails.snackBarMessages.delete.error"));
     } else {
-      openSnackbar("success", t("userDetails.snackBarMessages.delete.error"));
+      showSuccess(t("userDetails.snackBarMessages.delete.success"));
       navigate("/users");
     }
   };
@@ -55,7 +55,6 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
         onClose={() => setIsOpenModal(false)}
         onDelete={handleDeleteUser}
       />
-      {SnackbarComponent()}
     </Container>
   );
 };

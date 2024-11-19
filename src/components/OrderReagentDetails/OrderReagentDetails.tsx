@@ -26,7 +26,7 @@ import {
   OrderAccordionButtons,
 } from "@/components";
 import { ORDER_STATUSES } from "@/constants";
-import { Severity } from "@/hooks";
+import { useAlertSnackbar } from "@/hooks";
 import {
   useDeleteReagentFromOrderMutation,
   useUpdateOrderReagentMutation,
@@ -60,7 +60,6 @@ type OrderReagentDetailsProps = {
   expanded: expand;
   status: OrderStatus;
   setExpanded: (value: expand) => void;
-  openSnackbar: (severity: Severity, text: string) => void;
 };
 
 const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
@@ -69,12 +68,13 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   expanded,
   status,
   setExpanded,
-  openSnackbar,
 }) => {
   const { t } = useTranslation();
 
   const [isEditable, setIsEditable] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const {
     register,
@@ -100,20 +100,14 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
     try {
       await deleteReagentFromOrder({ orderId, reagentId: reagent.id }).unwrap();
 
-      openSnackbar(
-        "success",
-        t("substanceDetails.snackBarMessages.reagent.successDelete")
-      );
+      showSuccess(t("substanceDetails.snackBarMessages.reagent.successDelete"));
     } catch (err) {
       if (typeof err === "object" && err !== null && "data" in err) {
         const errorMessage = (err as { data: { message: string } }).data
           .message;
-        openSnackbar("error", errorMessage);
+        showError(errorMessage);
       } else {
-        openSnackbar(
-          "error",
-          t("substanceDetails.snackBarMessages.unexpectedError")
-        );
+        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
       }
     } finally {
       setDeleteModalIsOpen(false);
@@ -127,20 +121,14 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
         ...data,
         id: reagent.id,
       }).unwrap();
-      openSnackbar(
-        "success",
-        t("substanceDetails.snackBarMessages.reagent.successUpdate")
-      );
+      showSuccess(t("substanceDetails.snackBarMessages.reagent.successUpdate"));
     } catch (err) {
       if (typeof err === "object" && err !== null && "data" in err) {
         const errorMessage = (err as { data: { message: string } }).data
           .message;
-        openSnackbar("error", errorMessage);
+        showError(errorMessage);
       } else {
-        openSnackbar(
-          "error",
-          t("substanceDetails.snackBarMessages.unexpectedError")
-        );
+        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
       }
     } finally {
       setIsEditable(false);

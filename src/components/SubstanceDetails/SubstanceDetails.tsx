@@ -36,7 +36,7 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -69,11 +69,9 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
   const handleDelete = async () => {
     try {
       await deleteSubstance(substanceId).unwrap();
-
-      openSnackbar(
-        "success",
+      showSuccess(
         t(
-          `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.success" : "sample.success"}`
+          `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.successDelete" : "sample.successDelete"}`
         )
       );
 
@@ -82,12 +80,9 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
       if (typeof err === "object" && err !== null && "data" in err) {
         const errorMessage = (err as { data: { message: string } }).data
           .message;
-        openSnackbar("error", errorMessage);
+        showError(errorMessage);
       } else {
-        openSnackbar(
-          "error",
-          t("substanceDetails.snackBarMessages.unexpectedError")
-        );
+        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
       }
     } finally {
       setDeleteModalIsOpen(false);
@@ -113,7 +108,6 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
       )}
       {isEditing && (
         <ReagentEditForm
-          openSnackbar={openSnackbar}
           substanceType={substanceType}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
@@ -128,8 +122,6 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
         onClose={() => setDeleteModalIsOpen(false)}
         onDelete={handleDelete}
       />
-
-      {SnackbarComponent()}
     </Container>
   );
 };

@@ -29,16 +29,16 @@ const reagentDetailsRows: ReagentDetailRow[] = [
 
 type ReagentDetailsProps = {
   reagentDetails: Reagent;
+  reagentLocationDetails: RoomData;
   setDeleteModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  reagentLocationDetails: RoomData;
 };
 
 const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   reagentDetails,
+  reagentLocationDetails,
   setDeleteModalIsOpen,
   setIsEditing,
-  reagentLocationDetails,
 }) => {
   const { t } = useTranslation();
 

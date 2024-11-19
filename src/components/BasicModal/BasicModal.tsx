@@ -3,18 +3,18 @@ import { Box, IconButton, Modal, Typography } from "@mui/material";
 
 type BasicModalProps = {
   title: string;
-  children: React.ReactNode;
   isOpen: boolean;
-  closeModal: () => void;
   titleColor?: string;
+  children: React.ReactNode;
+  closeModal: () => void;
 };
 
 const BasicModal: React.FC<BasicModalProps> = ({
   title,
-  children,
   isOpen,
-  closeModal,
   titleColor = "primary",
+  children,
+  closeModal,
 }) => {
   return (
     <Modal open={isOpen} onClose={closeModal}>

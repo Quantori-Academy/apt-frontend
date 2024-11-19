@@ -1,32 +1,26 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { PageLoader } from "@/components";
-import { AddReagentForm } from "@/components/AddReagentForm";
-import useAlertSnackbar from "@/hooks/useAlertSnackbar";
+import { AddReagentForm, PageLoader } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
 import { useCreateReagentMutation, useGetStorageRoomsQuery } from "@/store";
-import { ReagentData } from "@/types/reagentData";
+import { ReagentData } from "@/types";
 
 const AddReagentPage: React.FC = () => {
   const { t } = useTranslation();
 
   const { data: storageRooms, isLoading } = useGetStorageRoomsQuery();
   const [createReagent] = useCreateReagentMutation();
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const handleCreateReagent = async (reagentData: ReagentData) => {
     try {
       await createReagent(reagentData).unwrap();
-      openSnackbar(
-        "success",
-        t("addSubstanceForm.snackBarMessages.reagent.success")
-      );
+      showSuccess(t("addSubstanceForm.snackBarMessages.reagent.success"));
     } catch (error) {
       console.error("Error adding reagent:", error);
-      openSnackbar(
-        "error",
-        t("addSubstanceForm.snackBarMessages.reagent.error")
-      );
+      showError(t("addSubstanceForm.snackBarMessages.reagent.error"));
     }
   };
 
@@ -48,7 +42,6 @@ const AddReagentPage: React.FC = () => {
         handleCreateReagent={handleCreateReagent}
         locationOptions={locationOptions}
       />
-      <SnackbarComponent />
     </div>
   );
 };

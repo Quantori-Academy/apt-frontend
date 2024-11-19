@@ -15,8 +15,11 @@ import {
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { DeclineReagentRequest, PageError } from "@/components";
-import { EditReagentRequest } from "@/components";
+import {
+  DeclineReagentRequest,
+  EditReagentRequest,
+  PageError,
+} from "@/components";
 import { statusColors, userRoles } from "@/constants";
 import { Severity, useAlertSnackbar, useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
@@ -31,25 +34,25 @@ import { formatDate } from "@/utils";
 type ReagentRequestTableProps = {
   sortColumn: RequestsSortColumns;
   sortDirection: SortDirection;
-  onSortChange: (property: RequestsSortColumns) => void;
   visibleItems: ReagentRequests;
   selected: Array<string>;
+  pendingItems: ReagentRequests;
+  onSortChange: (property: RequestsSortColumns) => void;
   isSelected: (id: string) => boolean;
   handleSelectAllClick: (isChecked: boolean) => void;
   toggleCheckbox: (id: string) => void;
-  pendingItems: ReagentRequests;
 };
 
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   sortColumn,
   sortDirection,
-  onSortChange,
   visibleItems,
   selected,
+  pendingItems,
+  onSortChange,
   isSelected,
   handleSelectAllClick,
   toggleCheckbox,
-  pendingItems,
 }) => {
   const [requestId, setRequestId] = useState("");
   const [editRequest, setEditRequest] = useState<RequestedReagent>({
@@ -71,10 +74,14 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   const { t } = useTranslation();
   const role = useAppSelector(selectUserRole);
 
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const handleSubmit = (severity: Severity, errorMessage: string) => {
-    openSnackbar(severity, errorMessage);
+    if (severity === "success") {
+      showSuccess(errorMessage);
+    } else {
+      showError(errorMessage);
+    }
   };
 
   const handleDecline = (id: string) => {
@@ -234,20 +241,18 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
       </TableContainer>
 
       <DeclineReagentRequest
-        onDeclineSubmit={handleSubmit}
         id={requestId}
-        onClose={() => setModalOpen(false)}
         modalOpen={modalOpen}
+        onDeclineSubmit={handleSubmit}
+        onClose={() => setModalOpen(false)}
       />
       <EditReagentRequest
-        onClose={() => setDetailsModalOpen(false)}
         modalOpen={detailsModalOpen}
         request={editRequest}
         requestId={requestId}
+        onClose={() => setDetailsModalOpen(false)}
         onEditSubmit={handleSubmit}
       />
-
-      {SnackbarComponent()}
     </>
   );
 };

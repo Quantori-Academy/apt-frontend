@@ -34,7 +34,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
 
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+  const { showError } = useAlertSnackbar();
 
   const {
     register,
@@ -50,12 +50,8 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
     const { error } = await updateUserDetails(updatedUserDetails);
 
     if (error) {
-      openSnackbar("error", t("userDetails.snackBarMessages.details.error"));
+      showError(t("userDetails.snackBarMessages.details.error"));
     } else {
-      openSnackbar(
-        "success",
-        t("userDetails.snackBarMessages.details.success")
-      );
       setIsEditMode(false);
     }
   };
@@ -175,7 +171,6 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
           </Grid>
         </Grid>
       </form>
-      {SnackbarComponent()}
     </Container>
   );
 };

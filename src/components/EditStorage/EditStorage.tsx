@@ -15,8 +15,8 @@ import { useUpdateStorageRoomMutation } from "@/store";
 
 type EditStorageProps = {
   open: boolean;
-  onClose: () => void;
   id: string;
+  onClose: () => void;
 };
 
 type editRoomSelect = {
@@ -24,12 +24,13 @@ type editRoomSelect = {
   roomDescription: string;
 };
 
-const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, id }) => {
+const EditStorage: React.FC<EditStorageProps> = ({ open, id, onClose }) => {
   const { t } = useTranslation();
 
   const [updateStorageRoom, { isLoading: isUpdating }] =
     useUpdateStorageRoomMutation();
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const {
     register,
@@ -51,9 +52,9 @@ const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, id }) => {
     });
 
     if (error) {
-      openSnackbar("error", t("storage.snackBarMessages.error"));
+      showError(t("storage.snackBarMessages.error"));
     } else {
-      openSnackbar("success", t("storage.snackBarMessages.success"));
+      showSuccess(t("storage.snackBarMessages.success"));
       onClose();
     }
   };
@@ -99,8 +100,6 @@ const EditStorage: React.FC<EditStorageProps> = ({ open, onClose, id }) => {
           </form>
         </DialogContent>
       </Dialog>
-
-      {SnackbarComponent()}
     </>
   );
 };

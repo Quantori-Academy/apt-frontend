@@ -416,14 +416,15 @@
       },
 
       "snackBarMessages": {
-        "successEdit": "Room edited successfully!",
-        "errorEdit": "Failed to edit room!",
+        "successEdit": "Room edited successfully",
+        "errorEdit": "Failed to edit room",
         "successDelete": "Storage location deleted successfully",
         "errorDelete": "Failed to delete storage location",
         "successMove": "Substance moved successfully",
         "errorMove": "Failed to move substances",
         "notEmptyError": "You can't delete this storage location because it contains substances",
-        "creationError": "Failed to create storage location!"
+        "creationSuccess": "Location created successfully",
+        "creationError": "Failed to create storage location"
       }
     },
 

@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL, prepareHeaders } from "@/api";
-import { transformOrderData, transformRequestData } from "@/store/utils";
 import { OrderInput, ReagentRequests, RequestedReagentBackend } from "@/types";
+
+import { transformOrderData, transformRequestData } from "./utils";
 
 type OrderFromRequest = OrderInput & {
   requestId: string;

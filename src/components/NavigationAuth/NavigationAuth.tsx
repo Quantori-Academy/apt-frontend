@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 import { userRoles } from "@/constants";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import { RouteProtectedPath } from "@/router";
 import { logout, selectUserRole } from "@/store";
 
 import styles from "./NavigationAuth.module.css";

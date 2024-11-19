@@ -80,7 +80,7 @@ const OrderPage: React.FC = () => {
     isError,
   } = useGetOrderQuery(orderId ? orderId : skipToken);
 
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const [editOrderTitleSeller] = useEditOrderTitleSellerMutation();
 
@@ -111,10 +111,9 @@ const OrderPage: React.FC = () => {
     });
 
     if (error && "message" in error) {
-      console.log(error.message);
-      openSnackbar("error", t(`orders.snackBarMessages.${error.message}`));
+      showError(t(`orders.snackBarMessages.${error.message}`));
     } else {
-      openSnackbar("success", t("orders.snackBarMessages.editing.success"));
+      showSuccess(t("orders.snackBarMessages.editing.success"));
     }
     setIsEditable(false);
     resetEditing();
@@ -127,9 +126,9 @@ const OrderPage: React.FC = () => {
     });
 
     if (error && "message" in error) {
-      openSnackbar("error", t(`orders.snackBarMessages.${error.message}`));
+      showError(t(`orders.snackBarMessages.${error.message}`));
     } else {
-      openSnackbar("success", t("orders.snackBarMessages.editing.success"));
+      showSuccess(t("orders.snackBarMessages.editing.success"));
     }
     setIsUpdatingStatus(false);
     resetUpdating();
@@ -178,10 +177,10 @@ const OrderPage: React.FC = () => {
                     <OrderStatusRow
                       key={key}
                       label={t("orders.table.Status")}
-                      value={order[key as keyof OrderPageNoId]}
                       isUpdating={isUpdatingStatus}
-                      register={registerUpdating}
+                      value={order[key as keyof OrderPageNoId]}
                       currentStatus={order.status}
+                      register={registerUpdating}
                     />
                   )
                 )}
@@ -206,7 +205,6 @@ const OrderPage: React.FC = () => {
           orderId={order.id}
           isOpen={isAddingReagents}
           onClose={() => setIsAddingReagents(false)}
-          openSnackbar={openSnackbar}
         />
       )}
       {isChoosingLocation && (
@@ -218,7 +216,6 @@ const OrderPage: React.FC = () => {
           <ChooseReagentsLocationForm
             orderId={order.id}
             onClose={() => setIsChoosingLocation(false)}
-            openSnackbar={openSnackbar}
           />
         </BasicModal>
       )}
@@ -231,10 +228,8 @@ const OrderPage: React.FC = () => {
           orderId={order.id}
           status={order.status}
           setExpanded={setExpanded}
-          openSnackbar={openSnackbar}
         />
       ))}
-      {SnackbarComponent()}
     </>
   );
 };

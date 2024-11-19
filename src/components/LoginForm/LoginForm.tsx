@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 
 import { RevealableField } from "@/components";
 import { useAppSelector, useLoginForm } from "@/hooks";
-import { selectErrorMessage, selectLoading } from "@/store/slices";
+import { selectErrorMessage, selectLoading } from "@/store";
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation();

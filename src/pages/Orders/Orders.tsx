@@ -12,14 +12,11 @@ import {
   PageLoader,
   SearchBar,
 } from "@/components";
-import { useAlertSnackbar } from "@/hooks";
 import { useGetOrdersQuery } from "@/store";
 import { StatusFilter } from "@/types";
 
 const Orders = () => {
   const { t } = useTranslation();
-
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
@@ -117,10 +114,8 @@ const Orders = () => {
         <AddOrder
           modalOpen={isOrderModalOpen}
           onClose={() => setIsOrderModalOpen(false)}
-          openSnackbar={openSnackbar}
         />
       )}
-      <SnackbarComponent />
     </Container>
   );
 };

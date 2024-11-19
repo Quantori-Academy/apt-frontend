@@ -7,10 +7,10 @@ import { Severity } from "@/hooks";
 import { useDeclineReagentRequestMutation } from "@/store";
 
 type DeclineReagentRequestProps = {
-  onDeclineSubmit: (severity: Severity, errorMessage: string) => void;
-  onClose: () => void;
   id: string;
   modalOpen: boolean;
+  onDeclineSubmit: (severity: Severity, errorMessage: string) => void;
+  onClose: () => void;
 };
 
 type DeclineMessage = {
@@ -18,10 +18,10 @@ type DeclineMessage = {
 };
 
 const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
-  onDeclineSubmit,
-  onClose,
   id,
   modalOpen,
+  onDeclineSubmit,
+  onClose,
 }) => {
   const { t } = useTranslation();
   const {
@@ -53,8 +53,8 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
   return (
     <BasicModal
       title={t("requests.declineRequest.title")}
-      closeModal={onClose}
       isOpen={modalOpen}
+      closeModal={onClose}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box
