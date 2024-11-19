@@ -3,6 +3,8 @@ import { RouteObject } from "react-router-dom";
 import { userRoles } from "@/constants";
 import {
   AccountSettings,
+  AddReagentPage,
+  AddSamplePage,
   Dashboard,
   OrderPage,
   Orders,
@@ -15,8 +17,6 @@ import {
   UserDetails,
   Users,
 } from "@/pages";
-import { AddReagentPage } from "@/pages/AddReagentPage";
-import { AddSamplePage } from "@/pages/AddSamplePage";
 import { UserRole } from "@/types";
 
 type AppRoutesProps = RouteObject & {
