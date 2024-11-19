@@ -34,7 +34,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
 
-  const { showSuccess } = useAlertSnackbar();
+  const { showError } = useAlertSnackbar();
 
   const {
     register,
@@ -50,7 +50,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
     const { error } = await updateUserDetails(updatedUserDetails);
 
     if (error) {
-      showSuccess(t("userDetails.snackBarMessages.details.error"));
+      showError(t("userDetails.snackBarMessages.details.error"));
     } else {
       setIsEditMode(false);
     }
