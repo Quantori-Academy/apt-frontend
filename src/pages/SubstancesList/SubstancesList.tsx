@@ -19,7 +19,6 @@ import {
   SearchBar,
   SubstancesTable,
 } from "@/components";
-import "@/components/AddReagentModal";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
 import { selectUserRole, useGetSubstancesQuery } from "@/store";
