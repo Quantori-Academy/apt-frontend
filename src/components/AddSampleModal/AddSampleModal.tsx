@@ -1,7 +1,8 @@
-import React from "react";
+import { Button } from "@mui/material";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { AddSampleForm, PageLoader } from "@/components";
+import { AddSampleForm, BasicModal } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import {
   useCreateSampleMutation,
@@ -22,8 +23,9 @@ const defaultSampleData: SampleData = {
   addedSubstanceIds: [],
 };
 
-const AddSamplePage: React.FC = () => {
+const AddSampleModal: React.FC = () => {
   const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
 
   const { data: reagentData, isLoading: isReagentsLoading } =
     useGetSubstancesQuery();
@@ -31,21 +33,30 @@ const AddSamplePage: React.FC = () => {
     useGetStorageRoomsQuery();
 
   const [createSample, { isLoading }] = useCreateSampleMutation();
-
   const { showSuccess, showError } = useAlertSnackbar();
 
-  const handleSubmit = async (sampleData: SampleData) => {
+  const handleCreateSample = async (sampleData: SampleData) => {
     try {
-      await createSample(sampleData).unwrap();
+      const processedSampleData = {
+        ...sampleData,
+        structure: sampleData.structure?.trim() || undefined,
+      };
+
+      await createSample(processedSampleData).unwrap();
+
       showSuccess(t("addSubstanceForm.snackBarMessages.sample.success"));
+      setIsOpen(false);
     } catch (error) {
       console.error("Failed to create sample:", error);
       showError(t("addSubstanceForm.snackBarMessages.sample.error"));
     }
   };
 
+  const handleOpenModal = () => setIsOpen(true);
+  const handleCloseModal = () => setIsOpen(false);
+
   if (isReagentsLoading || isLocationsLoading) {
-    return <PageLoader />;
+    return null;
   }
 
   const reagentOptions =
@@ -65,15 +76,27 @@ const AddSamplePage: React.FC = () => {
 
   return (
     <div>
-      <AddSampleForm
-        handleSubmit={handleSubmit}
-        isLoading={isLoading}
-        reagentOptions={reagentOptions}
-        locationOptions={locationOptions}
-        initialSampleData={defaultSampleData}
-      />
+      <Button variant="contained" onClick={handleOpenModal}>
+        {t("substances.buttons.addSample")}
+      </Button>
+
+      <BasicModal
+        title={t("addSubstanceForm.title.sample")}
+        isOpen={isOpen}
+        closeModal={handleCloseModal}
+        width="700px"
+        height="600px"
+      >
+        <AddSampleForm
+          handleSubmit={handleCreateSample}
+          isLoading={isLoading}
+          reagentOptions={reagentOptions}
+          locationOptions={locationOptions}
+          initialSampleData={defaultSampleData}
+        />
+      </BasicModal>
     </div>
   );
 };
 
-export default AddSamplePage;
+export default AddSampleModal;

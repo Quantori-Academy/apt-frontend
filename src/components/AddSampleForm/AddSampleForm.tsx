@@ -109,9 +109,6 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>
-        {t("addSubstanceForm.title.sample")}
-      </Typography>
       <form onSubmit={handleFormSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>

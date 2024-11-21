@@ -5,10 +5,9 @@ import {
   Container,
   Grid,
   TextField,
-  Typography,
 } from "@mui/material";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -34,7 +33,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
   const {
     register,
     handleSubmit,
-    setValue,
+    control,
     formState: { errors },
   } = useForm<ReagentData>({
     defaultValues: {
@@ -58,18 +57,8 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
     navigate(RouteProtectedPath.substances);
   };
 
-  const handleLocationChange = (
-    _event: React.ChangeEvent<unknown>,
-    value: LocationOption | null
-  ) => {
-    setValue("locationId", value ? value.id : "0");
-  };
-
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>
-        {t("addSubstanceForm.title.reagent")}
-      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -194,25 +183,35 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
 
           <Grid item xs={12}>
-            <Autocomplete
-              id="location-select"
-              options={locationOptions}
-              getOptionLabel={(option) => option.label}
-              onChange={handleLocationChange}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={t("addSubstanceForm.requiredFields.location.label")}
-                  placeholder="Select location"
-                  fullWidth
-                  margin="normal"
-                  error={!!errors.locationId}
-                  helperText={errors.locationId?.message}
-                  {...register("locationId", {
-                    required: t(
-                      "addSubstanceForm.requiredFields.location.requiredMessage"
-                    ),
-                  })}
+            <Controller
+              name="locationId"
+              control={control}
+              rules={{
+                required: t(
+                  "addSubstanceForm.requiredFields.location.requiredMessage"
+                ),
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <Autocomplete
+                  id="location-select"
+                  options={locationOptions}
+                  getOptionLabel={({ label }) => label}
+                  onChange={(_event, value) =>
+                    field.onChange(value ? value.id : 0)
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label={t(
+                        "addSubstanceForm.requiredFields.location.label"
+                      )}
+                      placeholder="Select location"
+                      fullWidth
+                      margin="normal"
+                      error={!!error}
+                      helperText={error?.message}
+                    />
+                  )}
                 />
               )}
             />
