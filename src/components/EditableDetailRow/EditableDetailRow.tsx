@@ -10,26 +10,26 @@ type EditableDetailTextFieldType = "text" | "number";
 
 type EditableDetailRowProps<T extends FieldValues> = {
   label: string;
-  value: string | number | null | undefined;
+  value?: string | number | null;
   isEditable?: boolean;
-  register: UseFormRegister<T>;
-  fieldName: Path<T>;
-  errors?: FieldErrors<T>;
   requiredFields?: boolean;
   requiredMessage?: string;
+  fieldName: Path<T>;
+  errors?: FieldErrors<T>;
   TextFieldType?: EditableDetailTextFieldType;
+  register: UseFormRegister<T>;
 };
 
 const EditableDetailRow = <T extends FieldValues>({
   label,
   value,
   isEditable,
-  register,
-  fieldName,
-  errors,
   requiredFields = false,
   requiredMessage,
+  fieldName,
+  errors,
   TextFieldType = "text",
+  register,
 }: EditableDetailRowProps<T>) => {
   return (
     <TableRow>

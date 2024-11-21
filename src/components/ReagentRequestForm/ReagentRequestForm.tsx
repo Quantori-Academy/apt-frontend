@@ -7,17 +7,17 @@ import { ReagentRequestInput } from "@/types";
 import style from "@/components/AddUserForm/AddUserForm.module.css";
 
 type ReagentRequestFormProps = {
-  onSubmit: (newReagentRequest: ReagentRequestInput) => void;
   isLoading: boolean;
-  onClose: () => void;
   isEdit: boolean;
+  onSubmit: (newReagentRequest: ReagentRequestInput) => void;
+  onClose: () => void;
 };
 
 const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
-  onSubmit,
   isLoading,
-  onClose,
   isEdit,
+  onSubmit,
+  onClose,
 }) => {
   const { t } = useTranslation();
   const {

@@ -9,12 +9,17 @@ import {
 import React, { ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { PageLoader, SearchBar, SubstancesTable } from "@/components";
-import { AddReagentModal } from "@/components/AddReagentModal";
-import { AddSampleModal } from "@/components/AddSampleModal";
-import { CategoryFilter } from "@/components/CategoryFilter";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
-import { PageError } from "@/components/PageError";
+import {
+  AddReagentModal,
+  AddSampleModal,
+  CategoryFilter,
+  DashboardBreadcrumbs,
+  PageError,
+  PageLoader,
+  SearchBar,
+  SubstancesTable,
+} from "@/components";
+import "@/components/AddReagentModal";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
 import { selectUserRole, useGetSubstancesQuery } from "@/store";

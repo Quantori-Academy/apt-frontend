@@ -18,16 +18,16 @@ import { LocationDetails } from "@/types";
 
 type ChangeLocationDialogProps = {
   open: boolean;
-  onClose: () => void;
   locationDetails: LocationDetails;
   selectedSubstanceId: string;
+  onClose: () => void;
 };
 
 const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
   open,
-  onClose,
   locationDetails,
   selectedSubstanceId,
+  onClose,
 }) => {
   const { t } = useTranslation();
 
@@ -37,7 +37,7 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
   const { data: rooms, isLoading: isRoomsLoading } = useGetStorageRoomsQuery();
   const [moveSubstance] = useMoveSubstanceMutation();
 
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const roomToMove = rooms?.find((room) => room.room === selectedRoom);
 
@@ -62,9 +62,9 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
     });
 
     if (error) {
-      openSnackbar("error", t("storage.snackBarMessages.errorMove"));
+      showError(t("storage.snackBarMessages.errorMove"));
     } else {
-      openSnackbar("success", t("storage.snackBarMessages.successMove"));
+      showSuccess(t("storage.snackBarMessages.successMove"));
       onClose();
     }
   };
@@ -133,7 +133,6 @@ const ChangeLocationDialog: React.FC<ChangeLocationDialogProps> = ({
           </Button>
         </DialogActions>
       </Dialog>
-      {SnackbarComponent()}
     </>
   );
 };

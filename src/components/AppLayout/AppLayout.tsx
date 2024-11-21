@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
-import { Header } from "@/components";
+import { AlertSnackbar, Header } from "@/components";
 import { useAppSelector } from "@/hooks";
 import { selectUserIsAuthenticated } from "@/store";
 
@@ -27,6 +27,7 @@ const AppLayout = () => {
       <Header />
       <Container sx={isAuthenticated ? authStyles : unAuthStyles}>
         <Outlet />
+        <AlertSnackbar />
       </Container>
     </>
   );

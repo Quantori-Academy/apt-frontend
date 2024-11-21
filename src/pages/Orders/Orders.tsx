@@ -5,21 +5,18 @@ import { useTranslation } from "react-i18next";
 
 import {
   AddOrder,
+  DashboardBreadcrumbs,
   OrdersFilter,
   OrdersTable,
   PageError,
   PageLoader,
   SearchBar,
 } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
-import { useAlertSnackbar } from "@/hooks";
 import { useGetOrdersQuery } from "@/store";
 import { StatusFilter } from "@/types";
 
 const Orders = () => {
   const { t } = useTranslation();
-
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
@@ -107,18 +104,18 @@ const Orders = () => {
             searchQuery={searchQuery}
             statusFilter={statusFilter}
             page={page}
-            setPage={setPage}
             orders={orders}
+            setPage={setPage}
           />
         </>
       )}
 
-      <AddOrder
-        modalOpen={isOrderModalOpen}
-        onClose={() => setIsOrderModalOpen(false)}
-        openSnackbar={openSnackbar}
-      />
-      <SnackbarComponent />
+      {isOrderModalOpen && (
+        <AddOrder
+          modalOpen={isOrderModalOpen}
+          onClose={() => setIsOrderModalOpen(false)}
+        />
+      )}
     </Container>
   );
 };

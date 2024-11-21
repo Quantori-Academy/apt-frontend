@@ -1,9 +1,13 @@
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useParams } from "react-router-dom";
 
-import { PageError, PageLoader, SubstanceDetails } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import {
+  DashboardBreadcrumbs,
+  PageError,
+  PageLoader,
+  SubstanceDetails,
+} from "@/components";
+import { RouteProtectedPath } from "@/router";
 import { useGetSampleDetailsQuery } from "@/store";
 
 const SamplePage: React.FC = () => {

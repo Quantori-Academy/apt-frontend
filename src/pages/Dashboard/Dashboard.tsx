@@ -3,15 +3,14 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ScienceIcon from "@mui/icons-material/Science";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
-import { Box, Typography } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
+import { Box, CardContent, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
 import { DashboardCard } from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig.tsx";
+import { RouteProtectedPath } from "@/router";
 import { selectUserRole } from "@/store";
 
 import style from "./Dashboard.module.css";

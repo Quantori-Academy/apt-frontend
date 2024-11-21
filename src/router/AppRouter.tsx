@@ -1,7 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import { PageLoader } from "@/components";
-import { AppLayout } from "@/components/AppLayout";
+import { AppLayout, PageLoader } from "@/components";
 
 import { ProtectedRoute } from "./ProtectedRoute";
 import { protectedRoutesRouterConfig } from "./protectedRoutesRouterConfig";

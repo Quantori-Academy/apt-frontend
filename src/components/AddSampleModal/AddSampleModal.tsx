@@ -4,11 +4,13 @@ import { useTranslation } from "react-i18next";
 
 import { AddSampleForm } from "@/components/AddSampleForm";
 import { BasicModal } from "@/components/BasicModal";
-import useAlertSnackbar from "@/hooks/useAlertSnackbar";
-import { useCreateSampleMutation } from "@/store";
-import { useGetStorageRoomsQuery } from "@/store/storageApi";
-import { useGetSubstancesQuery } from "@/store/substancesApi";
-import { SampleData } from "@/types/sampleData";
+import { useAlertSnackbar } from "@/hooks";
+import {
+  useCreateSampleMutation,
+  useGetStorageRoomsQuery,
+  useGetSubstancesQuery,
+} from "@/store";
+import { SampleData } from "@/types";
 
 const defaultSampleData: SampleData = {
   name: "",
@@ -32,7 +34,7 @@ const AddSampleModal: React.FC = () => {
     useGetStorageRoomsQuery();
 
   const [createSample, { isLoading }] = useCreateSampleMutation();
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const handleCreateSample = async (sampleData: SampleData) => {
     try {
@@ -43,17 +45,11 @@ const AddSampleModal: React.FC = () => {
 
       await createSample(processedSampleData).unwrap();
 
-      openSnackbar(
-        "success",
-        t("addSubstanceForm.snackBarMessages.sample.success")
-      );
+      showSuccess(t("addSubstanceForm.snackBarMessages.sample.success"));
       setIsOpen(false);
     } catch (error) {
       console.error("Failed to create sample:", error);
-      openSnackbar(
-        "error",
-        t("addSubstanceForm.snackBarMessages.sample.error")
-      );
+      showError(t("addSubstanceForm.snackBarMessages.sample.error"));
     }
   };
 
@@ -100,8 +96,6 @@ const AddSampleModal: React.FC = () => {
           initialSampleData={defaultSampleData}
         />
       </BasicModal>
-
-      <SnackbarComponent />
     </div>
   );
 };

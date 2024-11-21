@@ -45,7 +45,7 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
     },
   });
 
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   if (isLoadingUserDetails) return <PageLoader />;
 
@@ -56,9 +56,9 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
     });
 
     if (error) {
-      openSnackbar("error", t("userDetails.snackBarMessages.role.error"));
+      showError(t("userDetails.snackBarMessages.role.error"));
     } else {
-      openSnackbar("success", t("userDetails.snackBarMessages.role.success"));
+      showSuccess(t("userDetails.snackBarMessages.role.success"));
       setIsEditMode(false);
     }
   };
@@ -129,8 +129,6 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
           )}
         </form>
       )}
-
-      {SnackbarComponent()}
     </Container>
   );
 };

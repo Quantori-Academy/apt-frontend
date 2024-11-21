@@ -1,7 +1,7 @@
 import { Box, Modal, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { AddUserForm } from "@/components/AddUserForm";
+import { AddUserForm } from "@/components";
 import { Severity, useAlertSnackbar } from "@/hooks";
 
 import style from "./AddUserModal.module.css";
@@ -14,15 +14,15 @@ type AddUserModalProps = {
 const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
   const { t } = useTranslation();
 
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   function handleFormSubmit(status: Severity) {
     if (status === "success") {
-      openSnackbar("success", t("addUserForm.snackBarMessages.success"));
+      showSuccess(t("addUserForm.snackBarMessages.success"));
       onClose();
     } else {
       //TODO: error from backend,
-      openSnackbar("error", t("addUserForm.snackBarMessages.error"));
+      showError(t("addUserForm.snackBarMessages.error"));
     }
   }
 
@@ -41,7 +41,6 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ open, onClose }) => {
           <AddUserForm onFormSubmit={handleFormSubmit} />
         </Box>
       </Modal>
-      {SnackbarComponent()}
     </>
   );
 };

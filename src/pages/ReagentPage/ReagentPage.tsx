@@ -2,9 +2,13 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
-import { PageError, PageLoader, SubstanceDetails } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
+import {
+  DashboardBreadcrumbs,
+  PageError,
+  PageLoader,
+  SubstanceDetails,
+} from "@/components";
+import { RouteProtectedPath } from "@/router";
 import { useGetReagentDetailsQuery } from "@/store";
 
 const ReagentPage: React.FC = () => {

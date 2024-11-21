@@ -15,9 +15,12 @@ import {
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { DeclineReagentRequest, PageError } from "@/components";
-import { EditReagentRequest } from "@/components/EditReagentRequest";
-import { userRoles } from "@/constants";
+import {
+  DeclineReagentRequest,
+  EditReagentRequest,
+  PageError,
+} from "@/components";
+import { statusColors, userRoles } from "@/constants";
 import { Severity, useAlertSnackbar, useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
 import {
@@ -31,30 +34,25 @@ import { formatDate } from "@/utils";
 type ReagentRequestTableProps = {
   sortColumn: RequestsSortColumns;
   sortDirection: SortDirection;
-  onSortChange: (property: RequestsSortColumns) => void;
   visibleItems: ReagentRequests;
   selected: Array<string>;
+  pendingItems: ReagentRequests;
+  onSortChange: (property: RequestsSortColumns) => void;
   isSelected: (id: string) => boolean;
   handleSelectAllClick: (isChecked: boolean) => void;
-  handleCheckboxClick: (id: string) => void;
-};
-
-const statusColors = {
-  Declined: "#b22a00",
-  Pending: "#ff9800",
-  Ordered: "#4caf50",
-  Completed: "#4caf50",
+  toggleCheckbox: (id: string) => void;
 };
 
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   sortColumn,
   sortDirection,
-  onSortChange,
   visibleItems,
   selected,
+  pendingItems,
+  onSortChange,
   isSelected,
   handleSelectAllClick,
-  handleCheckboxClick,
+  toggleCheckbox,
 }) => {
   const [requestId, setRequestId] = useState("");
   const [editRequest, setEditRequest] = useState<RequestedReagent>({
@@ -76,10 +74,14 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   const { t } = useTranslation();
   const role = useAppSelector(selectUserRole);
 
-  const { SnackbarComponent, openSnackbar } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const handleSubmit = (severity: Severity, errorMessage: string) => {
-    openSnackbar(severity, errorMessage);
+    if (severity === "success") {
+      showSuccess(errorMessage);
+    } else {
+      showError(errorMessage);
+    }
   };
 
   const handleDecline = (id: string) => {
@@ -106,24 +108,27 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {role === userRoles.ProcurementOfficer && (
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    color="primary"
-                    indeterminate={
-                      selected.length > 0 &&
-                      selected.length < visibleItems.length
-                    }
-                    checked={
-                      visibleItems.length > 0 &&
-                      selected.length === visibleItems.length
-                    }
-                    onChange={(event) =>
-                      handleSelectAllClick(event.target.checked)
-                    }
-                  />
-                </TableCell>
-              )}
+              {role === userRoles.ProcurementOfficer &&
+                (pendingItems.length !== 0 ? (
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      color="primary"
+                      indeterminate={
+                        selected.length > 0 &&
+                        selected.length < pendingItems.length
+                      }
+                      checked={
+                        pendingItems.length > 0 &&
+                        selected.length === pendingItems.length
+                      }
+                      onChange={(event) =>
+                        handleSelectAllClick(event.target.checked)
+                      }
+                    />
+                  </TableCell>
+                ) : (
+                  <TableCell />
+                ))}
               <TableCell>
                 <TableSortLabel
                   active={sortColumn === "name"}
@@ -174,15 +179,24 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
             {visibleItems?.map((row: RequestedReagent, index) => (
               <TableRow
                 key={row.id}
-                selected={isSelected(row.id)}
-                onClick={() => handleCheckboxClick(row.id)}
+                selected={row.status === "Pending" ? isSelected(row.id) : false}
+                onClick={
+                  role === userRoles.ProcurementOfficer &&
+                  row.status === "Pending"
+                    ? () => toggleCheckbox(row.id)
+                    : undefined
+                }
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                {role === userRoles.ProcurementOfficer && (
-                  <TableCell padding="checkbox">
-                    <Checkbox color="primary" checked={isSelected(row.id)} />
-                  </TableCell>
-                )}
+                {role === userRoles.ProcurementOfficer &&
+                  (row.status === "Pending" ? (
+                    <TableCell padding="checkbox">
+                      <Checkbox color="primary" checked={isSelected(row.id)} />
+                    </TableCell>
+                  ) : (
+                    <TableCell />
+                  ))}
+
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
@@ -202,7 +216,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                 <TableCell>{formatDate(row.dateModified)}</TableCell>
                 <TableCell>
                   {role === userRoles.ProcurementOfficer &&
-                    row.status !== "Declined" && (
+                    row.status === "Pending" && (
                       <IconButton
                         title={t("requests.table.actionButtons.decline")}
                         onClick={() => handleDecline(row.id)}
@@ -227,20 +241,18 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
       </TableContainer>
 
       <DeclineReagentRequest
-        onDeclineSubmit={handleSubmit}
         id={requestId}
-        onClose={() => setModalOpen(false)}
         modalOpen={modalOpen}
+        onDeclineSubmit={handleSubmit}
+        onClose={() => setModalOpen(false)}
       />
       <EditReagentRequest
-        onClose={() => setDetailsModalOpen(false)}
         modalOpen={detailsModalOpen}
         request={editRequest}
         requestId={requestId}
+        onClose={() => setDetailsModalOpen(false)}
         onEditSubmit={handleSubmit}
       />
-
-      {SnackbarComponent()}
     </>
   );
 };

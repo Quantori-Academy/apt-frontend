@@ -3,14 +3,14 @@ import { Action, ThunkAction, combineSlices, configureStore } from "@reduxjs/too
 import { reagentRequestApi } from "@/store/reagentRequestApi.ts";
 
 import { ordersApi } from "./ordersApi";
-import { authSlice, counterSlice } from "./slices";
+import { authSlice, snackbarSlice } from "./slices";
 import { storageApi } from "./storageApi";
 import { substancesApi } from "./substancesApi";
 import { usersApi } from "./usersApi";
 
 const rootReducer = combineSlices(
-  counterSlice,
   authSlice,
+  snackbarSlice,
   storageApi,
   usersApi,
   substancesApi,

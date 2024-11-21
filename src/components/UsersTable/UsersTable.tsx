@@ -12,10 +12,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "@/hooks";
-import {
-  AppProtectedRoutes,
-  RouteProtectedPath,
-} from "@/router/protectedRoutesRouterConfig";
+import { RouteProtectedPath } from "@/router";
 import { selectUserId } from "@/store";
 import { UserFrontendDetails } from "@/types";
 
@@ -47,11 +44,9 @@ const UsersTable: React.FC<UserTableProps> = ({ users }) => {
 
   const handleEdit = (selectedUserIdFromTable: string) => {
     if (selectedUserIdFromTable === loggedInUserId) {
-      navigate(RouteProtectedPath[AppProtectedRoutes.ACCOUNT_SETTINGS]);
+      navigate(RouteProtectedPath.accountSettings);
     } else {
-      navigate(
-        `${RouteProtectedPath[AppProtectedRoutes.USERS]}/${selectedUserIdFromTable}`
-      );
+      navigate(`${RouteProtectedPath.users}/${selectedUserIdFromTable}`);
     }
   };
 

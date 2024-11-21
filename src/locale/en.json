@@ -27,7 +27,8 @@
       "login": "Login",
       "logout": "Logout",
       "create": "Create",
-      "submit": "Submit"
+      "submit": "Submit",
+      "add": "Add"
     },
 
     "users": {
@@ -63,7 +64,7 @@
         "actions": "Actions"
       },
 
-      "statusLocked":{
+      "statusLocked": {
         "title": "Warning!",
         "text": "You need to change your password, or you'll be locked out"
       }
@@ -415,14 +416,15 @@
       },
 
       "snackBarMessages": {
-        "successEdit": "Room edited successfully!",
-        "errorEdit": "Failed to edit room!",
+        "successEdit": "Room edited successfully",
+        "errorEdit": "Failed to edit room",
         "successDelete": "Storage location deleted successfully",
         "errorDelete": "Failed to delete storage location",
         "successMove": "Substance moved successfully",
         "errorMove": "Failed to move substances",
         "notEmptyError": "You can't delete this storage location because it contains substances",
-        "creationError": "Failed to create storage location!"
+        "creationSuccess": "Location created successfully",
+        "creationError": "Failed to create storage location"
       }
     },
 
@@ -436,6 +438,7 @@
         "createOrder": "Create Order",
         "create": "Create",
         "updateStatus": "Update Status",
+        "addReagents": "Add Reagents",
         "chooseLocation": "Choose Location"
       },
 
@@ -481,6 +484,8 @@
     },
 
     "createOrderForm": {
+      "title": "Add reagents to the order",
+
       "buttons": {
         "removeReagentFromOrder": "Remove from order"
       },
@@ -492,6 +497,10 @@
       "snackBarMessages": {
         "creation": {
           "success": "Order created successfully"
+        },
+        "addingReagents": {
+          "success": "Reagents added successfully",
+          "error": "Falied to add reagents"
         }
       },
 

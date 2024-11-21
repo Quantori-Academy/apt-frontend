@@ -3,11 +3,11 @@ import { Box, IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 
 type LanguageSwitcherProps = {
-  handleChangeLanguage: (value: string) => void;
   language: string;
+  handleChangeLanguage: (value: string) => void;
 };
 
-export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
+const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   language,
   handleChangeLanguage,
 }) => {
@@ -46,3 +46,5 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
     </Box>
   );
 };
+
+export default LanguageSwitcher;

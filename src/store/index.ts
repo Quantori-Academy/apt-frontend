@@ -49,7 +49,7 @@ export {
   useAddReagentRequestMutation,
   useEditReagentRequestMutation,
   useCreateOrderFromRequestsMutation,
-} from "./reagentRequestApi.ts";
+} from "./reagentRequestApi";
 
 export {
   useGetOrdersQuery,
@@ -60,4 +60,13 @@ export {
   useEditOrderTitleSellerMutation,
   useUpdateOrderStatusMutation,
   useChooseLocationMutation,
-} from "./ordersApi.ts";
+  useAddReagentsToOrderMutation,
+} from "./ordersApi";
+
+export {
+  showSnackbar,
+  hideSnackbar,
+  selectIsSnackBarOpen,
+  selectSnackbarMessage,
+  selectSnackbarStatus,
+} from "./slices/snackbarSlice";

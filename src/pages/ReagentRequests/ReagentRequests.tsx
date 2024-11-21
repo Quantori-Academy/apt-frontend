@@ -4,15 +4,20 @@ import { useTranslation } from "react-i18next";
 
 import {
   AddReagentRequest,
+  DashboardBreadcrumbs,
   OrderFromRequest,
   PageError,
   PageLoader,
   ReagentRequestTable,
   StatusFilter,
 } from "@/components";
-import { DashboardBreadcrumbs } from "@/components/DashboardBreadcrumbs";
 import { userRoles } from "@/constants";
-import { useAlertSnackbar, useAppSelector, useCheckedRows } from "@/hooks";
+import {
+  Severity,
+  useAlertSnackbar,
+  useAppSelector,
+  useCheckedRows,
+} from "@/hooks";
 import {
   selectUserId,
   selectUserRole,
@@ -42,7 +47,7 @@ const ReagentRequests: React.FC = () => {
   const userId = useAppSelector(selectUserId);
   const role = useAppSelector(selectUserRole);
 
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const { t } = useTranslation();
 
@@ -70,6 +75,7 @@ const ReagentRequests: React.FC = () => {
         statusFilter,
       }),
     [
+      role,
       reagentRequestsOfficer,
       sortColumn,
       sortDirection,
@@ -78,15 +84,16 @@ const ReagentRequests: React.FC = () => {
       reagentRequestsResearcher,
     ]
   );
+  const pendingItems = visibleItems.filter((item) => item.status === "Pending");
 
   const {
     selected,
     selectedRows,
     isSelected,
     handleSelectAllClick,
-    handleCheckboxClick,
+    toggleCheckbox,
     setSelected,
-  } = useCheckedRows(visibleItems);
+  } = useCheckedRows(pendingItems);
 
   if (isOfficerRequestsLoading || isResearcherRequestsLoading)
     return <PageLoader />;
@@ -100,13 +107,12 @@ const ReagentRequests: React.FC = () => {
     setSortColumn(property);
   };
 
-  const onAddRequestForm = (severity: "error" | "success") => {
-    openSnackbar(
-      severity,
-      severity === "error"
-        ? t("requests.snackBarMessages.failedAdd")
-        : t("requests.snackBarMessages.added")
-    );
+  const onAddRequestForm = (severity: Severity) => {
+    if (severity === "error")
+      showError(t("requests.snackBarMessages.failedAdd"));
+    else {
+      showSuccess(t("requests.snackBarMessages.added"));
+    }
   };
 
   const handleCreateOrder = () => {
@@ -147,12 +153,13 @@ const ReagentRequests: React.FC = () => {
       <ReagentRequestTable
         sortColumn={sortColumn}
         sortDirection={sortDirection}
-        onSortChange={handleSortChange}
         visibleItems={visibleItems}
         selected={selected}
+        onSortChange={handleSortChange}
         isSelected={isSelected}
         handleSelectAllClick={handleSelectAllClick}
-        handleCheckboxClick={handleCheckboxClick}
+        toggleCheckbox={toggleCheckbox}
+        pendingItems={pendingItems}
       />
       <Box className={style.pagination}>
         <Pagination
@@ -164,18 +171,18 @@ const ReagentRequests: React.FC = () => {
       {isOrderModalOpen && (
         <OrderFromRequest
           modalOpen={isOrderModalOpen}
-          onClose={() => setIsOrderModalOpen(false)}
-          openSnackbar={openSnackbar}
           requests={selectedRows}
-          onCreateOrder={() => setSelected([])}
+          onClose={() => setIsOrderModalOpen(false)}
+          onCreateOrder={() => setSelected(new Set())}
         />
       )}
-      <AddReagentRequest
-        modalOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onAddRequestForm={onAddRequestForm}
-      />
-      {SnackbarComponent()}
+      {modalOpen && (
+        <AddReagentRequest
+          modalOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onAddRequestForm={onAddRequestForm}
+        />
+      )}
     </Container>
   );
 };

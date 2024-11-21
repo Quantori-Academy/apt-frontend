@@ -14,22 +14,16 @@ const AddReagentModal: React.FC = () => {
 
   const { data: storageRooms } = useGetStorageRoomsQuery();
   const [createReagent] = useCreateReagentMutation();
-  const { openSnackbar, SnackbarComponent } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const handleCreateReagent = async (reagentData: ReagentData) => {
     try {
       await createReagent(reagentData).unwrap();
-      openSnackbar(
-        "success",
-        t("addSubstanceForm.snackBarMessages.reagent.success")
-      );
+      showSuccess(t("addSubstanceForm.snackBarMessages.reagent.success"));
       setIsOpen(false);
     } catch (error) {
       console.error("Error adding reagent:", error);
-      openSnackbar(
-        "error",
-        t("addSubstanceForm.snackBarMessages.reagent.error")
-      );
+      showError(t("addSubstanceForm.snackBarMessages.reagent.error"));
     }
   };
 
@@ -62,8 +56,6 @@ const AddReagentModal: React.FC = () => {
           locationOptions={locationOptions}
         />
       </BasicModal>
-
-      <SnackbarComponent />
     </div>
   );
 };

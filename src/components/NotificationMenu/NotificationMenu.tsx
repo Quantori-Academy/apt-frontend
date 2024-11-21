@@ -3,15 +3,15 @@ import { Menu, Typography } from "@mui/material";
 type NotificationMenuProps = {
   notificationText: string;
   anchorEl: HTMLElement | null;
-  handleClose: () => void;
   open: boolean;
+  handleClose: () => void;
 };
 
 const NotificationMenu: React.FC<NotificationMenuProps> = ({
   notificationText,
   anchorEl,
-  handleClose,
   open,
+  handleClose,
 }) => {
   return (
     <Menu

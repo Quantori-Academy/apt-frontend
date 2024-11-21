@@ -3,50 +3,40 @@ import { useMemo, useState } from "react";
 import { ReagentRequests } from "@/types";
 
 export const useCheckedRows = (rows: ReagentRequests) => {
-  const [selected, setSelected] = useState<Array<string>>([]);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
 
-  const isSelected = (id: string) => selected.includes(id);
+  const isSelected = (id: string) => selected.has(id);
 
-  const handleCheckboxClick = (id: string) => {
+  const toggleCheckbox = (id: string) => {
     setSelected((prevSelected) => {
-      const selectedIndex = prevSelected.indexOf(id);
-      let newSelected: Array<string> = [];
-
-      if (selectedIndex === -1) {
-        newSelected = [...prevSelected, id];
-      } else if (selectedIndex === 0) {
-        newSelected = prevSelected.slice(1);
-      } else if (selectedIndex === prevSelected.length - 1) {
-        newSelected = prevSelected.slice(0, -1);
-      } else if (selectedIndex > 0) {
-        newSelected = [
-          ...prevSelected.slice(0, selectedIndex),
-          ...prevSelected.slice(selectedIndex + 1),
-        ];
+      const newSelected = new Set(prevSelected);
+      if (newSelected.has(id)) {
+        newSelected.delete(id);
+      } else {
+        newSelected.add(id);
       }
-
       return newSelected;
     });
   };
 
   const handleSelectAllClick = (isChecked: boolean) => {
     if (isChecked) {
-      setSelected(rows.map((row) => row.id));
+      setSelected(new Set(rows.map((row) => row.id))); // Select all
     } else {
-      setSelected([]);
+      setSelected(new Set());
     }
   };
 
   const selectedRows = useMemo(
-    () => rows.filter((row) => selected.includes(row.id)),
+    () => rows.filter((row) => selected.has(row.id)),
     [rows, selected]
   );
 
   return {
-    selected,
+    selected: Array.from(selected),
     selectedRows,
     isSelected,
-    handleCheckboxClick,
+    toggleCheckbox,
     handleSelectAllClick,
     setSelected,
   };

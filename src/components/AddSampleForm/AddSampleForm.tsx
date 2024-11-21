@@ -12,8 +12,8 @@ import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { RouteProtectedPath } from "@/router/protectedRoutesRouterConfig";
-import { SampleData } from "@/types/sampleData.ts";
+import { RouteProtectedPath } from "@/router";
+import { SampleData } from "@/types";
 
 type LocationOption = {
   id: number;
@@ -28,17 +28,17 @@ type ReagentOption = {
 
 type AddSampleFormProps = {
   initialSampleData: SampleData;
-  handleSubmit: (sampleData: SampleData) => Promise<void>;
   isLoading: boolean;
   reagentOptions: ReagentOption[];
   locationOptions: LocationOption[];
+  handleSubmit: (sampleData: SampleData) => Promise<void>;
 };
 
 const AddSampleForm: React.FC<AddSampleFormProps> = ({
-  handleSubmit,
   isLoading,
   reagentOptions,
   locationOptions,
+  handleSubmit,
 }) => {
   const { t } = useTranslation();
 
