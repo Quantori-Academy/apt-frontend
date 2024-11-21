@@ -50,16 +50,21 @@ const ReagentRequests: React.FC = () => {
   const { showSuccess, showError } = useAlertSnackbar();
 
   const { t } = useTranslation();
+  const shouldLoadOwnRequests = role === userRoles.Researcher;
 
   const {
     data: reagentRequestsOfficer = [],
     isLoading: isOfficerRequestsLoading,
-  } = useGetAllReagentRequestsQuery();
+  } = useGetAllReagentRequestsQuery(undefined, {
+    skip: shouldLoadOwnRequests,
+  });
 
   const {
     data: reagentRequestsResearcher = [],
     isLoading: isResearcherRequestsLoading,
-  } = useGetOwnReagentRequestsQuery(userId!);
+  } = useGetOwnReagentRequestsQuery(userId!, {
+    skip: !shouldLoadOwnRequests,
+  });
 
   const { visibleItems, totalPages } = useMemo(
     () =>

@@ -1,6 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { BASE_URL, prepareHeaders } from "@/api";
 import {
   BackendOrder,
   BackendOrderDetailPage,
@@ -12,6 +11,7 @@ import {
   UpdatedReagent,
 } from "@/types";
 
+import { fetchQuery } from "./fetchQuery.ts";
 import {
   transformOrderData,
   transformOrderDetailResponse,
@@ -46,10 +46,7 @@ type Allocation = {
 
 export const ordersApi = createApi({
   reducerPath: "OrdersApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders,
-  }),
+  baseQuery: fetchQuery,
   tagTypes: ["Orders", "Order"],
   endpoints: (builder) => ({
     getOrders: builder.query<Order[], void>({
