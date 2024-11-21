@@ -40,7 +40,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const [expanded, setExpanded] = useState<string | false>(false);
+  const [expandedFieldId, setExpandedFieldId] = useState<string>("");
 
   const {
     register,
@@ -59,12 +59,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
       required: t("createOrderForm.errors.noReagentsOrder"),
     },
   });
-
-  const handleChange =
-    (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-    };
-
+  console.log("test");
   return (
     <Dialog open={modalOpen} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle>
@@ -165,8 +160,10 @@ const OrderForm: React.FC<OrderFormProps> = ({
                 },
               }}
               square
-              expanded={expanded === field.id}
-              onChange={handleChange(field.id)}
+              expanded={expandedFieldId === field.id}
+              onChange={() =>
+                setExpandedFieldId(expandedFieldId === field.id ? "" : field.id)
+              }
             >
               <AccordionSummary
                 id={field.id}
