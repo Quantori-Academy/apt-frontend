@@ -1,4 +1,9 @@
+import { Delete as DeleteIcon } from "@mui/icons-material";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
   Dialog,
@@ -6,9 +11,11 @@ import {
   DialogTitle,
   Divider,
   FormHelperText,
+  IconButton,
   Stack,
   TextField,
 } from "@mui/material";
+import { useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -33,6 +40,8 @@ const OrderForm: React.FC<OrderFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  const [expanded, setExpanded] = useState<string | false>(false);
+
   const {
     register,
     handleSubmit,
@@ -51,12 +60,17 @@ const OrderForm: React.FC<OrderFormProps> = ({
     },
   });
 
+  const handleChange =
+    (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
+      setExpanded(newExpanded ? panel : false);
+    };
+
   return (
-    <Dialog open={modalOpen} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open={modalOpen} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle>
         {orderCreation
           ? t("orders.buttons.createOrder")
-          : t("createOrderForm.title")}
+          : t("createOrderForm.title.form")}
       </DialogTitle>
       <DialogContent
         sx={{
@@ -124,107 +138,157 @@ const OrderForm: React.FC<OrderFormProps> = ({
           <FormHelperText error sx={{ mt: 1, fontSize: 14 }}>
             {errors.reagents?.root?.message}
           </FormHelperText>
-          {fields.map((field, index, arr) => (
-            <Stack spacing={3} mt={5} mb={3} key={field.id}>
-              <Divider>
+          <Divider>
+            <Box
+              sx={{
+                display: "inline-block",
+                padding: "6px 12px",
+                fontSize: "20px",
+                fontWeight: 500,
+                color: "#004d40",
+                borderRadius: "16px",
+                backgroundColor: "#f0f0f0",
+                marginBottom: "15px",
+              }}
+            >
+              {t("createOrderForm.title.reagents")}
+            </Box>
+          </Divider>
+          {fields.map((field, index) => (
+            <Accordion
+              key={field.id}
+              sx={{
+                border: "1px solid #ccc",
+                margin: "0 ",
+                "&.MuiAccordion-root": {
+                  margin: 0,
+                },
+              }}
+              square
+              expanded={expanded === field.id}
+              onChange={handleChange(field.id)}
+            >
+              <AccordionSummary
+                id={field.id}
+                expandIcon={<ArrowDropDownIcon />}
+                sx={{
+                  "&.Mui-focusVisible": {
+                    backgroundColor: "transparent",
+                  },
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                  },
+                }}
+              >
                 <Box
+                  onClick={(event) => event.stopPropagation()}
                   sx={{
-                    display: "inline-block",
-                    padding: "6px 12px",
-                    fontSize: "20px",
-                    fontWeight: 500,
-                    color: "#004d40",
-                    borderRadius: "16px",
-                    backgroundColor: "#f0f0f0",
+                    display: "flex",
+                    gap: 2,
+                    alignItems: "center",
+                    cursor: "default",
                   }}
                 >
-                  {`${t("substances.filters.options.Reagent")} №${arr.length - index}`}
+                  <TextField
+                    fullWidth
+                    label={t("createOrderForm.requiredFields.name.label")}
+                    {...register(`reagents.${index}.reagentName`, {
+                      required: t(
+                        "createOrderForm.requiredFields.name.requiredMessage"
+                      ),
+                    })}
+                    error={!!errors.reagents?.[index]?.reagentName}
+                  />
+                  <TextField
+                    label={t("createOrderForm.requiredFields.units.label")}
+                    fullWidth
+                    {...register(`reagents.${index}.unit`, {
+                      required: t(
+                        "createOrderForm.requiredFields.units.requiredMessage"
+                      ),
+                    })}
+                    error={!!errors.reagents?.[index]?.unit}
+                  />
+                  <TextField
+                    label={t("createOrderForm.requiredFields.quantity.label")}
+                    fullWidth
+                    inputProps={{ min: 0 }}
+                    type="number"
+                    {...register(`reagents.${index}.quantity`, {
+                      required: t(
+                        "createOrderForm.requiredFields.quantity.requiredMessage"
+                      ),
+                    })}
+                    error={!!errors.reagents?.[index]?.quantity}
+                  />
+                  <TextField
+                    label={t("createOrderForm.requiredFields.price.label")}
+                    fullWidth
+                    inputProps={{ min: 0 }}
+                    type="number"
+                    {...register(`reagents.${index}.pricePerUnit`, {
+                      required: t(
+                        "createOrderForm.requiredFields.price.requiredMessage"
+                      ),
+                    })}
+                    error={!!errors.reagents?.[index]?.pricePerUnit}
+                  />
+                  <IconButton
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      remove(index);
+                    }}
+                    color="error"
+                    aria-label="delete"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </Box>
-              </Divider>
-              <TextField
-                label={t("createOrderForm.requiredFields.name.label")}
-                {...register(`reagents.${index}.reagentName`, {
-                  required: t(
-                    "createOrderForm.requiredFields.name.requiredMessage"
-                  ),
-                })}
-                helperText={errors.reagents?.[index]?.reagentName?.message}
-                error={!!errors.reagents?.[index]?.reagentName}
-              />
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <TextField
-                  label={t("createOrderForm.requiredFields.units.label")}
-                  fullWidth
-                  {...register(`reagents.${index}.unit`, {
-                    required: t(
-                      "createOrderForm.requiredFields.units.requiredMessage"
-                    ),
-                  })}
-                  helperText={errors.reagents?.[index]?.unit?.message}
-                  error={!!errors.reagents?.[index]?.unit}
-                />
-                <TextField
-                  label={t("createOrderForm.requiredFields.quantity.label")}
-                  fullWidth
-                  inputProps={{ min: 0 }}
-                  type="number"
-                  {...register(`reagents.${index}.quantity`, {
-                    required: t(
-                      "createOrderForm.requiredFields.quantity.requiredMessage"
-                    ),
-                  })}
-                  helperText={errors.reagents?.[index]?.quantity?.message}
-                  error={!!errors.reagents?.[index]?.quantity}
-                />
-                <TextField
-                  label={t("createOrderForm.requiredFields.price.label")}
-                  fullWidth
-                  inputProps={{ min: 0 }}
-                  type="number"
-                  {...register(`reagents.${index}.pricePerUnit`, {
-                    required: t(
-                      "createOrderForm.requiredFields.price.requiredMessage"
-                    ),
-                  })}
-                  helperText={errors.reagents?.[index]?.pricePerUnit?.message}
-                  error={!!errors.reagents?.[index]?.pricePerUnit}
-                />
-              </Box>
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <TextField
-                  label={t("addSubstanceForm.requiredFields.CASNumber.label")}
-                  fullWidth
-                  {...register(`reagents.${index}.CASNumber`)}
-                />
-                <TextField
-                  label={t("addSubstanceForm.requiredFields.producer.label")}
-                  fullWidth
-                  {...register(`reagents.${index}.producer`)}
-                />
-              </Box>
-              <TextField
-                label={t("addSubstanceForm.requiredFields.structure.label")}
-                fullWidth
-                {...register(`reagents.${index}.structure`)}
-              />
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <TextField
-                  label={t("addSubstanceForm.requiredFields.catalogLink.label")}
-                  fullWidth
-                  sx={{ flex: "1" }}
-                  {...register(`reagents.${index}.catalogLink`)}
-                />
-                <TextField
-                  label={t("addSubstanceForm.requiredFields.catalogId.label")}
-                  fullWidth
-                  sx={{ flex: "0 0 20%" }}
-                  {...register(`reagents.${index}.catalogId`)}
-                />
-              </Box>
-              <Button type="button" onClick={() => remove(index)}>
-                {t("createOrderForm.buttons.removeReagentFromOrder")}
-              </Button>
-            </Stack>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Stack spacing={2}>
+                  <Box sx={{ display: "flex", gap: 2 }}>
+                    <TextField
+                      label={t(
+                        "addSubstanceForm.requiredFields.CASNumber.label"
+                      )}
+                      fullWidth
+                      {...register(`reagents.${index}.CASNumber`)}
+                    />
+                    <TextField
+                      label={t(
+                        "addSubstanceForm.requiredFields.producer.label"
+                      )}
+                      fullWidth
+                      {...register(`reagents.${index}.producer`)}
+                    />
+                  </Box>
+                  <TextField
+                    label={t("addSubstanceForm.requiredFields.structure.label")}
+                    fullWidth
+                    {...register(`reagents.${index}.structure`)}
+                  />
+                  <Box sx={{ display: "flex", gap: 2 }}>
+                    <TextField
+                      label={t(
+                        "addSubstanceForm.requiredFields.catalogLink.label"
+                      )}
+                      fullWidth
+                      sx={{ flex: "1" }}
+                      {...register(`reagents.${index}.catalogLink`)}
+                    />
+                    <TextField
+                      label={t(
+                        "addSubstanceForm.requiredFields.catalogId.label"
+                      )}
+                      fullWidth
+                      sx={{ flex: "0 0 20%" }}
+                      {...register(`reagents.${index}.catalogId`)}
+                    />
+                  </Box>
+                </Stack>
+              </AccordionDetails>
+            </Accordion>
           ))}
         </Box>
       </DialogContent>
