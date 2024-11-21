@@ -2,8 +2,7 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { AddSampleForm } from "@/components/AddSampleForm";
-import { BasicModal } from "@/components/BasicModal";
+import { AddSampleForm, BasicModal } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import {
   useCreateSampleMutation,
