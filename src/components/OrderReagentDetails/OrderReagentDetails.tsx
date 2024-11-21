@@ -8,6 +8,7 @@ import {
   Box,
   Link,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -22,6 +23,7 @@ import { useTranslation } from "react-i18next";
 
 import {
   ConfirmRemoving,
+  DetailItem,
   EditableDetailRow,
   OrderAccordionButtons,
 } from "@/components";
@@ -52,22 +54,20 @@ const OrderReagentSecondaryRows: readonly OrderReagentRow[] = [
   { label: "catalogID", key: "catalogId" },
 ];
 
-type expand = string | false;
-
 type OrderReagentDetailsProps = {
   orderId: string;
   reagent: OrderReagent;
-  expanded: expand;
+  expandedFieldId: string;
   status: OrderStatus;
-  setExpanded: (value: expand) => void;
+  setExpandedFieldId: (value: string) => void;
 };
 
 const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   orderId,
   reagent,
-  expanded,
+  expandedFieldId,
   status,
-  setExpanded,
+  setExpandedFieldId,
 }) => {
   const { t } = useTranslation();
 
@@ -135,10 +135,8 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
       reset();
     }
   };
-  const handleChange =
-    (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-    };
+
+  const isFieldExpanded = expandedFieldId === String(reagent.id);
 
   return (
     <>
@@ -147,15 +145,27 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
           boxShadow: `0px -1px 1px #00695f, 0px 1px 3px #00695f`,
           marginBottom: 2,
         }}
-        expanded={expanded === reagent.reagentName + reagent.quantity}
-        onChange={handleChange(reagent.reagentName + reagent.quantity)}
+        expanded={isFieldExpanded}
+        onChange={() =>
+          setExpandedFieldId(isFieldExpanded ? "" : String(reagent.id))
+        }
         key={reagent.id}
       >
         <AccordionSummary
           id={`${reagent.reagentName + reagent.quantity}`}
           expandIcon={<ArrowDropDownIcon />}
         >
-          {t("substances.filters.options.Reagent")}: {reagent.reagentName}
+          {!isFieldExpanded && (
+            <Stack direction="row" spacing={2}>
+              {OrderReagentMainRows.map(({ label, key }) => (
+                <DetailItem
+                  key={key}
+                  label={t(`substanceDetails.fields.${label}`)}
+                  value={reagent[key as keyof OrderReagent]}
+                />
+              ))}
+            </Stack>
+          )}
         </AccordionSummary>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <AccordionDetails>

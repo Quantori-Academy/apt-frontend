@@ -52,7 +52,7 @@ const OrderRows: readonly OrderRow[] = [
 const OrderPage: React.FC = () => {
   const { t } = useTranslation();
 
-  const [expanded, setExpanded] = useState<string | false>(false);
+  const [expandedFieldId, setExpandedFieldId] = useState("");
 
   const { id: orderId } = useParams<{ id: string }>();
 
@@ -224,10 +224,10 @@ const OrderPage: React.FC = () => {
         <OrderReagentDetails
           key={reagent.id}
           reagent={reagent}
-          expanded={expanded}
+          expandedFieldId={expandedFieldId}
           orderId={order.id}
           status={order.status}
-          setExpanded={setExpanded}
+          setExpandedFieldId={setExpandedFieldId}
         />
       ))}
     </>
