@@ -48,7 +48,7 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
   const onSubmit: SubmitHandler<OrderInput> = async (data) => {
     try {
       await createOrderFromRequests({
-        requestId: requests[0].id,
+        requestIds: requests.map((request) => request.id),
         ...data,
       }).unwrap();
       showSuccess(t("createOrderForm.snackBarMessages.creation.success"));
