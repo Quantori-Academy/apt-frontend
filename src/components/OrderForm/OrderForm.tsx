@@ -40,7 +40,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const [expandedFieldId, setExpandedFieldId] = useState<string>("");
+  const [expandedFieldId, setExpandedFieldId] = useState("");
 
   const {
     register,
