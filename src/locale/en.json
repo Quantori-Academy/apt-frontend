@@ -484,7 +484,10 @@
     },
 
     "createOrderForm": {
-      "title": "Add reagents to the order",
+      "title": {
+        "form": "Add reagents to the order",
+        "reagents": "Order reagents"
+      },
 
       "buttons": {
         "removeReagentFromOrder": "Remove from order"

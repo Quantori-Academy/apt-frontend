@@ -484,7 +484,10 @@
     },
 
     "createOrderForm": {
-      "title": "Добавьте реактивы к заказу",
+      "title": {
+        "form": "Добавьте реактивы к заказу",
+        "reagents": "Реактивы заказа"
+      },
 
       "buttons": {
         "removeReagentFromOrder": "Удалить из заказа"

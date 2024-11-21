@@ -192,12 +192,18 @@ class dashboard grey;
 
 - **Database Diagram**: Illustrates the key entities and relationships in our database.
 
-```mermaid
-erDiagram
+```erDiagram
     ROLE {
         enum Administrator
         enum Procurement_Officer
         enum Researcher
+    }
+
+    USER_STATUS {
+        enum Active
+        enum Password_Reset
+        enum Pre_Locked
+        enum Locked
     }
 
     COMPOUND {
@@ -210,6 +216,7 @@ erDiagram
         enum Ordered
         enum Declined
         enum Completed
+        enum Taken
     }
 
     ORDER_STATUS {
@@ -258,6 +265,7 @@ erDiagram
         varchar email "Email address of the user"
         char password_hash "Hashed password of the user"
         ROLE role "Role of the user in the system"
+        USER_STATUS status "Indicates user's account status"
         timestamp created_at "Creation timestamp"
         timestamptz last_login "Timestamp of last login"
     }
@@ -273,6 +281,7 @@ erDiagram
     SAMPLE {
         int substance_id FK "Reference to specific chemical substance"
         int added_substance_id FK "Added chemical to the sample"
+        int added_substance_quantity "Amount of the substance added to given sample"
     }
 
     REAGENT_REQUEST {
@@ -335,6 +344,7 @@ erDiagram
     REAGENT_ORDER ||--o{ ORDER_STATUS : "has"
     REAGENT_REQUEST ||--o{ REQUEST_STATUS : "has"
     USERS ||--o{ROLE: "have"
+    USERS ||--o{USER_STATUS: "have"
     SUBSTANCE ||--o{COMPOUND: "is"
 ```
 
