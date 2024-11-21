@@ -59,7 +59,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
       required: t("createOrderForm.errors.noReagentsOrder"),
     },
   });
-  console.log("test");
+
   return (
     <Dialog open={modalOpen} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle>
