@@ -33,9 +33,7 @@ const initialState: AuthSliceState = {
 
 export const loginUser = createAsyncThunk("auth/login", async (loginData: UserLoginInput, { rejectWithValue }) => {
   try {
-    const response = await apiManager.login(loginData);
-    localStorage.setItem("accessToken", response.token);
-    return response;
+    return apiManager.login(loginData);
   } catch (err) {
     if (typeof err === "object" && err !== null && "message" in err) {
       return rejectWithValue(err.message);
@@ -71,6 +69,10 @@ export const authSlice = createReducerSlice({
         state.errorMessage = null;
       })
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<Token>) => {
+        const { token, refresh_token } = action.payload;
+        localStorage.setItem("accessToken", token);
+        localStorage.setItem("refreshToken", refresh_token);
+
         state.isLoading = false;
         state.errorMessage = null;
         state.user = decodeUser(action.payload.token);
