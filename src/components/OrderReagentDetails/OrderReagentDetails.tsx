@@ -54,22 +54,20 @@ const OrderReagentSecondaryRows: readonly OrderReagentRow[] = [
   { label: "catalogID", key: "catalogId" },
 ];
 
-type expand = string | false;
-
 type OrderReagentDetailsProps = {
   orderId: string;
   reagent: OrderReagent;
-  expanded: expand;
+  expandedFieldId: string;
   status: OrderStatus;
-  setExpanded: (value: expand) => void;
+  setExpandedFieldId: (value: string) => void;
 };
 
 const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   orderId,
   reagent,
-  expanded,
+  expandedFieldId,
   status,
-  setExpanded,
+  setExpandedFieldId,
 }) => {
   const { t } = useTranslation();
 
@@ -138,12 +136,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
     }
   };
 
-  const handleChange =
-    (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-    };
-
-  const isExpanded = expanded === String(reagent.id);
+  const isFieldExpanded = expandedFieldId === String(reagent.id);
 
   return (
     <>
@@ -152,15 +145,17 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
           boxShadow: `0px -1px 1px #00695f, 0px 1px 3px #00695f`,
           marginBottom: 2,
         }}
-        expanded={isExpanded}
-        onChange={handleChange(String(reagent.id))}
+        expanded={isFieldExpanded}
+        onChange={() =>
+          setExpandedFieldId(isFieldExpanded ? "" : String(reagent.id))
+        }
         key={reagent.id}
       >
         <AccordionSummary
           id={`${reagent.reagentName + reagent.quantity}`}
           expandIcon={<ArrowDropDownIcon />}
         >
-          {!isExpanded && (
+          {!isFieldExpanded && (
             <Stack direction="row" spacing={2}>
               {OrderReagentMainRows.map(({ label, key }) => (
                 <DetailItem
