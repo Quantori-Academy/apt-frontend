@@ -1,9 +1,11 @@
 import { TableCell, TableRow, TextField, Typography } from "@mui/material";
 import {
+  Control,
+  Controller,
   FieldErrors,
   FieldValues,
   Path,
-  UseFormRegister,
+  PathValue,
 } from "react-hook-form";
 
 type EditableDetailTextFieldType = "text" | "number";
@@ -17,7 +19,7 @@ type EditableDetailRowProps<T extends FieldValues> = {
   fieldName: Path<T>;
   errors?: FieldErrors<T>;
   TextFieldType?: EditableDetailTextFieldType;
-  register: UseFormRegister<T>;
+  control: Control<T>;
 };
 
 const EditableDetailRow = <T extends FieldValues>({
@@ -29,7 +31,7 @@ const EditableDetailRow = <T extends FieldValues>({
   fieldName,
   errors,
   TextFieldType = "text",
-  register,
+  control,
 }: EditableDetailRowProps<T>) => {
   return (
     <TableRow>
@@ -38,18 +40,25 @@ const EditableDetailRow = <T extends FieldValues>({
       </TableCell>
       <TableCell align="center">
         {isEditable ? (
-          <TextField
-            size="small"
-            type={TextFieldType}
-            {...register(fieldName, {
+          <Controller
+            name={fieldName}
+            control={control}
+            defaultValue={value as PathValue<T, Path<T>>}
+            rules={{
               ...(requiredFields && {
                 required: requiredMessage,
               }),
-            })}
-            defaultValue={value}
-            error={!!errors?.[fieldName]}
-            helperText={errors?.[fieldName]?.message as string}
-            variant="outlined"
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                size="small"
+                type={TextFieldType}
+                error={!!errors?.[fieldName]}
+                helperText={errors?.[fieldName]?.message as string}
+                variant="outlined"
+              />
+            )}
           />
         ) : (
           value || "-"
