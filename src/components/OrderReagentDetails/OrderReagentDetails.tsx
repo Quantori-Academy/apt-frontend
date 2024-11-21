@@ -8,6 +8,7 @@ import {
   Box,
   Link,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -22,6 +23,7 @@ import { useTranslation } from "react-i18next";
 
 import {
   ConfirmRemoving,
+  DetailItem,
   EditableDetailRow,
   OrderAccordionButtons,
 } from "@/components";
@@ -135,10 +137,13 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
       reset();
     }
   };
+
   const handleChange =
     (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
     };
+
+  const isExpanded = expanded === String(reagent.id);
 
   return (
     <>
@@ -147,15 +152,25 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
           boxShadow: `0px -1px 1px #00695f, 0px 1px 3px #00695f`,
           marginBottom: 2,
         }}
-        expanded={expanded === reagent.reagentName + reagent.quantity}
-        onChange={handleChange(reagent.reagentName + reagent.quantity)}
+        expanded={isExpanded}
+        onChange={handleChange(String(reagent.id))}
         key={reagent.id}
       >
         <AccordionSummary
           id={`${reagent.reagentName + reagent.quantity}`}
           expandIcon={<ArrowDropDownIcon />}
         >
-          {t("substances.filters.options.Reagent")}: {reagent.reagentName}
+          {!isExpanded && (
+            <Stack direction="row" spacing={2}>
+              {OrderReagentMainRows.map(({ label, key }) => (
+                <DetailItem
+                  key={key}
+                  label={t(`substanceDetails.fields.${label}`)}
+                  value={reagent[key as keyof OrderReagent]}
+                />
+              ))}
+            </Stack>
+          )}
         </AccordionSummary>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <AccordionDetails>
