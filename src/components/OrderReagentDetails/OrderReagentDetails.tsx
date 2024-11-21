@@ -79,6 +79,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     reset,
   } = useForm<OrderReagent>({ mode: "onBlur" });
@@ -177,7 +178,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
                       key={key}
                       label={t(`substanceDetails.fields.${label}`)}
                       value={reagent[key as keyof OrderReagent]}
-                      register={register}
+                      control={control}
                       errors={errors}
                       isEditable={isEditable}
                       fieldName={key}
@@ -197,7 +198,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
                       key={key}
                       label={t(`substanceDetails.fields.${label}`)}
                       value={reagent[key as keyof OrderReagent]}
-                      register={register}
+                      control={control}
                       isEditable={isEditable}
                       fieldName={key}
                     />

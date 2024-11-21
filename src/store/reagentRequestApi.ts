@@ -5,10 +5,6 @@ import { OrderInput, ReagentRequests, RequestedReagentBackend } from "@/types";
 
 import { transformOrderData, transformRequestData } from "./utils";
 
-type OrderFromRequest = OrderInput & {
-  requestId: string;
-};
-
 export const reagentRequestApi = createApi({
   reducerPath: "requestsApi",
   baseQuery: fetchBaseQuery({
@@ -78,7 +74,7 @@ export const reagentRequestApi = createApi({
       invalidatesTags: ["Requests"],
     }),
 
-    createOrderFromRequests: builder.mutation<void, OrderFromRequest>({
+    createOrderFromRequests: builder.mutation<void, OrderInput>({
       query: (orderData) => ({
         url: "/orders",
         method: "POST",

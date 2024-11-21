@@ -4,7 +4,7 @@ import { BackendOrderReagent, UpdatedReagent } from "@/types";
 export const transformOrderData = (orderData: OrderInput): BackendOrderInput => ({
   ...(orderData.title && { title: orderData.title }),
   ...(orderData.seller && { seller: orderData.seller }),
-  ...(orderData.requestId && { request_id: orderData.requestId }),
+  request_ids: orderData.requestIds || [],
   reagents: orderData.reagents.map((reagent) => ({
     reagent_name: reagent.reagentName,
     unit: reagent.unit,

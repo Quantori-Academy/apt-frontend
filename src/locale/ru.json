@@ -598,7 +598,8 @@
         "Pending": "В ожидании",
         "Declined": "Отклонено",
         "Ordered": "Заказано",
-        "Completed": "Завершено"
+        "Completed": "Завершено",
+        "Taken": "Одобрено"
       },
       "declineRequest": {
         "title": "Отклонить запрос на реагент",

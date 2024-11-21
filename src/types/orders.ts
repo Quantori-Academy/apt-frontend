@@ -14,15 +14,13 @@ export type Order = {
   title: string;
   seller: string;
   status: OrderStatus;
-  requestId?: string;
   createdAt: string;
   modifiedAt: string;
 };
 
-export type BackendOrder = Omit<Order, "createdAt" | "modifiedAt" | "requestId"> & {
+export type BackendOrder = Omit<Order, "createdAt" | "modifiedAt"> & {
   created_at: string;
   modified_at: string;
-  request_id?: string;
 };
 
 export type OrderReagent = {
@@ -53,12 +51,12 @@ export type BackendOrderReagent = Pick<OrderReagent, "id" | "quantity" | "unit" 
 export type OrderInput = {
   title?: string;
   seller?: string;
-  requestId?: string;
+  requestIds?: string[];
   reagents: Omit<OrderReagent, "id">[];
 };
 
-export type BackendOrderInput = Omit<OrderInput, "reagents" | "requestId"> & {
-  request_id?: string;
+export type BackendOrderInput = Omit<OrderInput, "reagents" | "requestIds"> & {
+  request_ids?: string[];
   reagents: Omit<BackendOrderReagent, "id">[];
 };
 

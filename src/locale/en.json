@@ -598,7 +598,8 @@
         "Pending": "Pending",
         "Declined": "Declined",
         "Ordered": "Ordered",
-        "Completed": "Completed"
+        "Completed": "Completed",
+        "Taken": "Taken"
       },
 
       "declineRequest": {

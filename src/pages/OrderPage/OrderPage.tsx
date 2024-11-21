@@ -62,9 +62,9 @@ const OrderPage: React.FC = () => {
   const [isChoosingLocation, setIsChoosingLocation] = useState(false);
 
   const {
-    register: registerEditing,
     handleSubmit: handleSubmitEditing,
     formState: { errors },
+    control,
     reset: resetEditing,
   } = useForm<Omit<Order, "status">>({ mode: "onBlur" });
 
@@ -156,13 +156,13 @@ const OrderPage: React.FC = () => {
                   key !== "status" ? (
                     <EditableDetailRow
                       key={key}
+                      control={control}
                       label={t(`orders.table.${label}`)}
                       value={
                         key === "createdAt" || key === "modifiedAt"
                           ? formatDate(order[key as keyof OrderPageNoId])
                           : order[key as keyof OrderPageNoId] || "-"
                       }
-                      register={registerEditing}
                       errors={errors}
                       isEditable={
                         key === "seller" || key === "title" ? isEditable : false
