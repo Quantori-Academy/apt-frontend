@@ -2,11 +2,10 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { AddReagentForm } from "@/components/AddReagentForm";
-import { BasicModal } from "@/components/BasicModal";
-import useAlertSnackbar from "@/hooks/useAlertSnackbar";
+import { AddReagentForm, BasicModal } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
 import { useCreateReagentMutation, useGetStorageRoomsQuery } from "@/store";
-import { ReagentData } from "@/types/reagentData";
+import { ReagentData } from "@/types";
 
 const AddReagentModal: React.FC = () => {
   const { t } = useTranslation();
