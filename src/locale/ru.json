@@ -316,7 +316,9 @@
 
       "buttons": {
         "editDetails": "Редактировать детали",
-        "saveChanges": "Сохранить изменения"
+        "saveChanges": "Сохранить изменения",
+        "editQuantity": "Изменить количество",
+        "changeLocation": "Изменить местоположение"
       },
 
       "fields": {

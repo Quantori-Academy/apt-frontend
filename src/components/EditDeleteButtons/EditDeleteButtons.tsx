@@ -23,7 +23,7 @@ const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
           startIcon={<EditIcon />}
           onClick={onEdit}
         >
-          {t("buttons.edit")}
+          {t("substanceDetails.buttons.editQuantity")}
         </Button>
       </Grid>
       <Grid item>
@@ -33,7 +33,7 @@ const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
           startIcon={<DeleteIcon />}
           onClick={onDelete}
         >
-          {t("buttons.delete")}
+          {t("substanceDetails.buttons.changeLocation")}
         </Button>
       </Grid>
     </Grid>
