@@ -23,7 +23,7 @@ const QuantityLocationButtons: React.FC<QuantityLocationButtonsProps> = ({
           startIcon={<EditIcon />}
           onClick={onChangeQuantity}
         >
-          {t("substanceDetails.buttons.editQuantity")}
+          {t("substanceDetails.buttons.changeQuantity")}
         </Button>
       </Grid>
       <Grid item>
@@ -39,4 +39,5 @@ const QuantityLocationButtons: React.FC<QuantityLocationButtonsProps> = ({
     </Grid>
   );
 };
+
 export default QuantityLocationButtons;

@@ -317,7 +317,7 @@
       "buttons": {
         "editDetails": "Редактировать детали",
         "saveChanges": "Сохранить изменения",
-        "editQuantity": "Изменить количество",
+        "changeQuantity": "Изменить количество",
         "changeLocation": "Изменить местоположение"
       },
 
