@@ -12,5 +12,3 @@ export { SamplePage } from "./SamplePage";
 export { Orders } from "./Orders";
 export { ReagentRequests } from "./ReagentRequests";
 export { OrderPage } from "./OrderPage";
-export { AddReagentPage } from "./AddReagentPage";
-export { AddSamplePage } from "./AddSamplePage";

@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   TablePagination,
   ToggleButton,
@@ -9,9 +8,10 @@ import {
 } from "@mui/material";
 import React, { ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
 import {
+  AddReagentModal,
+  AddSampleModal,
   CategoryFilter,
   DashboardBreadcrumbs,
   PageError,
@@ -21,7 +21,6 @@ import {
 } from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
-import { RouteProtectedPath } from "@/router";
 import { selectUserRole, useGetSubstancesQuery } from "@/store";
 import {
   CategoryFilterOption,
@@ -45,7 +44,6 @@ const SubstancesList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const navigate = useNavigate();
 
   const role = useAppSelector(selectUserRole);
   const handleSortChange = (property: SortColumn) => {
@@ -98,23 +96,12 @@ const SubstancesList: React.FC = () => {
         {t("substances.title")}
       </Typography>
       {role === userRoles.Researcher && (
-        <Box className={style.buttonBox}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate(RouteProtectedPath.reagentAddPage)}
-          >
-            {t("substances.buttons.addReagent")}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate(RouteProtectedPath.sampleAddPage)}
-          >
-            {t("substances.buttons.addSample")}
-          </Button>
+        <Box className={style.buttonBox} sx={{ display: "flex", gap: 2 }}>
+          <AddReagentModal />
+          <AddSampleModal />
         </Box>
       )}
+
       <Box display="flex" gap={2} marginBottom={2}>
         <CategoryFilter
           filter={categoryFilter}

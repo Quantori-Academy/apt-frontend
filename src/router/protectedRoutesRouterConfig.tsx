@@ -3,8 +3,6 @@ import { RouteObject } from "react-router-dom";
 import { userRoles } from "@/constants";
 import {
   AccountSettings,
-  AddReagentPage,
-  AddSamplePage,
   Dashboard,
   OrderPage,
   Orders,
@@ -30,8 +28,6 @@ export const enum AppProtectedRoutes {
   ACCOUNT_SETTINGS = "accountSettings",
   SUBSTANCES = "substances",
   REAGENT_PAGE = "reagentPage",
-  SAMPLE_ADD_PAGE = "sampleAddPage",
-  REAGENT_ADD_PAGE = "reagentAddPage",
   STORAGE_LOCATION_DETAIL = "storageLocationDetail",
   STORAGE_LOCATIONS = "storageLocation",
   SAMPLE_PAGE = "samplePage",
@@ -52,8 +48,6 @@ export const RouteProtectedPath: Record<AppProtectedRoutes, string> = {
   [AppProtectedRoutes.SAMPLE_PAGE]: "/substances/sample/:id",
   [AppProtectedRoutes.ORDERS]: "/orders",
   [AppProtectedRoutes.ORDER_PAGE]: "/orders/:id",
-  [AppProtectedRoutes.SAMPLE_ADD_PAGE]: "/substances/add-sample",
-  [AppProtectedRoutes.REAGENT_ADD_PAGE]: "/substances/add-reagent",
   [AppProtectedRoutes.REAGENT_REQUESTS]: "/reagent-requests",
 };
 
@@ -114,16 +108,6 @@ export const protectedRoutesRouterConfig: Record<
   [AppProtectedRoutes.DASHBOARD]: {
     path: RouteProtectedPath[AppProtectedRoutes.DASHBOARD],
     element: <Dashboard />,
-    roles: Object.values(userRoles),
-  },
-  [AppProtectedRoutes.SAMPLE_ADD_PAGE]: {
-    path: RouteProtectedPath[AppProtectedRoutes.SAMPLE_ADD_PAGE],
-    element: <AddSamplePage />,
-    roles: Object.values(userRoles),
-  },
-  [AppProtectedRoutes.REAGENT_ADD_PAGE]: {
-    path: RouteProtectedPath[AppProtectedRoutes.REAGENT_ADD_PAGE],
-    element: <AddReagentPage />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.REAGENT_REQUESTS]: {
