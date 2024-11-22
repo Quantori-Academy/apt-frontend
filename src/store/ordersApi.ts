@@ -82,7 +82,7 @@ export const ordersApi = createApi({
           seller,
         },
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Order", "Orders"],
       transformErrorResponse: (response: MutationResponse) => {
         return {
           message: response.data?.message || "An unexpected error occurred.",
@@ -96,7 +96,7 @@ export const ordersApi = createApi({
         method: "PATCH",
         body: status,
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Order", "Orders"],
       transformErrorResponse: (response: MutationResponse) => {
         return {
           message: response.data?.message || "An unexpected error occurred.",
