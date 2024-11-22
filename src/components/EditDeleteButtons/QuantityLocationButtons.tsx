@@ -1,16 +1,16 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import MoveUpSharpIcon from "@mui/icons-material/MoveUpSharp";
 import { Button, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-type EditDeleteButtonsProps = {
-  onEdit: () => void;
-  onDelete: () => void;
+type QuantityLocationButtonsProps = {
+  onChangeQuantity: () => void;
+  onChangeLocation: () => void;
 };
 
-const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
-  onDelete,
-  onEdit,
+const QuantityLocationButtons: React.FC<QuantityLocationButtonsProps> = ({
+  onChangeQuantity,
+  onChangeLocation,
 }) => {
   const { t } = useTranslation();
 
@@ -21,22 +21,23 @@ const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
           variant="contained"
           color="primary"
           startIcon={<EditIcon />}
-          onClick={onEdit}
+          onClick={onChangeQuantity}
         >
-          {t("buttons.edit")}
+          {t("substanceDetails.buttons.changeQuantity")}
         </Button>
       </Grid>
       <Grid item>
         <Button
           variant="outlined"
           color="error"
-          startIcon={<DeleteIcon />}
-          onClick={onDelete}
+          startIcon={<MoveUpSharpIcon />}
+          onClick={onChangeLocation}
         >
-          {t("buttons.delete")}
+          {t("substanceDetails.buttons.changeLocation")}
         </Button>
       </Grid>
     </Grid>
   );
 };
-export default EditDeleteButtons;
+
+export default QuantityLocationButtons;

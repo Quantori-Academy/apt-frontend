@@ -2,21 +2,15 @@ import { Container } from "@mui/material";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
 import {
-  ConfirmRemoving,
   PageError,
   PageLoader,
   ReagentDetails,
   ReagentEditForm,
   SampleDetails,
 } from "@/components";
-import { useAlertSnackbar } from "@/hooks";
-import {
-  useDeleteSubstanceMutation,
-  useGetStorageLocationDetailQuery,
-} from "@/store";
+import { useGetStorageLocationDetailQuery } from "@/store";
 import { Reagent, Sample, SubstancesCategory } from "@/types";
 
 type Substance = Reagent | Sample;
@@ -31,15 +25,11 @@ type SubstanceDetailsProps = {
 const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
   substanceType,
   substanceDetails,
-  substanceId,
-  redirectPath,
 }) => {
   const { t } = useTranslation();
 
-  const { showSuccess, showError } = useAlertSnackbar();
-
-  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isChangingQuantity, setIsChangingQuantity] = useState(false);
+  const [isChangingLocation, setIsChangingLocation] = useState(false);
 
   const {
     data: substanceLocationDetails,
@@ -47,10 +37,6 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
   } = useGetStorageLocationDetailQuery(
     substanceDetails ? substanceDetails.locationId : skipToken
   );
-
-  const navigate = useNavigate();
-
-  const [deleteSubstance] = useDeleteSubstanceMutation();
 
   if (isSubstanceLocationLoading) {
     return <PageLoader />;
@@ -66,27 +52,9 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
     );
   }
 
-  const handleDelete = async () => {
-    try {
-      await deleteSubstance(substanceId).unwrap();
-      showSuccess(
-        t(
-          `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.successDelete" : "sample.successDelete"}`
-        )
-      );
-
-      navigate(redirectPath);
-    } catch (err) {
-      if (typeof err === "object" && err !== null && "data" in err) {
-        const errorMessage = (err as { data: { message: string } }).data
-          .message;
-        showError(errorMessage);
-      } else {
-        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
-      }
-    } finally {
-      setDeleteModalIsOpen(false);
-    }
+  const handleCancel = () => {
+    setIsChangingQuantity(false);
+    setIsChangingLocation(false);
   };
 
   return (
@@ -95,33 +63,27 @@ const SubstanceDetails: React.FC<SubstanceDetailsProps> = ({
         <ReagentDetails
           reagentDetails={substanceDetails as Reagent}
           reagentLocationDetails={substanceLocationDetails}
-          setDeleteModalIsOpen={setDeleteModalIsOpen}
-          setIsEditing={setIsEditing}
+          setIsChangingQuantity={setIsChangingQuantity}
+          setIsChangingLocation={setIsChangingLocation}
         />
       ) : (
         <SampleDetails
           sampleDetails={substanceDetails as Sample}
           sampleLocationDetails={substanceLocationDetails}
-          setDeleteModalIsOpen={setDeleteModalIsOpen}
-          setIsEditing={setIsEditing}
+          setIsChangingQuantity={setIsChangingQuantity}
+          setIsChangingLocation={setIsChangingLocation}
         />
       )}
-      {isEditing && (
+      {(isChangingQuantity || isChangingLocation) && (
         <ReagentEditForm
           substanceType={substanceType}
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
+          isChangingQuantity={isChangingQuantity}
+          isChangingLocation={isChangingLocation}
+          onCancel={handleCancel}
           substanceDetails={substanceDetails}
           substanceLocationDetails={substanceLocationDetails}
         />
       )}
-      <ConfirmRemoving
-        open={deleteModalIsOpen}
-        modalTitle=""
-        modalText={t("substances.modalMessages.confirmDelete")}
-        onClose={() => setDeleteModalIsOpen(false)}
-        onDelete={handleDelete}
-      />
     </Container>
   );
 };

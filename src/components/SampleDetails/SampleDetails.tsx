@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
-import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
+import { DetailItem, QuantityLocationButtons, SmilesImage } from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
 import { RouteProtectedPath } from "@/router";
@@ -28,15 +28,15 @@ const sampleDetailsRows: ReagentDetailRow[] = [
 type SampleDetailsProps = {
   sampleDetails: Sample;
   sampleLocationDetails: RoomData;
-  setDeleteModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChangingQuantity: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChangingLocation: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const SampleDetails: React.FC<SampleDetailsProps> = ({
   sampleDetails,
   sampleLocationDetails,
-  setDeleteModalIsOpen,
-  setIsEditing,
+  setIsChangingQuantity,
+  setIsChangingLocation,
 }) => {
   const { t } = useTranslation();
 
@@ -118,9 +118,9 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
         </Grid>
 
         {role === userRoles.Researcher && (
-          <EditDeleteButtons
-            onDelete={() => setDeleteModalIsOpen(true)}
-            onEdit={() => setIsEditing(true)}
+          <QuantityLocationButtons
+            onChangeQuantity={() => setIsChangingQuantity(true)}
+            onChangeLocation={() => setIsChangingLocation(true)}
           />
         )}
       </CardContent>
