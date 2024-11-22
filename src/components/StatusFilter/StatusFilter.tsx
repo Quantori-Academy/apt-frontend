@@ -9,6 +9,7 @@ const filterOptions: Array<StatusFilterOption> = [
   "Declined",
   "Completed",
   "Ordered",
+  "Taken",
 ];
 
 type StatusFilterProps = {
