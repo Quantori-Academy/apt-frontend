@@ -192,7 +192,8 @@ class dashboard grey;
 
 - **Database Diagram**: Illustrates the key entities and relationships in our database.
 
-```erDiagram
+```mermaid
+erDiagram
     ROLE {
         enum Administrator
         enum Procurement_Officer
