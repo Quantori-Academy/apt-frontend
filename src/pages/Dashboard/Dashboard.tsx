@@ -86,13 +86,10 @@ const Dashboard = () => {
             <DashboardCard dashboardCard={userCard} bgColor="#ffebee" />
           </NavLink>
         )}
-        {(role === userRoles.Administrator ||
-          role === userRoles.Researcher) && (
-          <NavLink to={RouteProtectedPath.substances} className={style.navLink}>
-            {" "}
-            <DashboardCard dashboardCard={substancesCard} bgColor="#e8eaf6" />
-          </NavLink>
-        )}
+
+        <NavLink to={RouteProtectedPath.substances} className={style.navLink}>
+          <DashboardCard dashboardCard={substancesCard} bgColor="#e8eaf6" />
+        </NavLink>
         {(role === userRoles.Administrator ||
           role === userRoles.Researcher) && (
           <NavLink
