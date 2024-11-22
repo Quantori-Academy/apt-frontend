@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
-import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
+import { DetailItem, QuantityLocationButtons, SmilesImage } from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
 import { RouteProtectedPath } from "@/router";
@@ -118,7 +118,7 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
         </Grid>
 
         {role === userRoles.Researcher && (
-          <EditDeleteButtons
+          <QuantityLocationButtons
             onDelete={() => setDeleteModalIsOpen(true)}
             onEdit={() => setIsEditing(true)}
           />

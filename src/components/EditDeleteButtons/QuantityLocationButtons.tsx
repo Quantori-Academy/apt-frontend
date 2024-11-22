@@ -1,14 +1,14 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import MoveUpSharpIcon from "@mui/icons-material/MoveUpSharp";
 import { Button, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-type EditDeleteButtonsProps = {
+type QuantityLocationButtonsProps = {
   onEdit: () => void;
   onDelete: () => void;
 };
 
-const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
+const QuantityLocationButtons: React.FC<QuantityLocationButtonsProps> = ({
   onDelete,
   onEdit,
 }) => {
@@ -30,7 +30,7 @@ const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
         <Button
           variant="outlined"
           color="error"
-          startIcon={<DeleteIcon />}
+          startIcon={<MoveUpSharpIcon />}
           onClick={onDelete}
         >
           {t("substanceDetails.buttons.changeLocation")}
@@ -39,4 +39,4 @@ const EditDeleteButtons: React.FC<EditDeleteButtonsProps> = ({
     </Grid>
   );
 };
-export default EditDeleteButtons;
+export default QuantityLocationButtons;

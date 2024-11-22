@@ -2,7 +2,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
+import { DetailItem, QuantityLocationButtons, SmilesImage } from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
@@ -102,7 +102,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
           )}
         </Grid>
         {role === userRoles.Researcher && (
-          <EditDeleteButtons
+          <QuantityLocationButtons
             onDelete={() => setDeleteModalIsOpen(true)}
             onEdit={() => setIsEditing(true)}
           />

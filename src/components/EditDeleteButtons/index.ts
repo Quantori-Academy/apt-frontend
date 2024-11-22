@@ -1,1 +1,1 @@
-export { default as EditDeleteButtons } from "./EditDeleteButtons";
+export { default as QuantityLocationButtons } from "./QuantityLocationButtons";

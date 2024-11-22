@@ -15,7 +15,7 @@ export { StorageLocationsList } from "./StorageLocationsList";
 export { StorageLocationDetail } from "./StorageLocationDetail";
 export { SmilesImage } from "./SmilesImage";
 export { ConfirmRemoving } from "./ConfirmRemoving";
-export { EditDeleteButtons } from "./EditDeleteButtons";
+export { QuantityLocationButtons } from "./EditDeleteButtons";
 export { DetailItem } from "./DetailItem";
 export { SubstancesTable } from "./SubstancesTable";
 export { ReagentDetails } from "./ReagentDetails";
