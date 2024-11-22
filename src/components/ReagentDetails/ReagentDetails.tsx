@@ -30,15 +30,15 @@ const reagentDetailsRows: ReagentDetailRow[] = [
 type ReagentDetailsProps = {
   reagentDetails: Reagent;
   reagentLocationDetails: RoomData;
-  setDeleteModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChangingQuantity: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChangingLocation: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   reagentDetails,
   reagentLocationDetails,
-  setDeleteModalIsOpen,
-  setIsEditing,
+  setIsChangingQuantity,
+  setIsChangingLocation,
 }) => {
   const { t } = useTranslation();
 
@@ -103,8 +103,8 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
         </Grid>
         {role === userRoles.Researcher && (
           <QuantityLocationButtons
-            onDelete={() => setDeleteModalIsOpen(true)}
-            onEdit={() => setIsEditing(true)}
+            onChangeQuantity={() => setIsChangingQuantity(true)}
+            onChangeLocation={() => setIsChangingLocation(true)}
           />
         )}
       </CardContent>

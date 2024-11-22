@@ -28,15 +28,15 @@ const sampleDetailsRows: ReagentDetailRow[] = [
 type SampleDetailsProps = {
   sampleDetails: Sample;
   sampleLocationDetails: RoomData;
-  setDeleteModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChangingQuantity: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChangingLocation: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const SampleDetails: React.FC<SampleDetailsProps> = ({
   sampleDetails,
   sampleLocationDetails,
-  setDeleteModalIsOpen,
-  setIsEditing,
+  setIsChangingQuantity,
+  setIsChangingLocation,
 }) => {
   const { t } = useTranslation();
 
@@ -119,8 +119,8 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
 
         {role === userRoles.Researcher && (
           <QuantityLocationButtons
-            onDelete={() => setDeleteModalIsOpen(true)}
-            onEdit={() => setIsEditing(true)}
+            onChangeQuantity={() => setIsChangingQuantity(true)}
+            onChangeLocation={() => setIsChangingLocation(true)}
           />
         )}
       </CardContent>

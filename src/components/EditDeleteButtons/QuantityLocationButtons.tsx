@@ -4,13 +4,13 @@ import { Button, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 type QuantityLocationButtonsProps = {
-  onEdit: () => void;
-  onDelete: () => void;
+  onChangeQuantity: () => void;
+  onChangeLocation: () => void;
 };
 
 const QuantityLocationButtons: React.FC<QuantityLocationButtonsProps> = ({
-  onDelete,
-  onEdit,
+  onChangeQuantity,
+  onChangeLocation,
 }) => {
   const { t } = useTranslation();
 
@@ -21,7 +21,7 @@ const QuantityLocationButtons: React.FC<QuantityLocationButtonsProps> = ({
           variant="contained"
           color="primary"
           startIcon={<EditIcon />}
-          onClick={onEdit}
+          onClick={onChangeQuantity}
         >
           {t("substanceDetails.buttons.editQuantity")}
         </Button>
@@ -31,7 +31,7 @@ const QuantityLocationButtons: React.FC<QuantityLocationButtonsProps> = ({
           variant="outlined"
           color="error"
           startIcon={<MoveUpSharpIcon />}
-          onClick={onDelete}
+          onClick={onChangeLocation}
         >
           {t("substanceDetails.buttons.changeLocation")}
         </Button>
