@@ -113,7 +113,7 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
         method: "PUT",
         body: transformOrderReagentData(updatedReagent),
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Order", "Orders"],
     }),
 
     addReagentsToOrder: builder.mutation<void, AddReagentsToOrder>({
@@ -122,7 +122,7 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
         method: "POST",
         body: transformOrderData(newReagentsData).reagents,
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Order", "Orders"],
     }),
 
     deleteReagentFromOrder: builder.mutation<void, DeleteReagentIds>({
@@ -130,7 +130,7 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
         url: `/orders/${orderId}/reagents/${reagentId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Order", "Orders"],
     }),
   }),
 });
