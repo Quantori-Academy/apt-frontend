@@ -1,17 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-import { BASE_URL, prepareHeaders } from "@/api";
 import { OrderInput, ReagentRequests, RequestedReagentBackend } from "@/types";
 
+import { requestsOrdersBaseApi } from "./requestsOrdersBaseApi";
 import { transformOrderData, transformRequestData } from "./utils";
 
-export const reagentRequestApi = createApi({
-  reducerPath: "requestsApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders,
-  }),
-  tagTypes: ["Requests"],
+export const reagentRequestApi = requestsOrdersBaseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllReagentRequests: builder.query<ReagentRequests, void>({
       query: () => "/requests",
@@ -80,7 +72,7 @@ export const reagentRequestApi = createApi({
         method: "POST",
         body: transformOrderData(orderData),
       }),
-      invalidatesTags: ["Requests"],
+      invalidatesTags: ["Requests", "Orders"],
     }),
   }),
 });

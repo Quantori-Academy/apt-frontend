@@ -1,6 +1,3 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-import { BASE_URL, prepareHeaders } from "@/api";
 import {
   BackendOrder,
   BackendOrderDetailPage,
@@ -12,6 +9,7 @@ import {
   UpdatedReagent,
 } from "@/types";
 
+import { requestsOrdersBaseApi } from "./requestsOrdersBaseApi";
 import {
   transformOrderData,
   transformOrderDetailResponse,
@@ -44,13 +42,7 @@ type Allocation = {
   locationId: string;
 };
 
-export const ordersApi = createApi({
-  reducerPath: "OrdersApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders,
-  }),
-  tagTypes: ["Orders", "Order"],
+export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query<Order[], void>({
       query: () => "/orders",
@@ -96,7 +88,7 @@ export const ordersApi = createApi({
         method: "PATCH",
         body: status,
       }),
-      invalidatesTags: ["Order", "Orders"],
+      invalidatesTags: ["Order", "Orders", "Requests"],
       transformErrorResponse: (response: MutationResponse) => {
         return {
           message: response.data?.message || "An unexpected error occurred.",
@@ -112,7 +104,7 @@ export const ordersApi = createApi({
           location_id: locationId,
         },
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Order", "Orders", "Requests"],
     }),
 
     updateOrderReagent: builder.mutation<void, UpdatedReagent>({
