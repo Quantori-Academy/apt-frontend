@@ -1,6 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { BASE_URL, prepareHeaders } from "@/api";
 import {
   BackendReagent,
   BackendSample,
@@ -12,6 +11,7 @@ import {
   SubstancesResponse,
 } from "@/types";
 
+import { fetchQuery } from "./fetchQuery.ts";
 import {
   transformReagentData,
   transformReagentResponse,
@@ -37,10 +37,7 @@ export type MutationPatchSubstance = {
 
 export const substancesApi = createApi({
   reducerPath: "reagentsApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders,
-  }),
+  baseQuery: fetchQuery,
   tagTypes: ["Substances"],
   endpoints: (builder) => ({
     getSubstances: builder.query<Array<SubstancesDetails>, void>({

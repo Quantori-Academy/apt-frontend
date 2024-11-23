@@ -39,7 +39,7 @@ const AddSampleModal: React.FC = () => {
     try {
       const processedSampleData = {
         ...sampleData,
-        structure: sampleData.structure?.trim() || undefined,
+        structure: sampleData.structure?.trim() || null,
       };
 
       await createSample(processedSampleData).unwrap();

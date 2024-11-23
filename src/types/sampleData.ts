@@ -7,5 +7,5 @@ export type SampleData = {
   expirationDate: string;
   locationId: number;
   addedSubstanceIds: number[];
-  structure?: string;
+  structure?: string | null;
 };

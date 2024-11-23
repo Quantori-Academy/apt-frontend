@@ -1,6 +1,8 @@
 export { store, type AppDispatch, type AppStore, type AppThunk, type RootState } from "./store";
 export { createReducerSlice } from "./createReducerSlice";
 
+export { authApi, useLoginMutation } from "./authApi";
+
 export {
   useGetUsersQuery,
   useAddUserMutation,
@@ -32,7 +34,6 @@ export {
 } from "./storageApi";
 
 export {
-  loginUser,
   logout,
   selectUserRole,
   selectUserId,

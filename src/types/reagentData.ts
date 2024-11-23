@@ -1,7 +1,6 @@
 export type ReagentData = {
   name: string;
   description: string;
-  structure: string;
   pricePerUnit: number;
   quantityUnit: string;
   quantityLeft: number;
@@ -11,4 +10,5 @@ export type ReagentData = {
   producer: string;
   catalogId: number;
   catalogLink: string;
+  structure?: string | null;
 };

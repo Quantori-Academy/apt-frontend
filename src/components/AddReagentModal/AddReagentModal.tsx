@@ -17,7 +17,12 @@ const AddReagentModal: React.FC = () => {
 
   const handleCreateReagent = async (reagentData: ReagentData) => {
     try {
-      await createReagent(reagentData).unwrap();
+      const payload = {
+        ...reagentData,
+        structure: reagentData.structure || null,
+      };
+
+      await createReagent(payload).unwrap();
       showSuccess(t("addSubstanceForm.snackBarMessages.reagent.success"));
       setIsOpen(false);
     } catch (error) {
