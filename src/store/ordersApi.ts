@@ -62,7 +62,7 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
     getOrder: builder.query<OrderDetailPage, string>({
       query: (orderId) => `orders/${orderId}`,
       transformResponse: (response: BackendOrderDetailPage) => transformOrderDetailResponse(response),
-      providesTags: ["Order"],
+      providesTags: ["Orders"],
     }),
 
     editOrderTitleSeller: builder.mutation<void, EditTitleSeller>({
@@ -74,7 +74,7 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
           seller,
         },
       }),
-      invalidatesTags: ["Order", "Orders"],
+      invalidatesTags: ["Orders"],
       transformErrorResponse: (response: MutationResponse) => {
         return {
           message: response.data?.message || "An unexpected error occurred.",
@@ -88,7 +88,7 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
         method: "PATCH",
         body: status,
       }),
-      invalidatesTags: ["Order", "Orders", "Requests"],
+      invalidatesTags: ["Orders", "Requests"],
       transformErrorResponse: (response: MutationResponse) => {
         return {
           message: response.data?.message || "An unexpected error occurred.",
@@ -104,7 +104,7 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
           location_id: locationId,
         },
       }),
-      invalidatesTags: ["Order", "Orders", "Requests"],
+      invalidatesTags: ["Orders", "Requests"],
     }),
 
     updateOrderReagent: builder.mutation<void, UpdatedReagent>({
@@ -113,7 +113,7 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
         method: "PUT",
         body: transformOrderReagentData(updatedReagent),
       }),
-      invalidatesTags: ["Order", "Orders"],
+      invalidatesTags: ["Orders"],
     }),
 
     addReagentsToOrder: builder.mutation<void, AddReagentsToOrder>({
@@ -122,7 +122,7 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
         method: "POST",
         body: transformOrderData(newReagentsData).reagents,
       }),
-      invalidatesTags: ["Order", "Orders"],
+      invalidatesTags: ["Orders"],
     }),
 
     deleteReagentFromOrder: builder.mutation<void, DeleteReagentIds>({
@@ -130,7 +130,7 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
         url: `/orders/${orderId}/reagents/${reagentId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Order", "Orders"],
+      invalidatesTags: ["Orders"],
     }),
   }),
 });

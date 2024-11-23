@@ -8,6 +8,6 @@ export const requestsOrdersBaseApi = createApi({
     baseUrl: BASE_URL,
     prepareHeaders,
   }),
-  tagTypes: ["Requests", "Orders", "Order"],
+  tagTypes: ["Requests", "Orders"],
   endpoints: () => ({}),
 });
