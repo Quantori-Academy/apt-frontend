@@ -2,7 +2,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { DetailItem, EditDeleteButtons, SmilesImage } from "@/components";
+import { DetailItem, QuantityLocationButtons, SmilesImage } from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";
@@ -30,15 +30,15 @@ const reagentDetailsRows: ReagentDetailRow[] = [
 type ReagentDetailsProps = {
   reagentDetails: Reagent;
   reagentLocationDetails: RoomData;
-  setDeleteModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChangingQuantity: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChangingLocation: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ReagentDetails: React.FC<ReagentDetailsProps> = ({
   reagentDetails,
   reagentLocationDetails,
-  setDeleteModalIsOpen,
-  setIsEditing,
+  setIsChangingQuantity,
+  setIsChangingLocation,
 }) => {
   const { t } = useTranslation();
 
@@ -102,9 +102,9 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
           )}
         </Grid>
         {role === userRoles.Researcher && (
-          <EditDeleteButtons
-            onDelete={() => setDeleteModalIsOpen(true)}
-            onEdit={() => setIsEditing(true)}
+          <QuantityLocationButtons
+            onChangeQuantity={() => setIsChangingQuantity(true)}
+            onChangeLocation={() => setIsChangingLocation(true)}
           />
         )}
       </CardContent>
