@@ -1,13 +1,12 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { useAppDispatch } from "@/hooks";
 import { RouteProtectedPath } from "@/router";
-import { loginUser } from "@/store";
+import { useLoginMutation } from "@/store";
 import { UserLoginInput } from "@/types";
 
 export const useLoginForm = () => {
-  const dispatch = useAppDispatch();
+  const [login] = useLoginMutation();
   const navigate = useNavigate();
 
   const {
@@ -19,9 +18,9 @@ export const useLoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<UserLoginInput> = async (userData: UserLoginInput) => {
-    const result = await dispatch(loginUser(userData));
+    const { error } = await login(userData);
 
-    if (loginUser.fulfilled.match(result)) {
+    if (!error) {
       navigate(RouteProtectedPath.dashboard);
     }
   };

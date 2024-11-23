@@ -1,16 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { BASE_URL, prepareHeaders } from "@/api";
 import { OrderInput, ReagentRequests, RequestedReagentBackend } from "@/types";
 
+import { fetchQuery } from "./fetchQuery.ts";
 import { transformOrderData, transformRequestData } from "./utils";
 
 export const reagentRequestApi = createApi({
   reducerPath: "requestsApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders,
-  }),
+  baseQuery: fetchQuery,
   tagTypes: ["Requests"],
   endpoints: (builder) => ({
     getAllReagentRequests: builder.query<ReagentRequests, void>({

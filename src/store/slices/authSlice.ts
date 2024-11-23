@@ -1,9 +1,9 @@
-import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
-import { apiManager } from "@/api";
-import { Token, UserAuth, UserLoginInput } from "@/types";
+import { Token, UserAuth } from "@/types";
 
+import { authApi } from "../authApi";
 import { createReducerSlice } from "../createReducerSlice";
 
 export type AuthSliceState = {
@@ -31,19 +31,6 @@ const initialState: AuthSliceState = {
   user: user,
 };
 
-export const loginUser = createAsyncThunk("auth/login", async (loginData: UserLoginInput, { rejectWithValue }) => {
-  try {
-    const response = await apiManager.login(loginData);
-    localStorage.setItem("accessToken", response.token);
-    return response;
-  } catch (err) {
-    if (typeof err === "object" && err !== null && "message" in err) {
-      return rejectWithValue(err.message);
-    }
-    return rejectWithValue("An unknown error occurred");
-  }
-});
-
 export const authSlice = createReducerSlice({
   name: "auth",
   initialState,
@@ -66,17 +53,21 @@ export const authSlice = createReducerSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state) => {
+      .addMatcher(authApi.endpoints.login.matchPending, (state) => {
         state.isLoading = true;
         state.errorMessage = null;
       })
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction<Token>) => {
+      .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action: PayloadAction<Token>) => {
+        const { token, refresh_token } = action.payload;
+        localStorage.setItem("accessToken", token);
+        localStorage.setItem("refreshToken", refresh_token);
+
         state.isLoading = false;
         state.errorMessage = null;
         state.user = decodeUser(action.payload.token);
         state.isAuthenticated = true;
       })
-      .addCase(loginUser.rejected, (state, action: PayloadAction<string | unknown>) => {
+      .addMatcher(authApi.endpoints.login.matchRejected, (state, action: PayloadAction<string | unknown>) => {
         state.isLoading = false;
         state.errorMessage = (action.payload as string) || "Unknown error!";
       });

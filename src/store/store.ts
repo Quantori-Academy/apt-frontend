@@ -2,6 +2,7 @@ import { Action, ThunkAction, combineSlices, configureStore } from "@reduxjs/too
 
 import { reagentRequestApi } from "@/store/reagentRequestApi.ts";
 
+import { authApi } from "./authApi";
 import { ordersApi } from "./ordersApi";
 import { authSlice, snackbarSlice } from "./slices";
 import { storageApi } from "./storageApi";
@@ -11,6 +12,7 @@ import { usersApi } from "./usersApi";
 const rootReducer = combineSlices(
   authSlice,
   snackbarSlice,
+  authApi,
   storageApi,
   usersApi,
   substancesApi,
@@ -23,6 +25,7 @@ export const makeStore = () => {
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
+        authApi.middleware,
         usersApi.middleware,
         storageApi.middleware,
         substancesApi.middleware,
