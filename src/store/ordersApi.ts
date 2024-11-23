@@ -11,7 +11,7 @@ import {
   UpdatedReagent,
 } from "@/types";
 
-import { fetchQuery } from "./fetchQuery.ts";
+import { fetchQuery } from "./fetchQuery";
 import {
   transformOrderData,
   transformOrderDetailResponse,
