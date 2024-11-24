@@ -10,6 +10,7 @@ import {
   PageLoader,
   StorageLocationsList,
 } from "@/components";
+import { AddRoomDialog } from "@/components/AddRoomDialog";
 import { useGetStorageRoomsQuery } from "@/store";
 import { paginateStorages } from "@/utils";
 
@@ -22,6 +23,7 @@ const StorageLocations: React.FC = () => {
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [createRoomDialogOpen, setCreateRoomDialogOpen] = useState(false);
   const [roomIdToEdit, setRoomIdToEdit] = useState("");
   const [page, setPage] = useState(1);
   const {
@@ -49,14 +51,25 @@ const StorageLocations: React.FC = () => {
       <Typography variant="h3" sx={{ marginBottom: "30px" }}>
         {t("storage.title.storage")}
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setCreateDialogOpen(true)}
-        style={{ marginBottom: "20px" }}
-      >
-        {t("storage.buttons.createLocation")}
-      </Button>
+
+      <Box className={style.buttonBox}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setCreateDialogOpen(true)}
+          style={{ marginBottom: "20px" }}
+        >
+          {t("storage.buttons.createLocation")}
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setCreateRoomDialogOpen(true)}
+          style={{ marginBottom: "20px" }}
+        >
+          {t("storage.buttons.createRoom")}
+        </Button>
+      </Box>
       <StorageLocationsList
         storages={paginatedStorages}
         onEditRoom={handleEdit}
@@ -71,6 +84,10 @@ const StorageLocations: React.FC = () => {
         open={createDialogOpen}
         onClose={() => setCreateDialogOpen(false)}
         storages={storages}
+      />
+      <AddRoomDialog
+        open={createRoomDialogOpen}
+        onClose={() => setCreateRoomDialogOpen(false)}
       />
       <Box className={style.pagination}>
         <Pagination
