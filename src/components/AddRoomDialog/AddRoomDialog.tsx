@@ -27,9 +27,6 @@ const AddRoomDialog: React.FC<AddRoomDialogProps> = ({ open, onClose }) => {
   const { showSuccess, showError } = useAlertSnackbar();
 
   const handleCreateSubmit = async () => {
-    console.log("roomName", roomName);
-    console.log("description", description);
-
     const { error } = await createStorageRoom({
       room: roomName,
       description,

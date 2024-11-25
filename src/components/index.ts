@@ -63,3 +63,4 @@ export { LanguageSwitcher } from "./LanguageSwitcher";
 export { Logo } from "./Logo";
 export { AddReagentModal } from "./AddReagentModal";
 export { AddSampleModal } from "./AddSampleModal";
+export { AddRoomDialog } from "./AddRoomDialog";

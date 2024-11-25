@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
+  AddRoomDialog,
   AddStorageDialog,
   DashboardBreadcrumbs,
   EditStorage,
@@ -10,7 +11,6 @@ import {
   PageLoader,
   StorageLocationsList,
 } from "@/components";
-import { AddRoomDialog } from "@/components/AddRoomDialog";
 import { useGetStorageRoomsQuery } from "@/store";
 import { paginateStorages } from "@/utils";
 
