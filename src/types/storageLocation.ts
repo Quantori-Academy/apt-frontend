@@ -32,6 +32,7 @@ export type BackendStorageRoomsBrief = Omit<StorageRoomsBrief, "locations" | "to
 };
 
 export type NewStorageRoom = Pick<StorageRoomsBrief, "room" | "description">;
+
 export type NewRoom = Pick<RoomData, "roomId" | "locationName">;
 
 export type Substance = {

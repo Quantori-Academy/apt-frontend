@@ -16,6 +16,7 @@ type AddRoomDialogProps = {
   open: boolean;
   onClose: () => void;
 };
+
 const AddRoomDialog: React.FC<AddRoomDialogProps> = ({ open, onClose }) => {
   const { t } = useTranslation();
 

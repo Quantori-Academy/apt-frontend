@@ -24,7 +24,9 @@ const StorageLocations: React.FC = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [createRoomDialogOpen, setCreateRoomDialogOpen] = useState(false);
+
   const [roomIdToEdit, setRoomIdToEdit] = useState("");
+
   const [page, setPage] = useState(1);
   const {
     data: storages,
