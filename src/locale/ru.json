@@ -540,6 +540,7 @@
     },
 
     "createRequestForm": {
+      "buttonText": "Создать запрос",
       "title": "Создать запрос на реагент",
       "requiredFields": {
         "name": {

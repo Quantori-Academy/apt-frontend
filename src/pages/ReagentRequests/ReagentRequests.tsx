@@ -9,6 +9,7 @@ import {
   PageError,
   PageLoader,
   ReagentRequestTable,
+  SearchBar,
   StatusFilter,
 } from "@/components";
 import { userRoles } from "@/constants";
@@ -37,11 +38,11 @@ const PAGE_SIZE = 4;
 
 const ReagentRequests: React.FC = () => {
   const [page, setPage] = useState(1);
+  const [modalOpen, setModalOpen] = useState(false);
   const [sortColumn, setSortColumn] = useState<RequestsSortColumns>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
-  const [modalOpen, setModalOpen] = useState(false);
-
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   const userId = useAppSelector(selectUserId);
@@ -78,6 +79,7 @@ const ReagentRequests: React.FC = () => {
         page,
         pageSize: PAGE_SIZE,
         statusFilter,
+        searchQuery,
       }),
     [
       role,
@@ -87,6 +89,7 @@ const ReagentRequests: React.FC = () => {
       page,
       statusFilter,
       reagentRequestsResearcher,
+      searchQuery,
     ]
   );
   const pendingItems = visibleItems.filter((item) => item.status === "Pending");
@@ -135,16 +138,25 @@ const ReagentRequests: React.FC = () => {
     >
       <DashboardBreadcrumbs />
       <Typography variant="h3">{t("requests.title")}</Typography>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
         <StatusFilter
           filter={statusFilter}
           setFilter={setStatusFilter}
           setPage={setPage}
         />
-        <Box sx={{ display: "flex", gap: "10px" }}>
+        <SearchBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
+        <Box sx={{ display: "flex", height: "60px" }}>
           {role === userRoles.Researcher && (
             <Button onClick={() => setModalOpen(true)}>
-              {t("createRequestForm.title")}
+              {t("createRequestForm.buttonText")}
             </Button>
           )}
           {role === userRoles.ProcurementOfficer && (
