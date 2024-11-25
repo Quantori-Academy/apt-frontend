@@ -2,6 +2,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {
   Checkbox,
+  Divider,
   IconButton,
   Paper,
   Table,
@@ -9,10 +10,11 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -41,6 +43,11 @@ type ReagentRequestTableProps = {
   isSelected: (id: string) => boolean;
   handleSelectAllClick: (isChecked: boolean) => void;
   toggleCheckbox: (id: string) => void;
+  totalPages: number;
+  page: number;
+  setPage: (page: number) => void;
+  rowsPerPage: number;
+  onChangePageSize: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
@@ -53,6 +60,11 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
   isSelected,
   handleSelectAllClick,
   toggleCheckbox,
+  totalPages,
+  page,
+  setPage,
+  rowsPerPage,
+  onChangePageSize,
 }) => {
   const [requestId, setRequestId] = useState("");
   const [editRequest, setEditRequest] = useState<RequestedReagent>({
@@ -238,6 +250,16 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
             ))}
           </TableBody>
         </Table>
+        <Divider />
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={totalPages}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(_, page) => setPage(page)}
+          onRowsPerPageChange={onChangePageSize}
+        />
       </TableContainer>
 
       <DeclineReagentRequest
