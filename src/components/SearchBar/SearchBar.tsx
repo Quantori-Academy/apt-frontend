@@ -24,7 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       size="medium"
       value={searchQuery}
       placeholder={t("users.filters.search")}
-      onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
+      onChange={(e) => setSearchQuery(e.target.value)}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

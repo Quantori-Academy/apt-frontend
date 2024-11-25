@@ -36,7 +36,7 @@ const Users: React.FC = () => {
   }
 
   const filteredUsers =
-    users && getFilteredUsers(users, searchQuery, roleFilter);
+    users && getFilteredUsers(users, searchQuery.toLowerCase(), roleFilter);
 
   return (
     <Container>

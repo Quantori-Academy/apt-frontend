@@ -79,7 +79,7 @@ const ReagentRequests: React.FC = () => {
         page,
         pageSize: PAGE_SIZE,
         statusFilter,
-        searchQuery,
+        searchQuery: searchQuery.toLowerCase(),
       }),
     [
       role,
