@@ -540,6 +540,7 @@
     },
 
     "createRequestForm": {
+      "buttonText" : "Add Request",
       "title": "Create Reagent Request",
       "requiredFields": {
         "name": {

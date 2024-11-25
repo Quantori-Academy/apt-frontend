@@ -26,7 +26,7 @@ const StatusFilter: React.FC<StatusFilterProps> = ({
   const { t } = useTranslation();
 
   return (
-    <FormControl size="small" sx={{ width: "20%", padding: "5px" }}>
+    <FormControl size="medium" sx={{ width: "20%", padding: "5px" }}>
       <InputLabel sx={{ height: "auto" }} id="selectRole">
         {t("requests.table.Status")}
       </InputLabel>
