@@ -1,5 +1,6 @@
 import DescriptionIcon from "@mui/icons-material/Description";
 import {
+  Divider,
   IconButton,
   Paper,
   Table,
@@ -7,9 +8,11 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   TableSortLabel,
 } from "@mui/material";
+import React, { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -27,12 +30,23 @@ type ReagentSampleTableProps = {
   sortDirection: SortDirection;
   visibleItems: Array<SubstancesDetails>;
   onSortChange: (property: SortColumn) => void;
+  totalPages: number;
+  onChangePageSize: (event: ChangeEvent<HTMLInputElement>) => void;
+  rowsPerPage: number;
+  page: number;
+  setPage: (page: number) => void;
 };
+
 const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   sortColumn,
   sortDirection,
   visibleItems,
   onSortChange,
+  totalPages,
+  onChangePageSize,
+  rowsPerPage,
+  page,
+  setPage,
 }) => {
   const { t } = useTranslation();
 
@@ -128,6 +142,16 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
             ))}
           </TableBody>
         </Table>
+        <Divider />
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={totalPages}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(_, page) => setPage(page)}
+          onRowsPerPageChange={onChangePageSize}
+        />
       </TableContainer>
     </>
   );

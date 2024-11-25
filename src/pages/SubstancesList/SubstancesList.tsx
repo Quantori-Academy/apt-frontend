@@ -1,7 +1,6 @@
 import {
   Box,
   Container,
-  TablePagination,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
@@ -128,15 +127,11 @@ const SubstancesList: React.FC = () => {
         sortDirection={sortDirection}
         onSortChange={handleSortChange}
         visibleItems={visibleItems}
-      />
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={totalPages}
+        totalPages={totalPages}
         rowsPerPage={rowsPerPage}
+        onChangePageSize={handleChangeRowsPerPage}
         page={page}
-        onPageChange={(_, page) => setPage(page)}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        setPage={setPage}
       />
     </Container>
   );
