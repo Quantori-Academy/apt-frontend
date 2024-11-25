@@ -5,7 +5,7 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import React, { ChangeEvent, useMemo, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -79,6 +79,12 @@ const SubstancesList: React.FC = () => {
       rowsPerPage,
     ]
   );
+
+  useEffect(() => {
+    if (searchQuery) {
+      setPage(0);
+    }
+  }, [searchQuery, setPage]);
 
   if (isLoading) {
     return <PageLoader />;
