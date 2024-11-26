@@ -14,24 +14,22 @@ const EditController = <T extends FieldValues>({
   control,
 }: EditControllerProps<T>) => {
   return (
-    <>
-      <Controller
-        name={fieldName}
-        control={control}
-        defaultValue={value as PathValue<T, Path<T>>}
-        rules={rules}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            size="small"
-            type={TextFieldType}
-            error={!!errors?.[fieldName]}
-            helperText={errors?.[fieldName]?.message as string}
-            variant="outlined"
-          />
-        )}
-      />
-    </>
+    <Controller
+      name={fieldName}
+      control={control}
+      defaultValue={value as PathValue<T, Path<T>>}
+      rules={rules}
+      render={({ field }) => (
+        <TextField
+          {...field}
+          size="small"
+          type={TextFieldType}
+          error={!!errors?.[fieldName]}
+          helperText={errors?.[fieldName]?.message as string}
+          variant="outlined"
+        />
+      )}
+    />
   );
 };
 
