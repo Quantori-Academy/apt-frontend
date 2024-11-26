@@ -33,8 +33,8 @@ import {
 import { getRequestsListData } from "@/utils";
 
 const ReagentRequests: React.FC = () => {
-  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortColumn, setSortColumn] = useState<RequestsSortColumns>("name");
@@ -76,7 +76,7 @@ const ReagentRequests: React.FC = () => {
         page,
         pageSize: rowsPerPage,
         statusFilter,
-        searchQuery,
+        searchQuery: searchQuery.toLowerCase(),
       }),
     [
       role,

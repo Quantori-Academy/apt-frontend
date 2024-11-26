@@ -69,7 +69,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
         orderBy,
         orders,
         page,
-        searchQuery,
+        searchQuery: searchQuery.toLowerCase(),
         statusFilter,
         sortType: order,
         rowsPerPage,

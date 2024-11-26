@@ -65,7 +65,7 @@ const SubstancesList: React.FC = () => {
         sortColumn,
         sortDirection,
         page,
-        searchQuery,
+        searchQuery: searchQuery.toLowerCase(),
         expiredFilter,
         pageSize: rowsPerPage,
       }),
