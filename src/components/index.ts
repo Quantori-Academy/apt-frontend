@@ -54,7 +54,7 @@ export { DashboardBreadcrumbs } from "./DashboardBreadcrumbs";
 export { AuthUserInfo } from "./AuthUserInfo";
 export { NotificationMenu } from "./NotificationMenu";
 export { AccountMenu } from "./AccountMenu";
-export { UserStatusLocked } from "./UserStatusLocked";
+export { ResetPasswordNotification } from "./ResetPasswordNotification";
 export { AlertSnackbar } from "./AlertSnackbar";
 export { AppLayout } from "./AppLayout";
 export { AddReagentForm } from "./AddReagentForm";

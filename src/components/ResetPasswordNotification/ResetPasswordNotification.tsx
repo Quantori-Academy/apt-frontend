@@ -5,19 +5,12 @@ import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router-dom";
 
 import { BasicModal, NotificationMenu, PageLoader } from "@/components";
-import { userRoles } from "@/constants";
 import { useAppSelector, useMenu } from "@/hooks";
 import { RouteProtectedPath } from "@/router";
-import {
-  selectUserId,
-  selectUserRole,
-  useGetUserPasswordStatusQuery,
-} from "@/store";
+import { selectUserId, useGetUserPasswordStatusQuery } from "@/store";
 
-const UserStatusLocked: React.FC = () => {
+const ResetPasswordNotification: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
-
-  const role = useAppSelector(selectUserRole);
   const userId = useAppSelector(selectUserId);
 
   const { t } = useTranslation();
@@ -28,7 +21,7 @@ const UserStatusLocked: React.FC = () => {
   const passwordStatus = data?.status;
 
   useEffect(() => {
-    if (passwordStatus === "Locked") {
+    if (passwordStatus === "Password Reset") {
       setModalOpen(true);
     }
   }, [passwordStatus]);
@@ -38,13 +31,13 @@ const UserStatusLocked: React.FC = () => {
 
   return (
     <>
-      {role !== userRoles.Administrator && passwordStatus === "Locked" && (
+      {passwordStatus === "Password Reset" && (
         <>
           <IconButton onClick={handleOpen}>
             <NotificationsActiveIcon color="error" />
           </IconButton>
           <NotificationMenu
-            notificationText={t("users.statusLocked.text")}
+            notificationText={t("users.statusResetPassword.text")}
             anchorEl={anchorEl}
             handleClose={handleClose}
             open={open}
@@ -52,10 +45,12 @@ const UserStatusLocked: React.FC = () => {
           <BasicModal
             isOpen={modalOpen}
             closeModal={() => setModalOpen(false)}
-            title={t("users.statusLocked.title")}
+            title={t("users.statusResetPassword.title")}
             titleColor={"error"}
           >
-            <Typography margin={4}>{t("users.statusLocked.text")}</Typography>
+            <Typography margin={4}>
+              {t("users.statusResetPassword.text")}
+            </Typography>
             <Link
               component={RouterLink}
               to={RouteProtectedPath.accountSettings}
@@ -70,4 +65,4 @@ const UserStatusLocked: React.FC = () => {
   );
 };
 
-export default UserStatusLocked;
+export default ResetPasswordNotification;
