@@ -62,14 +62,13 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   const [deleteReagentFromOrder] = useDeleteReagentFromOrderMutation();
 
   const handleCheckboxChange = (id: number) => {
+    const selected = selectedReagents.includes(id)
+      ? selectedReagents.filter((item) => item !== id)
+      : [...selectedReagents, id];
+
     setEditableRowId(null);
-    setSelectedReagents((prev) => {
-      const selected = prev.includes(id)
-        ? prev.filter((item) => item !== id)
-        : [...prev, id];
-      setIsAllocateDisabled(!selected.length);
-      return selected;
-    });
+    setSelectedReagents(selected);
+    setIsAllocateDisabled(!selected.length);
   };
 
   const handleSelectAll = (checked: boolean) => {
