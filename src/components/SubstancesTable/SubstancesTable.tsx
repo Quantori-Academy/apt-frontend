@@ -109,9 +109,9 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
         </TableRow>
       </TableHead>
       <TableBody>
-        {visibleItems.map((reagent) => (
+        {visibleItems.map((reagent, index) => (
           <TableRow
-            key={reagent.id}
+            key={`${reagent.id}${index}`}
             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
           >
             <TableCell component="th" scope="row">
