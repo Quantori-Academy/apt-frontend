@@ -31,20 +31,20 @@ import {
 import { formatDate } from "@/utils";
 
 type ReagentRequestTableProps = {
+  totalPages: number;
+  page: number;
+  rowsPerPage: number;
+  selected: Array<string>;
   sortColumn: RequestsSortColumns;
   sortDirection: SortDirection;
   visibleItems: ReagentRequests;
-  selected: Array<string>;
   pendingItems: ReagentRequests;
-  onSortChange: (property: RequestsSortColumns) => void;
   isSelected: (id: string) => boolean;
-  handleSelectAllClick: (isChecked: boolean) => void;
   toggleCheckbox: (id: string) => void;
-  totalPages: number;
-  page: number;
-  setPage: (page: number) => void;
-  rowsPerPage: number;
+  onSortChange: (property: RequestsSortColumns) => void;
   onChangePageSize: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleSelectAllClick: (isChecked: boolean) => void;
+  setPage: (page: number) => void;
 };
 
 const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({

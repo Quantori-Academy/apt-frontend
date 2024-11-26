@@ -22,14 +22,14 @@ import {
 } from "@/types";
 
 type ReagentSampleTableProps = {
+  page: number;
+  rowsPerPage: number;
+  totalPages: number;
+  visibleItems: Array<SubstancesDetails>;
   sortColumn: SortColumn;
   sortDirection: SortDirection;
-  visibleItems: Array<SubstancesDetails>;
   onSortChange: (property: SortColumn) => void;
-  totalPages: number;
   onChangePageSize: (event: ChangeEvent<HTMLInputElement>) => void;
-  rowsPerPage: number;
-  page: number;
   setPage: (page: number) => void;
 };
 
