@@ -5,7 +5,6 @@ import {
   Collapse,
   IconButton,
   Link,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -172,7 +171,7 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
         >
           <Collapse in={isRowOpened} unmountOnExit>
             <Box m={1}>
-              <Table size="small" component={Paper}>
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     {OrderReagentSecondaryRows.map(({ label }) => (
