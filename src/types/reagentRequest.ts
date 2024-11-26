@@ -1,4 +1,4 @@
-import { UserRole } from "@/types/user.ts";
+import { UserRole } from "@/types/user";
 
 export type ReagentRequests = Array<RequestedReagent>;
 

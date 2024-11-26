@@ -10,7 +10,7 @@ import {
   UpdateStorageRoom,
 } from "@/types";
 
-import { fetchQuery } from "./fetchQuery.ts";
+import { fetchQuery } from "./fetchQuery";
 import { transformStorageLocationResponse, transformStorageRoomsResponse } from "./utils";
 
 export const storageApi = createApi({

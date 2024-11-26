@@ -1,1 +1,1 @@
-export { default as ResetPasswordNotification } from "./ResetPasswordNotification.tsx";
+export { default as ResetPasswordNotification } from "./ResetPasswordNotification";

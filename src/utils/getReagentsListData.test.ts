@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 
 import { SubstancesDetails } from "@/types";
-import { getListData } from "@/utils/getReagentsListData.ts";
+import { getListData } from "@/utils/getReagentsListData";
 
 const mockData: Array<SubstancesDetails> = [
   {

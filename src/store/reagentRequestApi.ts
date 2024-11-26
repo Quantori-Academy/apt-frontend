@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { OrderInput, ReagentRequests, RequestedReagentBackend } from "@/types";
 
-import { fetchQuery } from "./fetchQuery.ts";
+import { fetchQuery } from "./fetchQuery";
 import { transformOrderData, transformRequestData } from "./utils";
 
 export const reagentRequestApi = createApi({

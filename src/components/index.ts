@@ -64,3 +64,4 @@ export { Logo } from "./Logo";
 export { AddReagentModal } from "./AddReagentModal";
 export { AddSampleModal } from "./AddSampleModal";
 export { ScrollableTable } from "./ScrollableTable";
+export { NavigationUnauth } from "./NavigationUnauth";
