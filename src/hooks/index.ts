@@ -4,5 +4,5 @@ export { useFieldVisibility } from "./useFieldVisibility";
 export { useLoginForm } from "./useLoginForm";
 export { useLocationQuantityDetails } from "./useLocationQuantityDetails";
 export { type Severity, useAlertSnackbar } from "./useAlertSnackbar";
-export { useCheckedRows } from "./useCheckedRows";
+export { useCheckedRows } from "./useCheckedRows.ts";
 export { useMenu } from "./useMenu";

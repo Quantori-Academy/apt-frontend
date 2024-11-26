@@ -34,7 +34,7 @@ type ReagentRequestTableProps = {
   totalPages: number;
   page: number;
   rowsPerPage: number;
-  selected: Array<string>;
+  selected: ReagentRequests;
   sortColumn: RequestsSortColumns;
   sortDirection: SortDirection;
   visibleItems: ReagentRequests;
