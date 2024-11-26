@@ -37,7 +37,6 @@ export { BasicModal } from "./BasicModal";
 export { DeclineReagentRequest } from "./DeclineReagentRequest";
 export { AddReagentRequest } from "./AddReagentRequest";
 export { AddOrder } from "./AddOrder";
-export { EditableDetailRow } from "./EditableDetailRow";
 export { OrderReagentDetails } from "./OrderReagentDetails";
 export { OrderReagentButtons } from "./OrderReagentButtons";
 export { EditReagentRequest } from "./EditReagentRequest";
