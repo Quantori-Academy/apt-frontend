@@ -12,8 +12,7 @@ import React, { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { SmilesImage } from "@/components";
-import { ScrollableTable } from "@/components/ScrollableTable";
+import { ScrollableTable, SmilesImage } from "@/components";
 import { RouteProtectedPath } from "@/router";
 import {
   SortColumn,

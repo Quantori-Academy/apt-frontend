@@ -17,8 +17,8 @@ import {
   DeclineReagentRequest,
   EditReagentRequest,
   PageError,
+  ScrollableTable,
 } from "@/components";
-import { ScrollableTable } from "@/components/ScrollableTable";
 import { statusColors, userRoles } from "@/constants";
 import { Severity, useAlertSnackbar, useAppSelector } from "@/hooks";
 import { selectUserRole } from "@/store";

@@ -10,7 +10,7 @@ import { ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { ScrollableTable } from "@/components/ScrollableTable";
+import { ScrollableTable } from "@/components";
 import { RouteProtectedPath } from "@/router";
 import { Order, SortType, StatusFilter } from "@/types";
 import { formatDate, getOrdersRows } from "@/utils";
