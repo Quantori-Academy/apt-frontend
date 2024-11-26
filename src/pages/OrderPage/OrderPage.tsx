@@ -77,6 +77,8 @@ const OrderPage: React.FC = () => {
 
   const [editOrderTitleSeller] = useEditOrderTitleSellerMutation();
 
+  const [isAllocateDisabled, setIsAllocateDisabled] = useState(true);
+
   // const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
   if (isOrderLoading) {
@@ -269,6 +271,7 @@ const OrderPage: React.FC = () => {
                   gap: "8px",
                   fontSize: "14px",
                 }}
+                disabled={isAllocateDisabled}
                 onClick={() => setIsChoosingLocation(true)}
               >
                 <MoveUp /> {t("orders.buttons.allocateSelected")}
@@ -281,6 +284,7 @@ const OrderPage: React.FC = () => {
             orderedReagents={order.orderedReagents}
             orderId={order.id}
             status={order.status}
+            setIsAllocateDisabled={setIsAllocateDisabled}
           />
         </Collapse>
       </Box>

@@ -37,12 +37,14 @@ type OrderReagentDetailsProps = {
   orderId: string;
   orderedReagents: OrderReagent[];
   status: OrderStatus;
+  setIsAllocateDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   orderId,
   orderedReagents,
   status,
+  setIsAllocateDisabled,
 }) => {
   const { t } = useTranslation();
 
@@ -61,16 +63,23 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
 
   const handleCheckboxChange = (id: number) => {
     setEditableRowId(null);
-    setSelectedReagents((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
+    setSelectedReagents((prev) => {
+      const selected = prev.includes(id)
+        ? prev.filter((item) => item !== id)
+        : [...prev, id];
+      setIsAllocateDisabled(!selected.length);
+      return selected;
+    });
   };
 
   const handleSelectAll = (checked: boolean) => {
-    setReagentIdToDelete(null);
-    setSelectedReagents(
-      checked ? orderedReagents.map((reagent) => reagent.id) : []
-    );
+    if (checked) {
+      setSelectedReagents(orderedReagents.map((reagent) => reagent.id));
+      setIsAllocateDisabled(false);
+    } else {
+      setSelectedReagents([]);
+      setIsAllocateDisabled(true);
+    }
   };
 
   const onDelete = (reagentId: number) => {
