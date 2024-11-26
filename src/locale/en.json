@@ -339,8 +339,7 @@
         "structure": "Structure",
         "addedSubstances": "Substances",
         "room": "Room",
-        "location": "Location",
-        "noStructure": "Structure is not provided"
+        "location": "Location"
       },
 
       "currentLocation": " (current)",
