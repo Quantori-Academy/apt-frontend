@@ -81,9 +81,7 @@ const SubstancesList: React.FC = () => {
   );
 
   useEffect(() => {
-    if (searchQuery) {
-      setPage(0);
-    }
+    setPage(0);
   }, [searchQuery, setPage]);
 
   if (isLoading) {
