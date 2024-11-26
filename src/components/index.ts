@@ -65,3 +65,5 @@ export { AddSampleModal } from "./AddSampleModal";
 export { EditableRow } from "./EditableRow";
 export { EditController } from "./EditController";
 export { OrderReagentRow } from "./OrderReagentRow";
+export { AddRoomDialog } from "./AddRoomDialog";
+

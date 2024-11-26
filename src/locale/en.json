@@ -376,6 +376,7 @@
 
       "buttons": {
         "createLocation": "Create New Storage Location",
+        "createRoom": "Create New Storage Room",
         "editRoom": "Edit Room",
         "updatingRooms": "Updating...",
         "creatingLocation": "Creating...",
@@ -549,6 +550,7 @@
     },
 
     "createRequestForm": {
+      "buttonText" : "Add Request",
       "title": "Create Reagent Request",
       "requiredFields": {
         "name": {
