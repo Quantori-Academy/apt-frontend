@@ -93,7 +93,11 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
     }
   };
 
-  const handleDecline = (id: string) => {
+  const handleDecline = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    id: string
+  ) => {
+    event.stopPropagation();
     setModalOpen(true);
     setRequestId(id);
   };
@@ -238,7 +242,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                   row.status === "Pending" && (
                     <IconButton
                       title={t("requests.table.actionButtons.decline")}
-                      onClick={() => handleDecline(row.id)}
+                      onClick={(e) => handleDecline(e, row.id)}
                     >
                       <HighlightOffIcon color="error" />
                     </IconButton>
