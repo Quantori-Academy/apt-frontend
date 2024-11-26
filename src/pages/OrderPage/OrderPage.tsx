@@ -198,7 +198,7 @@ const OrderPage: React.FC = () => {
               <EditableRow
                 label={t(`orders.table.Seller`)}
                 fieldName="seller"
-                value={order.seller}
+                value={order.seller || "-"}
                 isEditable={isEditable}
                 control={control}
               />
