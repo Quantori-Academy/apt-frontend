@@ -374,6 +374,7 @@
 
       "buttons": {
         "createLocation": "Create New Storage Location",
+        "createRoom": "Create New Storage Room",
         "editRoom": "Edit Room",
         "updatingRooms": "Updating...",
         "creatingLocation": "Creating...",
