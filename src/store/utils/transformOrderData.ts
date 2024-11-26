@@ -14,7 +14,6 @@ export const transformOrderData = (orderData: OrderInput): BackendOrderInput => 
 export const transformOrderReagentData = (
   orderReagentData: Omit<OrderReagent, "id">
 ): Omit<BackendOrderReagent, "id"> => {
-  console.log(orderReagentData, "data to backend");
   return {
     reagent_name: orderReagentData.reagentName,
     unit: orderReagentData.unit,
