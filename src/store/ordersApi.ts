@@ -7,8 +7,8 @@ import {
   Order,
   OrderDetailPage,
   OrderInput,
+  OrderReagent,
   StatusForm,
-  UpdatedReagent,
 } from "@/types";
 
 import { fetchQuery } from "./fetchQuery";
@@ -30,8 +30,8 @@ type AddReagentsToOrder = OrderInput & {
 
 type EditTitleSeller = {
   orderId: string;
-  title: string;
-  seller: string;
+  title: string | null;
+  seller: string | null;
 };
 
 type UpdateOrderStatus = {
@@ -112,11 +112,11 @@ export const ordersApi = createApi({
       invalidatesTags: ["Order"],
     }),
 
-    updateOrderReagent: builder.mutation<void, UpdatedReagent>({
-      query: (updatedReagent) => ({
-        url: `/orders/${updatedReagent.orderId}/reagents/${updatedReagent.id}`,
+    updateOrderReagent: builder.mutation<void, { orderId: string; reagent: OrderReagent }>({
+      query: ({ orderId, reagent }) => ({
+        url: `/orders/${orderId}/reagents/${reagent.id}`,
         method: "PUT",
-        body: transformOrderReagentData(updatedReagent),
+        body: transformOrderReagentData(reagent),
       }),
       invalidatesTags: ["Order"],
     }),
