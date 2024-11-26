@@ -44,41 +44,39 @@ const AddRoomDialog: React.FC<AddRoomDialogProps> = ({ open, onClose }) => {
   };
 
   return (
-    <>
-      <Dialog open={open} onClose={onClose}>
-        <DialogTitle>{t("storage.buttons.createRoom")}</DialogTitle>
-        <DialogContent>
-          <TextField
-            label={t("storage.fields.room")}
-            onChange={(e) => setRoomName(e.target.value)}
-            value={roomName}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label={t("storage.fields.description")}
-            onChange={(e) => setDescription(e.target.value)}
-            value={description}
-            fullWidth
-            margin="normal"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose} color="primary">
-            {t("buttons.cancel")}
-          </Button>
-          <Button
-            onClick={handleCreateSubmit}
-            color="primary"
-            disabled={isCreating || !roomName}
-          >
-            {isCreating
-              ? t("storage.buttons.creatingLocation")
-              : t("buttons.create")}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>{t("storage.buttons.createRoom")}</DialogTitle>
+      <DialogContent>
+        <TextField
+          label={t("storage.fields.room")}
+          onChange={(e) => setRoomName(e.target.value)}
+          value={roomName}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label={t("storage.fields.description")}
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+          fullWidth
+          margin="normal"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose} color="primary">
+          {t("buttons.cancel")}
+        </Button>
+        <Button
+          onClick={handleCreateSubmit}
+          color="primary"
+          disabled={isCreating || !roomName}
+        >
+          {isCreating
+            ? t("storage.buttons.creatingLocation")
+            : t("buttons.create")}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
