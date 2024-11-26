@@ -376,6 +376,7 @@
 
       "buttons": {
         "createLocation": "Создать новое место хранения",
+        "createRoom": "Создать новую комнату хранения",
         "editRoom": "Редактировать комнату",
         "updatingRooms": "Обновление...",
         "creatingLocation": "Создание...",
@@ -549,6 +550,7 @@
     },
 
     "createRequestForm": {
+      "buttonText": "Создать запрос",
       "title": "Создать запрос на реагент",
       "requiredFields": {
         "name": {
