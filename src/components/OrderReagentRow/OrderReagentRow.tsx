@@ -171,8 +171,8 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
           colSpan={OrderReagentMainRows.length + 3}
         >
           <Collapse in={isRowOpened} unmountOnExit>
-            <Box m={1} component={Paper}>
-              <Table size="small">
+            <Box m={1}>
+              <Table size="small" component={Paper}>
                 <TableHead>
                   <TableRow>
                     {OrderReagentSecondaryRows.map(({ label }) => (
