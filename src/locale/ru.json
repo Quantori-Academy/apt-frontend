@@ -373,6 +373,7 @@
 
       "buttons": {
         "createLocation": "Создать новое место хранения",
+        "createRoom": "Создать новую комнату хранения",
         "editRoom": "Редактировать комнату",
         "updatingRooms": "Обновление...",
         "creatingLocation": "Создание...",
