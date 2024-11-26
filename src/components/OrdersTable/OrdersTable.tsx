@@ -1,9 +1,6 @@
 import {
-  Paper,
-  Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -13,6 +10,7 @@ import { ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+import { ScrollableTable } from "@/components/ScrollableTable";
 import { RouteProtectedPath } from "@/router";
 import { Order, SortType, StatusFilter } from "@/types";
 import { formatDate, getOrdersRows } from "@/utils";
@@ -85,78 +83,74 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
       : 0;
 
   return (
-    <Paper sx={{ width: "100%", mb: 2 }}>
-      <TableContainer>
-        <Table sx={{ minWidth: 750 }} size="medium">
-          <TableHead>
-            <TableRow>
-              {headCells.map((headCell) => (
-                <TableCell
-                  key={headCell.key}
-                  sortDirection={orderBy === headCell.key ? order : false}
-                >
-                  <TableSortLabel
-                    active={orderBy === headCell.key}
-                    direction={orderBy === headCell.key ? order : "asc"}
-                    onClick={() => handleRequestSort(headCell.key)}
-                  >
-                    {t(`orders.table.${headCell.label}`)}
-                  </TableSortLabel>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {visibleRows.map((order) => (
-              <TableRow
-                hover
-                onClick={() =>
-                  navigate(
-                    RouteProtectedPath.orderPage.replace(":id", order.id)
-                  )
-                }
-                key={order.id}
-                sx={{ cursor: "pointer" }}
+    <ScrollableTable
+      paginationComponent={
+        <TablePagination
+          sx={{ backgroundColor: "#f5f5f5" }}
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={filteredOrders.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(_, newPage) => setPage(newPage)}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          labelRowsPerPage={t("orders.table.Pagination.RowsPerPage")}
+          labelDisplayedRows={({ from, to, count }) =>
+            `${from}-${to} ${t("orders.table.Pagination.of")} ${count !== -1 ? count : `${t("orders.table.Pagantion.moreThan")} ${to}`}`
+          }
+        />
+      }
+    >
+      <TableHead>
+        <TableRow>
+          {headCells.map((headCell) => (
+            <TableCell
+              key={headCell.key}
+              sortDirection={orderBy === headCell.key ? order : false}
+            >
+              <TableSortLabel
+                active={orderBy === headCell.key}
+                direction={orderBy === headCell.key ? order : "asc"}
+                onClick={() => handleRequestSort(headCell.key)}
               >
-                {headCells.map((cell) => (
-                  <TableCell key={cell.key}>
-                    {cell.key === "status"
-                      ? t(`orders.statuses.${order[cell.key]}`)
-                      : cell.key === "createdAt" || cell.key === "modifiedAt"
-                        ? formatDate(
-                            order[cell.key as keyof typeof order] || null
-                          )
-                        : order[cell.key as keyof typeof order] || "-"}
-                  </TableCell>
-                ))}
-              </TableRow>
+                {t(`orders.table.${headCell.label}`)}
+              </TableSortLabel>
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {visibleRows.map((order) => (
+          <TableRow
+            hover
+            onClick={() =>
+              navigate(RouteProtectedPath.orderPage.replace(":id", order.id))
+            }
+            key={order.id}
+            sx={{ cursor: "pointer" }}
+          >
+            {headCells.map((cell) => (
+              <TableCell key={cell.key}>
+                {cell.key === "status"
+                  ? t(`orders.statuses.${order[cell.key]}`)
+                  : cell.key === "createdAt" || cell.key === "modifiedAt"
+                    ? formatDate(order[cell.key as keyof typeof order] || null)
+                    : order[cell.key as keyof typeof order] || "-"}
+              </TableCell>
             ))}
-            {emptyRows > 0 && (
-              <TableRow
-                style={{
-                  height: 53 * emptyRows,
-                }}
-              >
-                <TableCell colSpan={5} />
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={filteredOrders.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={(_, newPage) => setPage(newPage)}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage={t("orders.table.Pagination.RowsPerPage")}
-        labelDisplayedRows={({ from, to, count }) =>
-          `${from}-${to} ${t("orders.table.Pagination.of")} ${count !== -1 ? count : `${t("orders.table.Pagantion.moreThan")} ${to}`}`
-        }
-      />
-    </Paper>
+          </TableRow>
+        ))}
+        {emptyRows > 0 && (
+          <TableRow
+            style={{
+              height: 53 * emptyRows,
+            }}
+          >
+            <TableCell colSpan={5} />
+          </TableRow>
+        )}
+      </TableBody>
+    </ScrollableTable>
   );
 };
 export default OrdersTable;

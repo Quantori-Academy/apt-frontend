@@ -1,12 +1,8 @@
 import DescriptionIcon from "@mui/icons-material/Description";
 import {
-  Divider,
   IconButton,
-  Paper,
-  Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -17,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { SmilesImage } from "@/components";
+import { ScrollableTable } from "@/components/ScrollableTable";
 import { RouteProtectedPath } from "@/router";
 import {
   SortColumn,
@@ -64,88 +61,87 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <TableSortLabel
-                active={sortColumn === "name"}
-                direction={sortDirection}
-                onClick={() => onSortChange("name")}
-              >
-                {t("substances.table.name")}
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>
-              <TableSortLabel
-                active={sortColumn === "category"}
-                direction={sortDirection}
-                onClick={() => onSortChange("category")}
-              >
-                {t("substances.table.category")}
-              </TableSortLabel>
-            </TableCell>
-            <TableCell align="right">
-              {t("substances.table.structure")}
-            </TableCell>
-            <TableCell align="right">
-              {t("substances.table.description")}
-            </TableCell>
-            <TableCell align="right">
-              {t("substances.table.quantityLeft")}
-            </TableCell>
-            <TableCell align="right">
-              {t("substances.table.storageLocation")}
-            </TableCell>
-            <TableCell align="right">{t("substances.table.actions")}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {visibleItems.map((reagent) => (
-            <TableRow
-              key={reagent.id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+    <ScrollableTable
+      paginationComponent={
+        <TablePagination
+          sx={{ backgroundColor: "#f5f5f5" }}
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={totalPages}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(_, page) => setPage(page)}
+          onRowsPerPageChange={onChangePageSize}
+        />
+      }
+    >
+      <TableHead>
+        <TableRow>
+          <TableCell>
+            <TableSortLabel
+              active={sortColumn === "name"}
+              direction={sortDirection}
+              onClick={() => onSortChange("name")}
             >
-              <TableCell component="th" scope="row">
-                {reagent.name}
-              </TableCell>
-              <TableCell align="left">
-                {t(`substances.filters.options.${reagent.category}`)}
-              </TableCell>
-              <TableCell align="right">
-                <SmilesImage
-                  smiles={reagent.structure}
-                  svgOptions={{ width: 100, height: 100 }}
-                  align="flex-end"
-                />
-              </TableCell>
-              <TableCell align="center">{reagent.description}</TableCell>
-              <TableCell align="right">{reagent.quantityLeft}</TableCell>
-              <TableCell align="right">{reagent.storageLocation}</TableCell>
-              <TableCell align="right">
-                <IconButton
-                  title="Details"
-                  onClick={() => onClickDetails(reagent.category, reagent.id)}
-                >
-                  <DescriptionIcon />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Divider />
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={totalPages}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={(_, page) => setPage(page)}
-        onRowsPerPageChange={onChangePageSize}
-      />
-    </TableContainer>
+              {t("substances.table.name")}
+            </TableSortLabel>
+          </TableCell>
+          <TableCell>
+            <TableSortLabel
+              active={sortColumn === "category"}
+              direction={sortDirection}
+              onClick={() => onSortChange("category")}
+            >
+              {t("substances.table.category")}
+            </TableSortLabel>
+          </TableCell>
+          <TableCell align="right">{t("substances.table.structure")}</TableCell>
+          <TableCell align="right">
+            {t("substances.table.description")}
+          </TableCell>
+          <TableCell align="right">
+            {t("substances.table.quantityLeft")}
+          </TableCell>
+          <TableCell align="right">
+            {t("substances.table.storageLocation")}
+          </TableCell>
+          <TableCell align="right">{t("substances.table.actions")}</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {visibleItems.map((reagent) => (
+          <TableRow
+            key={reagent.id}
+            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+          >
+            <TableCell component="th" scope="row">
+              {reagent.name}
+            </TableCell>
+            <TableCell align="left">
+              {t(`substances.filters.options.${reagent.category}`)}
+            </TableCell>
+            <TableCell align="right">
+              <SmilesImage
+                smiles={reagent.structure}
+                svgOptions={{ width: 100, height: 100 }}
+                align="flex-end"
+              />
+            </TableCell>
+            <TableCell align="center">{reagent.description}</TableCell>
+            <TableCell align="right">{reagent.quantityLeft}</TableCell>
+            <TableCell align="right">{reagent.storageLocation}</TableCell>
+            <TableCell align="right">
+              <IconButton
+                title="Details"
+                onClick={() => onClickDetails(reagent.category, reagent.id)}
+              >
+                <DescriptionIcon />
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </ScrollableTable>
   );
 };
 

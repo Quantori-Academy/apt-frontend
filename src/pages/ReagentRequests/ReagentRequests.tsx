@@ -93,7 +93,7 @@ const ReagentRequests: React.FC = () => {
 
   useEffect(() => {
     setPage(0);
-  }, [searchQuery]);
+  }, [searchQuery, statusFilter]);
 
   const pendingItems = visibleItems.filter((item) => item.status === "Pending");
 

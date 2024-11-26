@@ -42,6 +42,7 @@ const SubstancesList: React.FC = () => {
     useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const role = useAppSelector(selectUserRole);
@@ -82,7 +83,7 @@ const SubstancesList: React.FC = () => {
 
   useEffect(() => {
     setPage(0);
-  }, [searchQuery, setPage]);
+  }, [searchQuery, setPage, categoryFilter, expiredFilter]);
 
   if (isLoading) {
     return <PageLoader />;
