@@ -27,6 +27,7 @@ const AddReagentsToOrder: React.FC<AddReagentsToOrderProps> = ({
       {
         reagentName: "",
         unit: "",
+        amount: "",
         quantity: "",
         pricePerUnit: "",
         structure: "",
@@ -34,6 +35,7 @@ const AddReagentsToOrder: React.FC<AddReagentsToOrderProps> = ({
         producer: "",
         catalogId: "",
         catalogLink: "",
+        fromRequest: false,
       },
     ],
   };
