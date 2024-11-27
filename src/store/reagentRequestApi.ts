@@ -66,6 +66,8 @@ export const reagentRequestApi = createApi({
             quantity: editedRequest.desiredQuantity,
             unit: editedRequest.unit,
             user_comment: editedRequest.userComment,
+            initial_quantity: editedRequest.initialQuantity,
+            amount: editedRequest.amount,
           },
         };
       },
