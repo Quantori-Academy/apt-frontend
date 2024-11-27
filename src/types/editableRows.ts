@@ -1,4 +1,4 @@
-import { Control, FieldErrors, FieldValues, Path, RegisterOptions } from "react-hook-form";
+import type { Control, FieldErrors, FieldValues, Path, RegisterOptions } from "react-hook-form";
 
 type EditableDetailTextFieldType = "text" | "number";
 
