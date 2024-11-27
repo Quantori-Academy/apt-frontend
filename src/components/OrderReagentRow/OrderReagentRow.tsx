@@ -98,7 +98,14 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
 
   return (
     <>
-      <TableRow>
+      <TableRow
+        sx={{
+          backgroundColor: isRowOpened ? "#00808045" : "white",
+          "&:hover": {
+            backgroundColor: "lightgray",
+          },
+        }}
+      >
         <TableCell>
           <IconButton
             size="small"
