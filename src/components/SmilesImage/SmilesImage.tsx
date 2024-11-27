@@ -6,7 +6,6 @@ import SmilesDrawer from "smiles-drawer";
 import styles from "./SmilesImage.module.css";
 
 type SmilesImageProps = {
-  index?: number;
   smiles: string;
   align?: string;
   index?: number;
@@ -27,7 +26,7 @@ const SmilesImage: React.FC<SmilesImageProps> = ({
     SmilesDrawer.parse(smiles, function (tree: unknown) {
       drawer.draw(tree, `${smiles}-${index}`, "light");
     });
-  }, [smiles]);
+  }, [smiles, svgOptions, index]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: align }}>
