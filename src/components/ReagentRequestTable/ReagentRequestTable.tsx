@@ -10,7 +10,7 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import React, { ChangeEvent, useCallback, useState } from "react";
+import { type ChangeEvent, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {

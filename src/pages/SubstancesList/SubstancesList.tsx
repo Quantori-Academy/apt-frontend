@@ -5,7 +5,7 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { type ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {

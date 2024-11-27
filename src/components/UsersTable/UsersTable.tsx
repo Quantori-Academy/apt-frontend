@@ -6,7 +6,7 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import React, { ChangeEvent, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 

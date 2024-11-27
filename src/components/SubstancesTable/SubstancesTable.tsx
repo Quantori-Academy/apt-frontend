@@ -8,7 +8,7 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import React, { ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
