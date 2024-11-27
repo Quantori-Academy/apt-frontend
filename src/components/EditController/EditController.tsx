@@ -1,5 +1,6 @@
 import { TextField } from "@mui/material";
-import { Controller, FieldValues, Path, PathValue } from "react-hook-form";
+import { Controller } from "react-hook-form";
+import type { FieldValues, Path, PathValue } from "react-hook-form";
 
 import { EditableRowsProps } from "@/types";
 
