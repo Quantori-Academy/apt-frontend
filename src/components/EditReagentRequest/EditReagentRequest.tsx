@@ -21,7 +21,7 @@ const EditReagentRequest: React.FC<ReagentRequestDetailsProps> = ({
   onClose,
   onEditSubmit,
 }) => {
-  const [desiredQuantity, unit] = request.desiredQuantity.split(" ");
+  const [desiredQuantity, unit] = request.quantity.split(" ");
 
   const formMethods = useReagentRequestForm({
     reagentName: request?.name,

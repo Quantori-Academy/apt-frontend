@@ -69,7 +69,8 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
     name: "",
     structure: "",
     CAS: "",
-    desiredQuantity: "",
+    amount: 0,
+    quantity: "",
     status: "Pending",
     userComment: "",
     procurementComment: "",
@@ -225,7 +226,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
               </TableCell>
               <TableCell>{row.structure}</TableCell>
               <TableCell>{row.CAS}</TableCell>
-              <TableCell>{row.desiredQuantity}</TableCell>
+              <TableCell>{row.quantity}</TableCell>
               <TableCell
                 sx={{
                   color: statusColors[row.status],
