@@ -447,7 +447,9 @@
         "updateStatus": "Update Status",
         "addReagents": "Add Reagents",
         "allocateSelected": "Allocate selected reagents",
-        "chooseLocation": "Choose location"
+        "chooseLocation": "Choose location",
+        "markSubmitted": "Mark as Submitted",
+        "markCancelled": "Mark as Cancelled"
       },
 
       "errors": {
@@ -550,7 +552,7 @@
     },
 
     "createRequestForm": {
-      "buttonText" : "Add Request",
+      "buttonText": "Add Request",
       "title": "Create Reagent Request",
       "requiredFields": {
         "name": {

@@ -447,7 +447,9 @@
         "updateStatus": "Обновить Статус",
         "addReagents": "Добавить реактивы",
         "allocateSelected": "Распределить выбранные реагенты",
-        "chooseLocation": "Выберите локацию"
+        "chooseLocation": "Выберите локацию",
+        "markSubmitted": "Отметить как отправленный",
+        "markCancelled": "Отметить как отмененое"
       },
 
       "errors": {
