@@ -41,6 +41,7 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
       {
         reagentName: "",
         unit: "",
+        amount: "",
         quantity: "",
         pricePerUnit: "",
         structure: "",
@@ -48,6 +49,7 @@ const AddOrder: React.FC<AddOrderProps> = ({ modalOpen, onClose }) => {
         producer: "",
         catalogId: "",
         catalogLink: "",
+        fromRequest: false,
       },
     ],
   };

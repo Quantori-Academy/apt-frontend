@@ -61,7 +61,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
   });
 
   return (
-    <Dialog open={modalOpen} onClose={onClose} fullWidth maxWidth="md">
+    <Dialog open={modalOpen} onClose={onClose} fullWidth maxWidth="lg">
       <DialogTitle>
         {orderCreation
           ? t("orders.buttons.createOrder")
@@ -96,14 +96,8 @@ const OrderForm: React.FC<OrderFormProps> = ({
               />
               <TextField
                 label={t("createOrderForm.requiredFields.seller.label")}
-                {...register("seller", {
-                  required: t(
-                    "createOrderForm.requiredFields.seller.requiredMessage"
-                  ),
-                })}
+                {...register("seller")}
                 fullWidth
-                helperText={errors.seller?.message}
-                error={!!errors.seller}
               />
             </Stack>
           )}
@@ -114,6 +108,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
                 prepend({
                   reagentName: "",
                   unit: "",
+                  amount: "",
                   quantity: "",
                   pricePerUnit: "",
                   structure: "",
@@ -121,6 +116,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
                   producer: "",
                   catalogId: "",
                   catalogLink: "",
+                  fromRequest: false,
                 })
               }
             >
@@ -197,14 +193,15 @@ const OrderForm: React.FC<OrderFormProps> = ({
                     error={!!errors.reagents?.[index]?.reagentName}
                   />
                   <TextField
-                    label={t("createOrderForm.requiredFields.units.label")}
                     fullWidth
-                    {...register(`reagents.${index}.unit`, {
+                    label={t("createOrderForm.requiredFields.amount.label")}
+                    type="number"
+                    {...register(`reagents.${index}.amount`, {
                       required: t(
-                        "createOrderForm.requiredFields.units.requiredMessage"
+                        "createOrderForm.requiredFields.amount.requiredMessage"
                       ),
                     })}
-                    error={!!errors.reagents?.[index]?.unit}
+                    error={!!errors.reagents?.[index]?.amount}
                   />
                   <TextField
                     label={t("createOrderForm.requiredFields.quantity.label")}
@@ -217,6 +214,16 @@ const OrderForm: React.FC<OrderFormProps> = ({
                       ),
                     })}
                     error={!!errors.reagents?.[index]?.quantity}
+                  />
+                  <TextField
+                    label={t("createOrderForm.requiredFields.units.label")}
+                    fullWidth
+                    {...register(`reagents.${index}.unit`, {
+                      required: t(
+                        "createOrderForm.requiredFields.units.requiredMessage"
+                      ),
+                    })}
+                    error={!!errors.reagents?.[index]?.unit}
                   />
                   <TextField
                     label={t("createOrderForm.requiredFields.price.label")}

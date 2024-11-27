@@ -331,6 +331,8 @@
         "unit": "Единица измерения",
         "units": "Единица измерения",
         "price": "Цена за единицу",
+        "amount": "Количество контейнеров",
+        "fromRequest": "На основе запроса",
         "totalQuantityLeft": "Остаток",
         "quantity": "Количество",
         "catalogID": "ID каталога",
@@ -433,15 +435,18 @@
     "orders": {
       "title": {
         "OrdersPage": "Заказы",
-        "DetailPage": "Детали Заказа"
+        "Order": "Заказ",
+        "OrderInformation": "Информация о заказе",
+        "Reagents": "Реактивы"
       },
 
       "buttons": {
         "createOrder": "Создать заказ",
         "create": "Создать",
         "updateStatus": "Обновить Статус",
-        "chooseLocation": "Выбрать Локацию",
-        "addReagents": "Добавить реактивы"
+        "addReagents": "Добавить реактивы",
+        "allocateSelected": "Распределить выбранные реагенты",
+        "chooseLocation": "Выберите локацию"
       },
 
       "errors": {
@@ -516,7 +521,7 @@
           "maxLengthMessage": "Название не должно превышать 200 символов"
         },
         "seller": {
-          "label": "Продавец*",
+          "label": "Продавец",
           "requiredMessage": "Продавец обязателен"
         },
 
@@ -528,8 +533,12 @@
           "label": "Единица измерения*",
           "requiredMessage": "Единица измерения обязательны"
         },
+        "amount": {
+          "label": "Количество контейнеров*",
+          "requiredMessage": "Количество обязательно"
+        },
         "quantity": {
-          "label": "Количество*",
+          "label": "Количество в контейнере*",
           "requiredMessage": "Количество обязательно"
         },
         "price": {
