@@ -13,6 +13,7 @@ import { ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+import { ORDER_STATUS_COLOR } from "@/constants";
 import { RouteProtectedPath } from "@/router";
 import { Order, SortType, StatusFilter } from "@/types";
 import { formatDate, getOrdersRows } from "@/utils";
@@ -118,17 +119,27 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                 key={order.id}
                 sx={{ cursor: "pointer" }}
               >
-                {headCells.map((cell) => (
-                  <TableCell key={cell.key}>
-                    {cell.key === "status"
-                      ? t(`orders.statuses.${order[cell.key]}`)
-                      : cell.key === "createdAt" || cell.key === "modifiedAt"
-                        ? formatDate(
-                            order[cell.key as keyof typeof order] || null
-                          )
-                        : order[cell.key as keyof typeof order] || "-"}
-                  </TableCell>
-                ))}
+                {headCells.map(({ key }) => {
+                  let value;
+                  let sxStyles = {};
+
+                  if (key === "status") {
+                    value = t(`orders.statuses.${order[key]}`);
+                    sxStyles = { color: ORDER_STATUS_COLOR[order[key]] };
+                  } else if (key === "createdAt" || key === "modifiedAt") {
+                    value = formatDate(
+                      order[key as keyof typeof order] || null
+                    );
+                  } else {
+                    value = order[key as keyof typeof order] || "-";
+                  }
+
+                  return (
+                    <TableCell sx={sxStyles} key={key}>
+                      {value}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             ))}
             {emptyRows > 0 && (
