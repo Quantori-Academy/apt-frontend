@@ -45,7 +45,9 @@ export type RequestedReagentBackend = {
 export type ReagentRequestInput = {
   reagentName: string;
   CAS: string;
-  desiredQuantity: number | null;
+  initialQuantity: number;
   userComment: string | null;
   unit: string;
+  structure: string;
+  amount: number;
 };
