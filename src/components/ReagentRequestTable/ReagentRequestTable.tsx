@@ -166,9 +166,8 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
             </TableCell>
             <TableCell align="left">{t("requests.table.Structure")}</TableCell>
             <TableCell align="left"> {t("requests.table.CAS")}</TableCell>
-            <TableCell align="left">
-              {t("requests.table.Desired Quantity")}
-            </TableCell>
+            <TableCell align="left">Initial Quantity</TableCell>
+            <TableCell align="left">Amount</TableCell>
             <TableCell>
               <TableSortLabel
                 active={sortColumn === "status"}
@@ -227,6 +226,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
               <TableCell>{row.structure}</TableCell>
               <TableCell>{row.CAS}</TableCell>
               <TableCell>{row.quantity}</TableCell>
+              <TableCell>{row.amount}</TableCell>
               <TableCell
                 sx={{
                   color: statusColors[row.status],
