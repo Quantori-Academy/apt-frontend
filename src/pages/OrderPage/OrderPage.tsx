@@ -32,7 +32,7 @@ import {
   PageError,
   PageLoader,
 } from "@/components";
-import { ORDER_STATUSES } from "@/constants";
+import { ORDER_STATUSES, ORDER_STATUS_COLOR } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
 import {
   useEditOrderTitleSellerMutation,
@@ -140,7 +140,12 @@ const OrderPage: React.FC = () => {
         </Typography>
         <Typography variant="subtitle1" color="textSecondary">
           {t(`orders.table.Status`)}:{" "}
-          <span>{t(`orders.statuses.${order.status}`)}</span>
+          <Typography
+            component="span"
+            sx={{ color: ORDER_STATUS_COLOR[order.status], display: "inline" }}
+          >
+            {t(`orders.statuses.${order.status}`)}
+          </Typography>
         </Typography>
       </Box>
       <Divider />
