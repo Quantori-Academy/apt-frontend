@@ -96,6 +96,7 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
     reset();
   };
 
+  const canSelectReagent = status === ORDER_STATUSES.Submitted;
   const canEditReagent = status === ORDER_STATUSES.Pending;
 
   return (
@@ -113,7 +114,7 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
             {isRowOpened ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         </TableCell>
-        {canEditReagent && (
+        {canSelectReagent && (
           <TableCell padding="checkbox">
             <Checkbox
               checked={selectedReagents.includes(reagent.id)}
