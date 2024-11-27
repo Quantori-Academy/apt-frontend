@@ -75,7 +75,10 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedReagents(orderedReagents.map((reagent) => reagent.id));
+      const unallocatedReagentIds = orderedReagents
+        .filter((reagent) => !reagent.isAllocated)
+        .map((reagent) => reagent.id);
+      setSelectedReagents(unallocatedReagentIds);
       setIsAllocateDisabled(false);
     } else {
       setSelectedReagents([]);
@@ -117,6 +120,12 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   const canSelectAll = status === ORDER_STATUSES.Submitted;
   const canEditReagent = status === ORDER_STATUSES.Pending;
 
+  const notAllocatedReagentsAmount = orderedReagents.filter(
+    (reagent) => !reagent.isAllocated
+  ).length;
+
+  const showTableCell = !!notAllocatedReagentsAmount && canSelectAll;
+
   return (
     <>
       <TableContainer component={Paper} variant="outlined" sx={{ mt: 1 }}>
@@ -129,9 +138,11 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
                   <Checkbox
                     indeterminate={
                       selectedReagents.length > 0 &&
-                      selectedReagents.length < orderedReagents.length
+                      selectedReagents.length < notAllocatedReagentsAmount
                     }
-                    checked={selectedReagents.length === orderedReagents.length}
+                    checked={
+                      selectedReagents.length === notAllocatedReagentsAmount
+                    }
                     onChange={(e) => handleSelectAll(e.target.checked)}
                   />
                 </TableCell>
@@ -157,6 +168,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
                 OrderReagentMainRows={OrderReagentMainRows}
                 OrderReagentSecondaryRows={OrderReagentSecondaryRows}
                 selectedReagents={selectedReagents}
+                showTableCell={showTableCell}
                 setEditableRowId={setEditableRowId}
                 onClickCheckbox={() => handleCheckboxChange(reagent.id)}
                 onDelete={onDelete}

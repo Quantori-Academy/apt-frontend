@@ -10,12 +10,14 @@ import { RoomLocationBrief, StorageRoomsBrief } from "@/types";
 type ChooseReagentsLocationFormProps = {
   orderId: string;
   selectedReagents: number[];
+  onAllocation: () => void;
   onClose: () => void;
 };
 
 const ChooseReagentsLocationForm: React.FC<ChooseReagentsLocationFormProps> = ({
   orderId,
   selectedReagents,
+  onAllocation,
   onClose,
 }) => {
   const { t } = useTranslation();
@@ -49,6 +51,7 @@ const ChooseReagentsLocationForm: React.FC<ChooseReagentsLocationFormProps> = ({
     } else {
       showSuccess(t("orders.snackBarMessages.editing.success"));
     }
+    onAllocation();
     onClose();
   };
   return (

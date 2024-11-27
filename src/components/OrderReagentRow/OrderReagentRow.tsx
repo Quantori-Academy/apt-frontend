@@ -27,6 +27,7 @@ type OrderReagentRowProps = {
   status: OrderStatus;
   isEditable: boolean;
   reagent: OrderReagent;
+  showTableCell: boolean;
   selectedReagents: number[];
   OrderReagentMainRows: readonly OrderReagentRowType[];
   OrderReagentSecondaryRows: readonly OrderReagentRowType[];
@@ -40,6 +41,7 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
   status,
   isEditable,
   reagent,
+  showTableCell,
   OrderReagentMainRows,
   OrderReagentSecondaryRows,
   selectedReagents,
@@ -96,7 +98,8 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
     reset();
   };
 
-  const canSelectReagent = status === ORDER_STATUSES.Submitted;
+  const canSelectReagent =
+    status === ORDER_STATUSES.Submitted && !reagent.isAllocated;
   const canEditReagent = status === ORDER_STATUSES.Pending;
 
   return (
@@ -114,12 +117,14 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
             {isRowOpened ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         </TableCell>
-        {canSelectReagent && (
+        {showTableCell && (
           <TableCell padding="checkbox">
-            <Checkbox
-              checked={selectedReagents.includes(reagent.id)}
-              onChange={onClickCheckbox}
-            />
+            {canSelectReagent && (
+              <Checkbox
+                checked={selectedReagents.includes(reagent.id)}
+                onChange={onClickCheckbox}
+              />
+            )}
           </TableCell>
         )}
         {OrderReagentMainRows.map(({ label, key }) => {
