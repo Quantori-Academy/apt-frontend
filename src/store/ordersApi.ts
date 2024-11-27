@@ -42,6 +42,7 @@ type UpdateOrderStatus = {
 type Allocation = {
   orderId: string;
   locationId: string;
+  reagentIds: number[];
 };
 
 export const ordersApi = createApi({
@@ -102,11 +103,12 @@ export const ordersApi = createApi({
     }),
 
     chooseLocation: builder.mutation<void, Allocation>({
-      query: ({ orderId, locationId }) => ({
+      query: ({ orderId, locationId, reagentIds }) => ({
         url: `orders/${orderId}/allocate`,
         method: "POST",
         body: {
           location_id: locationId,
+          reagentIds,
         },
       }),
       invalidatesTags: ["Order"],

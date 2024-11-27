@@ -55,6 +55,8 @@ const OrderPage: React.FC = () => {
   const [isInfoOpened, setIsInfoOpened] = useState(true);
   const [reagentsListIsOpened, setReagentsListIsOpened] = useState(true);
 
+  const [selectedReagents, setSelectedReagents] = useState<number[]>([]);
+
   const {
     handleSubmit: handleSubmitEditing,
     formState: { errors },
@@ -129,7 +131,8 @@ const OrderPage: React.FC = () => {
     }
   };
 
-  const orderCanBeEdited = order.status == ORDER_STATUSES.Pending;
+  const orderCanBeEdited = order.status === ORDER_STATUSES.Pending;
+  const reagentCanBeAllocated = order.status === ORDER_STATUSES.Submitted;
 
   return (
     <>
@@ -232,6 +235,7 @@ const OrderPage: React.FC = () => {
           <ChooseReagentsLocationForm
             orderId={order.id}
             onClose={() => setIsChoosingLocation(false)}
+            selectedReagents={selectedReagents}
           />
         </BasicModal>
       )}
@@ -272,7 +276,7 @@ const OrderPage: React.FC = () => {
                   gap: "8px",
                   fontSize: "14px",
                 }}
-                disabled={isAllocateDisabled || !orderCanBeEdited}
+                disabled={isAllocateDisabled || !reagentCanBeAllocated}
                 onClick={() => setIsChoosingLocation(true)}
               >
                 <MoveUp /> {t("orders.buttons.allocateSelected")}
@@ -286,6 +290,8 @@ const OrderPage: React.FC = () => {
             orderId={order.id}
             status={order.status}
             setIsAllocateDisabled={setIsAllocateDisabled}
+            selectedReagents={selectedReagents}
+            setSelectedReagents={setSelectedReagents}
           />
         </Collapse>
       </Box>
