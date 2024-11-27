@@ -445,11 +445,13 @@
         "create": "Create",
         "updateStatus": "Update Status",
         "addReagents": "Add Reagents",
-        "allocateSelected": "Allocate selected reagents",
+        "allocateSelected": "Allocate Reagents",
         "chooseLocation": "Choose location",
         "markSubmitted": "Mark as Submitted",
         "markCancelled": "Mark as Cancelled"
       },
+
+      "tooltip": "Once all reagents are allocated, the order will be fulfilled",
 
       "errors": {
         "loadError": "Failed to load orders",

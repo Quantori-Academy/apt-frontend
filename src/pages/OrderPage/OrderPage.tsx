@@ -289,10 +289,7 @@ const OrderPage: React.FC = () => {
               >
                 <MoveUp /> {t("orders.buttons.allocateSelected")}
               </Button>
-              <Tooltip
-                title="Once all reagents are allocated, the order will be fulfilled."
-                placement="top"
-              >
+              <Tooltip title={t("orders.tooltip")} placement="top">
                 <IconButton>
                   <HelpOutline fontSize="small" />
                 </IconButton>
