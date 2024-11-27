@@ -6,9 +6,9 @@ import SmilesDrawer from "smiles-drawer";
 import styles from "./SmilesImage.module.css";
 
 type SmilesImageProps = {
-  index?: number;
   smiles: string;
   align?: string;
+  index?: number;
   svgOptions: {
     width: number;
     height: number;
