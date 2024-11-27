@@ -545,19 +545,29 @@
       "requiredFields": {
         "name": {
           "label": "Reagent Name*",
-          "requiredMessage": "Reagent Name Is Required"
+          "requiredMessage": "Reagent Name Is Required!"
         },
         "units": {
           "label": "Unit*",
-          "requiredMessage": "Unit Is Required"
+          "requiredMessage": "Unit Is Required!"
         },
-        "quantity": {
-          "label": "Quantity*",
-          "requiredMessage": "Quantity Is Required"
+        "initialQuantity": {
+          "label": "Initial Quantity*",
+          "requiredMessage": "Initial Quantity Is Required!",
+          "errorMessage": "Initial quantity must be greater than 0"
+        },
+        "amount": {
+          "label": "Amount*",
+          "requiredMessage": "Amount Is Required!",
+          "errorMessage": "Amount must be greater than 0"
+        },
+        "structure": {
+          "label": "Structure"
         },
         "CASNumber": {
           "label": "CAS Number"
         },
+
         "comment": {
           "label": "Comment"
         }
@@ -570,7 +580,8 @@
         "name": "Name",
         "CreationDate": "Creation Date",
         "ModifiedDate": "Modified Date",
-        "Desired Quantity": "Desired Quantity",
+        "InitialQuantity": "Initial Quantity",
+        "Amount": "Amount",
         "Structure": "Structure",
         "Status": "Status",
         "CAS": "CAS",

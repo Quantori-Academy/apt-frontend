@@ -44,21 +44,22 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
           {...register("CAS")}
         />
         <TextField
-          label="Structure*"
+          label={t("createRequestForm.requiredFields.structure.label")}
           {...register("structure")}
-          helperText={errors.structure?.message}
-          error={!!errors.structure}
         />
         <Box display="flex" justifyContent="space-between" gap={1}>
           <TextField
             type="number"
-            label="Initial Quantity*"
+            label={t("createRequestForm.requiredFields.initialQuantity.label")}
             {...register("initialQuantity", {
               required: t(
-                "createRequestForm.requiredFields.quantity.requiredMessage"
+                "createRequestForm.requiredFields.initialQuantity.requiredMessage"
               ),
               validate: (value) =>
-                value > 0 || "Quantity must be greater than 0",
+                value > 0 ||
+                t(
+                  "createRequestForm.requiredFields.initialQuantity.errorMessage"
+                ),
             })}
             helperText={errors.initialQuantity?.message}
             error={!!errors.initialQuantity}
@@ -77,10 +78,14 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
 
         <TextField
           type="number"
-          label="Amount*"
+          label={t("createRequestForm.requiredFields.amount.label")}
           {...register("amount", {
-            required: "Amount is required",
-            validate: (value) => value > 0 || "Amount must be greater than 0",
+            required: t(
+              "createRequestForm.requiredFields.amount.requiredMessage"
+            ),
+            validate: (value) =>
+              value > 0 ||
+              t("createRequestForm.requiredFields.amount.errorMessage"),
           })}
           helperText={errors.initialQuantity?.message}
           error={!!errors.initialQuantity}
