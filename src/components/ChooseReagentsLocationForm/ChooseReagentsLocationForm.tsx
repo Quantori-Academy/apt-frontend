@@ -9,11 +9,13 @@ import { RoomLocationBrief, StorageRoomsBrief } from "@/types";
 
 type ChooseReagentsLocationFormProps = {
   orderId: string;
+  selectedReagents: number[];
   onClose: () => void;
 };
 
 const ChooseReagentsLocationForm: React.FC<ChooseReagentsLocationFormProps> = ({
   orderId,
+  selectedReagents,
   onClose,
 }) => {
   const { t } = useTranslation();
@@ -40,6 +42,7 @@ const ChooseReagentsLocationForm: React.FC<ChooseReagentsLocationFormProps> = ({
     const { error } = await chooseLocation({
       orderId: orderId,
       locationId: selectedLocation!.locationId,
+      reagentIds: selectedReagents,
     });
     if (error) {
       showError(t("substanceDetails.snackBarMessages.unexpectedError"));
