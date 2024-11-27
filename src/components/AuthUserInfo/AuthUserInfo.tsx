@@ -1,7 +1,7 @@
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { Box, IconButton, Typography } from "@mui/material";
 
-import { AccountMenu, UserStatusLocked } from "@/components";
+import { AccountMenu, ResetPasswordNotification } from "@/components";
 import { useAppSelector, useMenu } from "@/hooks";
 import { selectUsername } from "@/store";
 
@@ -47,7 +47,7 @@ const AuthUserInfo: React.FC = () => {
           onClose={handleAccountClose}
         />
       </Box>
-      <UserStatusLocked />
+      <ResetPasswordNotification />
     </Box>
   );
 };

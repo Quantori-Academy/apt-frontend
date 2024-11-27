@@ -1,1 +1,1 @@
-export { default as PageError } from "./PageError.tsx";
+export { default as PageError } from "./PageError";

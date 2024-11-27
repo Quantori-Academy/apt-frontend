@@ -1,4 +1,4 @@
-import { SampleData } from "@/types/sampleData.ts";
+import { SampleData } from "@/types/sampleData";
 
 export const transformSampleData = (sample: SampleData) => ({
   name: sample.name,

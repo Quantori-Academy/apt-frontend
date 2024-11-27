@@ -1,1 +1,1 @@
-export { default as UserDetails } from "./UserDetails.tsx";
+export { default as UserDetails } from "./UserDetails";

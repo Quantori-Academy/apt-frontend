@@ -1,5 +1,5 @@
-import { Box, Button, Container, Pagination, Typography } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import { Box, Button, Container, Typography } from "@mui/material";
+import { type ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -32,18 +32,15 @@ import {
 } from "@/types";
 import { getRequestsListData } from "@/utils";
 
-import style from "./ReagentRequests.module.css";
-
-const PAGE_SIZE = 4;
-
 const ReagentRequests: React.FC = () => {
-  const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortColumn, setSortColumn] = useState<RequestsSortColumns>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilterOption>("All");
-  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   const userId = useAppSelector(selectUserId);
   const role = useAppSelector(selectUserRole);
@@ -77,7 +74,7 @@ const ReagentRequests: React.FC = () => {
         sortColumn,
         sortDirection,
         page,
-        pageSize: PAGE_SIZE,
+        pageSize: rowsPerPage,
         statusFilter,
         searchQuery: searchQuery.toLowerCase(),
       }),
@@ -90,13 +87,18 @@ const ReagentRequests: React.FC = () => {
       statusFilter,
       reagentRequestsResearcher,
       searchQuery,
+      rowsPerPage,
     ]
   );
+
+  useEffect(() => {
+    setPage(0);
+  }, [searchQuery, statusFilter]);
+
   const pendingItems = visibleItems.filter((item) => item.status === "Pending");
 
   const {
     selected,
-    selectedRows,
     isSelected,
     handleSelectAllClick,
     toggleCheckbox,
@@ -125,6 +127,11 @@ const ReagentRequests: React.FC = () => {
 
   const handleCreateOrder = () => {
     setIsOrderModalOpen(true);
+  };
+
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
@@ -177,18 +184,16 @@ const ReagentRequests: React.FC = () => {
         handleSelectAllClick={handleSelectAllClick}
         toggleCheckbox={toggleCheckbox}
         pendingItems={pendingItems}
+        totalPages={totalPages}
+        page={page}
+        setPage={setPage}
+        rowsPerPage={rowsPerPage}
+        onChangePageSize={handleChangeRowsPerPage}
       />
-      <Box className={style.pagination}>
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={(_, page) => setPage(page)}
-        />
-      </Box>
       {isOrderModalOpen && (
         <OrderFromRequest
           modalOpen={isOrderModalOpen}
-          requests={selectedRows}
+          requests={selected}
           onClose={() => setIsOrderModalOpen(false)}
           onCreateOrder={() => setSelected(new Set())}
         />

@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { UserBackendDetails, UserBase, UserFrontendDetails, UserRegisterData, UserRole, UserStatus } from "@/types";
 
-import { fetchQuery } from "./fetchQuery.ts";
+import { fetchQuery } from "./fetchQuery";
 import { transformUserResponse } from "./utils";
 
 // TODO. Think of backend-to-frontend object fields mapper

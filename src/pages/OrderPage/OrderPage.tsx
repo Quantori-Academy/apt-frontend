@@ -49,7 +49,6 @@ const OrderPage: React.FC = () => {
   const { id: orderId } = useParams<{ id: string }>();
 
   const [isEditable, setIsEditable] = useState(false);
-
   const [isAddingReagents, setIsAddingReagents] = useState(false);
   const [isChoosingLocation, setIsChoosingLocation] = useState(false);
 

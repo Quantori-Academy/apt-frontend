@@ -1,6 +1,6 @@
 import { Action, ThunkAction, combineSlices, configureStore } from "@reduxjs/toolkit";
 
-import { reagentRequestApi } from "@/store/reagentRequestApi.ts";
+import { reagentRequestApi } from "@/store/reagentRequestApi";
 
 import { authApi } from "./authApi";
 import { ordersApi } from "./ordersApi";

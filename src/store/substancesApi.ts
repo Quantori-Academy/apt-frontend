@@ -11,7 +11,7 @@ import {
   SubstancesResponse,
 } from "@/types";
 
-import { fetchQuery } from "./fetchQuery.ts";
+import { fetchQuery } from "./fetchQuery";
 import {
   transformReagentData,
   transformReagentResponse,
