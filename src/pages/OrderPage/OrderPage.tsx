@@ -1,10 +1,18 @@
 import {
+  Add,
+  ExpandLess,
+  ExpandMore,
+  ModeEditOutlineOutlined,
+  MoveUp,
+  Save,
+} from "@mui/icons-material";
+import {
   Box,
+  Button,
+  Collapse,
   Divider,
+  IconButton,
   Paper,
-  Table,
-  TableBody,
-  TableContainer,
   Typography,
 } from "@mui/material";
 import { skipToken } from "@reduxjs/toolkit/query";
@@ -18,48 +26,36 @@ import {
   BasicModal,
   ChooseReagentsLocationForm,
   DashboardBreadcrumbs,
-  EditableDetailRow,
+  DetailItem,
+  EditableRow,
   OrderReagentDetails,
-  OrderStatusRow,
-  OrderUpdateButtons,
   PageError,
   PageLoader,
 } from "@/components";
+import { ORDER_STATUSES } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
 import {
   useEditOrderTitleSellerMutation,
-  useGetOrderQuery,
-  useUpdateOrderStatusMutation,
+  useGetOrderQuery, // useUpdateOrderStatusMutation,
 } from "@/store";
-import { Order, StatusForm } from "@/types";
+import {
+  Order,
+  /*StatusForm*/
+} from "@/types";
 import { formatDate } from "@/utils";
-
-type OrderPageNoId = Omit<Order, "requestId">;
-
-type OrderRow = {
-  label: string;
-  key: keyof OrderPageNoId;
-};
-
-const OrderRows: readonly OrderRow[] = [
-  { label: "Title", key: "title" },
-  { label: "Seller", key: "seller" },
-  { label: "Status", key: "status" },
-  { label: "Creation Date", key: "createdAt" },
-  { label: "Modified Date", key: "modifiedAt" },
-];
 
 const OrderPage: React.FC = () => {
   const { t } = useTranslation();
 
-  const [expandedFieldId, setExpandedFieldId] = useState("");
-
   const { id: orderId } = useParams<{ id: string }>();
 
   const [isEditable, setIsEditable] = useState(false);
-  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  // const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
   const [isAddingReagents, setIsAddingReagents] = useState(false);
   const [isChoosingLocation, setIsChoosingLocation] = useState(false);
+
+  const [isInfoOpened, setIsInfoOpened] = useState(true);
+  const [reagentsListIsOpened, setReagentsListIsOpened] = useState(true);
 
   const {
     handleSubmit: handleSubmitEditing,
@@ -68,11 +64,8 @@ const OrderPage: React.FC = () => {
     reset: resetEditing,
   } = useForm<Omit<Order, "status">>({ mode: "onBlur" });
 
-  const {
-    register: registerUpdating,
-    handleSubmit: handleSubmitUpdating,
-    reset: resetUpdating,
-  } = useForm<StatusForm>({ mode: "onBlur" });
+  // const { handleSubmit: handleSubmitUpdating, reset: resetUpdating } =
+  //   useForm<StatusForm>({ mode: "onBlur" });
 
   const {
     data: order,
@@ -84,7 +77,9 @@ const OrderPage: React.FC = () => {
 
   const [editOrderTitleSeller] = useEditOrderTitleSellerMutation();
 
-  const [updateOrderStatus] = useUpdateOrderStatusMutation();
+  const [isAllocateDisabled, setIsAllocateDisabled] = useState(true);
+
+  // const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
   if (isOrderLoading) {
     return <PageLoader />;
@@ -94,111 +89,132 @@ const OrderPage: React.FC = () => {
     return <PageError text={t("orders.errors.detailedOrderError")} />;
   }
 
-  const handleCancelEdit = () => {
-    setIsEditable(false);
-    resetEditing();
+  const handleEditClick = () => {
+    setIsInfoOpened(true);
+    setIsEditable(true);
   };
 
-  const handleCancelUpdateStatus = () => {
-    setIsUpdatingStatus(false);
-    resetUpdating();
+  const handleOrderInformationExpanding = () => {
+    setIsInfoOpened((prev) => !prev);
+    setIsEditable(false);
+    resetEditing({ title: order.title, seller: order.seller });
   };
 
   const onSubmitEditing = async (data: Pick<Order, "title" | "seller">) => {
     const { error } = await editOrderTitleSeller({
       orderId: order.id,
-      ...data,
+      title: data.title === order.title ? null : data.title,
+      seller: data.seller,
     });
 
     if (error && "message" in error) {
+      resetEditing({ title: order.title, seller: order.seller });
       showError(t(`orders.snackBarMessages.${error.message}`));
     } else {
       showSuccess(t("orders.snackBarMessages.editing.success"));
     }
     setIsEditable(false);
-    resetEditing();
   };
 
-  const onSubmitUpdatingStatus = async (data: StatusForm) => {
-    const { error } = await updateOrderStatus({
-      orderId: order.id,
-      status: data,
-    });
+  // const onSubmitUpdatingStatus = async (data: StatusForm) => {
+  //   const { error } = await updateOrderStatus({
+  //     orderId: order.id,
+  //     status: data,
+  //   });
 
-    if (error && "message" in error) {
-      showError(t(`orders.snackBarMessages.${error.message}`));
-    } else {
-      showSuccess(t("orders.snackBarMessages.editing.success"));
-    }
-    setIsUpdatingStatus(false);
-    resetUpdating();
-  };
+  //   if (error && "message" in error) {
+  //     showError(t(`orders.snackBarMessages.${error.message}`));
+  //   } else {
+  //     showSuccess(t("orders.snackBarMessages.editing.success"));
+  //   }
+  //   setIsUpdatingStatus(false);
+  //   resetUpdating();
+  // };
 
   return (
     <>
       <DashboardBreadcrumbs />
-      <Typography variant="h2" gutterBottom>
-        {t("orders.title.DetailPage")}
-      </Typography>
+      <Box mb={2}>
+        <Typography variant="h4">
+          {t("orders.title.Order")}: {order.title}
+        </Typography>
+        <Typography variant="subtitle1" color="textSecondary">
+          {t(`orders.table.Status`)}:{" "}
+          <span>{t(`orders.statuses.${order.status}`)}</span>
+        </Typography>
+      </Box>
+      <Divider />
       <Box
+        pt={3}
         component="form"
-        onSubmit={
-          isEditable
-            ? handleSubmitEditing(onSubmitEditing)
-            : handleSubmitUpdating(onSubmitUpdatingStatus)
-        }
+        onSubmit={handleSubmitEditing(onSubmitEditing)}
       >
-        <Box display="flex" flexDirection="column" marginBottom={2}>
-          <TableContainer sx={{ maxWidth: "350px" }} component={Paper}>
-            <Table size="small">
-              <TableBody>
-                {OrderRows.map(({ label, key }) =>
-                  key !== "status" ? (
-                    <EditableDetailRow
-                      key={key}
-                      control={control}
-                      label={t(`orders.table.${label}`)}
-                      value={
-                        key === "createdAt" || key === "modifiedAt"
-                          ? formatDate(order[key as keyof OrderPageNoId])
-                          : order[key as keyof OrderPageNoId] || "-"
-                      }
-                      errors={errors}
-                      isEditable={
-                        key === "seller" || key === "title" ? isEditable : false
-                      }
-                      fieldName={key}
-                      requiredMessage={t(
-                        `createOrderForm.requiredFields.${label}.requiredMessage`
-                      )}
-                      requiredFields
-                    />
-                  ) : (
-                    <OrderStatusRow
-                      key={key}
-                      label={t("orders.table.Status")}
-                      isUpdating={isUpdatingStatus}
-                      value={order[key as keyof OrderPageNoId]}
-                      currentStatus={order.status}
-                      register={registerUpdating}
-                    />
-                  )
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+        <Box mb={2}>
+          <Box display="flex" alignItems="center">
+            <IconButton onClick={handleOrderInformationExpanding}>
+              {isInfoOpened ? <ExpandLess /> : <ExpandMore />}
+            </IconButton>
+            <Typography variant="h6">
+              {t("orders.title.OrderInformation")}
+            </Typography>
+            {order.status === ORDER_STATUSES.Pending && (
+              <IconButton
+                key={String(isEditable)}
+                type={isEditable ? "submit" : "button"}
+                onClick={isEditable ? undefined : handleEditClick}
+              >
+                {isEditable ? <Save /> : <ModeEditOutlineOutlined />}
+              </IconButton>
+            )}
+          </Box>
+          <Collapse in={isInfoOpened}>
+            <Paper
+              variant="outlined"
+              sx={{
+                p: 2,
+                mt: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              <EditableRow
+                label={t(`orders.table.Title`)}
+                fieldName="title"
+                value={order.title}
+                rules={{
+                  required: t(
+                    "createOrderForm.requiredFields.title.maxLengthMessage"
+                  ),
+                  maxLength: {
+                    value: 200,
+                    message: t(
+                      "createOrderForm.requiredFields.title.maxLengthMessage"
+                    ),
+                  },
+                }}
+                isEditable={isEditable}
+                errors={errors}
+                control={control}
+              />
+              <EditableRow
+                label={t(`orders.table.Seller`)}
+                fieldName="seller"
+                value={order.seller || "-"}
+                isEditable={isEditable}
+                control={control}
+              />
+              <DetailItem
+                label={t(`orders.table.Creation Date`)}
+                value={formatDate(order.createdAt)}
+              />
+              <DetailItem
+                label={t(`orders.table.Modified Date`)}
+                value={formatDate(order.modifiedAt)}
+              />
+            </Paper>
+          </Collapse>
         </Box>
-        <OrderUpdateButtons
-          status={order.status}
-          isEditable={isEditable}
-          isUpdatingStatus={isUpdatingStatus}
-          onEdit={() => setIsEditable(true)}
-          onUpdate={() => setIsUpdatingStatus(true)}
-          onAdd={() => setIsAddingReagents(true)}
-          onCancelEditable={handleCancelEdit}
-          onCancelUpdating={handleCancelUpdateStatus}
-          onChooseLocation={() => setIsChoosingLocation(true)}
-        />
       </Box>
       {isAddingReagents && (
         <AddReagentsToOrder
@@ -209,7 +225,7 @@ const OrderPage: React.FC = () => {
       )}
       {isChoosingLocation && (
         <BasicModal
-          title="Choose location"
+          title={t("orders.buttons.chooseLocation")}
           isOpen={isChoosingLocation}
           closeModal={() => setIsChoosingLocation(false)}
         >
@@ -219,17 +235,59 @@ const OrderPage: React.FC = () => {
           />
         </BasicModal>
       )}
-      <Divider style={{ margin: "16px 0" }} />
-      {order.orderedReagents.map((reagent) => (
-        <OrderReagentDetails
-          key={reagent.id}
-          reagent={reagent}
-          expandedFieldId={expandedFieldId}
-          orderId={order.id}
-          status={order.status}
-          setExpandedFieldId={setExpandedFieldId}
-        />
-      ))}
+      <Box mt={2}>
+        <Box mt={2}>
+          <Box display="flex" alignItems="center">
+            <IconButton
+              onClick={() => setReagentsListIsOpened(!reagentsListIsOpened)}
+            >
+              {reagentsListIsOpened ? <ExpandLess /> : <ExpandMore />}
+            </IconButton>
+            <Box
+              mt={2}
+              mb={2}
+              sx={{ display: "flex", alignItems: "center", gap: "10px" }}
+            >
+              <Typography variant="h6">{t("orders.title.Reagents")}</Typography>
+              <Button
+                sx={{
+                  paddingLeft: "5px",
+                  paddingRight: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "3px",
+                  fontSize: "14px",
+                }}
+                onClick={() => setIsAddingReagents(true)}
+              >
+                <Add /> {t("orders.buttons.addReagents")}
+              </Button>
+              <Button
+                sx={{
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  fontSize: "14px",
+                }}
+                disabled={isAllocateDisabled}
+                onClick={() => setIsChoosingLocation(true)}
+              >
+                <MoveUp /> {t("orders.buttons.allocateSelected")}
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+        <Collapse in={reagentsListIsOpened}>
+          <OrderReagentDetails
+            orderedReagents={order.orderedReagents}
+            orderId={order.id}
+            status={order.status}
+            setIsAllocateDisabled={setIsAllocateDisabled}
+          />
+        </Collapse>
+      </Box>
     </>
   );
 };

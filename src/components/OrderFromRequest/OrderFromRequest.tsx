@@ -33,11 +33,13 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
         unit: reagentUnit || "",
         quantity: reagentQuantity || "",
         pricePerUnit: "",
+        amount: "",
         structure: request.structure || "",
         CASNumber: request.CAS || "",
         producer: "",
         catalogId: "",
         catalogLink: "",
+        fromRequest: false,
       };
     }),
   };

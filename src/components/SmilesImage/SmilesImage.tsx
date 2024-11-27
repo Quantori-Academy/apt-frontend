@@ -9,6 +9,7 @@ type SmilesImageProps = {
   index?: number;
   smiles: string;
   align?: string;
+  index?: number;
   svgOptions: {
     width: number;
     height: number;

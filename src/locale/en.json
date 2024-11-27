@@ -331,6 +331,8 @@
         "unit": "Units",
         "units": "Units",
         "price": "Price per unit",
+        "amount": "Container amount",
+        "fromRequest": "From request",
         "totalQuantityLeft": "Quantity left",
         "quantity": "Quantity",
         "catalogID": "Catalog ID",
@@ -433,7 +435,9 @@
     "orders": {
       "title": {
         "OrdersPage": "Orders",
-        "DetailPage": "Order Details"
+        "Order": "Order",
+        "OrderInformation": "Order Information",
+        "Reagents": "Reagents"
       },
 
       "buttons": {
@@ -441,7 +445,8 @@
         "create": "Create",
         "updateStatus": "Update Status",
         "addReagents": "Add Reagents",
-        "chooseLocation": "Choose Location"
+        "allocateSelected": "Allocate selected reagents",
+        "chooseLocation": "Choose location"
       },
 
       "errors": {
@@ -516,7 +521,7 @@
           "maxLengthMessage": "Title cannot exceed 200 characters"
         },
         "seller": {
-          "label": "Seller*",
+          "label": "Seller",
           "requiredMessage": "Seller required"
         },
 
@@ -528,8 +533,12 @@
           "label": "Units*",
           "requiredMessage": "Units required"
         },
+        "amount": {
+          "label": "Container amount*",
+          "requiredMessage": "Amount required"
+        },
         "quantity": {
-          "label": "Quantity*",
+          "label": "Quantity per Container*",
           "requiredMessage": "Quantity required"
         },
         "price": {

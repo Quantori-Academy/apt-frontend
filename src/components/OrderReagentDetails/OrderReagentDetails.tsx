@@ -1,53 +1,32 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import LinkIcon from "@mui/icons-material/Link";
 import {
-  Accordion,
-  AccordionActions,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Link,
+  Checkbox,
   Paper,
-  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
+  TableHead,
   TableRow,
-  TextField,
-  Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import {
-  ConfirmRemoving,
-  DetailItem,
-  EditableDetailRow,
-  OrderAccordionButtons,
-} from "@/components";
+import { ConfirmRemoving, OrderReagentRow } from "@/components";
 import { ORDER_STATUSES } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
-import {
-  useDeleteReagentFromOrderMutation,
-  useUpdateOrderReagentMutation,
-} from "@/store";
-import { OrderReagent, OrderStatus } from "@/types";
+import { useDeleteReagentFromOrderMutation } from "@/store";
+import { OrderReagent, OrderReagentRowType, OrderStatus } from "@/types";
 
-type OrderReagentRow = {
-  label: string;
-  key: keyof OrderReagent;
-};
-
-const OrderReagentMainRows: readonly OrderReagentRow[] = [
+const OrderReagentMainRows: readonly OrderReagentRowType[] = [
   { label: "name", key: "reagentName" },
   { label: "quantity", key: "quantity" },
   { label: "units", key: "unit" },
+  { label: "amount", key: "amount" },
   { label: "price", key: "pricePerUnit" },
+  { label: "fromRequest", key: "fromRequest" },
 ];
 
-const OrderReagentSecondaryRows: readonly OrderReagentRow[] = [
+const OrderReagentSecondaryRows: readonly OrderReagentRowType[] = [
   { label: "structure", key: "structure" },
   { label: "CASNumber", key: "CASNumber" },
   { label: "producer", key: "producer" },
@@ -56,50 +35,68 @@ const OrderReagentSecondaryRows: readonly OrderReagentRow[] = [
 
 type OrderReagentDetailsProps = {
   orderId: string;
-  reagent: OrderReagent;
-  expandedFieldId: string;
+  orderedReagents: OrderReagent[];
   status: OrderStatus;
-  setExpandedFieldId: (value: string) => void;
+  setIsAllocateDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   orderId,
-  reagent,
-  expandedFieldId,
+  orderedReagents,
   status,
-  setExpandedFieldId,
+  setIsAllocateDisabled,
 }) => {
   const { t } = useTranslation();
 
-  const [isEditable, setIsEditable] = useState(false);
-  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-
   const { showSuccess, showError } = useAlertSnackbar();
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-    reset,
-  } = useForm<OrderReagent>({ mode: "onBlur" });
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+  const [reagentIdToDelete, setReagentIdToDelete] = useState<number | null>(
+    null
+  );
 
-  const [updateOrderReagent] = useUpdateOrderReagentMutation();
+  const [editableRowId, setEditableRowId] = useState<number | null>(null);
+
+  const [selectedReagents, setSelectedReagents] = useState<number[]>([]);
 
   const [deleteReagentFromOrder] = useDeleteReagentFromOrderMutation();
 
-  const handleEdit = () => {
-    setIsEditable(true);
+  const handleCheckboxChange = (id: number) => {
+    const selected = selectedReagents.includes(id)
+      ? selectedReagents.filter((item) => item !== id)
+      : [...selectedReagents, id];
+
+    setEditableRowId(null);
+    setSelectedReagents(selected);
+    setIsAllocateDisabled(!selected.length);
   };
 
-  const handleCancel = () => {
-    setIsEditable(false);
-    reset();
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedReagents(orderedReagents.map((reagent) => reagent.id));
+      setIsAllocateDisabled(false);
+    } else {
+      setSelectedReagents([]);
+      setIsAllocateDisabled(true);
+    }
   };
 
-  const handleDelete = async () => {
+  const onDelete = (reagentId: number) => {
+    setReagentIdToDelete(reagentId);
+    setDeleteModalIsOpen(true);
+  };
+
+  const onCancelDelete = () => {
+    setReagentIdToDelete(null);
+    setDeleteModalIsOpen(false);
+  };
+
+  const handleDeleteRequest = async () => {
     try {
-      await deleteReagentFromOrder({ orderId, reagentId: reagent.id }).unwrap();
+      await deleteReagentFromOrder({
+        orderId,
+        reagentId: reagentIdToDelete!,
+      }).unwrap();
 
       showSuccess(t("substanceDetails.snackBarMessages.reagent.successDelete"));
     } catch (err) {
@@ -115,156 +112,61 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
     }
   };
 
-  const onSubmit = async (data: OrderReagent) => {
-    try {
-      await updateOrderReagent({
-        orderId: orderId,
-        ...data,
-        id: reagent.id,
-      }).unwrap();
-      showSuccess(t("substanceDetails.snackBarMessages.reagent.successUpdate"));
-    } catch (err) {
-      if (typeof err === "object" && err !== null && "data" in err) {
-        const errorMessage = (err as { data: { message: string } }).data
-          .message;
-        showError(errorMessage);
-      } else {
-        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
-      }
-    } finally {
-      setIsEditable(false);
-      reset();
-    }
-  };
-
-  const isFieldExpanded = expandedFieldId === String(reagent.id);
-
   return (
     <>
-      <Accordion
-        sx={{
-          boxShadow: `0px -1px 1px #00695f, 0px 1px 3px #00695f`,
-          marginBottom: 2,
-        }}
-        expanded={isFieldExpanded}
-        onChange={() =>
-          setExpandedFieldId(isFieldExpanded ? "" : String(reagent.id))
-        }
-        key={reagent.id}
-      >
-        <AccordionSummary
-          id={`${reagent.reagentName + reagent.quantity}`}
-          expandIcon={<ArrowDropDownIcon />}
-        >
-          {!isFieldExpanded && (
-            <Stack direction="row" spacing={2}>
-              {OrderReagentMainRows.map(({ label, key }) => (
-                <DetailItem
-                  key={key}
-                  label={t(`substanceDetails.fields.${label}`)}
-                  value={reagent[key as keyof OrderReagent]}
+      <TableContainer component={Paper} variant="outlined" sx={{ mt: 1 }}>
+        <Table stickyHeader size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell padding="checkbox">
+                <Checkbox
+                  indeterminate={
+                    selectedReagents.length > 0 &&
+                    selectedReagents.length < orderedReagents.length
+                  }
+                  checked={selectedReagents.length === orderedReagents.length}
+                  onChange={(e) => handleSelectAll(e.target.checked)}
                 />
+              </TableCell>
+              {OrderReagentMainRows.map(({ label }) => (
+                <TableCell key={label}>
+                  {t(`substanceDetails.fields.${label}`)}
+                </TableCell>
               ))}
-            </Stack>
-          )}
-        </AccordionSummary>
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          <AccordionDetails>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableBody>
-                  {OrderReagentMainRows.map(({ label, key }) => (
-                    <EditableDetailRow
-                      key={key}
-                      label={t(`substanceDetails.fields.${label}`)}
-                      value={reagent[key as keyof OrderReagent]}
-                      control={control}
-                      errors={errors}
-                      isEditable={isEditable}
-                      fieldName={key}
-                      TextFieldType={
-                        key === "pricePerUnit" || key === "quantity"
-                          ? "number"
-                          : "text"
-                      }
-                      requiredMessage={t(
-                        `createOrderForm.requiredFields.${label}.requiredMessage`
-                      )}
-                      requiredFields
-                    />
-                  ))}
-                  {OrderReagentSecondaryRows.map(({ label, key }) => (
-                    <EditableDetailRow
-                      key={key}
-                      label={t(`substanceDetails.fields.${label}`)}
-                      value={reagent[key as keyof OrderReagent]}
-                      control={control}
-                      isEditable={isEditable}
-                      fieldName={key}
-                    />
-                  ))}
-                  <TableRow>
-                    <TableCell>
-                      <Typography fontWeight="bold">
-                        {t("substanceDetails.fields.catalogLink")}:
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="center">
-                      {isEditable ? (
-                        <TextField
-                          size="small"
-                          {...register("catalogLink")}
-                          defaultValue={reagent.catalogLink}
-                          error={!!errors.catalogLink}
-                          helperText={errors.catalogLink?.message}
-                          variant="outlined"
-                        />
-                      ) : reagent.catalogLink ? (
-                        <Link
-                          href={reagent.catalogLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          underline="hover"
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <LinkIcon sx={{ mr: 1 }} />{" "}
-                          {t(
-                            "addSubstanceForm.requiredFields.catalogLink.label"
-                          )}
-                        </Link>
-                      ) : (
-                        "-"
-                      )}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </AccordionDetails>
-          {status === ORDER_STATUSES.Pending && (
-            <AccordionActions sx={{ padding: "0px 16px 16px" }}>
-              <OrderAccordionButtons
-                isEditable={isEditable}
-                onEdit={handleEdit}
-                onCancel={handleCancel}
-                onDelete={() => setDeleteModalIsOpen(true)}
+              {status === ORDER_STATUSES.Pending && (
+                <TableCell align="center">{t("users.table.actions")}</TableCell>
+              )}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {orderedReagents.map((reagent) => (
+              <OrderReagentRow
+                key={reagent.id}
+                orderId={orderId}
+                status={status}
+                isEditable={editableRowId === reagent.id}
+                reagent={reagent}
+                OrderReagentMainRows={OrderReagentMainRows}
+                OrderReagentSecondaryRows={OrderReagentSecondaryRows}
+                selectedReagents={selectedReagents}
+                setEditableRowId={setEditableRowId}
+                onClickCheckbox={() => handleCheckboxChange(reagent.id)}
+                onDelete={onDelete}
               />
-            </AccordionActions>
-          )}
-        </Box>
-      </Accordion>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <ConfirmRemoving
         open={deleteModalIsOpen}
         modalTitle=""
         modalText={t("substances.modalMessages.confirmDelete")}
-        onClose={() => setDeleteModalIsOpen(false)}
-        onDelete={handleDelete}
+        onClose={onCancelDelete}
+        onDelete={handleDeleteRequest}
       />
     </>
   );
 };
+
 export default OrderReagentDetails;
