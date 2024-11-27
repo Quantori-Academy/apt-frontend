@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { ScrollableTable } from "@/components";
-import { ORDER_STATUS_COLOR } from "@/constants";
+import { ORDER_STATUS_COLORS } from "@/constants";
 import { RouteProtectedPath } from "@/router";
 import { Order, SortType, StatusFilter } from "@/types";
 import { formatDate, getOrdersRows } from "@/utils";
@@ -136,7 +136,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                 let sxStyles = {};
                 if (key === "status") {
                   value = t(`orders.statuses.${order[key]}`);
-                  sxStyles = { color: ORDER_STATUS_COLOR[order[key]] };
+                  sxStyles = { color: ORDER_STATUS_COLORS[order[key]] };
                 } else if (key === "createdAt" || key === "modifiedAt") {
                   value = formatDate(order[key as keyof typeof order] || null);
                 } else {

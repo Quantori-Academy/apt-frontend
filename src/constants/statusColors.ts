@@ -8,7 +8,9 @@ export const statusColors = {
   Taken: "#1769aa",
 };
 
-export const ORDER_STATUS_COLOR: Record<keyof typeof ORDER_STATUSES, string> = {
+type StatusColorKey = keyof typeof statusColors;
+
+export const ORDER_STATUS_COLORS: Record<keyof typeof ORDER_STATUSES, (typeof statusColors)[StatusColorKey]> = {
   Pending: statusColors.Pending,
   Submitted: statusColors.Ordered,
   Fulfilled: statusColors.Completed,

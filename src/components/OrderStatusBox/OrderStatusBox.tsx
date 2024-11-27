@@ -2,7 +2,7 @@ import { DoNotDisturb, LocalShipping } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { ORDER_STATUSES, ORDER_STATUS_COLOR } from "@/constants";
+import { ORDER_STATUSES, ORDER_STATUS_COLORS } from "@/constants";
 import { OrderStatus } from "@/types";
 
 type OrderStatusBoxProps = {
@@ -23,7 +23,7 @@ const OrderStatusBox: React.FC<OrderStatusBoxProps> = ({ status, onClick }) => {
         <Typography
           component="span"
           sx={{
-            color: ORDER_STATUS_COLOR[status],
+            color: ORDER_STATUS_COLORS[status],
             display: "inline",
           }}
         >
