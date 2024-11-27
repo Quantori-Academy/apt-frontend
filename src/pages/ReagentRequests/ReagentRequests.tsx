@@ -99,7 +99,6 @@ const ReagentRequests: React.FC = () => {
 
   const {
     selected,
-    selectedRows,
     isSelected,
     handleSelectAllClick,
     toggleCheckbox,
@@ -194,7 +193,7 @@ const ReagentRequests: React.FC = () => {
       {isOrderModalOpen && (
         <OrderFromRequest
           modalOpen={isOrderModalOpen}
-          requests={selectedRows}
+          requests={selected}
           onClose={() => setIsOrderModalOpen(false)}
           onCreateOrder={() => setSelected(new Set())}
         />

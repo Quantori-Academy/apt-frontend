@@ -121,9 +121,9 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
             </TableCell>
             <TableCell align="right">
               <SmilesImage
+                index={index}
                 smiles={reagent.structure}
                 svgOptions={{ width: 100, height: 100 }}
-                align="flex-end"
               />
             </TableCell>
             <TableCell align="center">{reagent.description}</TableCell>
