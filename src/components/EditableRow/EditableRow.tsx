@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { FieldValues } from "react-hook-form";
+import type { FieldValues } from "react-hook-form";
 
 import { EditController } from "@/components";
 import { EditableRowsProps } from "@/types";
