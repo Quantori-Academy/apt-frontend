@@ -1,1 +1,1 @@
-export { default as AddReagentRequest } from "./AddReagentRequest.tsx";
+export { default as AddReagentRequest } from "./AddReagentRequest";

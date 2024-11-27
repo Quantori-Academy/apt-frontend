@@ -1,12 +1,11 @@
 import {
   Box,
   Container,
-  TablePagination,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import React, { ChangeEvent, useMemo, useState } from "react";
+import { type ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -43,6 +42,7 @@ const SubstancesList: React.FC = () => {
     useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const role = useAppSelector(selectUserRole);
@@ -80,6 +80,10 @@ const SubstancesList: React.FC = () => {
       rowsPerPage,
     ]
   );
+
+  useEffect(() => {
+    setPage(0);
+  }, [searchQuery, setPage, categoryFilter, expiredFilter]);
 
   if (isLoading) {
     return <PageLoader />;
@@ -128,15 +132,11 @@ const SubstancesList: React.FC = () => {
         sortDirection={sortDirection}
         onSortChange={handleSortChange}
         visibleItems={visibleItems}
-      />
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={totalPages}
+        totalPages={totalPages}
         rowsPerPage={rowsPerPage}
+        onChangePageSize={handleChangeRowsPerPage}
         page={page}
-        onPageChange={(_, page) => setPage(page)}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        setPage={setPage}
       />
     </Container>
   );

@@ -73,7 +73,7 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
         <Box sx={{ display: "flex", gap: "5px", justifyContent: "end" }}>
           {isEdit ? (
             <Button type="submit" disabled={isLoading}>
-              {t("buttons.edit")}
+              {t("buttons.save")}
             </Button>
           ) : (
             <Button type="submit" disabled={isLoading}>

@@ -6,8 +6,7 @@ import { useAppSelector } from "@/hooks";
 import { selectUserIsAuthenticated } from "@/store";
 
 const authStyles = {
-  marginTop: "75px",
-  padding: "30px",
+  padding: "105px 30px 30px 30px",
   width: "100%",
   height: "100%",
 };

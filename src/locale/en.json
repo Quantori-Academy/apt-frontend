@@ -64,9 +64,9 @@
         "actions": "Actions"
       },
 
-      "statusLocked": {
+      "statusResetPassword": {
         "title": "Warning!",
-        "text": "You need to change your password, or you'll be locked out"
+        "text": "Your password is temporary. Please change it to ensure your account's security."
       }
     },
 
@@ -339,8 +339,7 @@
         "structure": "Structure",
         "addedSubstances": "Substances",
         "room": "Room",
-        "location": "Location",
-        "noStructure": "Structure is not provided"
+        "location": "Location"
       },
 
       "currentLocation": " (current)",

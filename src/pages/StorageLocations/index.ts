@@ -1,1 +1,1 @@
-export { default as StorageLocations } from "./StorageLocations.tsx";
+export { default as StorageLocations } from "./StorageLocations";
