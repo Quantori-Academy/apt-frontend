@@ -2,6 +2,7 @@ import {
   Add,
   ExpandLess,
   ExpandMore,
+  HelpOutline,
   ModeEditOutlineOutlined,
   MoveUp,
   Save,
@@ -13,6 +14,7 @@ import {
   Divider,
   IconButton,
   Paper,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { skipToken } from "@reduxjs/toolkit/query";
@@ -131,6 +133,11 @@ const OrderPage: React.FC = () => {
     }
   };
 
+  const handleAllocation = () => {
+    setIsAllocateDisabled(true);
+    setSelectedReagents([]);
+  };
+
   const orderCanBeEdited = order.status === ORDER_STATUSES.Pending;
   const reagentCanBeAllocated = order.status === ORDER_STATUSES.Submitted;
 
@@ -234,8 +241,9 @@ const OrderPage: React.FC = () => {
         >
           <ChooseReagentsLocationForm
             orderId={order.id}
-            onClose={() => setIsChoosingLocation(false)}
             selectedReagents={selectedReagents}
+            onAllocation={handleAllocation}
+            onClose={() => setIsChoosingLocation(false)}
           />
         </BasicModal>
       )}
@@ -281,6 +289,14 @@ const OrderPage: React.FC = () => {
               >
                 <MoveUp /> {t("orders.buttons.allocateSelected")}
               </Button>
+              <Tooltip
+                title="Once all reagents are allocated, the order will be fulfilled."
+                placement="top"
+              >
+                <IconButton>
+                  <HelpOutline fontSize="small" />
+                </IconButton>
+              </Tooltip>
             </Box>
           </Box>
         </Box>
