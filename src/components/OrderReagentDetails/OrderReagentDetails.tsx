@@ -112,6 +112,8 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
     }
   };
 
+  const canSelectAll = status === ORDER_STATUSES.Pending;
+
   return (
     <>
       <TableContainer component={Paper} variant="outlined" sx={{ mt: 1 }}>
@@ -119,22 +121,24 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell padding="checkbox">
-                <Checkbox
-                  indeterminate={
-                    selectedReagents.length > 0 &&
-                    selectedReagents.length < orderedReagents.length
-                  }
-                  checked={selectedReagents.length === orderedReagents.length}
-                  onChange={(e) => handleSelectAll(e.target.checked)}
-                />
-              </TableCell>
+              {canSelectAll && (
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    indeterminate={
+                      selectedReagents.length > 0 &&
+                      selectedReagents.length < orderedReagents.length
+                    }
+                    checked={selectedReagents.length === orderedReagents.length}
+                    onChange={(e) => handleSelectAll(e.target.checked)}
+                  />
+                </TableCell>
+              )}
               {OrderReagentMainRows.map(({ label }) => (
                 <TableCell key={label}>
                   {t(`substanceDetails.fields.${label}`)}
                 </TableCell>
               ))}
-              {status === ORDER_STATUSES.Pending && (
+              {canSelectAll && (
                 <TableCell align="center">{t("users.table.actions")}</TableCell>
               )}
             </TableRow>
