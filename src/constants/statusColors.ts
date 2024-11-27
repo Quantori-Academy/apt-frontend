@@ -15,4 +15,4 @@ export const ORDER_STATUS_COLORS: Record<keyof typeof ORDER_STATUSES, (typeof st
   Submitted: statusColors.Ordered,
   Fulfilled: statusColors.Completed,
   Cancelled: statusColors.Declined,
-};
+} as const;
