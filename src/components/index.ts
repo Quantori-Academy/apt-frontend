@@ -63,5 +63,6 @@ export { LanguageSwitcher } from "./LanguageSwitcher";
 export { Logo } from "./Logo";
 export { AddReagentModal } from "./AddReagentModal";
 export { AddSampleModal } from "./AddSampleModal";
+export { AddRoomDialog } from "./AddRoomDialog";
 export { ScrollableTable } from "./ScrollableTable";
 export { NavigationUnauth } from "./NavigationUnauth";

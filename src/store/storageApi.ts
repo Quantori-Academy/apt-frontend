@@ -5,6 +5,7 @@ import {
   BackendStorageRoomsBrief,
   MoveSubstance,
   NewRoom,
+  NewStorageRoom,
   RoomData,
   StorageRoomsBrief,
   UpdateStorageRoom,
@@ -28,6 +29,18 @@ export const storageApi = createApi({
       query: (locationId) => `/storage/${locationId}`,
       transformResponse: (response: BackendRoomData) => transformStorageLocationResponse(response),
       providesTags: ["StorageRooms"],
+    }),
+
+    createRoom: builder.mutation<void, NewStorageRoom>({
+      query: ({ room, description }) => ({
+        url: "/storage",
+        method: "POST",
+        body: {
+          room,
+          description,
+        },
+      }),
+      invalidatesTags: ["StorageRooms"],
     }),
 
     updateStorageRoom: builder.mutation<void, UpdateStorageRoom>({
@@ -80,6 +93,7 @@ export const storageApi = createApi({
 export const {
   useGetStorageRoomsQuery,
   useGetStorageLocationDetailQuery,
+  useCreateRoomMutation,
   useUpdateStorageRoomMutation,
   useCreateStorageRoomMutation,
   useDeleteStorageLocationMutation,

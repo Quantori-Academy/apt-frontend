@@ -27,6 +27,7 @@ export {
 export {
   useGetStorageRoomsQuery,
   useGetStorageLocationDetailQuery,
+  useCreateRoomMutation,
   useUpdateStorageRoomMutation,
   useCreateStorageRoomMutation,
   useDeleteStorageLocationMutation,
