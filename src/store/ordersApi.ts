@@ -8,7 +8,7 @@ import {
   OrderDetailPage,
   OrderInput,
   OrderReagent,
-  StatusForm,
+  OrderStatus,
 } from "@/types";
 
 import { fetchQuery } from "./fetchQuery";
@@ -36,7 +36,7 @@ type EditTitleSeller = {
 
 type UpdateOrderStatus = {
   orderId: string;
-  status: StatusForm;
+  status: OrderStatus;
 };
 
 type Allocation = {
@@ -91,7 +91,7 @@ export const ordersApi = createApi({
       query: ({ orderId, status }) => ({
         url: `/orders/${orderId}/status`,
         method: "PATCH",
-        body: status,
+        body: { status },
       }),
       invalidatesTags: ["Order", "Orders"],
       transformErrorResponse: (response: MutationResponse) => {

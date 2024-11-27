@@ -29,19 +29,18 @@ import {
   DetailItem,
   EditableRow,
   OrderReagentDetails,
+  OrderStatusBox,
   PageError,
   PageLoader,
 } from "@/components";
-import { ORDER_STATUSES, ORDER_STATUS_COLOR } from "@/constants";
+import { ORDER_STATUSES } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
 import {
   useEditOrderTitleSellerMutation,
-  useGetOrderQuery, // useUpdateOrderStatusMutation,
+  useGetOrderQuery,
+  useUpdateOrderStatusMutation,
 } from "@/store";
-import {
-  Order,
-  /*StatusForm*/
-} from "@/types";
+import { Order } from "@/types";
 import { formatDate } from "@/utils";
 
 const OrderPage: React.FC = () => {
@@ -50,7 +49,7 @@ const OrderPage: React.FC = () => {
   const { id: orderId } = useParams<{ id: string }>();
 
   const [isEditable, setIsEditable] = useState(false);
-  // const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+
   const [isAddingReagents, setIsAddingReagents] = useState(false);
   const [isChoosingLocation, setIsChoosingLocation] = useState(false);
 
@@ -64,9 +63,6 @@ const OrderPage: React.FC = () => {
     reset: resetEditing,
   } = useForm<Omit<Order, "status">>({ mode: "onBlur" });
 
-  // const { handleSubmit: handleSubmitUpdating, reset: resetUpdating } =
-  //   useForm<StatusForm>({ mode: "onBlur" });
-
   const {
     data: order,
     isLoading: isOrderLoading,
@@ -79,7 +75,7 @@ const OrderPage: React.FC = () => {
 
   const [isAllocateDisabled, setIsAllocateDisabled] = useState(true);
 
-  // const [updateOrderStatus] = useUpdateOrderStatusMutation();
+  const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
   if (isOrderLoading) {
     return <PageLoader />;
@@ -116,20 +112,25 @@ const OrderPage: React.FC = () => {
     setIsEditable(false);
   };
 
-  // const onSubmitUpdatingStatus = async (data: StatusForm) => {
-  //   const { error } = await updateOrderStatus({
-  //     orderId: order.id,
-  //     status: data,
-  //   });
+  const onSubmitUpdatingStatus = async () => {
+    const statusToSend =
+      order.status === ORDER_STATUSES.Pending
+        ? ORDER_STATUSES.Submitted
+        : ORDER_STATUSES.Cancelled;
 
-  //   if (error && "message" in error) {
-  //     showError(t(`orders.snackBarMessages.${error.message}`));
-  //   } else {
-  //     showSuccess(t("orders.snackBarMessages.editing.success"));
-  //   }
-  //   setIsUpdatingStatus(false);
-  //   resetUpdating();
-  // };
+    const { error } = await updateOrderStatus({
+      orderId: order.id,
+      status: statusToSend,
+    });
+
+    if (error && "message" in error) {
+      showError(t(`orders.snackBarMessages.${error.message}`));
+    } else {
+      showSuccess(t("orders.snackBarMessages.editing.success"));
+    }
+  };
+
+  const orderCanBeEdited = order.status == ORDER_STATUSES.Pending;
 
   return (
     <>
@@ -138,15 +139,10 @@ const OrderPage: React.FC = () => {
         <Typography variant="h4">
           {t("orders.title.Order")}: {order.title}
         </Typography>
-        <Typography variant="subtitle1" color="textSecondary">
-          {t(`orders.table.Status`)}:{" "}
-          <Typography
-            component="span"
-            sx={{ color: ORDER_STATUS_COLOR[order.status], display: "inline" }}
-          >
-            {t(`orders.statuses.${order.status}`)}
-          </Typography>
-        </Typography>
+        <OrderStatusBox
+          status={order.status}
+          onClick={onSubmitUpdatingStatus}
+        />
       </Box>
       <Divider />
       <Box
@@ -162,7 +158,7 @@ const OrderPage: React.FC = () => {
             <Typography variant="h6">
               {t("orders.title.OrderInformation")}
             </Typography>
-            {order.status === ORDER_STATUSES.Pending && (
+            {orderCanBeEdited && (
               <IconButton
                 key={String(isEditable)}
                 type={isEditable ? "submit" : "button"}
@@ -255,6 +251,7 @@ const OrderPage: React.FC = () => {
             >
               <Typography variant="h6">{t("orders.title.Reagents")}</Typography>
               <Button
+                disabled={!orderCanBeEdited}
                 sx={{
                   paddingLeft: "5px",
                   paddingRight: "10px",
@@ -276,7 +273,7 @@ const OrderPage: React.FC = () => {
                   gap: "8px",
                   fontSize: "14px",
                 }}
-                disabled={isAllocateDisabled}
+                disabled={isAllocateDisabled || !orderCanBeEdited}
                 onClick={() => setIsChoosingLocation(true)}
               >
                 <MoveUp /> {t("orders.buttons.allocateSelected")}

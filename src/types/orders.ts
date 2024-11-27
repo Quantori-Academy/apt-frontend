@@ -3,10 +3,6 @@ import { ORDER_STATUSES } from "@/constants";
 export type OrderStatus = (typeof ORDER_STATUSES)[keyof typeof ORDER_STATUSES];
 export type StatusFilter = OrderStatus | "All";
 
-export type StatusForm = {
-  status: OrderStatus;
-};
-
 export type SortType = "asc" | "desc";
 
 export type Order = {
