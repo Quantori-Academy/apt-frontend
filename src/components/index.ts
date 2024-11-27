@@ -53,7 +53,7 @@ export { DashboardBreadcrumbs } from "./DashboardBreadcrumbs";
 export { AuthUserInfo } from "./AuthUserInfo";
 export { NotificationMenu } from "./NotificationMenu";
 export { AccountMenu } from "./AccountMenu";
-export { UserStatusLocked } from "./UserStatusLocked";
+export { ResetPasswordNotification } from "./ResetPasswordNotification";
 export { AlertSnackbar } from "./AlertSnackbar";
 export { AppLayout } from "./AppLayout";
 export { AddReagentForm } from "./AddReagentForm";
@@ -66,4 +66,6 @@ export { EditableRow } from "./EditableRow";
 export { EditController } from "./EditController";
 export { OrderReagentRow } from "./OrderReagentRow";
 export { AddRoomDialog } from "./AddRoomDialog";
+export { ScrollableTable } from "./ScrollableTable";
+export { NavigationUnauth } from "./NavigationUnauth";
 

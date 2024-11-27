@@ -1,1 +1,1 @@
-export { default as CategoryFilter } from "./CategoryFilter.tsx";
+export { default as CategoryFilter } from "./CategoryFilter";

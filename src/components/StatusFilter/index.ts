@@ -1,1 +1,1 @@
-export { default as StatusFilter } from "./StatusFilter.tsx";
+export { default as StatusFilter } from "./StatusFilter";

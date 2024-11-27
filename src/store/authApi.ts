@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { Token, UserLoginInput } from "@/types";
 
-import { fetchQuery } from "./fetchQuery.ts";
+import { fetchQuery } from "./fetchQuery";
 
 export const authApi = createApi({
   reducerPath: "authApi",
