@@ -19,9 +19,9 @@ import { OrderReagent, OrderReagentRowType, OrderStatus } from "@/types";
 
 const OrderReagentMainRows: readonly OrderReagentRowType[] = [
   { label: "name", key: "reagentName" },
+  { label: "amount", key: "amount" },
   { label: "quantity", key: "quantity" },
   { label: "units", key: "unit" },
-  { label: "amount", key: "amount" },
   { label: "price", key: "pricePerUnit" },
   { label: "fromRequest", key: "fromRequest" },
 ];
@@ -37,6 +37,8 @@ type OrderReagentDetailsProps = {
   orderId: string;
   orderedReagents: OrderReagent[];
   status: OrderStatus;
+  selectedReagents: number[];
+  setSelectedReagents: React.Dispatch<React.SetStateAction<number[]>>;
   setIsAllocateDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -44,6 +46,8 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   orderId,
   orderedReagents,
   status,
+  selectedReagents,
+  setSelectedReagents,
   setIsAllocateDisabled,
 }) => {
   const { t } = useTranslation();
@@ -56,8 +60,6 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   );
 
   const [editableRowId, setEditableRowId] = useState<number | null>(null);
-
-  const [selectedReagents, setSelectedReagents] = useState<number[]>([]);
 
   const [deleteReagentFromOrder] = useDeleteReagentFromOrderMutation();
 
@@ -112,7 +114,8 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
     }
   };
 
-  const canSelectAll = status === ORDER_STATUSES.Pending;
+  const canSelectAll = status === ORDER_STATUSES.Submitted;
+  const canEditReagent = status === ORDER_STATUSES.Pending;
 
   return (
     <>
@@ -120,7 +123,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
         <Table stickyHeader size="small">
           <TableHead>
             <TableRow>
-              <TableCell />
+              <TableCell sx={{ width: 0 }} />
               {canSelectAll && (
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -138,7 +141,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
                   {t(`substanceDetails.fields.${label}`)}
                 </TableCell>
               ))}
-              {canSelectAll && (
+              {canEditReagent && (
                 <TableCell align="center">{t("users.table.actions")}</TableCell>
               )}
             </TableRow>
