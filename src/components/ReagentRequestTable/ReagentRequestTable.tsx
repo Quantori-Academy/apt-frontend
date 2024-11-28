@@ -18,6 +18,7 @@ import {
   EditReagentRequest,
   PageError,
   ScrollableTable,
+  SmilesImage,
 } from "@/components";
 import { statusColors, userRoles } from "@/constants";
 import { Severity, useAlertSnackbar, useAppSelector } from "@/hooks";
@@ -225,7 +226,13 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell>{row.structure}</TableCell>
+              <TableCell>
+                <SmilesImage
+                  index={index}
+                  smiles={row.structure}
+                  svgOptions={{ width: 100, height: 100 }}
+                />
+              </TableCell>
               <TableCell>{row.CAS}</TableCell>
               <TableCell>{row.quantity}</TableCell>
               <TableCell>{row.amount}</TableCell>
