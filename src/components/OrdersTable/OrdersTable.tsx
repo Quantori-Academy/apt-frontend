@@ -103,17 +103,17 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
     >
       <TableHead>
         <TableRow>
-          {headCells.map((headCell) => (
+          {headCells.map(({ key, label }) => (
             <TableCell
-              key={headCell.key}
-              sortDirection={orderBy === headCell.key ? order : false}
+              key={key}
+              sortDirection={orderBy === key ? order : false}
             >
               <TableSortLabel
-                active={orderBy === headCell.key}
-                direction={orderBy === headCell.key ? order : "asc"}
-                onClick={() => handleRequestSort(headCell.key)}
+                active={orderBy === key}
+                direction={orderBy === key ? order : "asc"}
+                onClick={() => handleRequestSort(key)}
               >
-                {t(`orders.table.${headCell.label}`)}
+                {t(`orders.table.${label}`)}
               </TableSortLabel>
             </TableCell>
           ))}
@@ -136,9 +136,9 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
                 value = t(`orders.statuses.${order[key]}`);
                 sxStyles = { color: ORDER_STATUS_COLORS[order[key]] };
               } else if (key === "createdAt" || key === "modifiedAt") {
-                value = formatDate(order[key as keyof typeof order] || null);
+                value = formatDate(order[key] || null);
               } else {
-                value = order[key as keyof typeof order] || "-";
+                value = order[key] || "-";
               }
               return (
                 <TableCell sx={sxStyles} key={key}>
