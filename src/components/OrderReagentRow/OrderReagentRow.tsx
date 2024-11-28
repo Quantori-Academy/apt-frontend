@@ -31,12 +31,6 @@ type OrderReagentRowProps = {
   selectedReagents: number[];
   OrderReagentMainRows: readonly OrderReagentRowType[];
   OrderReagentSecondaryRows: readonly OrderReagentRowType[];
-  isEditable: boolean;
-  reagent: OrderReagent;
-  showTableCell: boolean;
-  selectedReagents: number[];
-  OrderReagentMainRows: readonly OrderReagentRowType[];
-  OrderReagentSecondaryRows: readonly OrderReagentRowType[];
   setEditableRowId: React.Dispatch<React.SetStateAction<number | null>>;
   onDelete: (reagentId: number) => void;
   onClickCheckbox: () => void;

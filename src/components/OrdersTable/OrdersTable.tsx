@@ -1,5 +1,4 @@
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -102,65 +101,63 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
         />
       }
     >
-      <Table sx={{ minWidth: 750 }} size="medium">
-        <TableHead>
-          <TableRow>
-            {headCells.map((headCell) => (
-              <TableCell
-                key={headCell.key}
-                sortDirection={orderBy === headCell.key ? order : false}
+      <TableHead>
+        <TableRow>
+          {headCells.map((headCell) => (
+            <TableCell
+              key={headCell.key}
+              sortDirection={orderBy === headCell.key ? order : false}
+            >
+              <TableSortLabel
+                active={orderBy === headCell.key}
+                direction={orderBy === headCell.key ? order : "asc"}
+                onClick={() => handleRequestSort(headCell.key)}
               >
-                <TableSortLabel
-                  active={orderBy === headCell.key}
-                  direction={orderBy === headCell.key ? order : "asc"}
-                  onClick={() => handleRequestSort(headCell.key)}
-                >
-                  {t(`orders.table.${headCell.label}`)}
-                </TableSortLabel>
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {visibleRows.map((order) => (
-            <TableRow
-              hover
-              onClick={() =>
-                navigate(RouteProtectedPath.orderPage.replace(":id", order.id))
-              }
-              key={order.id}
-              sx={{ cursor: "pointer" }}
-            >
-              {headCells.map(({ key }) => {
-                let value;
-                let sxStyles = {};
-                if (key === "status") {
-                  value = t(`orders.statuses.${order[key]}`);
-                  sxStyles = { color: ORDER_STATUS_COLORS[order[key]] };
-                } else if (key === "createdAt" || key === "modifiedAt") {
-                  value = formatDate(order[key as keyof typeof order] || null);
-                } else {
-                  value = order[key as keyof typeof order] || "-";
-                }
-                return (
-                  <TableCell sx={sxStyles} key={key}>
-                    {value}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
+                {t(`orders.table.${headCell.label}`)}
+              </TableSortLabel>
+            </TableCell>
           ))}
-          {emptyRows > 0 && (
-            <TableRow
-              style={{
-                height: 53 * emptyRows,
-              }}
-            >
-              <TableCell colSpan={5} />
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {visibleRows.map((order) => (
+          <TableRow
+            hover
+            onClick={() =>
+              navigate(RouteProtectedPath.orderPage.replace(":id", order.id))
+            }
+            key={order.id}
+            sx={{ cursor: "pointer" }}
+          >
+            {headCells.map(({ key }) => {
+              let value;
+              let sxStyles = {};
+              if (key === "status") {
+                value = t(`orders.statuses.${order[key]}`);
+                sxStyles = { color: ORDER_STATUS_COLORS[order[key]] };
+              } else if (key === "createdAt" || key === "modifiedAt") {
+                value = formatDate(order[key as keyof typeof order] || null);
+              } else {
+                value = order[key as keyof typeof order] || "-";
+              }
+              return (
+                <TableCell sx={sxStyles} key={key}>
+                  {value}
+                </TableCell>
+              );
+            })}
+          </TableRow>
+        ))}
+        {emptyRows > 0 && (
+          <TableRow
+            style={{
+              height: 53 * emptyRows,
+            }}
+          >
+            <TableCell colSpan={5} />
+          </TableRow>
+        )}
+      </TableBody>
     </ScrollableTable>
   );
 };

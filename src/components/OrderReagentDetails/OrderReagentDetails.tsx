@@ -75,10 +75,10 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      const unallocatedReagentIds = orderedReagents
-        .filter((reagent) => !reagent.isAllocated)
-        .map((reagent) => reagent.id);
-      setSelectedReagents(unallocatedReagentIds);
+      const notAllocatedReagentsIds = notAllocatedReagents.map(
+        (reagent) => reagent.id
+      );
+      setSelectedReagents(notAllocatedReagentsIds);
       setIsAllocateDisabled(false);
     } else {
       setSelectedReagents([]);
@@ -120,9 +120,11 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   const canSelectAll = status === ORDER_STATUSES.Submitted;
   const canEditReagent = status === ORDER_STATUSES.Pending;
 
-  const notAllocatedReagentsAmount = orderedReagents.filter(
+  const notAllocatedReagents = orderedReagents.filter(
     (reagent) => !reagent.isAllocated
-  ).length;
+  );
+
+  const notAllocatedReagentsAmount = notAllocatedReagents.length;
 
   const showTableCell = !!notAllocatedReagentsAmount && canSelectAll;
 
