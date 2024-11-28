@@ -571,7 +571,7 @@
           "errorMessage": "Amount must be greater than 0"
         },
         "structure": {
-          "label": "Structure"
+          "label": "Structure in SMILES"
         },
         "CASNumber": {
           "label": "CAS Number"

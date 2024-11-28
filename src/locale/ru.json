@@ -571,7 +571,7 @@
           "errorMessage": "Количество должно быть больше 0"
         },
         "structure": {
-          "label": "Структура"
+          "label": "Структура в SMILES"
         },
         "CASNumber": {
           "label": "Номер CAS"

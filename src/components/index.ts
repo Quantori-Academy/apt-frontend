@@ -68,4 +68,4 @@ export { OrderReagentRow } from "./OrderReagentRow";
 export { AddRoomDialog } from "./AddRoomDialog";
 export { ScrollableTable } from "./ScrollableTable";
 export { NavigationUnauth } from "./NavigationUnauth";
-
+export { StructureEditor } from "./StructureEditor";
