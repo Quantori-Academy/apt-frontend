@@ -8,7 +8,7 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -32,7 +32,6 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [smile, setSmile] = useState("");
-  const inputRef = useRef();
   const { t } = useTranslation();
   const {
     handleSubmit,
@@ -63,10 +62,10 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
           label={t("createRequestForm.requiredFields.CASNumber.label")}
           {...register("CAS")}
         />
+
         <TextField
-          inputRef={inputRef}
           InputLabelProps={{
-            shrink: true, // Prevents label from moving to the top
+            shrink: true,
           }}
           label={t("createRequestForm.requiredFields.structure.label")}
           {...register("structure")}
