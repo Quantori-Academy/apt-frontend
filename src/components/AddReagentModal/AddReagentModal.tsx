@@ -17,8 +17,19 @@ const AddReagentModal: React.FC = () => {
 
   const handleCreateReagent = async (reagentData: ReagentData) => {
     try {
-      const payload = {
-        ...reagentData,
+      const payload: ReagentData = {
+        name: reagentData.name,
+        description: reagentData.description || null,
+        pricePerUnit: reagentData.pricePerUnit || null,
+        unit: reagentData.unit,
+        amount: reagentData.amount,
+        initialQuantity: reagentData.initialQuantity,
+        expirationDate: reagentData.expirationDate,
+        locationId: reagentData.locationId,
+        casNumber: reagentData.casNumber,
+        producer: reagentData.producer || null,
+        catalogId: reagentData.catalogId || null,
+        catalogLink: reagentData.catalogLink || null,
         structure: reagentData.structure || null,
       };
 
@@ -37,7 +48,7 @@ const AddReagentModal: React.FC = () => {
   const locationOptions =
     storageRooms?.flatMap((room) =>
       room.locations.map((location) => ({
-        id: location.locationId,
+        id: Number(location.locationId),
         label: `${room.room} - ${location.locationName}`,
       }))
     ) || [];
