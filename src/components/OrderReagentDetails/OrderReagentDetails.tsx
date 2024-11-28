@@ -63,27 +63,27 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
 
   const [deleteReagentFromOrder] = useDeleteReagentFromOrderMutation();
 
-  const handleCheckboxChange = (id: number) => {
-    const selected = selectedReagents.includes(id)
-      ? selectedReagents.filter((item) => item !== id)
-      : [...selectedReagents, id];
-
-    setEditableRowId(null);
-    setSelectedReagents(selected);
-    setIsAllocateDisabled(!selected.length);
-  };
+  const notAllocatedReagents = orderedReagents
+    .filter((reagent) => !reagent.isAllocated)
+    .map((reagent) => reagent.id);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      const notAllocatedReagentsIds = notAllocatedReagents.map(
-        (reagent) => reagent.id
-      );
-      setSelectedReagents(notAllocatedReagentsIds);
+      setSelectedReagents(notAllocatedReagents);
       setIsAllocateDisabled(false);
     } else {
       setSelectedReagents([]);
       setIsAllocateDisabled(true);
     }
+  };
+
+  const handleCheckboxChange = (id: number) => {
+    const selected = selectedReagents.includes(id)
+      ? selectedReagents.filter((item) => item !== id)
+      : [...selectedReagents, id];
+    setEditableRowId(null);
+    setSelectedReagents(selected);
+    setIsAllocateDisabled(!selected.length);
   };
 
   const onDelete = (reagentId: number) => {
@@ -120,12 +120,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   const canSelectAll = status === ORDER_STATUSES.Submitted;
   const canEditReagent = status === ORDER_STATUSES.Pending;
 
-  const notAllocatedReagents = orderedReagents.filter(
-    (reagent) => !reagent.isAllocated
-  );
-
   const notAllocatedReagentsAmount = notAllocatedReagents.length;
-
   const showTableCell = !!notAllocatedReagentsAmount && canSelectAll;
 
   return (
