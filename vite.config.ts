@@ -21,4 +21,9 @@ export default defineConfig({
       enabled: true,
     },
   },
+
+  define: {
+    "process.env": {},
+    global: "globalThis",
+  },
 });
