@@ -24,7 +24,13 @@ import { OrderReagent, OrderReagentRowType, OrderStatus } from "@/types";
 
 type OrderReagentRowProps = {
   orderId: string;
+  isEditable: boolean;
+  showTableCell: boolean;
   status: OrderStatus;
+  reagent: OrderReagent;
+  selectedReagents: number[];
+  OrderReagentMainRows: readonly OrderReagentRowType[];
+  OrderReagentSecondaryRows: readonly OrderReagentRowType[];
   isEditable: boolean;
   reagent: OrderReagent;
   showTableCell: boolean;
