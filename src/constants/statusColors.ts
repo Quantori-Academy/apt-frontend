@@ -3,7 +3,7 @@ import { ORDER_STATUSES } from "@/constants";
 export const statusColors = {
   Declined: "#b22a00",
   Pending: "#ff9800",
-  Ordered: "#4caf50",
+  Ordered: "#964B00",
   Completed: "#4caf50",
   Taken: "#1769aa",
 };
