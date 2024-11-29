@@ -86,15 +86,18 @@ const SubstanceLocationsTable: React.FC<SubstanceLocationsTableProps> = ({
             <TableCell align="right">
               {t("substances.table.quantityLeft")}
             </TableCell>
-            <TableCell align="right">
-              {t("substanceDetails.fields.price")}
-            </TableCell>
+            {substanceType === "Reagent" && (
+              <TableCell align="right">
+                {t("substanceDetails.fields.price")}
+              </TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
           {visibleRows.map((location) => (
             <SubstanceLocationTableRow
               key={location.contentId}
+              substanceType={substanceType}
               {...location}
               onClickChangeLocation={() =>
                 setLocationIdsToChange({
@@ -134,10 +137,12 @@ const SubstanceLocationsTable: React.FC<SubstanceLocationsTableProps> = ({
 export default SubstanceLocationsTable;
 
 type SubstanceLocationTableRowProps = ReagentLocation & {
+  substanceType?: SubstancesCategory;
   onClickChangeLocation: () => void;
 };
 
 const SubstanceLocationTableRow: React.FC<SubstanceLocationTableRowProps> = ({
+  substanceType = "Reagent",
   location,
   room,
   quantityLeft,
@@ -169,7 +174,9 @@ const SubstanceLocationTableRow: React.FC<SubstanceLocationTableRowProps> = ({
           </Tooltip>
         )}
       </TableCell>
-      <TableCell align="right">{pricePerUnit || "-"}</TableCell>
+      {substanceType === "Reagent" && (
+        <TableCell align="right">{pricePerUnit || "-"}</TableCell>
+      )}
     </TableRow>
   );
 };
