@@ -564,9 +564,18 @@
           "label": "Единица измерения*",
           "requiredMessage": "Единица измерения обязательны"
         },
-        "quantity": {
+        "initialQuantity": {
+          "label": "Начальное количество*",
+          "requiredMessage": "Начальное количество обязательно!",
+          "errorMessage": "Начальное количество должно быть больше 0"
+        },
+        "amount": {
           "label": "Количество*",
-          "requiredMessage": "Количество обязательно"
+          "requiredMessage": "Количество обязательно!",
+          "errorMessage": "Количество должно быть больше 0"
+        },
+        "structure": {
+          "label": "Структура"
         },
         "CASNumber": {
           "label": "Номер CAS"
@@ -583,7 +592,8 @@
         "name": "Название",
         "CreationDate": "Дата создания",
         "ModifiedDate": "Дата изменения",
-        "Desired Quantity": "Желаемое количество",
+        "InitialQuantity": "Начальное количество",
+        "Amount": "Количество",
         "Structure": "Структура",
         "Status": "Статус",
         "CAS": "CAS",

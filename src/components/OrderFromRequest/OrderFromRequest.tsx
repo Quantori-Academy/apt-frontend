@@ -27,19 +27,19 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
     title: "",
     seller: "",
     reagents: requests.map((request) => {
-      const [reagentQuantity, reagentUnit] = request.desiredQuantity.split(" ");
+      const [reagentQuantity, reagentUnit] = request.quantity.split(" ");
       return {
         reagentName: request.name || "",
         unit: reagentUnit || "",
         quantity: reagentQuantity || "",
         pricePerUnit: "",
-        amount: "",
+        amount: String(request.amount),
         structure: request.structure || "",
         CASNumber: request.CAS || "",
         producer: "",
         catalogId: "",
         catalogLink: "",
-        fromRequest: false,
+        fromRequest: true,
       };
     }),
   };

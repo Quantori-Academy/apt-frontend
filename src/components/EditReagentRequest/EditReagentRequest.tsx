@@ -21,14 +21,16 @@ const EditReagentRequest: React.FC<ReagentRequestDetailsProps> = ({
   onClose,
   onEditSubmit,
 }) => {
-  const [desiredQuantity, unit] = request.desiredQuantity.split(" ");
+  const [desiredQuantity, unit] = request.quantity.split(" ");
 
   const formMethods = useReagentRequestForm({
     reagentName: request?.name,
     CAS: request?.CAS,
-    desiredQuantity: Number(desiredQuantity),
+    initialQuantity: Number(desiredQuantity),
     userComment: request?.userComment,
     unit: unit,
+    amount: request?.amount,
+    structure: request?.structure,
   });
 
   const [editReagentRequest] = useEditReagentRequestMutation();

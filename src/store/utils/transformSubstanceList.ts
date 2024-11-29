@@ -9,8 +9,8 @@ export const transformSubstanceData = (substances: SubstancesResponse): Array<Su
       name: substance.name,
       structure: substance.structure || "",
       isExpired: substance.is_expired,
-      quantityLeft: `${substance.locations[0].quantity_left} ${substance.locations[0].unit}`,
-      storageLocation: `${substance.locations[0].room}/${substance.locations[0].location}`,
+      quantityLeft: `${substance.location.quantity_left} ${substance.location.unit}`,
+      storageLocation: `${substance.location.room} / ${substance.location.location}`,
     };
   });
 };
