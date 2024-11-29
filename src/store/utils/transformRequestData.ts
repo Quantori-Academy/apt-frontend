@@ -8,7 +8,7 @@ export const transformRequestData = (requestedReagents: Array<RequestedReagentBa
       structure: request.structure,
       CAS: request.cas_number,
       amount: request.amount,
-      quantity: request.quantity,
+      quantity: request.initial_quantity,
       status: request.status,
       userComment: request.user_comment?.comment,
       procurementComment: request.procurement_comment?.comment,
