@@ -4,6 +4,7 @@ import { reagentRequestApi } from "@/store/reagentRequestApi";
 
 import { authApi } from "./authApi";
 import { ordersApi } from "./ordersApi";
+import { requestsOrdersBaseApi } from "./requestsOrdersBaseApi";
 import { authSlice, snackbarSlice } from "./slices";
 import { storageApi } from "./storageApi";
 import { substancesApi } from "./substancesApi";
@@ -29,8 +30,7 @@ export const makeStore = () => {
         usersApi.middleware,
         storageApi.middleware,
         substancesApi.middleware,
-        reagentRequestApi.middleware,
-        ordersApi.middleware
+        requestsOrdersBaseApi.middleware
       ),
   });
 
