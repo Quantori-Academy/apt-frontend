@@ -11,7 +11,9 @@ import {
   PageLoader,
   StorageLocationsList,
 } from "@/components";
-import { useGetStorageRoomsQuery } from "@/store";
+import { userRoles } from "@/constants";
+import { useAppSelector } from "@/hooks";
+import { selectUserRole, useGetStorageRoomsQuery } from "@/store";
 import { paginateStorages } from "@/utils";
 
 import style from "./StorageLocations.module.css";
@@ -20,6 +22,8 @@ const PAGE_SIZE = 3;
 
 const StorageLocations: React.FC = () => {
   const { t } = useTranslation();
+
+  const role = useAppSelector(selectUserRole);
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
@@ -55,22 +59,26 @@ const StorageLocations: React.FC = () => {
       </Typography>
 
       <Box className={style.buttonBox}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setCreateDialogOpen(true)}
-          style={{ marginBottom: "20px" }}
-        >
-          {t("storage.buttons.createLocation")}
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setCreateRoomDialogOpen(true)}
-          style={{ marginBottom: "20px" }}
-        >
-          {t("storage.buttons.createRoom")}
-        </Button>
+        {role === userRoles.Administrator && (
+          <>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setCreateDialogOpen(true)}
+              style={{ marginBottom: "20px" }}
+            >
+              {t("storage.buttons.createLocation")}
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setCreateRoomDialogOpen(true)}
+              style={{ marginBottom: "20px" }}
+            >
+              {t("storage.buttons.createRoom")}
+            </Button>
+          </>
+        )}
       </Box>
       <StorageLocationsList
         storages={paginatedStorages}
