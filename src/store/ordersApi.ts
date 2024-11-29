@@ -1,5 +1,3 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-
 import {
   BackendOrder,
   BackendOrderDetailPage,
@@ -11,7 +9,7 @@ import {
   StatusForm,
 } from "@/types";
 
-import { fetchQuery } from "./fetchQuery";
+import { requestsOrdersBaseApi } from "./requestsOrdersBaseApi";
 import {
   transformOrderData,
   transformOrderDetailResponse,
@@ -44,10 +42,7 @@ type Allocation = {
   locationId: string;
 };
 
-export const ordersApi = createApi({
-  reducerPath: "OrdersApi",
-  baseQuery: fetchQuery,
-  tagTypes: ["Orders", "Order"],
+export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query<Order[], void>({
       query: () => "/orders",
@@ -67,7 +62,7 @@ export const ordersApi = createApi({
     getOrder: builder.query<OrderDetailPage, string>({
       query: (orderId) => `orders/${orderId}`,
       transformResponse: (response: BackendOrderDetailPage) => transformOrderDetailResponse(response),
-      providesTags: ["Order"],
+      providesTags: ["Orders"],
     }),
 
     editOrderTitleSeller: builder.mutation<void, EditTitleSeller>({
@@ -79,7 +74,7 @@ export const ordersApi = createApi({
           seller,
         },
       }),
-      invalidatesTags: ["Order", "Orders"],
+      invalidatesTags: ["Orders"],
       transformErrorResponse: (response: MutationResponse) => {
         return {
           message: response.data?.message || "An unexpected error occurred.",
@@ -93,7 +88,7 @@ export const ordersApi = createApi({
         method: "PATCH",
         body: status,
       }),
-      invalidatesTags: ["Order", "Orders"],
+      invalidatesTags: ["Orders", "Requests"],
       transformErrorResponse: (response: MutationResponse) => {
         return {
           message: response.data?.message || "An unexpected error occurred.",
@@ -109,7 +104,7 @@ export const ordersApi = createApi({
           location_id: locationId,
         },
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Orders", "Requests"],
     }),
 
     updateOrderReagent: builder.mutation<void, { orderId: string; reagent: OrderReagent }>({
@@ -118,7 +113,7 @@ export const ordersApi = createApi({
         method: "PUT",
         body: transformOrderReagentData(reagent),
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Orders"],
     }),
 
     addReagentsToOrder: builder.mutation<void, AddReagentsToOrder>({
@@ -127,7 +122,7 @@ export const ordersApi = createApi({
         method: "POST",
         body: transformOrderData(newReagentsData).reagents,
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Orders"],
     }),
 
     deleteReagentFromOrder: builder.mutation<void, DeleteReagentIds>({
@@ -135,7 +130,7 @@ export const ordersApi = createApi({
         url: `/orders/${orderId}/reagents/${reagentId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Orders"],
     }),
   }),
 });
