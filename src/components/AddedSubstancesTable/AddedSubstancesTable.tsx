@@ -91,7 +91,7 @@ const AddedSubstancesTable: React.FC<AddedSubstancesTableProps> = ({
                 {addedSubstance.name}
               </NavLink>
             </TableCell>
-            <TableCell>{addedSubstance.description}</TableCell>
+            <TableCell>{addedSubstance.description || "-"}</TableCell>
             <TableCell align="right">{addedSubstance.addedAmount}</TableCell>
           </TableRow>
         ))}

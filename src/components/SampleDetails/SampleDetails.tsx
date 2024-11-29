@@ -58,7 +58,7 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
                 <DetailItem
                   key={label}
                   label={t(`substanceDetails.fields.${key}`)}
-                  value={sampleDetails[key]}
+                  value={sampleDetails[key] || "-"}
                 />
               );
             })}
@@ -66,9 +66,6 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
 
           {sampleDetails.structure && (
             <Grid item xs={12} sm={6}>
-              <Typography gutterBottom sx={{ textAlign: "center" }}>
-                {t("substanceDetails.fields.structure")}
-              </Typography>
               <SmilesImage
                 smiles={sampleDetails.structure}
                 svgOptions={{ width: 185, height: 185 }}

@@ -49,6 +49,7 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
       title={t("createRequestForm.title")}
       closeModal={onClose}
       isOpen={modalOpen}
+      width={"auto"}
     >
       <FormProvider {...formMethods}>
         <ReagentRequestForm
