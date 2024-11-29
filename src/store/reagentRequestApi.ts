@@ -72,7 +72,7 @@ export const reagentRequestApi = requestsOrdersBaseApi.injectEndpoints({
         method: "POST",
         body: transformOrderData(orderData),
       }),
-      invalidatesTags: ["Requests"],
+      invalidatesTags: ["Requests", "Orders"],
     }),
   }),
 });
