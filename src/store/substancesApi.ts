@@ -18,7 +18,6 @@ import {
   transformSampleData,
   transformSampleResponse,
   transformSubstanceData,
-  transformSubstancePatchRequest,
 } from "./utils";
 
 type MutationSubstanceResponse = {
@@ -29,10 +28,8 @@ type MutationSubstanceResponse = {
 };
 
 export type MutationPatchSubstance = {
-  id: string;
-  oldLocationId: string;
-  quantity: string;
-  newLocationId?: string;
+  storageContentId: number;
+  newLocationId: number;
 };
 
 export const substancesApi = createApi({
@@ -73,11 +70,14 @@ export const substancesApi = createApi({
       },
       invalidatesTags: ["Substances"],
     }),
-    updateSubstance: builder.mutation<MutationSubstanceResponse, MutationPatchSubstance>({
-      query: (updatedSubstanceDetails) => ({
-        url: `/substances/${updatedSubstanceDetails.id}`,
+    updateLocation: builder.mutation<MutationSubstanceResponse, MutationPatchSubstance>({
+      query: ({ storageContentId, newLocationId }) => ({
+        url: "/substances/location",
         method: "PATCH",
-        body: transformSubstancePatchRequest(updatedSubstanceDetails),
+        body: {
+          storage_content_id: storageContentId,
+          new_location_id: newLocationId,
+        },
       }),
       invalidatesTags: ["Substances"],
     }),
@@ -89,7 +89,10 @@ export const substancesApi = createApi({
     }),
     getSampleDetails: builder.query<Sample, string>({
       query: (sampleId) => `/substances/samples/${sampleId}`,
-      transformResponse: (response: BackendSample) => transformSampleResponse(response),
+      transformResponse: (response: BackendSample) => {
+        console.log(response);
+        return transformSampleResponse(response);
+      },
       providesTags: ["Substances"],
     }),
   }),
@@ -102,5 +105,5 @@ export const {
   useCreateSampleMutation,
   useCreateReagentMutation,
   useGetSampleDetailsQuery,
-  useUpdateSubstanceMutation,
+  useUpdateLocationMutation,
 } = substancesApi;

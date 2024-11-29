@@ -16,7 +16,7 @@ export {
 
 export {
   useGetReagentDetailsQuery,
-  useUpdateSubstanceMutation,
+  useUpdateLocationMutation,
   useGetSampleDetailsQuery,
   useDeleteSubstanceMutation,
   useGetSubstancesQuery,
