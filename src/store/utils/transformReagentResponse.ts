@@ -11,7 +11,12 @@ export const transformReagentResponse = (reagent: BackendReagent): Reagent => ({
   catalogID: reagent.catalog_id,
   catalogLink: reagent.catalog_link,
   totalQuantityLeft: reagent.total_quantity_left,
-  unit: reagent.unit,
-  pricePerUnit: reagent.price_per_unit,
-  locationId: String(reagent.location_id),
+  locations: reagent.locations.map((location) => ({
+    contentId: location.content_id,
+    locationId: location.location_id,
+    room: location.room,
+    location: location.location,
+    quantityLeft: location.quantity_left,
+    pricePerUnit: location.price_per_unit,
+  })),
 });
