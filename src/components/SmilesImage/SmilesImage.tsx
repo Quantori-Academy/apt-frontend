@@ -9,6 +9,7 @@ type SmilesImageProps = {
   smiles: string;
   align?: string;
   index?: number;
+  withBorder?: boolean;
   svgOptions: {
     width: number;
     height: number;
@@ -18,9 +19,18 @@ type SmilesImageProps = {
 const SmilesImage: React.FC<SmilesImageProps> = ({
   index,
   smiles,
-  svgOptions,
+  withBorder,
   align = "center",
+  svgOptions,
 }) => {
+  const borderStyles = withBorder
+    ? {
+        border: "1px solid teal",
+        borderRadius: " 10px",
+        background: "white",
+      }
+    : {};
+
   useEffect(() => {
     const drawer = new SmilesDrawer.SvgDrawer(svgOptions);
     SmilesDrawer.parse(smiles, function (tree: unknown) {
@@ -29,9 +39,16 @@ const SmilesImage: React.FC<SmilesImageProps> = ({
   }, [smiles]);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: align }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: align,
+      }}
+    >
       <svg
         className={styles.smilesSvg}
+        style={borderStyles}
         {...svgOptions}
         id={`${smiles}-${index}`}
       ></svg>
