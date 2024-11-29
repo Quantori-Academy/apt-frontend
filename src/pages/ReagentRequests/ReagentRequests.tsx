@@ -133,7 +133,7 @@ const ReagentRequests: React.FC = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  console.log(selected);
   return (
     <Container
       sx={{
