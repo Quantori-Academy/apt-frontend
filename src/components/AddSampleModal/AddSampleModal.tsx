@@ -13,14 +13,14 @@ import { SampleData } from "@/types";
 
 const defaultSampleData: SampleData = {
   name: "",
-  description: "",
-  structure: "",
-  pricePerUnit: 0,
-  quantityUnit: "",
-  quantityLeft: 0,
+  description: null,
+  unit: "",
+  initialQuantity: 0,
+  amount: 0,
   expirationDate: "",
   locationId: 0,
-  addedSubstanceIds: [],
+  addedSubstances: [],
+  structure: null,
 };
 
 const AddSampleModal: React.FC = () => {
@@ -62,8 +62,9 @@ const AddSampleModal: React.FC = () => {
   const reagentOptions =
     reagentData?.map((reagent) => ({
       id: Number(reagent.id),
-      label: reagent.name,
-      consumption: reagent.quantityLeft,
+      name: reagent.name,
+      unit: reagent.unit || "",
+      quantityLeft: reagent.quantityLeft || 0,
     })) || [];
 
   const locationOptions =
@@ -88,7 +89,7 @@ const AddSampleModal: React.FC = () => {
         height="600px"
       >
         <AddSampleForm
-          handleSubmit={handleCreateSample}
+          handleSubmitForm={handleCreateSample}
           isLoading={isLoading}
           reagentOptions={reagentOptions}
           locationOptions={locationOptions}

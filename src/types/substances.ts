@@ -6,9 +6,10 @@ export type SubstancesDetails = {
   category: SubstancesCategory;
   structure: string;
   description: string;
-  quantityLeft: string;
+  quantityLeft: number;
   storageLocation: string;
   isExpired: boolean;
+  unit: string;
 };
 export type CategoryFilterOption = SubstancesCategory | "All";
 export type SortDirection = "asc" | "desc";
@@ -23,6 +24,7 @@ type LocationResponse = {
 };
 
 export type SubstanceItemResponse = {
+  unit: string;
   id: string;
   name: string;
   category: SubstancesCategory;
@@ -30,6 +32,7 @@ export type SubstanceItemResponse = {
   structure: string;
   is_expired: boolean;
   locations: Array<LocationResponse>;
+  quantityLeft: number;
 };
 
 export type SubstancesResponse = Array<SubstanceItemResponse>;

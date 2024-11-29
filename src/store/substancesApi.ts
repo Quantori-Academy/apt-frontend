@@ -36,17 +36,18 @@ export type MutationPatchSubstance = {
 };
 
 export const substancesApi = createApi({
-  reducerPath: "reagentsApi",
+  reducerPath: "substancesApi",
   baseQuery: fetchQuery,
   tagTypes: ["Substances"],
   endpoints: (builder) => ({
     getSubstances: builder.query<Array<SubstancesDetails>, void>({
-      query: () => "/substances",
+      query: () => "/storage/total",
       transformResponse: (baseQueryReturnValue: SubstancesResponse) => {
         return transformSubstanceData(baseQueryReturnValue);
       },
       providesTags: ["Substances"],
     }),
+
     deleteSubstance: builder.mutation<MutationSubstanceResponse, string>({
       query: (substanceId) => ({
         url: `substances/${substanceId}`,
@@ -63,6 +64,7 @@ export const substancesApi = createApi({
       }),
       invalidatesTags: ["Substances"],
     }),
+
     createSample: builder.mutation({
       query: (sample: SampleData) => {
         return {
@@ -73,6 +75,7 @@ export const substancesApi = createApi({
       },
       invalidatesTags: ["Substances"],
     }),
+
     updateSubstance: builder.mutation<MutationSubstanceResponse, MutationPatchSubstance>({
       query: (updatedSubstanceDetails) => ({
         url: `/substances/${updatedSubstanceDetails.id}`,
@@ -87,6 +90,7 @@ export const substancesApi = createApi({
       transformResponse: (response: BackendReagent) => transformReagentResponse(response),
       providesTags: ["Substances"],
     }),
+
     getSampleDetails: builder.query<Sample, string>({
       query: (sampleId) => `/substances/samples/${sampleId}`,
       transformResponse: (response: BackendSample) => transformSampleResponse(response),

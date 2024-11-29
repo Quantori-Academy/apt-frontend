@@ -5,113 +5,89 @@ import {
   Container,
   Grid,
   TextField,
-  Typography,
 } from "@mui/material";
+import { t } from "i18next";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
-import { RouteProtectedPath } from "@/router";
 import { SampleData } from "@/types";
+
+type SubstanceOption = {
+  id: number;
+  name: string;
+  quantityLeft: number;
+  unit: string;
+};
 
 type LocationOption = {
   id: number;
   label: string;
 };
 
-type ReagentOption = {
-  id: number;
-  label: string;
-  consumption: string;
-};
-
 type AddSampleFormProps = {
-  initialSampleData: SampleData;
+  handleSubmitForm: (sampleData: SampleData) => Promise<void>;
   isLoading: boolean;
-  reagentOptions: ReagentOption[];
   locationOptions: LocationOption[];
-  handleSubmit: (sampleData: SampleData) => Promise<void>;
+  reagentOptions: SubstanceOption[];
+  initialSampleData: SampleData;
 };
+const todayPlusOneYear = new Date();
+todayPlusOneYear.setFullYear(todayPlusOneYear.getFullYear() + 1);
 
+const defaultExpirationDate = todayPlusOneYear.toISOString().slice(0, 16);
 const AddSampleForm: React.FC<AddSampleFormProps> = ({
+  handleSubmitForm,
   isLoading,
-  reagentOptions,
   locationOptions,
-  handleSubmit,
+  reagentOptions,
+  initialSampleData,
 }) => {
-  const { t } = useTranslation();
-
   const {
     register,
-    handleSubmit: handleFormSubmit,
-    setValue,
+    handleSubmit,
     control,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm<SampleData>({
     defaultValues: {
-      name: "",
-      description: "",
-      structure: "",
-      pricePerUnit: 0,
-      quantityUnit: "",
-      quantityLeft: 0,
-      expirationDate: new Date().toISOString().slice(0, 16),
-      locationId: 0,
-      addedSubstanceIds: [],
+      ...initialSampleData,
+      expirationDate: defaultExpirationDate,
     },
   });
-  const [selectedReagents, setSelectedReagents] = React.useState<
-    { id: number; amount: string; unit: string; label: string }[]
-  >([]);
 
-  const handleReagentChange = (
-    _event: React.ChangeEvent<unknown>,
-    value: ReagentOption | null,
-    index: number
-  ) => {
-    const newReagents = [...selectedReagents];
-    if (value) {
-      const [amount, unit] = value.consumption.split(" ");
-      newReagents[index] = {
-        id: value.id,
-        label: value.label,
-        amount,
-        unit,
-      };
-      setSelectedReagents(newReagents);
-      setValue(
-        "addedSubstanceIds",
-        newReagents.map((reagent) => reagent.id)
-      );
-    }
-  };
-  const handleAmountChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    index: number
-  ) => {
-    const newReagents = [...selectedReagents];
-    newReagents[index].amount = event.target.value;
-    setSelectedReagents(newReagents);
-  };
-  const addReagentField = () => {
-    setSelectedReagents([
-      ...selectedReagents,
-      { id: 0, amount: "", unit: "", label: "" },
+  const addedSubstances = watch("addedSubstances");
+
+  const handleAddSubstance = () => {
+    setValue("addedSubstances", [
+      ...addedSubstances,
+      {
+        addedSubstanceId: 0,
+        addedSubstanceQuantity: 0,
+        addedSubstanceUnit: "",
+      },
     ]);
   };
 
-  const navigate = useNavigate();
-  const onSubmit = async (data: SampleData) => {
-    await handleSubmit(data);
-    navigate(RouteProtectedPath.substances);
+  const handleSubstanceChange = <T extends string | number>(
+    index: number,
+    field: string,
+    value: T
+  ) => {
+    const updatedSubstances = [...addedSubstances];
+    updatedSubstances[index] = {
+      ...updatedSubstances[index],
+      [field]: value,
+    };
+    setValue("addedSubstances", updatedSubstances);
   };
+  console.log(initialSampleData);
 
   return (
     <Container maxWidth="sm">
-      <form onSubmit={handleFormSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleSubmitForm)}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               label={t("addSubstanceForm.requiredFields.name.label")}
               {...register("name", {
@@ -125,14 +101,6 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               helperText={errors.name?.message}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.structure.label")}
-              {...register("structure")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
           <Grid item xs={12}>
             <TextField
               label={t("addSubstanceForm.requiredFields.description.label")}
@@ -141,69 +109,21 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               margin="normal"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
-              label={t("addSubstanceForm.requiredFields.price.label")}
-              type="number"
-              {...register("pricePerUnit", {
-                valueAsNumber: true,
+              label={t("addSubstanceForm.requiredFields.unit.label")}
+              {...register("unit", {
                 required: t(
-                  "addSubstanceForm.requiredFields.price.requiredMessage"
+                  "addSubstanceForm.requiredFields.unit.requiredMessage"
                 ),
-                min: {
-                  value: 0,
-                  message: t(
-                    "addSubstanceForm.requiredFields.price.minPriceMessage"
-                  ),
-                },
               })}
               fullWidth
               margin="normal"
-              error={!!errors.pricePerUnit}
-              helperText={errors.pricePerUnit?.message}
-              InputProps={{
-                inputProps: { min: 0 },
-              }}
-              sx={{
-                "& input[type=number]": {
-                  MozAppearance: "textfield",
-                },
-                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
-                  {
-                    WebkitAppearance: "none",
-                    margin: 0,
-                  },
-              }}
+              error={!!errors.unit}
+              helperText={errors.unit?.message}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.quantityUnit.label")}
-              {...register("quantityUnit", {
-                required: {
-                  value: true,
-                  message: t(
-                    "addSubstanceForm.requiredFields.quantityUnit.requiredMessage"
-                  ),
-                },
-              })}
-              fullWidth
-              margin="normal"
-              error={!!errors.quantityUnit}
-              helperText={errors.quantityUnit?.message}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.expirationDate.label")}
-              type="datetime-local"
-              {...register("expirationDate")}
-              fullWidth
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Controller
               name="locationId"
               control={control}
@@ -212,25 +132,20 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                   "addSubstanceForm.requiredFields.location.requiredMessage"
                 ),
               }}
-              render={({ field, fieldState: { error } }) => (
+              render={({ field }) => (
                 <Autocomplete
-                  id="location-select"
                   options={locationOptions}
-                  getOptionLabel={({ label }) => label}
-                  onChange={(_event, value) =>
-                    field.onChange(value ? value.id : 0)
-                  }
+                  getOptionLabel={(option) => option.label}
+                  onChange={(_, value) => field.onChange(value?.id || 0)}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       label={t(
                         "addSubstanceForm.requiredFields.location.label"
                       )}
-                      placeholder="Select location"
+                      error={!!errors.locationId}
+                      helperText={errors.locationId?.message}
                       fullWidth
-                      margin="normal"
-                      error={!!error}
-                      helperText={error?.message}
                     />
                   )}
                 />
@@ -239,88 +154,131 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label={t("addSubstanceForm.requiredFields.quantity.label")}
+              label={t("addSubstanceForm.requiredFields.expirationDate.label")}
+              type="datetime-local"
+              {...register("expirationDate")}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label={t("addSubstanceForm.requiredFields.quantityUnit.label")}
               type="number"
-              {...register("quantityLeft", {
-                valueAsNumber: true,
+              {...register("initialQuantity", {
                 required: t(
-                  "addSubstanceForm.requiredFields.quantity.requiredMessage"
+                  "addSubstanceForm.requiredFields.quantityUnit.requiredMessage"
                 ),
                 min: {
                   value: 0,
                   message: t(
-                    "addSubstanceForm.requiredFields.quantity.minQuantityMessage"
+                    "addSubstanceForm.requiredFields.quantityUnit.minQuantityMessage"
+                  ),
+                },
+              })}
+              fullWidth
+              error={!!errors.initialQuantity}
+              helperText={errors.initialQuantity?.message}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label={t("addSubstanceForm.requiredFields.amount.label")}
+              type="number"
+              {...register("amount", {
+                valueAsNumber: true,
+                required: t(
+                  "addSubstanceForm.requiredFields.amount.requiredMessage"
+                ),
+                min: {
+                  value: 0,
+                  message: t(
+                    "addSubstanceForm.requiredFields.amount.minAmountMessage"
                   ),
                 },
               })}
               fullWidth
               margin="normal"
-              error={!!errors.quantityLeft}
-              helperText={errors.quantityLeft?.message}
+              error={!!errors.amount}
+              helperText={errors.amount?.message}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label={t("addSubstanceForm.requiredFields.structure.label")}
+              {...register("structure")}
+              fullWidth
+              margin="normal"
             />
           </Grid>
           <Grid item xs={12}>
-            <Button
-              variant="outlined"
-              onClick={addReagentField}
-              disabled={selectedReagents.length >= reagentOptions.length}
-              fullWidth
-            >
-              {t("substances.buttons.chooseSubstance")}
+            <Button variant="outlined" onClick={handleAddSubstance}>
+              Add Substance
             </Button>
           </Grid>
-          {selectedReagents.map((reagent, index) => (
+          {addedSubstances.map((substance, index) => (
             <Grid
               container
               spacing={2}
               key={index}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                justifyContent: "center",
-              }}
+              alignItems="center"
+              style={{ marginTop: "16px", marginBottom: "16px" }}
             >
               <Grid item xs={12} sm={6}>
                 <Autocomplete
                   options={reagentOptions}
-                  getOptionLabel={({ label }) => label}
-                  onChange={(event, value) =>
-                    handleReagentChange(event, value, index)
+                  getOptionLabel={(option) => option.name}
+                  onChange={(_, value) =>
+                    handleSubstanceChange(
+                      index,
+                      "addedSubstanceId",
+                      value?.id || 0
+                    )
                   }
                   renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label={t(
-                        "addSubstanceForm.requiredFields.substance.label"
-                      )}
-                      placeholder="Select reagent"
-                      fullWidth
-                      margin="normal"
-                    />
+                    <TextField {...params} label="Substance" fullWidth />
                   )}
                 />
               </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={4}
-                sx={{ display: "flex", alignItems: "center", gap: 1 }}
-              >
+
+              <Grid item xs={12} sm={4}>
                 <TextField
-                  label={t("addSubstanceForm.requiredFields.consumption.label")}
-                  value={reagent.amount}
-                  onChange={(event) => handleAmountChange(event, index)}
-                  fullWidth
-                  margin="normal"
-                  InputProps={{
-                    inputProps: { min: 1 },
+                  label={t("addSubstanceForm.requiredFields.quantity.label")}
+                  type="number"
+                  inputProps={{
+                    min: 0,
+                    max:
+                      reagentOptions.find(
+                        (option) => option.id === substance.addedSubstanceId
+                      )?.quantityLeft || 0,
                   }}
+                  value={substance.addedSubstanceQuantity}
+                  onChange={(e) =>
+                    handleSubstanceChange(
+                      index,
+                      "addedSubstanceQuantity",
+                      Number(e.target.value)
+                    )
+                  }
+                  fullWidth
                 />
-                <Typography sx={{ marginTop: 1 }}>{reagent.unit}</Typography>
+              </Grid>
+
+              <Grid item xs={12} sm={1}>
+                <Box>
+                  {reagentOptions.find(
+                    (option) => option.id === substance.addedSubstanceId
+                  )?.unit || ""}
+                </Box>
               </Grid>
             </Grid>
           ))}
+
           <Grid item xs={12}>
             <Box display="flex" justifyContent="center">
               <Button
@@ -329,9 +287,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                 type="submit"
                 disabled={isLoading}
               >
-                {isLoading
-                  ? t("substances.buttons.adding")
-                  : t("substances.buttons.addSample")}
+                Submit
               </Button>
             </Box>
           </Grid>
