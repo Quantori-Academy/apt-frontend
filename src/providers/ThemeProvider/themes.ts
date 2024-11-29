@@ -132,7 +132,7 @@ export const appTheme = createTheme({
       styleOverrides: {
         root: {
           ".MuiSvgIcon-root": {
-            color: "#C6CED8",
+            color: "#555",
           },
           "&.Mui-checked": {
             ".MuiSvgIcon-root": {

@@ -445,9 +445,13 @@
         "create": "Create",
         "updateStatus": "Update Status",
         "addReagents": "Add Reagents",
-        "allocateSelected": "Allocate selected reagents",
-        "chooseLocation": "Choose location"
+        "allocateSelected": "Allocate Reagents",
+        "chooseLocation": "Choose location",
+        "markSubmitted": "Mark as Submitted",
+        "markCancelled": "Mark as Cancelled"
       },
+
+      "tooltip": "Once all reagents are allocated, the order will be fulfilled",
 
       "errors": {
         "loadError": "Failed to load orders",
@@ -549,7 +553,7 @@
     },
 
     "createRequestForm": {
-      "buttonText" : "Add Request",
+      "buttonText": "Add Request",
       "title": "Create Reagent Request",
       "requiredFields": {
         "name": {
