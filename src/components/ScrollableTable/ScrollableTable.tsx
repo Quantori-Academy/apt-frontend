@@ -4,11 +4,13 @@ import type { ReactNode } from "react";
 import styles from "./ScrollableTable.module.css";
 
 type ScrollableTableProps = {
+  size?: "small" | "medium";
   children: ReactNode;
   paginationComponent: ReactNode;
 };
 
 const ScrollableTable: React.FC<ScrollableTableProps> = ({
+  size = "medium",
   children,
   paginationComponent,
 }) => {
@@ -20,7 +22,7 @@ const ScrollableTable: React.FC<ScrollableTableProps> = ({
         }}
         className={styles.customScrollbar}
       >
-        <Table aria-label="simple table" stickyHeader>
+        <Table aria-label="simple table" stickyHeader size={size}>
           {children}
         </Table>
       </TableContainer>
