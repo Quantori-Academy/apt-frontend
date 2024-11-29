@@ -26,7 +26,7 @@ const SmilesImage: React.FC<SmilesImageProps> = ({
     SmilesDrawer.parse(smiles, function (tree: unknown) {
       drawer.draw(tree, `${smiles}-${index}`, "light");
     });
-  }, [smiles]);
+  }, [smiles, svgOptions, index]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: align }}>

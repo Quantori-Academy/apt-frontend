@@ -27,7 +27,7 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
     title: "",
     seller: "",
     reagents: requests.map((request) => {
-      const [reagentQuantity, reagentUnit] = request.desiredQuantity.split(" ");
+      const [reagentQuantity, reagentUnit] = request.quantity.split(" ");
       return {
         reagentName: request.name || "",
         unit: reagentUnit || "",

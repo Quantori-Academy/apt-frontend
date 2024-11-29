@@ -7,7 +7,8 @@ export type RequestedReagent = {
   name: string;
   structure: string;
   CAS: string;
-  desiredQuantity: string;
+  amount: number;
+  quantity: string;
   status: RequestStatus;
   userComment: string | null;
   procurementComment: string | null;
@@ -38,12 +39,15 @@ export type RequestedReagentBackend = {
   modified_at: string | null;
   user_comment: RequestUserCommentBackend;
   procurement_comment: RequestUserCommentBackend;
+  amount: number;
 };
 
 export type ReagentRequestInput = {
   reagentName: string;
   CAS: string;
-  desiredQuantity: number | null;
+  initialQuantity: number;
   userComment: string | null;
   unit: string;
+  structure: string;
+  amount: number;
 };

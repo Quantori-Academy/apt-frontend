@@ -29,7 +29,7 @@ export type SubstanceItemResponse = {
   description: string;
   structure: string;
   is_expired: boolean;
-  locations: Array<LocationResponse>;
+  location: LocationResponse;
 };
 
 export type SubstancesResponse = Array<SubstanceItemResponse>;
