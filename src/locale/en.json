@@ -267,15 +267,31 @@
           "requiredMessage": "Price is required",
           "minPriceMessage": "Price must be positive"
         },
+          "unit": {
+          "label": "Unit",
+          "requiredMessage": "Unit is required"
+        },
+        "amount": {
+          "label": "Amount",
+          "requiredMessage": "Amount is required",
+          "minAmountMessage": "Amount must be positive"
+        },
         "quantityUnit": {
-          "label": "Quantity Unit",
-          "requiredMessage": "Quantity unit is required"
+          "label": "Initial Quantity",
+          "requiredMessage": " Initial quantity is required",
+          "minAmountMessage": "Initial quantity must be positive"
         },
         "quantity": {
-          "label": "Quantity Left",
-          "requiredMessage": "Quantity left is required",
-          "minQuantityMessage": "Quantity must be positive"
+          "label": "Quantity",
+          "minAmountMessage": "Initial quantity can not be negative"
         },
+        "initialQuantity":{
+          "label": "Initial Quantity",
+          "requiredMessage": "Initial quantity is required",
+          "minQuantityMessage": "Initial quantity must be positive"
+
+},
+
         "expirationDate": {
           "label": "Expiration Date"
         },
