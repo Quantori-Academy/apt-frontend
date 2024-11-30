@@ -10,8 +10,8 @@ export const transformSubstanceData = (substances: SubstancesResponse): Array<Su
       structure: substance.structure || "",
       unit: substance.unit || "",
       isExpired: substance.is_expired,
-      quantityLeft: Number(substance.quantityLeft) || 0,
-      storageLocation: "",
+      quantityLeft: substance.location.quantity_left,
+      storageLocation: `${substance.location.room} / ${substance.location.location}`,
     };
   });
 };
