@@ -3,10 +3,6 @@ import { ORDER_STATUSES } from "@/constants";
 export type OrderStatus = (typeof ORDER_STATUSES)[keyof typeof ORDER_STATUSES];
 export type StatusFilter = OrderStatus | "All";
 
-export type StatusForm = {
-  status: OrderStatus;
-};
-
 export type SortType = "asc" | "desc";
 
 export type Order = {
@@ -31,6 +27,7 @@ export type OrderReagent = {
   unit: string;
   pricePerUnit: string;
   fromRequest: boolean;
+  isAllocated?: boolean;
   structure?: string | null;
   CASNumber?: string | null;
   producer?: string | null;
@@ -52,6 +49,7 @@ export type BackendOrderReagent = Pick<OrderReagent, "id" | "unit" | "amount" | 
   initial_quantity: number;
   price_per_unit: string;
   from_request: boolean;
+  is_allocated?: boolean;
   cas_number?: string | null;
   catalog_id?: string | null;
   catalog_link?: string | null;

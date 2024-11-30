@@ -28,7 +28,7 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
-      <Stack spacing={2} width={300} sx={{ padding: "20px" }}>
+      <Stack spacing={2} width={300} sx={{ padding: "10px" }}>
         <TextField
           label={t("createRequestForm.requiredFields.name.label")}
           {...register("reagentName", {
@@ -44,26 +44,53 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
           {...register("CAS")}
         />
         <TextField
-          type="number"
-          label={t("createRequestForm.requiredFields.quantity.label")}
-          {...register("desiredQuantity", {
-            required: t(
-              "createRequestForm.requiredFields.quantity.requiredMessage"
-            ),
-          })}
-          helperText={errors.desiredQuantity?.message}
-          error={!!errors.desiredQuantity}
+          label={t("createRequestForm.requiredFields.structure.label")}
+          {...register("structure")}
         />
+        <Box display="flex" justifyContent="space-between" gap={1}>
+          <TextField
+            type="number"
+            label={t("createRequestForm.requiredFields.initialQuantity.label")}
+            {...register("initialQuantity", {
+              required: t(
+                "createRequestForm.requiredFields.initialQuantity.requiredMessage"
+              ),
+              validate: (value) =>
+                value > 0 ||
+                t(
+                  "createRequestForm.requiredFields.initialQuantity.errorMessage"
+                ),
+            })}
+            helperText={errors.initialQuantity?.message}
+            error={!!errors.initialQuantity}
+          />
+          <TextField
+            label={t("createRequestForm.requiredFields.units.label")}
+            {...register("unit", {
+              required: t(
+                "createRequestForm.requiredFields.units.requiredMessage"
+              ),
+            })}
+            helperText={errors.unit?.message}
+            error={!!errors.unit}
+          />
+        </Box>
+
         <TextField
-          label={t("createRequestForm.requiredFields.units.label")}
-          {...register("unit", {
+          type="number"
+          label={t("createRequestForm.requiredFields.amount.label")}
+          {...register("amount", {
             required: t(
-              "createRequestForm.requiredFields.units.requiredMessage"
+              "createRequestForm.requiredFields.amount.requiredMessage"
             ),
+            validate: (value) =>
+              value > 0 ||
+              t("createRequestForm.requiredFields.amount.errorMessage"),
           })}
-          helperText={errors.unit?.message}
-          error={!!errors.unit}
+          helperText={errors.initialQuantity?.message}
+          error={!!errors.initialQuantity}
         />
+
         <TextField
           multiline
           rows={4}

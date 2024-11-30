@@ -6,11 +6,12 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import { ChangeEvent, useMemo, useState } from "react";
+import { type ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { ScrollableTable } from "@/components";
+import { ORDER_STATUS_COLORS } from "@/constants";
 import { RouteProtectedPath } from "@/router";
 import { Order, SortType, StatusFilter } from "@/types";
 import { formatDate, getOrdersRows } from "@/utils";
@@ -86,7 +87,6 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
     <ScrollableTable
       paginationComponent={
         <TablePagination
-          sx={{ backgroundColor: "#f5f5f5" }}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={filteredOrders.length}
@@ -103,17 +103,17 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
     >
       <TableHead>
         <TableRow>
-          {headCells.map((headCell) => (
+          {headCells.map(({ key, label }) => (
             <TableCell
-              key={headCell.key}
-              sortDirection={orderBy === headCell.key ? order : false}
+              key={key}
+              sortDirection={orderBy === key ? order : false}
             >
               <TableSortLabel
-                active={orderBy === headCell.key}
-                direction={orderBy === headCell.key ? order : "asc"}
-                onClick={() => handleRequestSort(headCell.key)}
+                active={orderBy === key}
+                direction={orderBy === key ? order : "asc"}
+                onClick={() => handleRequestSort(key)}
               >
-                {t(`orders.table.${headCell.label}`)}
+                {t(`orders.table.${label}`)}
               </TableSortLabel>
             </TableCell>
           ))}
@@ -129,15 +129,23 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
             key={order.id}
             sx={{ cursor: "pointer" }}
           >
-            {headCells.map((cell) => (
-              <TableCell key={cell.key}>
-                {cell.key === "status"
-                  ? t(`orders.statuses.${order[cell.key]}`)
-                  : cell.key === "createdAt" || cell.key === "modifiedAt"
-                    ? formatDate(order[cell.key as keyof typeof order] || null)
-                    : order[cell.key as keyof typeof order] || "-"}
-              </TableCell>
-            ))}
+            {headCells.map(({ key }) => {
+              let value;
+              let sxStyles = {};
+              if (key === "status") {
+                value = t(`orders.statuses.${order[key]}`);
+                sxStyles = { color: ORDER_STATUS_COLORS[order[key]] };
+              } else if (key === "createdAt" || key === "modifiedAt") {
+                value = formatDate(order[key] || null);
+              } else {
+                value = order[key] || "-";
+              }
+              return (
+                <TableCell sx={sxStyles} key={key}>
+                  {value}
+                </TableCell>
+              );
+            })}
           </TableRow>
         ))}
         {emptyRows > 0 && (

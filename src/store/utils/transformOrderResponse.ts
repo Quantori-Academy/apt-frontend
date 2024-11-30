@@ -24,6 +24,7 @@ export const transformOrderDetailResponse = (orderDetail: BackendOrderDetailPage
     fromRequest: reagent.from_request,
     unit: reagent.unit,
     pricePerUnit: reagent.price_per_unit,
+    isAllocated: reagent.is_allocated,
     structure: reagent.structure ?? "",
     CASNumber: reagent.cas_number ?? "",
     producer: reagent.producer ?? "",

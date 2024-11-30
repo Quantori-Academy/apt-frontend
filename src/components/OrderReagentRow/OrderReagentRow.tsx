@@ -24,8 +24,9 @@ import { OrderReagent, OrderReagentRowType, OrderStatus } from "@/types";
 
 type OrderReagentRowProps = {
   orderId: string;
-  status: OrderStatus;
   isEditable: boolean;
+  showTableCell: boolean;
+  status: OrderStatus;
   reagent: OrderReagent;
   selectedReagents: number[];
   OrderReagentMainRows: readonly OrderReagentRowType[];
@@ -40,6 +41,7 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
   status,
   isEditable,
   reagent,
+  showTableCell,
   OrderReagentMainRows,
   OrderReagentSecondaryRows,
   selectedReagents,
@@ -96,9 +98,17 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
     reset();
   };
 
+  const canSelectReagent =
+    status === ORDER_STATUSES.Submitted && !reagent.isAllocated;
+  const canEditReagent = status === ORDER_STATUSES.Pending;
+
   return (
     <>
-      <TableRow>
+      <TableRow
+        sx={{
+          backgroundColor: isRowOpened && !isEditable ? "#0080801f" : "white",
+        }}
+      >
         <TableCell>
           <IconButton
             size="small"
@@ -107,12 +117,16 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
             {isRowOpened ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         </TableCell>
-        <TableCell padding="checkbox">
-          <Checkbox
-            checked={selectedReagents.includes(reagent.id)}
-            onChange={onClickCheckbox}
-          />
-        </TableCell>
+        {showTableCell && (
+          <TableCell padding="checkbox">
+            {canSelectReagent && (
+              <Checkbox
+                checked={selectedReagents.includes(reagent.id)}
+                onChange={onClickCheckbox}
+              />
+            )}
+          </TableCell>
+        )}
         {OrderReagentMainRows.map(({ label, key }) => {
           let value;
           if (reagent[key] === true) {
@@ -148,7 +162,7 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
             </TableCell>
           );
         })}
-        {status === ORDER_STATUSES.Pending && (
+        {canEditReagent && (
           <TableCell align="center">
             <OrderReagentButtons
               isEditable={isEditable}
@@ -171,11 +185,17 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
         >
           <Collapse in={isRowOpened} unmountOnExit>
             <Box m={1}>
-              <Table size="small">
+              <Table
+                sx={{
+                  border: "1px solid #00808045",
+                  borderCollapse: "collapse",
+                }}
+                size="small"
+              >
                 <TableHead>
                   <TableRow>
                     {OrderReagentSecondaryRows.map(({ label }) => (
-                      <TableCell key={label}>
+                      <TableCell align="center" key={label}>
                         {t(`substanceDetails.fields.${label}`)}
                       </TableCell>
                     ))}
@@ -185,9 +205,15 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
+                  <TableRow
+                    sx={{
+                      "&:last-child td, &:last-child th": {
+                        borderBottom: "1px solid #00808045",
+                      },
+                    }}
+                  >
                     {OrderReagentSecondaryRows.map(({ key }) => (
-                      <TableCell key={key}>
+                      <TableCell align="center" key={key}>
                         {isEditable ? (
                           <EditController
                             value={reagent[key]}
