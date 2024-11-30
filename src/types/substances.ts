@@ -32,7 +32,6 @@ export type SubstanceItemResponse = {
   structure: string;
   is_expired: boolean;
   location: LocationResponse;
-  quantityLeft: number;
 };
 
 export type SubstancesResponse = Array<SubstanceItemResponse>;
