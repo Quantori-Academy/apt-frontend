@@ -34,7 +34,7 @@ type AddSampleFormProps = {
 const todayPlusOneYear = new Date();
 todayPlusOneYear.setFullYear(todayPlusOneYear.getFullYear() + 1);
 
-const defaultExpirationDate = todayPlusOneYear.toISOString().slice(0, 16);
+const defaultExpirationDate = todayPlusOneYear.toISOString().slice(0, 10);
 const AddSampleForm: React.FC<AddSampleFormProps> = ({
   handleSubmitForm,
   isLoading,
@@ -81,7 +81,6 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
     };
     setValue("addedSubstances", updatedSubstances);
   };
-  console.log(initialSampleData);
 
   return (
     <Container maxWidth="sm">
@@ -155,7 +154,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           <Grid item xs={12}>
             <TextField
               label={t("addSubstanceForm.requiredFields.expirationDate.label")}
-              type="datetime-local"
+              type="date"
               {...register("expirationDate")}
               fullWidth
               margin="normal"

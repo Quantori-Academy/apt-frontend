@@ -33,7 +33,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
   const todayPlusOneYear = new Date();
   todayPlusOneYear.setFullYear(todayPlusOneYear.getFullYear() + 1);
 
-  const defaultExpirationDate = todayPlusOneYear.toISOString().slice(0, 16);
+  const defaultExpirationDate = todayPlusOneYear.toISOString().slice(0, 10);
 
   const {
     register,
@@ -139,10 +139,32 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               helperText={errors.amount?.message}
             />
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label={t("addSubstanceForm.requiredFields.initialQuantity.label")}
+              type="number"
+              {...register("initialQuantity", {
+                valueAsNumber: true,
+                required: t(
+                  "addSubstanceForm.requiredFields.initialQuantity.requiredMessage"
+                ),
+                min: {
+                  value: 0,
+                  message: t(
+                    "addSubstanceForm.requiredFields.initialQuantity.minQuantityMessage"
+                  ),
+                },
+              })}
+              fullWidth
+              margin="normal"
+              error={!!errors.initialQuantity}
+              helperText={errors.initialQuantity?.message}
+            />
+          </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               label={t("addSubstanceForm.requiredFields.expirationDate.label")}
-              type="datetime-local"
+              type="date"
               {...register("expirationDate")}
               fullWidth
               margin="normal"
@@ -238,29 +260,6 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               margin="normal"
             />
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.initialQuantity.label")}
-              type="number"
-              {...register("initialQuantity", {
-                valueAsNumber: true,
-                required: t(
-                  "addSubstanceForm.requiredFields.initialQuantity.requiredMessage"
-                ),
-                min: {
-                  value: 0,
-                  message: t(
-                    "addSubstanceForm.requiredFields.initialQuantity.minQuantityMessage"
-                  ),
-                },
-              })}
-              fullWidth
-              margin="normal"
-              error={!!errors.initialQuantity}
-              helperText={errors.initialQuantity?.message}
-            />
-          </Grid>
-
           <Grid item xs={12}>
             <Box display="flex" justifyContent="center">
               <Button variant="contained" color="primary" type="submit">
