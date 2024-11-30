@@ -33,7 +33,7 @@ export type RequestedReagentBackend = {
   reagent_name: string;
   structure: string;
   cas_number: string;
-  quantity: string;
+  initial_quantity: string;
   status: RequestStatus;
   created_at: string;
   modified_at: string | null;
