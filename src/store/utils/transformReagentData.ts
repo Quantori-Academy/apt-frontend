@@ -5,7 +5,7 @@ export const transformReagentData = (reagent: ReagentData) => ({
   description: reagent.description || null,
   structure: reagent.structure || null,
   price_per_unit: reagent.pricePerUnit || 0,
-  unit: reagent.unit || "mL",
+  unit: reagent.unit || null,
   amount: reagent.amount || 0,
   initial_quantity: reagent.initialQuantity || 0,
   expiration_date: reagent.expirationDate || new Date().toISOString(),
