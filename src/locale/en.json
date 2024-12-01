@@ -215,7 +215,8 @@
         "description": "Description",
         "quantityLeft": "Quantity left",
         "storageLocation": "Storage location",
-        "actions": "Actions"
+        "actions": "Actions",
+        "addedQuantity": "Added quantity"
       },
 
       "modalMessages": {
@@ -342,6 +343,13 @@
         "addedSubstances": "Substances",
         "room": "Room",
         "location": "Location"
+      },
+
+      "quantityValidation": {
+        "required": "Quantity required",
+        "invalidNumber": "Please enter a valid number",
+        "greaterThanZero": "The quantity must be greater than zero",
+        "lessThanCurrent": "The quantity must be less than the current quantity of {{currentQuantity}}"
       },
 
       "currentLocation": " (current)",

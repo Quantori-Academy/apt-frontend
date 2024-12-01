@@ -215,7 +215,8 @@
         "description": "Описание",
         "quantityLeft": "Остаток",
         "storageLocation": "Место хранения",
-        "actions": "Действия"
+        "actions": "Действия",
+        "addedQuantity": "Добавленное количество"
       },
 
       "modalMessages": {
@@ -342,6 +343,13 @@
         "addedSubstances": "Вещества",
         "room": "Комната",
         "location": "Локация"
+      },
+
+      "quantityValidation": {
+        "required": "Требуется указать количество",
+        "invalidNumber": "Пожалуйста, введите корректное число",
+        "greaterThanZero": "Количество должно быть больше нуля",
+        "lessThanCurrent": "Количество должно быть меньше текущего количества {{currentQuantity}}"
       },
 
       "currentLocation": " (текущая)",
