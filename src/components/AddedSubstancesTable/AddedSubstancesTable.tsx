@@ -58,7 +58,7 @@ const AddedSubstancesTable: React.FC<AddedSubstancesTableProps> = ({
             onRowsPerPageChange={handleChangeRowsPerPage}
             labelRowsPerPage={t("orders.table.Pagination.RowsPerPage")}
             labelDisplayedRows={({ from, to, count }) =>
-              `${from}-${to} ${t("orders.table.Pagination.of")} ${count !== -1 ? count : `${t("orders.table.Pagantion.moreThan")} ${to}`}`
+              `${from}-${to} ${t("orders.table.Pagination.of")} ${count !== -1 ? count : `${t("orders.table.Pagination.moreThan")} ${to}`}`
             }
           />
         ) : null
@@ -66,9 +66,13 @@ const AddedSubstancesTable: React.FC<AddedSubstancesTableProps> = ({
     >
       <TableHead>
         <TableRow>
-          <TableCell>Name</TableCell>
-          <TableCell>Description</TableCell>
-          <TableCell align="right">Added amount</TableCell>
+          <TableCell>{t("substances.table.name")}</TableCell>
+          <TableCell align="center">
+            {t("substances.table.description")}
+          </TableCell>
+          <TableCell align="right">
+            {t("substances.table.addedQuantity")}
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -91,7 +95,9 @@ const AddedSubstancesTable: React.FC<AddedSubstancesTableProps> = ({
                 {addedSubstance.name}
               </NavLink>
             </TableCell>
-            <TableCell>{addedSubstance.description}</TableCell>
+            <TableCell align="center">
+              {addedSubstance.description || "-"}
+            </TableCell>
             <TableCell align="right">{addedSubstance.addedAmount}</TableCell>
           </TableRow>
         ))}
