@@ -8,7 +8,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { SaveCancelButtons } from "@/components";
+import { FormsLoadingBox, SaveCancelButtons } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useChangeQuantityMutation } from "@/store";
 import { SubstancesCategory } from "@/types";
@@ -44,7 +44,11 @@ const SubstanceQuantityChangingForm: React.FC<QuantityChangingProps> = ({
     },
   });
 
-  const [changeQuantity] = useChangeQuantityMutation();
+  const [changeQuantity, { isLoading }] = useChangeQuantityMutation();
+
+  if (isLoading) {
+    <FormsLoadingBox />;
+  }
 
   const onSubmit = async (data: NewQuantity) => {
     const lowerCaseType = substanceType.toLowerCase();
