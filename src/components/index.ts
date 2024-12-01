@@ -70,3 +70,4 @@ export { SubstanceLocationsTable } from "./SubstanceLocationsTable";
 export { SubstanceLocationChangingForm } from "./SubstanceLocationChangingForm";
 export { FormsLoadingBox } from "./FormsLoadingBox";
 export { AddedSubstancesTable } from "./AddedSubstancesTable";
+export { SubstanceQuantityChangingForm } from "./SubstanceQuantityChangingForm";
