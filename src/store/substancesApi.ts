@@ -3,6 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   BackendReagent,
   BackendSample,
+  MutationResponse,
   Reagent,
   ReagentData,
   Sample,
@@ -20,14 +21,12 @@ import {
   transformSubstanceData,
 } from "./utils";
 
-type MutationSubstanceResponse = {
-  status: number;
-  data: {
-    message: string;
-  };
+type UpdateQuantityPayload = {
+  storageContentId: number;
+  newQuantity: string;
 };
 
-export type MutationPatchSubstance = {
+export type UpdateLocationPayload = {
   storageContentId: number;
   newLocationId: number;
 };
@@ -44,7 +43,7 @@ export const substancesApi = createApi({
       },
       providesTags: ["Substances"],
     }),
-    deleteSubstance: builder.mutation<MutationSubstanceResponse, string>({
+    deleteSubstance: builder.mutation<MutationResponse, string>({
       query: (substanceId) => ({
         url: `substances/${substanceId}`,
         method: "DELETE",
@@ -70,7 +69,8 @@ export const substancesApi = createApi({
       },
       invalidatesTags: ["Substances"],
     }),
-    updateLocation: builder.mutation<MutationSubstanceResponse, MutationPatchSubstance>({
+
+    updateLocation: builder.mutation<MutationResponse, UpdateLocationPayload>({
       query: ({ storageContentId, newLocationId }) => ({
         url: "/substances/location",
         method: "PATCH",
@@ -80,6 +80,23 @@ export const substancesApi = createApi({
         },
       }),
       invalidatesTags: ["Substances"],
+    }),
+
+    changeQuantity: builder.mutation<void, UpdateQuantityPayload>({
+      query: (data) => ({
+        url: "/substances/quantity",
+        method: "PATCH",
+        body: {
+          storage_content_id: data.storageContentId,
+          new_quantity: data.newQuantity,
+        },
+      }),
+      invalidatesTags: ["Substances"],
+      transformErrorResponse: (response: MutationResponse) => {
+        return {
+          message: response.data?.message || "An unexpected error occurred.",
+        };
+      },
     }),
 
     getReagentDetails: builder.query<Reagent, string>({
@@ -106,4 +123,5 @@ export const {
   useCreateReagentMutation,
   useGetSampleDetailsQuery,
   useUpdateLocationMutation,
+  useChangeQuantityMutation,
 } = substancesApi;
