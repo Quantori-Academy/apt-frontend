@@ -1,25 +1,30 @@
-import { Edit, MoveUp } from "@mui/icons-material";
 import {
-  IconButton,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
-  Tooltip,
 } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ScrollableTable, SubstanceLocationChangingForm } from "@/components";
-import { userRoles } from "@/constants";
-import { useAppSelector } from "@/hooks";
-import { selectUserRole } from "@/store";
+import {
+  ScrollableTable,
+  SubstanceLocationChangingForm,
+  SubstanceQuantityChangingForm,
+} from "@/components";
 import {
   LocationChangingIds,
   ReagentLocation,
   SubstancesCategory,
 } from "@/types";
+
+import { SubstanceLocationTableRow } from "./SubstanceLocationTableRow";
+
+type QuantityChangingType = {
+  storageContentId: number | null;
+  currentQuantity: string;
+};
 
 type SubstanceLocationsTableProps = {
   substanceType: SubstancesCategory;
@@ -41,11 +46,31 @@ const SubstanceLocationsTable: React.FC<SubstanceLocationsTableProps> = ({
       currentLocationId: null,
     });
 
+  const [quantityIdToChange, setQuantityIdToChange] =
+    useState<QuantityChangingType>({
+      storageContentId: null,
+      currentQuantity: "",
+    });
+
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const onCancelChangingLocation = () => {
+    setLocationIdsToChange({
+      storageContentId: null,
+      currentLocationId: null,
+    });
+  };
+
+  const onCancelChangingQuantity = () => {
+    setQuantityIdToChange({
+      storageContentId: null,
+      currentQuantity: "",
+    });
   };
 
   const visibleRows = locations.slice(
@@ -74,7 +99,7 @@ const SubstanceLocationsTable: React.FC<SubstanceLocationsTableProps> = ({
               onRowsPerPageChange={handleChangeRowsPerPage}
               labelRowsPerPage={t("orders.table.Pagination.RowsPerPage")}
               labelDisplayedRows={({ from, to, count }) =>
-                `${from}-${to} ${t("orders.table.Pagination.of")} ${count !== -1 ? count : `${t("orders.table.Pagantion.moreThan")} ${to}`}`
+                `${from}-${to} ${t("orders.table.Pagination.of")} ${count !== -1 ? count : `${t("orders.table.Pagination.moreThan")} ${to}`}`
               }
             />
           ) : null
@@ -105,6 +130,12 @@ const SubstanceLocationsTable: React.FC<SubstanceLocationsTableProps> = ({
                   currentLocationId: location.locationId,
                 })
               }
+              onClickChangeQuantity={() =>
+                setQuantityIdToChange({
+                  storageContentId: location.contentId,
+                  currentQuantity: location.quantityLeft,
+                })
+              }
             />
           ))}
           {emptyRows > 0 && (
@@ -122,12 +153,15 @@ const SubstanceLocationsTable: React.FC<SubstanceLocationsTableProps> = ({
         <SubstanceLocationChangingForm
           locationIdsToChange={locationIdsToChange}
           substanceType={substanceType}
-          onCancel={() =>
-            setLocationIdsToChange({
-              storageContentId: null,
-              currentLocationId: null,
-            })
-          }
+          onCancel={onCancelChangingLocation}
+        />
+      )}
+      {quantityIdToChange.storageContentId && (
+        <SubstanceQuantityChangingForm
+          storageContentId={quantityIdToChange.storageContentId}
+          currentQuantity={quantityIdToChange.currentQuantity}
+          substanceType={substanceType}
+          onCancel={onCancelChangingQuantity}
         />
       )}
     </>
@@ -135,48 +169,3 @@ const SubstanceLocationsTable: React.FC<SubstanceLocationsTableProps> = ({
 };
 
 export default SubstanceLocationsTable;
-
-type SubstanceLocationTableRowProps = ReagentLocation & {
-  substanceType?: SubstancesCategory;
-  onClickChangeLocation: () => void;
-};
-
-const SubstanceLocationTableRow: React.FC<SubstanceLocationTableRowProps> = ({
-  substanceType = "Reagent",
-  location,
-  room,
-  quantityLeft,
-  pricePerUnit,
-  onClickChangeLocation,
-}) => {
-  const role = useAppSelector(selectUserRole);
-  const isResearcher = role === userRoles.Researcher;
-
-  return (
-    <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-      <TableCell>
-        {isResearcher && (
-          <Tooltip placement="top" title="Change reagent's location">
-            <IconButton onClick={onClickChangeLocation}>
-              <MoveUp />
-            </IconButton>
-          </Tooltip>
-        )}
-        {`${room}, ${location}`}{" "}
-      </TableCell>
-      <TableCell align="right">
-        {quantityLeft}
-        {isResearcher && (
-          <Tooltip placement="top" title="Change  reagent's quantity">
-            <IconButton>
-              <Edit />
-            </IconButton>
-          </Tooltip>
-        )}
-      </TableCell>
-      {substanceType === "Reagent" && (
-        <TableCell align="right">{pricePerUnit || "-"}</TableCell>
-      )}
-    </TableRow>
-  );
-};
