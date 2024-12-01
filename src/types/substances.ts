@@ -6,7 +6,7 @@ export type SubstancesDetails = {
   category: SubstancesCategory;
   structure: string;
   description: string;
-  quantityLeft: number;
+  quantityLeft: string;
   storageLocation: string;
   isExpired: boolean;
   unit: string;

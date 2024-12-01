@@ -64,7 +64,10 @@ const AddSampleModal: React.FC = () => {
       id: Number(reagent.id),
       name: reagent.name,
       unit: reagent.unit || "",
-      quantityLeft: reagent.quantityLeft || 0,
+      quantityLeft:
+        typeof reagent.quantityLeft === "string"
+          ? parseFloat(reagent.quantityLeft) || 0
+          : reagent.quantityLeft,
     })) || [];
 
   const locationOptions =
