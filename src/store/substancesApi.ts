@@ -41,7 +41,7 @@ export const substancesApi = createApi({
   tagTypes: ["Substances"],
   endpoints: (builder) => ({
     getSubstances: builder.query<Array<SubstancesDetails>, void>({
-      query: () => "/storage/total",
+      query: () => "/substances",
       transformResponse: (baseQueryReturnValue: SubstancesResponse) => {
         return transformSubstanceData(baseQueryReturnValue);
       },
