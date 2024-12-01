@@ -7,19 +7,14 @@ import { Reagent } from "@/types";
 
 type ReagentKey = keyof Omit<Reagent, "locations">;
 
-type ReagentDetailRow = {
-  label: string;
-  key: ReagentKey;
-};
-
-const reagentDetailsRows: ReagentDetailRow[] = [
-  { label: "name", key: "name" },
-  { label: "totalQuantityLeft", key: "totalQuantityLeft" },
-  { label: "CASNumber", key: "CASNumber" },
-  { label: "producer", key: "producer" },
-  { label: "catalogID", key: "catalogID" },
-  { label: "catalogLink", key: "catalogLink" },
-  { label: "description", key: "description" },
+const reagentDetailsRows: ReagentKey[] = [
+  "name",
+  "totalQuantityLeft",
+  "CASNumber",
+  "producer",
+  "catalogID",
+  "catalogLink",
+  "description",
 ];
 
 type ReagentDetailsProps = {
@@ -38,7 +33,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
 
         <Grid container spacing={2} mb={6}>
           <Grid item xs={12} sm={6}>
-            {reagentDetailsRows.map(({ label, key }) => {
+            {reagentDetailsRows.map((key) => {
               let value;
               if (key === "catalogLink" && reagentDetails.catalogLink) {
                 value = (
@@ -62,8 +57,8 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
               }
               return (
                 <DetailItem
-                  key={label}
-                  label={t(`substanceDetails.fields.${label}`)}
+                  key={key}
+                  label={t(`substanceDetails.fields.${key}`)}
                   value={value}
                 />
               );

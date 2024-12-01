@@ -7,7 +7,7 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import { type ReactNode, type SyntheticEvent, useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -18,17 +18,14 @@ import {
 } from "@/components";
 import { Sample } from "@/types";
 
+import CustomTabPanel from "./CustomTabelPanel";
+
 type SampleKey = keyof Omit<Sample, "locations" | "addedSubstances">;
 
-type ReagentDetailRow = {
-  label: string;
-  key: SampleKey;
-};
-
-const sampleDetailsRows: ReagentDetailRow[] = [
-  { label: "Name", key: "name" },
-  { label: "Quantity left", key: "totalQuantityLeft" },
-  { label: "Description", key: "description" },
+const sampleDetailsRows: SampleKey[] = [
+  "name",
+  "totalQuantityLeft",
+  "description",
 ];
 
 type SampleDetailsProps = {
@@ -53,12 +50,12 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
 
         <Grid container spacing={2} mb={6}>
           <Grid item xs={12} sm={6}>
-            {sampleDetailsRows.map(({ label, key }) => {
+            {sampleDetailsRows.map((key) => {
               return (
                 <DetailItem
-                  key={label}
+                  key={key}
                   label={t(`substanceDetails.fields.${key}`)}
-                  value={sampleDetails[key]}
+                  value={sampleDetails[key] || "-"}
                 />
               );
             })}
@@ -66,9 +63,6 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
 
           {sampleDetails.structure && (
             <Grid item xs={12} sm={6}>
-              <Typography gutterBottom sx={{ textAlign: "center" }}>
-                {t("substanceDetails.fields.structure")}
-              </Typography>
               <SmilesImage
                 smiles={sampleDetails.structure}
                 svgOptions={{ width: 185, height: 185 }}
@@ -100,25 +94,3 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
 };
 
 export default SampleDetails;
-
-type TabPanelProps = {
-  children?: ReactNode;
-  index: number;
-  value: number;
-};
-
-const CustomTabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-};
