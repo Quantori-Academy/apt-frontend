@@ -20,7 +20,7 @@ type QuantityChangingProps = {
   currentQuantity: string;
   onCancel: () => void;
 };
-type newQuantity = { newQuantity: string };
+type NewQuantity = { newQuantity: string };
 
 const SubstanceQuantityChangingForm: React.FC<QuantityChangingProps> = ({
   storageContentId,
@@ -36,7 +36,7 @@ const SubstanceQuantityChangingForm: React.FC<QuantityChangingProps> = ({
     control,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<newQuantity>({
+  } = useForm<NewQuantity>({
     mode: "onChange",
     defaultValues: {
       newQuantity: "",
@@ -45,7 +45,7 @@ const SubstanceQuantityChangingForm: React.FC<QuantityChangingProps> = ({
 
   const [changeQuantity] = useChangeQuantityMutation();
 
-  const onSubmit = async (data: newQuantity) => {
+  const onSubmit = async (data: NewQuantity) => {
     const lowerCaseType = substanceType.toLowerCase();
     const { error } = await changeQuantity({
       storageContentId,
