@@ -47,7 +47,7 @@ const SubstanceQuantityChangingForm: React.FC<QuantityChangingProps> = ({
   const [changeQuantity, { isLoading }] = useChangeQuantityMutation();
 
   if (isLoading) {
-    <FormsLoadingBox />;
+    return <FormsLoadingBox />;
   }
 
   const onSubmit = async (data: NewQuantity) => {
