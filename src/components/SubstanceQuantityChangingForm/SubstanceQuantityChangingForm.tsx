@@ -20,6 +20,7 @@ type QuantityChangingProps = {
   currentQuantity: string;
   onCancel: () => void;
 };
+
 type NewQuantity = { newQuantity: string };
 
 const SubstanceQuantityChangingForm: React.FC<QuantityChangingProps> = ({
