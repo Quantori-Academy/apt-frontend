@@ -1,7 +1,5 @@
 import {
   Autocomplete,
-  Box,
-  Button,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -9,7 +7,7 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { FormsLoadingBox, PageError } from "@/components";
+import { FormsLoadingBox, PageError, SaveCancelButtons } from "@/components";
 import { useAlertSnackbar, useLocationDetails } from "@/hooks";
 import {
   useGetStorageLocationDetailQuery,
@@ -87,7 +85,7 @@ const SubstanceLocationChangingForm: React.FC<LocationChangingProps> = ({
   const availableLocations = selectedRoom ? selectedRoom.locations : [];
 
   return (
-    <Dialog open onClose={onCancel} maxWidth="sm">
+    <Dialog open onClose={onCancel} fullWidth maxWidth="xs">
       <DialogTitle>
         {t(
           `substanceDetails.title.${substanceType === "Reagent" ? "editReagent" : "editSample"}`
@@ -145,18 +143,11 @@ const SubstanceLocationChangingForm: React.FC<LocationChangingProps> = ({
             )}
           />
         )}
-
-        <Box sx={{ display: "flex", gap: "10px" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            disabled={!selectedRoom?.id || !selectedLocation?.locationId}
-          >
-            {t("substanceDetails.buttons.saveChanges")}
-          </Button>
-          <Button onClick={onCancel}>{t("buttons.cancel")}</Button>
-        </Box>
+        <SaveCancelButtons
+          saveDisabled={!selectedRoom?.id || !selectedLocation?.locationId}
+          onClickCancel={onCancel}
+          onClickSave={handleSubmit}
+        />
       </DialogContent>
     </Dialog>
   );
