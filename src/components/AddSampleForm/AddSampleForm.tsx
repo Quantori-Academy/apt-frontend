@@ -123,6 +123,26 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
             />
           </Grid>
           <Grid item xs={12}>
+            <TextField
+              label={t("addSubstanceForm.requiredFields.quantityUnit.label")}
+              type="number"
+              {...register("initialQuantity", {
+                required: t(
+                  "addSubstanceForm.requiredFields.quantityUnit.requiredMessage"
+                ),
+                min: {
+                  value: 0,
+                  message: t(
+                    "addSubstanceForm.requiredFields.quantityUnit.minQuantityMessage"
+                  ),
+                },
+              })}
+              fullWidth
+              error={!!errors.initialQuantity}
+              helperText={errors.initialQuantity?.message}
+            />
+          </Grid>
+          <Grid item xs={12}>
             <Controller
               name="locationId"
               control={control}
@@ -164,26 +184,6 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
             />
           </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.quantityUnit.label")}
-              type="number"
-              {...register("initialQuantity", {
-                required: t(
-                  "addSubstanceForm.requiredFields.quantityUnit.requiredMessage"
-                ),
-                min: {
-                  value: 0,
-                  message: t(
-                    "addSubstanceForm.requiredFields.quantityUnit.minQuantityMessage"
-                  ),
-                },
-              })}
-              fullWidth
-              error={!!errors.initialQuantity}
-              helperText={errors.initialQuantity?.message}
-            />
-          </Grid>
           <Grid item xs={12}>
             <TextField
               label={t("addSubstanceForm.requiredFields.amount.label")}

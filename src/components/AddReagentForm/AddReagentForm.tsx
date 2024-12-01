@@ -139,7 +139,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               helperText={errors.amount?.message}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label={t("addSubstanceForm.requiredFields.initialQuantity.label")}
               type="number"
@@ -163,18 +163,6 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label={t("addSubstanceForm.requiredFields.expirationDate.label")}
-              type="date"
-              {...register("expirationDate")}
-              fullWidth
-              margin="normal"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
               label={t("addSubstanceForm.requiredFields.unit.label")}
               {...register("unit", {
                 required: t(
@@ -187,7 +175,18 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               helperText={errors.unit?.message}
             />
           </Grid>
-
+          <Grid item xs={12}>
+            <TextField
+              label={t("addSubstanceForm.requiredFields.expirationDate.label")}
+              type="date"
+              {...register("expirationDate")}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Grid>
           <Grid item xs={12}>
             <Controller
               name="locationId"
