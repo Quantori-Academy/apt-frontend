@@ -13,6 +13,6 @@ export const transformSampleData = (sample: SampleData) => ({
     sample.addedSubstances?.map((substance) => ({
       added_substance_id: substance.addedSubstanceId,
       added_substance_quantity: substance.addedSubstanceQuantity || 0,
-      added_substance_unit: substance.addedSubstanceUnit || null,
+      added_substance_unit: substance.addedSubstanceUnit || "",
     })) || [],
 });
