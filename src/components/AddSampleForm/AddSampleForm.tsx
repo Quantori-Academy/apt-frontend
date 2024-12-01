@@ -124,16 +124,16 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label={t("addSubstanceForm.requiredFields.quantityUnit.label")}
+              label={t("addSubstanceForm.requiredFields.initialQuantity.label")}
               type="number"
               {...register("initialQuantity", {
                 required: t(
-                  "addSubstanceForm.requiredFields.quantityUnit.requiredMessage"
+                  "addSubstanceForm.requiredFields.initialQuantity.requiredMessage"
                 ),
                 min: {
                   value: 0,
                   message: t(
-                    "addSubstanceForm.requiredFields.quantityUnit.minQuantityMessage"
+                    "addSubstanceForm.requiredFields.initialQuantity.minQuantityMessage"
                   ),
                 },
               })}

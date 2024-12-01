@@ -253,7 +253,7 @@
 
       "requiredFields": {
         "name": {
-          "label": "Name",
+          "label": "Name*",
           "requiredMessage": "Name is required"
         },
         "description": {
@@ -268,35 +268,30 @@
           "minPriceMessage": "Price must be positive"
         },
           "unit": {
-          "label": "Unit",
+          "label": "Unit*",
           "requiredMessage": "Unit is required"
         },
         "amount": {
-          "label": "Amount",
+          "label": "Amount*",
           "requiredMessage": "Amount is required",
           "minAmountMessage": "Amount must be positive"
         },
-        "quantityUnit": {
-          "label": "Initial Quantity",
-          "requiredMessage": " Initial quantity is required",
-          "minAmountMessage": "Initial quantity must be positive"
-        },
         "quantity": {
-          "label": "Quantity",
+          "label": "Quantity*",
           "minAmountMessage": "Initial quantity can not be negative"
         },
+
         "initialQuantity":{
-          "label": "Initial Quantity",
+          "label": "Initial Quantity*",
           "requiredMessage": "Initial quantity is required",
           "minQuantityMessage": "Initial quantity must be positive"
-
 },
 
         "expirationDate": {
           "label": "Expiration Date"
         },
         "location": {
-          "label": "Location",
+          "label": "Location*",
           "requiredMessage": "Location is required"
         },
         "CASNumber": {
