@@ -107,7 +107,6 @@ export const substancesApi = createApi({
     getSampleDetails: builder.query<Sample, string>({
       query: (sampleId) => `/substances/samples/${sampleId}`,
       transformResponse: (response: BackendSample) => {
-        console.log(response);
         return transformSampleResponse(response);
       },
       providesTags: ["Substances"],
