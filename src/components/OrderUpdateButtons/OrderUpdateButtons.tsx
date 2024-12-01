@@ -32,17 +32,10 @@ const OrderUpdateButtons: React.FC<OrderUpdateButtonsProps> = ({
   return (
     <Stack direction="row" spacing={1}>
       {isEditable ? (
-        <SaveCancelButtons
-          key="editOrder"
-          saveText={t("buttons.save")}
-          cancelText={t("buttons.cancel")}
-          onClickCancel={onCancelEditable}
-        />
+        <SaveCancelButtons key="editOrder" onClickCancel={onCancelEditable} />
       ) : isUpdatingStatus ? (
         <SaveCancelButtons
           key="editOrderStatus"
-          saveText={t("buttons.save")}
-          cancelText={t("buttons.cancel")}
           onClickCancel={onCancelUpdating}
         />
       ) : (
