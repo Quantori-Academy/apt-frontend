@@ -34,33 +34,46 @@ export type SubstanceItemResponse = {
 
 export type SubstancesResponse = Array<SubstanceItemResponse>;
 
+export type ReagentLocation = {
+  contentId: number;
+  locationId: number;
+  room: string;
+  location: string;
+  quantityLeft: string;
+  pricePerUnit?: string;
+};
+
+export type BackendReagentLocation = Pick<ReagentLocation, "room" | "location"> & {
+  content_id: number;
+  location_id: number;
+  quantity_left: string;
+  price_per_unit?: string;
+};
+
 export type Reagent = {
   substanceId: string;
   name: string;
-  category: string;
+  category: SubstancesCategory;
   CASNumber: string;
   producer: string;
-  locationId: string;
-  unit: string;
-  pricePerUnit: string;
   totalQuantityLeft: number;
   catalogID: number;
   catalogLink: string;
   description: string;
   structure: string;
+  locations: ReagentLocation[];
 };
 
 export type BackendReagent = Omit<
   Reagent,
-  "substanceId" | "CASNumber" | "catalogID" | "catalogLink" | "totalQuantityLeft" | "pricePerUnit" | "locationId"
+  "substanceId" | "CASNumber" | "catalogID" | "catalogLink" | "totalQuantityLeft" | "locations"
 > & {
   substance_id: string;
   cas_number: string;
   catalog_id: number;
   catalog_link: string;
   total_quantity_left: number;
-  price_per_unit: string;
-  location_id: number;
+  locations: BackendReagentLocation[];
 };
 
 export type Sample = Omit<Reagent, "CASNumber" | "producer" | "catalogID" | "catalogLink"> & {
@@ -68,7 +81,7 @@ export type Sample = Omit<Reagent, "CASNumber" | "producer" | "catalogID" | "cat
 };
 
 export type BackendSample = Omit<BackendReagent, "cas_number" | "catalog_id" | "catalog_link" | "producer"> & {
-  added_substances: AddedSubstance[];
+  added_substances: BackendAddedSubstance[];
 };
 
 export type AddedSubstance = {
@@ -77,4 +90,14 @@ export type AddedSubstance = {
   description: string;
   structure: string;
   category: string;
+  addedAmount: string;
+};
+
+export type BackendAddedSubstance = Omit<AddedSubstance, "addedAmount"> & {
+  added_amount: string;
+};
+
+export type LocationChangingIds = {
+  storageContentId: number | null;
+  currentLocationId: number | null;
 };

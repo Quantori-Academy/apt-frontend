@@ -5,14 +5,7 @@ import { BasicModal, ReagentRequestForm } from "@/components";
 import { useReagentRequestForm } from "@/components/ReagentRequestForm";
 import { Severity } from "@/hooks";
 import { useAddReagentRequestMutation } from "@/store";
-
-type ReagentRequestInput = {
-  reagentName: string;
-  CAS: string;
-  desiredQuantity: number | null;
-  userComment: string | null;
-  unit: string;
-};
+import { ReagentRequestInput } from "@/types";
 
 type AddReagentRequestProps = {
   modalOpen: boolean;
@@ -30,9 +23,11 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
   const formMethods = useReagentRequestForm({
     reagentName: "",
     CAS: "",
-    desiredQuantity: null,
+    initialQuantity: 0,
     userComment: "",
     unit: "",
+    structure: "",
+    amount: 0,
   });
 
   const [addReagentRequest, { isLoading }] = useAddReagentRequestMutation();

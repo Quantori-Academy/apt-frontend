@@ -19,9 +19,9 @@ import { OrderReagent, OrderReagentRowType, OrderStatus } from "@/types";
 
 const OrderReagentMainRows: readonly OrderReagentRowType[] = [
   { label: "name", key: "reagentName" },
+  { label: "amount", key: "amount" },
   { label: "quantity", key: "quantity" },
   { label: "units", key: "unit" },
-  { label: "amount", key: "amount" },
   { label: "price", key: "pricePerUnit" },
   { label: "fromRequest", key: "fromRequest" },
 ];
@@ -37,6 +37,8 @@ type OrderReagentDetailsProps = {
   orderId: string;
   orderedReagents: OrderReagent[];
   status: OrderStatus;
+  selectedReagents: number[];
+  setSelectedReagents: React.Dispatch<React.SetStateAction<number[]>>;
   setIsAllocateDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -44,6 +46,8 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
   orderId,
   orderedReagents,
   status,
+  selectedReagents,
+  setSelectedReagents,
   setIsAllocateDisabled,
 }) => {
   const { t } = useTranslation();
@@ -57,28 +61,29 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
 
   const [editableRowId, setEditableRowId] = useState<number | null>(null);
 
-  const [selectedReagents, setSelectedReagents] = useState<number[]>([]);
-
   const [deleteReagentFromOrder] = useDeleteReagentFromOrderMutation();
 
-  const handleCheckboxChange = (id: number) => {
-    const selected = selectedReagents.includes(id)
-      ? selectedReagents.filter((item) => item !== id)
-      : [...selectedReagents, id];
-
-    setEditableRowId(null);
-    setSelectedReagents(selected);
-    setIsAllocateDisabled(!selected.length);
-  };
+  const notAllocatedReagents = orderedReagents
+    .filter((reagent) => !reagent.isAllocated)
+    .map((reagent) => reagent.id);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedReagents(orderedReagents.map((reagent) => reagent.id));
+      setSelectedReagents(notAllocatedReagents);
       setIsAllocateDisabled(false);
     } else {
       setSelectedReagents([]);
       setIsAllocateDisabled(true);
     }
+  };
+
+  const handleCheckboxChange = (id: number) => {
+    const selected = selectedReagents.includes(id)
+      ? selectedReagents.filter((item) => item !== id)
+      : [...selectedReagents, id];
+    setEditableRowId(null);
+    setSelectedReagents(selected);
+    setIsAllocateDisabled(!selected.length);
   };
 
   const onDelete = (reagentId: number) => {
@@ -112,29 +117,39 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
     }
   };
 
+  const canSelectAll = status === ORDER_STATUSES.Submitted;
+  const canEditReagent = status === ORDER_STATUSES.Pending;
+
+  const notAllocatedReagentsAmount = notAllocatedReagents.length;
+  const showTableCell = !!notAllocatedReagentsAmount && canSelectAll;
+
   return (
     <>
       <TableContainer component={Paper} variant="outlined" sx={{ mt: 1 }}>
         <Table stickyHeader size="small">
           <TableHead>
             <TableRow>
-              <TableCell />
-              <TableCell padding="checkbox">
-                <Checkbox
-                  indeterminate={
-                    selectedReagents.length > 0 &&
-                    selectedReagents.length < orderedReagents.length
-                  }
-                  checked={selectedReagents.length === orderedReagents.length}
-                  onChange={(e) => handleSelectAll(e.target.checked)}
-                />
-              </TableCell>
+              <TableCell sx={{ width: 0 }} />
+              {canSelectAll && (
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    indeterminate={
+                      selectedReagents.length > 0 &&
+                      selectedReagents.length < notAllocatedReagentsAmount
+                    }
+                    checked={
+                      selectedReagents.length === notAllocatedReagentsAmount
+                    }
+                    onChange={(e) => handleSelectAll(e.target.checked)}
+                  />
+                </TableCell>
+              )}
               {OrderReagentMainRows.map(({ label }) => (
                 <TableCell key={label}>
                   {t(`substanceDetails.fields.${label}`)}
                 </TableCell>
               ))}
-              {status === ORDER_STATUSES.Pending && (
+              {canEditReagent && (
                 <TableCell align="center">{t("users.table.actions")}</TableCell>
               )}
             </TableRow>
@@ -150,6 +165,7 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
                 OrderReagentMainRows={OrderReagentMainRows}
                 OrderReagentSecondaryRows={OrderReagentSecondaryRows}
                 selectedReagents={selectedReagents}
+                showTableCell={showTableCell}
                 setEditableRowId={setEditableRowId}
                 onClickCheckbox={() => handleCheckboxChange(reagent.id)}
                 onDelete={onDelete}

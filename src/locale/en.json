@@ -215,7 +215,8 @@
         "description": "Description",
         "quantityLeft": "Quantity left",
         "storageLocation": "Storage location",
-        "actions": "Actions"
+        "actions": "Actions",
+        "addedQuantity": "Added quantity"
       },
 
       "modalMessages": {
@@ -344,6 +345,13 @@
         "location": "Location"
       },
 
+      "quantityValidation": {
+        "required": "Quantity required",
+        "invalidNumber": "Please enter a valid number",
+        "greaterThanZero": "The quantity must be greater than zero",
+        "lessThanCurrent": "The quantity must be less than the current quantity of {{currentQuantity}}"
+      },
+
       "currentLocation": " (current)",
 
       "quantityWarning": "Will be deleted, if quantity is 0",
@@ -445,9 +453,13 @@
         "create": "Create",
         "updateStatus": "Update Status",
         "addReagents": "Add Reagents",
-        "allocateSelected": "Allocate selected reagents",
-        "chooseLocation": "Choose location"
+        "allocateSelected": "Allocate Reagents",
+        "chooseLocation": "Choose location",
+        "markSubmitted": "Mark as Submitted",
+        "markCancelled": "Mark as Cancelled"
       },
+
+      "tooltip": "Once all reagents are allocated, the order will be fulfilled",
 
       "errors": {
         "loadError": "Failed to load orders",
@@ -549,24 +561,34 @@
     },
 
     "createRequestForm": {
-      "buttonText" : "Add Request",
+      "buttonText": "Add Request",
       "title": "Create Reagent Request",
       "requiredFields": {
         "name": {
           "label": "Reagent Name*",
-          "requiredMessage": "Reagent Name Is Required"
+          "requiredMessage": "Reagent Name Is Required!"
         },
         "units": {
           "label": "Unit*",
-          "requiredMessage": "Unit Is Required"
+          "requiredMessage": "Unit Is Required!"
         },
-        "quantity": {
-          "label": "Quantity*",
-          "requiredMessage": "Quantity Is Required"
+        "initialQuantity": {
+          "label": "Initial Quantity*",
+          "requiredMessage": "Initial Quantity Is Required!",
+          "errorMessage": "Initial quantity must be greater than 0"
+        },
+        "amount": {
+          "label": "Amount*",
+          "requiredMessage": "Amount Is Required!",
+          "errorMessage": "Amount must be greater than 0"
+        },
+        "structure": {
+          "label": "Structure"
         },
         "CASNumber": {
           "label": "CAS Number"
         },
+
         "comment": {
           "label": "Comment"
         }
@@ -579,7 +601,8 @@
         "name": "Name",
         "CreationDate": "Creation Date",
         "ModifiedDate": "Modified Date",
-        "Desired Quantity": "Desired Quantity",
+        "InitialQuantity": "Initial Quantity",
+        "Amount": "Amount",
         "Structure": "Structure",
         "Status": "Status",
         "CAS": "CAS",
