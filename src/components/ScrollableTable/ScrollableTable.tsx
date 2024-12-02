@@ -1,14 +1,15 @@
 import { Paper, Table, TableContainer } from "@mui/material";
-import type { ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 
 import styles from "./ScrollableTable.module.css";
 
-type ScrollableTableProps = {
-  children: ReactNode;
+type ScrollableTableProps = PropsWithChildren & {
   paginationComponent: ReactNode;
+  size?: "small" | "medium";
 };
 
 const ScrollableTable: React.FC<ScrollableTableProps> = ({
+  size = "medium",
   children,
   paginationComponent,
 }) => {
@@ -20,7 +21,7 @@ const ScrollableTable: React.FC<ScrollableTableProps> = ({
         }}
         className={styles.customScrollbar}
       >
-        <Table aria-label="simple table" stickyHeader>
+        <Table aria-label="simple table" stickyHeader size={size}>
           {children}
         </Table>
       </TableContainer>

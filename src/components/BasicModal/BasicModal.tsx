@@ -1,13 +1,13 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, IconButton, Modal, Typography } from "@mui/material";
+import type { PropsWithChildren } from "react";
 
-type BasicModalProps = {
+type BasicModalProps = PropsWithChildren & {
   title: string;
   isOpen: boolean;
   titleColor?: string;
   width?: string | number;
   height?: string | number;
-  children: React.ReactNode;
   closeModal: () => void;
 };
 
