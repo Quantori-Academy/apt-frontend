@@ -25,7 +25,6 @@ export { PageError } from "./PageError";
 export { AddStorageDialog } from "./AddStorageDialog";
 export { ChangeLocationDialog } from "./ChangeLocationDialog";
 export { EditStorage } from "./EditStorage";
-export { StoredSubstances } from "./StoredSubstances";
 export { SubstanceDetails } from "./SubstanceDetails";
 export { CategoryFilter } from "./CategoryFilter";
 export { OrdersTable } from "./OrdersTable";
@@ -68,4 +67,4 @@ export { OrderReagentRow } from "./OrderReagentRow";
 export { AddRoomDialog } from "./AddRoomDialog";
 export { ScrollableTable } from "./ScrollableTable";
 export { NavigationUnauth } from "./NavigationUnauth";
-
+export { SubstancesList } from "./SubstancesList";

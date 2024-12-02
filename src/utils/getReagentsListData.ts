@@ -37,10 +37,11 @@ const filterListData = (
   return items.filter((item) => {
     const satisfiesExpired = expiredFilter === "All" || item.isExpired;
     const satisfiesCategory = categoryFilter === "All" || item.category === categoryFilter;
+
     const satisfiesSearch =
       item.name.toLowerCase().includes(searchQuery) ||
       item.structure.toLowerCase().includes(searchQuery) ||
-      item.storageLocation.toLowerCase().includes(searchQuery);
+      item.storageLocation?.toLowerCase().includes(searchQuery);
 
     return satisfiesExpired && satisfiesCategory && satisfiesSearch;
   });
