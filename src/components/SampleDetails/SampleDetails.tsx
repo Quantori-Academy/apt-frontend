@@ -63,7 +63,7 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
             })}
           </Grid>
 
-          {sampleDetails.structure && (
+          {structure && (
             <Grid item xs={12} sm={6}>
               <SmilesImage
                 smiles={structure}
