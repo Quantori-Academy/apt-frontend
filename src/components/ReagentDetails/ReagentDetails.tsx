@@ -24,6 +24,8 @@ type ReagentDetailsProps = {
 const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
   const { t } = useTranslation();
 
+  const { catalogLink, structure, locations, category } = reagentDetails;
+
   return (
     <Card sx={{ background: "#0080800f" }}>
       <CardContent>
@@ -35,10 +37,10 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
           <Grid item xs={12} sm={6}>
             {reagentDetailsRows.map((key) => {
               let value;
-              if (key === "catalogLink" && reagentDetails.catalogLink) {
+              if (key === "catalogLink" && catalogLink) {
                 value = (
                   <Link
-                    href={reagentDetails.catalogLink}
+                    href={catalogLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     underline="hover"
@@ -65,10 +67,10 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
             })}
           </Grid>
 
-          {reagentDetails.structure && (
+          {structure && (
             <Grid item xs={12} sm={6}>
               <SmilesImage
-                smiles={reagentDetails.structure}
+                smiles={structure}
                 svgOptions={{ width: 185, height: 185 }}
                 withBorder
               />
@@ -76,8 +78,8 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
           )}
         </Grid>
         <SubstanceLocationsTable
-          locations={reagentDetails.locations}
-          substanceType={reagentDetails.category}
+          locations={locations}
+          substanceType={category}
         />
       </CardContent>
     </Card>

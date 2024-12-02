@@ -41,6 +41,8 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
     setValue(newValue);
   };
 
+  const { structure, locations, addedSubstances, category } = sampleDetails;
+
   return (
     <Card sx={{ background: "#0080800f" }}>
       <CardContent>
@@ -64,7 +66,7 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
           {sampleDetails.structure && (
             <Grid item xs={12} sm={6}>
               <SmilesImage
-                smiles={sampleDetails.structure}
+                smiles={structure}
                 svgOptions={{ width: 185, height: 185 }}
                 withBorder
               />
@@ -78,14 +80,12 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <AddedSubstancesTable
-            addedSubstances={sampleDetails.addedSubstances}
-          />
+          <AddedSubstancesTable addedSubstances={addedSubstances} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <SubstanceLocationsTable
-            locations={sampleDetails.locations}
-            substanceType={sampleDetails.category}
+            locations={locations}
+            substanceType={category}
           />
         </CustomTabPanel>
       </CardContent>
