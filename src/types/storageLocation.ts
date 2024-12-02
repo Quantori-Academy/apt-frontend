@@ -1,3 +1,5 @@
+import { SubstancesCategory } from "@/types/substances.ts";
+
 export type StorageRoomsBrief = {
   id: string;
   room: string;
@@ -40,6 +42,9 @@ export type Substance = {
   name: string;
   description: string;
   structureSmiles: string;
+  category: SubstancesCategory;
+  isExpired: boolean;
+  quantityLeft: string;
 };
 
 export type BackendRoomData = {
@@ -55,6 +60,10 @@ export type BackendSubstance = {
   name: string;
   description: string;
   structure_smiles: string;
+  category: SubstancesCategory;
+  is_expired: boolean;
+  quantity_left: number;
+  unit: string;
 };
 
 export type SubstancesInLocation = {
@@ -77,3 +86,19 @@ export type MoveSubstance = {
   substanceId: string;
   newLocationId?: string;
 };
+
+export type BackendSubstancesInStorage = Array<{
+  substance_id: number;
+  name: string;
+  category: SubstancesCategory;
+  total_quantity_left: string;
+  unit: string;
+}>;
+
+export type SubstancesInStorage = Array<{
+  id: number;
+  name: string;
+  category: SubstancesCategory;
+  totalQuantityLeft: string;
+  unit: string;
+}>;

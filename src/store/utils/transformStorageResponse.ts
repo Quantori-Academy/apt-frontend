@@ -21,5 +21,8 @@ export const transformStorageLocationResponse = (location: BackendRoomData): Roo
     name: substance.name,
     description: substance.description,
     structureSmiles: substance.structure_smiles,
+    category: substance.category,
+    isExpired: substance.is_expired,
+    quantityLeft: ` ${substance.quantity_left} ${substance.unit}`,
   })),
 });
