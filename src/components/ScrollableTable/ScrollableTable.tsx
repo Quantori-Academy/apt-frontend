@@ -4,8 +4,8 @@ import type { PropsWithChildren, ReactNode } from "react";
 import styles from "./ScrollableTable.module.css";
 
 type ScrollableTableProps = PropsWithChildren & {
-  size?: "small" | "medium";
   paginationComponent: ReactNode;
+  size?: "small" | "medium";
 };
 
 const ScrollableTable: React.FC<ScrollableTableProps> = ({

@@ -3,8 +3,6 @@ import { useEffect } from "react";
 // @ts-expect-error: No type declarations for 'smiles-drawer'
 import SmilesDrawer from "smiles-drawer";
 
-import styles from "./SmilesImage.module.css";
-
 type SmilesImageProps = {
   smiles: string;
   align?: string;
@@ -16,6 +14,12 @@ type SmilesImageProps = {
   };
 };
 
+const borderStyles = {
+  border: "1px solid teal",
+  borderRadius: " 10px",
+  background: "white",
+};
+
 const SmilesImage: React.FC<SmilesImageProps> = ({
   index,
   smiles,
@@ -23,14 +27,6 @@ const SmilesImage: React.FC<SmilesImageProps> = ({
   align = "center",
   svgOptions,
 }) => {
-  const borderStyles = withBorder
-    ? {
-        border: "1px solid teal",
-        borderRadius: " 10px",
-        background: "white",
-      }
-    : {};
-
   useEffect(() => {
     const drawer = new SmilesDrawer.SvgDrawer(svgOptions);
     SmilesDrawer.parse(smiles, function (tree: unknown) {
@@ -47,8 +43,10 @@ const SmilesImage: React.FC<SmilesImageProps> = ({
       }}
     >
       <svg
-        className={styles.smilesSvg}
-        style={borderStyles}
+        style={{
+          display: "block",
+          ...(withBorder && borderStyles),
+        }}
         {...svgOptions}
         id={`${smiles}-${index}`}
       ></svg>
