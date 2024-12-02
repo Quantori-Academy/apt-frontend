@@ -1,11 +1,10 @@
 import { Paper, Table, TableContainer } from "@mui/material";
-import type { ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 
 import styles from "./ScrollableTable.module.css";
 
-type ScrollableTableProps = {
+type ScrollableTableProps = PropsWithChildren & {
   size?: "small" | "medium";
-  children: ReactNode;
   paginationComponent: ReactNode;
 };
 
