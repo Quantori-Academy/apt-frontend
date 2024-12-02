@@ -31,8 +31,8 @@ import { getListData } from "@/utils";
 import style from "./SubstancesList.module.css";
 
 type SubstancesListProps = {
-  substances: Array<SubstancesDetails>;
   isInLocation: boolean;
+  substances: Array<SubstancesDetails>;
 };
 
 const SubstancesList: React.FC<SubstancesListProps> = ({

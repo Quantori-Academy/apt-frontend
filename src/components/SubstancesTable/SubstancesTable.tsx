@@ -26,13 +26,13 @@ type ReagentSampleTableProps = {
   page: number;
   rowsPerPage: number;
   totalPages: number;
+  isInLocation: boolean;
   visibleItems: Array<SubstancesDetails>;
   sortColumn: SortColumn;
   sortDirection: SortDirection;
   onSortChange: (property: SortColumn) => void;
   onChangePageSize: (event: ChangeEvent<HTMLInputElement>) => void;
   setPage: (page: number) => void;
-  isInLocation: boolean;
 };
 
 const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
