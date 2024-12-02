@@ -22,6 +22,7 @@ export {
   useGetSubstancesQuery,
   useCreateReagentMutation,
   useCreateSampleMutation,
+  useGetStorageTotalQuantitiesQuery,
 } from "./substancesApi";
 
 export {

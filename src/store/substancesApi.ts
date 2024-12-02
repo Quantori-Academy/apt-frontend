@@ -7,6 +7,8 @@ import {
   ReagentData,
   Sample,
   SampleData,
+  StorageTotalQuantity,
+  StorageTotalResponse,
   SubstancesDetails,
   SubstancesResponse,
 } from "@/types";
@@ -17,6 +19,7 @@ import {
   transformReagentResponse,
   transformSampleData,
   transformSampleResponse,
+  transformStorageTotalResponse,
   transformSubstanceData,
   transformSubstancePatchRequest,
 } from "./utils";
@@ -96,6 +99,12 @@ export const substancesApi = createApi({
       transformResponse: (response: BackendSample) => transformSampleResponse(response),
       providesTags: ["Substances"],
     }),
+
+    getStorageTotalQuantities: builder.query<Array<StorageTotalQuantity>, void>({
+      query: () => "/storage/total",
+      transformResponse: (response: StorageTotalResponse) => transformStorageTotalResponse(response),
+      providesTags: ["Substances"],
+    }),
   }),
 });
 
@@ -107,4 +116,5 @@ export const {
   useCreateReagentMutation,
   useGetSampleDetailsQuery,
   useUpdateSubstanceMutation,
+  useGetStorageTotalQuantitiesQuery,
 } = substancesApi;

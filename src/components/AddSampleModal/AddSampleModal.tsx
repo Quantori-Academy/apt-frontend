@@ -7,7 +7,7 @@ import { useAlertSnackbar } from "@/hooks";
 import {
   useCreateSampleMutation,
   useGetStorageRoomsQuery,
-  useGetSubstancesQuery,
+  useGetStorageTotalQuantitiesQuery,
 } from "@/store";
 import { SampleData } from "@/types";
 
@@ -28,7 +28,7 @@ const AddSampleModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { data: reagentData, isLoading: isReagentsLoading } =
-    useGetSubstancesQuery();
+    useGetStorageTotalQuantitiesQuery();
   const { data: storageRooms, isLoading: isLocationsLoading } =
     useGetStorageRoomsQuery();
 
@@ -65,9 +65,9 @@ const AddSampleModal: React.FC = () => {
       name: reagent.name,
       unit: reagent.unit || "",
       quantityLeft:
-        typeof reagent.quantityLeft === "string"
-          ? parseFloat(reagent.quantityLeft) || 0
-          : reagent.quantityLeft,
+        typeof reagent.totalQuantityLeft === "string"
+          ? parseFloat(reagent.totalQuantityLeft) || 0
+          : reagent.totalQuantityLeft,
     })) || [];
 
   const locationOptions =

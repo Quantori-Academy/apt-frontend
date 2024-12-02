@@ -9,3 +9,4 @@ export { transformReagentData } from "./transformReagentData";
 export * from "./transformOrderData";
 export * from "./transformOrderResponse";
 export { transformRequestData } from "./transformRequestData";
+export { transformStorageTotalResponse } from "./transformStorageTotalResponse";

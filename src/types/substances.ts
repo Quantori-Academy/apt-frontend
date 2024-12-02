@@ -23,6 +23,22 @@ type LocationResponse = {
   unit: string;
 };
 
+export type StorageTotalQuantity = {
+  id: number;
+  name: string;
+  category: SubstancesCategory;
+  totalQuantityLeft: number;
+  unit: string;
+};
+
+export type StorageTotalResponse = Array<{
+  substance_id: number;
+  name: string;
+  category: "Reagent" | "Sample";
+  total_quantity_left: string;
+  unit: string;
+}>;
+
 export type SubstanceItemResponse = {
   unit: string;
   id: string;

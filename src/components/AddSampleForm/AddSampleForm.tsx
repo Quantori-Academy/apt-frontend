@@ -5,6 +5,7 @@ import {
   Container,
   Grid,
   TextField,
+  Typography,
 } from "@mui/material";
 import { t } from "i18next";
 import React from "react";
@@ -183,7 +184,6 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               }}
             />
           </Grid>
-
           <Grid item xs={12}>
             <TextField
               label={t("addSubstanceForm.requiredFields.amount.label")}
@@ -206,7 +206,6 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               helperText={errors.amount?.message}
             />
           </Grid>
-
           <Grid item xs={12}>
             <TextField
               label={t("addSubstanceForm.requiredFields.structure.label")}
@@ -232,13 +231,15 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                 <Autocomplete
                   options={reagentOptions}
                   getOptionLabel={(option) => option.name}
-                  onChange={(_, value) =>
+                  onChange={(_, value) => {
+                    const unit = value?.unit || "";
                     handleSubstanceChange(
                       index,
                       "addedSubstanceId",
                       value?.id || 0
-                    )
-                  }
+                    );
+                    handleSubstanceChange(index, "addedSubstanceUnit", unit);
+                  }}
                   renderInput={(params) => (
                     <TextField {...params} label="Substance" fullWidth />
                   )}
@@ -268,11 +269,9 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                 />
               </Grid>
 
-              <Grid item xs={12} sm={1}>
-                <Box>
-                  {reagentOptions.find(
-                    (option) => option.id === substance.addedSubstanceId
-                  )?.unit || ""}
+              <Grid item xs={12} sm={2}>
+                <Box display="flex" alignItems="center">
+                  <Typography>{substance.addedSubstanceUnit || "-"}</Typography>
                 </Box>
               </Grid>
             </Grid>
