@@ -3,15 +3,16 @@ import { useEffect } from "react";
 // @ts-expect-error: No type declarations for 'smiles-drawer'
 import SmilesDrawer from "smiles-drawer";
 
+type MediaOptions = {
+  width: number;
+  height: number;
+};
 type SmilesImageProps = {
   smiles: string;
+  svgOptions: MediaOptions;
   align?: string;
   index?: number;
   withBorder?: boolean;
-  svgOptions: {
-    width: number;
-    height: number;
-  };
 };
 
 const borderStyles = {
