@@ -82,7 +82,7 @@ const SubstanceLocationChangingForm: React.FC<LocationChangingProps> = ({
     return <PageError text="Failed to load locations" />;
   }
 
-  const availableLocations = selectedRoom ? selectedRoom.locations : [];
+  const availableLocations = selectedRoom?.locations || [];
 
   return (
     <Dialog open onClose={onCancel} fullWidth maxWidth="xs">

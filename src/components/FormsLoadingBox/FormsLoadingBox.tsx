@@ -10,7 +10,7 @@ const style = {
   transform: "translate(-50%, -50%)",
 };
 
-const FormsLoadingBox = () => {
+const FormsLoadingBox: React.FC = () => {
   return (
     <Modal open>
       <Box sx={style}>
