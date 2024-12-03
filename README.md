@@ -8,6 +8,7 @@ This project is designed to manage users, reagents, samples, requests, orders, s
 - [Getting Started](#getting-started)
 - [Tools and Technologies](#tools-and-technologies)
 - [Diagrams](#diagrams)
+- [License](#license)
 
 ## Getting Started
 
@@ -358,3 +359,6 @@ erDiagram
     SUBSTANCE ||--o{ COMPOUND : "is either of"
 ```
 
+## License
+
+This project is licensed under the terms of the [MIT License](LICENSE).
