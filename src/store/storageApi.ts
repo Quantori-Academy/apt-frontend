@@ -1,5 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
+import { transformTotalQuantityResponse } from "@/store/utils/transformTotalQuantityResponse.ts";
 import {
   BackendRoomData,
   BackendStorageRoomsBrief,
@@ -8,6 +9,8 @@ import {
   NewStorageRoom,
   RoomData,
   StorageRoomsBrief,
+  SubstancesTotalQuantity,
+  SubstancesTotalQuantityResponse,
   UpdateStorageRoom,
 } from "@/types";
 
@@ -67,6 +70,13 @@ export const storageApi = createApi({
       invalidatesTags: ["StorageRooms"],
     }),
 
+    getSubstanceTotalQuantity: builder.query<Array<SubstancesTotalQuantity>, void>({
+      query: () => "/storage/total",
+      transformResponse: (baseQueryReturnValue: Array<SubstancesTotalQuantityResponse>) => {
+        return transformTotalQuantityResponse(baseQueryReturnValue);
+      },
+    }),
+
     deleteStorageLocation: builder.mutation<void, number>({
       query: (locationId) => ({
         url: `/storage/location/${locationId}`,
@@ -98,4 +108,5 @@ export const {
   useCreateStorageRoomMutation,
   useDeleteStorageLocationMutation,
   useMoveSubstanceMutation,
+  useGetSubstanceTotalQuantityQuery,
 } = storageApi;

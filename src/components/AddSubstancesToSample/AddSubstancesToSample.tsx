@@ -1,7 +1,11 @@
 import { Box } from "@mui/material";
 import React from "react";
 
+import { useGetSubstanceTotalQuantityQuery } from "@/store";
+
 const AddSubstancesToSample: React.FC = () => {
+  const { data: substances } = useGetSubstanceTotalQuantityQuery();
+  console.log(substances);
   return (
     <Box>Add Substances</Box>
     //   <Grid item xs={12}>

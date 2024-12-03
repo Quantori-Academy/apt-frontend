@@ -1,3 +1,5 @@
+import { SubstancesCategory } from "@/types/substances.ts";
+
 export type StorageRoomsBrief = {
   id: string;
   room: string;
@@ -76,4 +78,51 @@ export type MoveSubstance = {
   oldRoomId: string;
   substanceId: string;
   newLocationId?: string;
+};
+
+// [
+// //   {
+// //     "substance_id": 120,
+// //     "name": "Ethanol",
+// //     "category": "Reagent",
+// //     "locations": [
+// //       {
+// //         "room": "Room 1376",
+// //         "location_id": 7,
+// //         "location": "Cabinet 2, Shelf 1",
+// //         "total_quantity_left": 92.1,
+// //         "unit": "l"
+// //       }
+// //     ]
+// //   }
+// // ]
+
+export type SubstancesTotalQuantityResponse = {
+  substance_id: number;
+  name: string;
+  category: SubstancesCategory;
+  locations: Array<SubstanceLocationsResponse>;
+};
+
+export type SubstanceLocationsResponse = {
+  room: string;
+  location_id: number;
+  location: string;
+  total_quantity_left: number;
+  unit: string;
+};
+
+export type SubstancesTotalQuantity = {
+  id: number;
+  name: string;
+  category: SubstancesCategory;
+  locations: Array<SubstanceLocations>;
+};
+
+export type SubstanceLocations = {
+  room: string;
+  locationId: number;
+  location: string;
+  totalQuantityLeft: number;
+  unit: string;
 };
