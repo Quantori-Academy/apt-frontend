@@ -61,7 +61,7 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
 
   const { showSuccess, showError } = useAlertSnackbar();
 
-  const [showDrawer, setShowDrawer] = useState(false);
+  const [showSMILES, setShowSMILES] = useState(false);
 
   const [isRowOpened, setIsRowOpened] = useState(false);
 
@@ -241,15 +241,15 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
                           <Tooltip placement="top" title="Show structure image">
                             <IconButton
                               size="small"
-                              onClick={() => setShowDrawer(true)}
+                              onClick={() => setShowSMILES(true)}
                             >
                               <VisibilityOutlined fontSize="small" />
                             </IconButton>
                           </Tooltip>
 
                           <Dialog
-                            open={showDrawer}
-                            onClose={() => setShowDrawer(false)}
+                            open={showSMILES}
+                            onClose={() => setShowSMILES(false)}
                           >
                             <SmilesImage
                               smiles={reagent.structure}
