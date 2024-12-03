@@ -272,16 +272,22 @@
           "label": "Unit*",
           "requiredMessage": "Unit is required"
         },
-        "quantity": {
-          "label": "Initial Quantity*",
-          "requiredMessage": "Initial quantity is required",
-          "minQuantityMessage": "Initial Quantity can't be 0"
-        },
         "amount": {
           "label": "Amount*",
           "requiredMessage": "Amount is required",
-          "minQuantityMessage": "Amount can't be 0"
+          "minAmountMessage": "Amount must be positive"
         },
+        "quantity": {
+          "label": "Quantity*",
+          "minAmountMessage": "Initial quantity can not be negative"
+        },
+
+        "initialQuantity":{
+          "label": "Initial Quantity*",
+          "requiredMessage": "Initial quantity is required",
+          "minQuantityMessage": "Initial quantity must be positive"
+        },
+
         "expirationDate": {
           "label": "Expiration Date*",
           "requiredMessage": "Expiration Date is required"

@@ -11,7 +11,7 @@ import {
   SamplePage,
   StorageLocationDetails,
   StorageLocations,
-  SubstancesList,
+  Substances,
   UserDetails,
   Users,
 } from "@/pages";
@@ -82,7 +82,7 @@ export const protectedRoutesRouterConfig: Record<
   },
   [AppProtectedRoutes.SUBSTANCES]: {
     path: RouteProtectedPath[AppProtectedRoutes.SUBSTANCES],
-    element: <SubstancesList />,
+    element: <Substances />,
     roles: Object.values(userRoles),
   },
   [AppProtectedRoutes.REAGENT_PAGE]: {

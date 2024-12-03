@@ -1,4 +1,4 @@
-import { SubstancesCategory } from "@/types/substances.ts";
+import { SubstancesCategory, SubstancesDetails } from "@/types/substances.ts";
 
 export type StorageRoomsBrief = {
   id: string;
@@ -20,7 +20,7 @@ export type RoomData = {
   locationId: string;
   roomName: string;
   locationName: string;
-  substances: Substance[];
+  substances: SubstancesDetails[];
 };
 
 export type BackendRoomLocationBrief = {
@@ -37,13 +37,6 @@ export type NewStorageRoom = Pick<StorageRoomsBrief, "room" | "description">;
 
 export type NewRoom = Pick<RoomData, "roomId" | "locationName">;
 
-export type Substance = {
-  substanceId: string;
-  name: string;
-  description: string;
-  structureSmiles: string;
-};
-
 export type BackendRoomData = {
   room_id: string;
   location_id: string;
@@ -53,17 +46,14 @@ export type BackendRoomData = {
 };
 
 export type BackendSubstance = {
-  substance_id: string;
+  id: string;
   name: string;
   description: string;
-  structure_smiles: string;
-};
-
-export type SubstancesInLocation = {
-  description: string;
-  name: string;
-  structureSmiles: string;
-  substanceId: string;
+  structure: string | null;
+  category: SubstancesCategory;
+  is_expired: boolean;
+  quantity_left: number;
+  unit: string;
 };
 
 export type LocationDetails = {
@@ -71,7 +61,7 @@ export type LocationDetails = {
   locationName: string;
   roomId: string;
   roomName: string;
-  substances: Array<SubstancesInLocation>;
+  substances: Array<SubstancesDetails>;
 };
 
 export type MoveSubstance = {
@@ -79,24 +69,6 @@ export type MoveSubstance = {
   substanceId: string;
   newLocationId?: string;
 };
-
-// [
-// //   {
-// //     "substance_id": 120,
-// //     "name": "Ethanol",
-// //     "category": "Reagent",
-// //     "locations": [
-// //       {
-// //         "room": "Room 1376",
-// //         "location_id": 7,
-// //         "location": "Cabinet 2, Shelf 1",
-// //         "total_quantity_left": 92.1,
-// //         "unit": "l"
-// //       }
-// //     ]
-// //   }
-// // ]
-
 export type SubstancesTotalQuantityResponse = {
   substance_id: number;
   name: string;
