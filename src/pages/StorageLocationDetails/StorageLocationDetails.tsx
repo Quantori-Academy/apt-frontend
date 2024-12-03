@@ -1,23 +1,14 @@
 import { Delete as DeleteIcon } from "@mui/icons-material";
-import {
-  Box,
-  Divider,
-  Grid,
-  IconButton,
-  Paper,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import { Box, Grid, IconButton, Paper, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
-  ChangeLocationDialog,
   DashboardBreadcrumbs,
   PageError,
   PageLoader,
   StorageLocationDetail,
-  StoredSubstances,
+  SubstancesList,
 } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { RouteProtectedPath } from "@/router";
@@ -29,7 +20,6 @@ import {
 const StorageLocationDetails: React.FC = () => {
   const { t } = useTranslation();
 
-  const [selectedSubstanceId, setSelectedSubstanceId] = useState("");
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
 
@@ -44,8 +34,6 @@ const StorageLocationDetails: React.FC = () => {
   const [deleteStorageLocation, { isLoading: isDeleting }] =
     useDeleteStorageLocationMutation();
 
-  const [modalIsOpened, setModalIsOpened] = useState(false);
-
   const handleDelete = async () => {
     if (locationDetails?.substances.length === 0) {
       const { error } = await deleteStorageLocation(Number(locationId));
@@ -59,10 +47,6 @@ const StorageLocationDetails: React.FC = () => {
     } else {
       showError(t("storage.snackBarMessages.notEmptyError"));
     }
-  };
-
-  const handleChangeLocation = (substanceId: string) => {
-    setSelectedSubstanceId(substanceId);
   };
 
   if (isLoading || isDeleting) return <PageLoader />;
@@ -112,24 +96,21 @@ const StorageLocationDetails: React.FC = () => {
               boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ fontWeight: 600, margin: "20px" }}
+            >
               {t("storage.fields.storedSubstances")}
             </Typography>
-            <Divider sx={{ marginBottom: 2 }} />
-            <StoredSubstances
+
+            <SubstancesList
               substances={locationDetails.substances}
-              onChangeLocation={handleChangeLocation}
-              openModal={() => setModalIsOpened(true)}
+              isInLocation={true}
             />
           </Paper>
         </Grid>
       </Grid>
-      <ChangeLocationDialog
-        open={modalIsOpened}
-        onClose={() => setModalIsOpened(false)}
-        locationDetails={locationDetails}
-        selectedSubstanceId={selectedSubstanceId}
-      />
     </Box>
   );
 };

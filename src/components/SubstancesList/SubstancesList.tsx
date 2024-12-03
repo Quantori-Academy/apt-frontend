@@ -13,28 +13,32 @@ import {
   AddSampleModal,
   CategoryFilter,
   DashboardBreadcrumbs,
-  PageError,
-  PageLoader,
   SearchBar,
   SubstancesTable,
 } from "@/components";
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
-import { selectUserRole, useGetSubstancesQuery } from "@/store";
+import { selectUserRole } from "@/store";
 import {
   CategoryFilterOption,
   ExpiredFilter,
   SortColumn,
   SortDirection,
+  SubstancesDetails,
 } from "@/types";
 import { getListData } from "@/utils";
 
 import style from "./SubstancesList.module.css";
 
-const SubstancesList: React.FC = () => {
-  const { t } = useTranslation();
-  const { data: substances = [], isLoading, isError } = useGetSubstancesQuery();
+type SubstancesListProps = {
+  isInLocation: boolean;
+  substances: Array<SubstancesDetails>;
+};
 
+const SubstancesList: React.FC<SubstancesListProps> = ({
+  substances,
+  isInLocation,
+}) => {
   const [page, setPage] = useState(0);
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
@@ -45,7 +49,10 @@ const SubstancesList: React.FC = () => {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const { t } = useTranslation();
+
   const role = useAppSelector(selectUserRole);
+
   const handleSortChange = (property: SortColumn) => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
     setSortDirection(isAsc ? "asc" : "desc");
@@ -78,6 +85,7 @@ const SubstancesList: React.FC = () => {
       searchQuery,
       expiredFilter,
       rowsPerPage,
+      isInLocation,
     ]
   );
 
@@ -85,21 +93,15 @@ const SubstancesList: React.FC = () => {
     setPage(0);
   }, [searchQuery, setPage, categoryFilter, expiredFilter]);
 
-  if (isLoading) {
-    return <PageLoader />;
-  }
-
-  if (isError) {
-    return <PageError text={t("substances.errors.loadError")} />;
-  }
-
   return (
     <Container>
-      <DashboardBreadcrumbs />
-      <Typography variant="h3" sx={{ marginBottom: "30px" }}>
-        {t("substances.title")}
-      </Typography>
-      {role === userRoles.Researcher && (
+      {!isInLocation && <DashboardBreadcrumbs />}
+      {!isInLocation && (
+        <Typography variant="h3" sx={{ marginBottom: "30px" }}>
+          {t("substances.title")}
+        </Typography>
+      )}
+      {role === userRoles.Researcher && !isInLocation && (
         <Box className={style.buttonBox} sx={{ display: "flex", gap: 2 }}>
           <AddReagentModal />
           <AddSampleModal />
@@ -128,6 +130,7 @@ const SubstancesList: React.FC = () => {
         </ToggleButtonGroup>
       </Box>
       <SubstancesTable
+        isInLocation={isInLocation}
         sortColumn={sortColumn}
         sortDirection={sortDirection}
         onSortChange={handleSortChange}
