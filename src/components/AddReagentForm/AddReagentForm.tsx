@@ -15,7 +15,7 @@ import { RouteProtectedPath } from "@/router";
 import { ReagentData } from "@/types";
 
 type LocationOption = {
-  id: string;
+  id: number;
   label: string;
 };
 
@@ -30,6 +30,11 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  const todayPlusOneYear = new Date();
+  todayPlusOneYear.setFullYear(todayPlusOneYear.getFullYear() + 1);
+
+  const defaultExpirationDate = todayPlusOneYear.toISOString().slice(0, 10);
+
   const {
     register,
     handleSubmit,
@@ -38,19 +43,21 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
   } = useForm<ReagentData>({
     defaultValues: {
       name: "",
-      description: "",
-      structure: "",
-      pricePerUnit: 0,
-      quantityUnit: "",
-      quantityLeft: 0,
-      expirationDate: new Date().toISOString().slice(0, 16),
-      locationId: "0",
-      casNumber: "",
-      producer: "",
-      catalogId: 0,
-      catalogLink: "",
+      description: null,
+      structure: null,
+      pricePerUnit: null,
+      unit: "",
+      initialQuantity: 0,
+      amount: 0,
+      expirationDate: defaultExpirationDate,
+      locationId: 0,
+      casNumber: null,
+      producer: null,
+      catalogId: null,
+      catalogLink: null,
     },
   });
+
   const navigate = useNavigate();
   const onSubmit = async (data: ReagentData) => {
     await handleCreateReagent(data);
@@ -97,9 +104,6 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               type="number"
               {...register("pricePerUnit", {
                 valueAsNumber: true,
-                required: t(
-                  "addSubstanceForm.requiredFields.price.requiredMessage"
-                ),
                 min: {
                   value: 0,
                   message: t(
@@ -111,54 +115,70 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               margin="normal"
               error={!!errors.pricePerUnit}
               helperText={errors.pricePerUnit?.message}
-              sx={{
-                "& input[type=number]": {
-                  MozAppearance: "textfield",
-                },
-                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
-                  {
-                    WebkitAppearance: "none",
-                    margin: 0,
-                  },
-              }}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
-              label={t("addSubstanceForm.requiredFields.quantity.label")}
+              label={t("addSubstanceForm.requiredFields.amount.label")}
               type="number"
-              {...register("quantityLeft", {
+              {...register("amount", {
                 valueAsNumber: true,
                 required: t(
-                  "addSubstanceForm.requiredFields.quantity.requiredMessage"
+                  "addSubstanceForm.requiredFields.amount.requiredMessage"
                 ),
                 min: {
                   value: 0,
                   message: t(
-                    "addSubstanceForm.requiredFields.quantity.minQuantityMessage"
+                    "addSubstanceForm.requiredFields.amount.minAmountMessage"
                   ),
                 },
               })}
               fullWidth
               margin="normal"
-              error={!!errors.quantityLeft}
-              helperText={errors.quantityLeft?.message}
-              sx={{
-                "& input[type=number]": {
-                  MozAppearance: "textfield",
-                },
-                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
-                  {
-                    WebkitAppearance: "none",
-                    margin: 0,
-                  },
-              }}
+              error={!!errors.amount}
+              helperText={errors.amount?.message}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              label={t("addSubstanceForm.requiredFields.initialQuantity.label")}
+              type="number"
+              {...register("initialQuantity", {
+                valueAsNumber: true,
+                required: t(
+                  "addSubstanceForm.requiredFields.initialQuantity.requiredMessage"
+                ),
+                min: {
+                  value: 0,
+                  message: t(
+                    "addSubstanceForm.requiredFields.initialQuantity.minQuantityMessage"
+                  ),
+                },
+              })}
+              fullWidth
+              margin="normal"
+              error={!!errors.initialQuantity}
+              helperText={errors.initialQuantity?.message}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label={t("addSubstanceForm.requiredFields.unit.label")}
+              {...register("unit", {
+                required: t(
+                  "addSubstanceForm.requiredFields.unit.requiredMessage"
+                ),
+              })}
+              fullWidth
+              margin="normal"
+              error={!!errors.unit}
+              helperText={errors.unit?.message}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
               label={t("addSubstanceForm.requiredFields.expirationDate.label")}
-              type="datetime-local"
+              type="date"
               {...register("expirationDate")}
               fullWidth
               margin="normal"
@@ -167,21 +187,6 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.quantityUnit.label")}
-              {...register("quantityUnit", {
-                required: t(
-                  "addSubstanceForm.requiredFields.quantityUnit.requiredMessage"
-                ),
-              })}
-              fullWidth
-              margin="normal"
-              error={!!errors.quantityUnit}
-              helperText={errors.quantityUnit?.message}
-            />
-          </Grid>
-
           <Grid item xs={12}>
             <Controller
               name="locationId"
@@ -244,16 +249,6 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               margin="normal"
               error={!!errors.catalogId}
               helperText={errors.catalogId?.message}
-              sx={{
-                "& input[type=number]": {
-                  MozAppearance: "textfield",
-                },
-                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
-                  {
-                    WebkitAppearance: "none",
-                    margin: 0,
-                  },
-              }}
             />
           </Grid>
           <Grid item xs={12}>
