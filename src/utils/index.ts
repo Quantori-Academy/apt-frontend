@@ -5,4 +5,4 @@ export * from "./getPaginatedStorageLocations";
 export * from "./getReagentRequestsData";
 export * from "./formatDate";
 export * from "./validateQuantity";
-export * from "./PriceQuantityAmountFormatter";
+export * from "./PriceQuantityAmountFormatters";
