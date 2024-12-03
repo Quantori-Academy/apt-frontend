@@ -46,8 +46,8 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const [order, setOrder] = useState<SortType>("asc");
-  const [orderBy, setOrderBy] = useState<keyof Order>("title");
+  const [order, setOrder] = useState<SortType>("desc");
+  const [orderBy, setOrderBy] = useState<keyof Order>("createdAt");
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
