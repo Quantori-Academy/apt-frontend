@@ -69,6 +69,7 @@ export type MoveSubstance = {
   substanceId: string;
   newLocationId?: string;
 };
+
 export type SubstancesTotalQuantityResponse = {
   substance_id: number;
   name: string;

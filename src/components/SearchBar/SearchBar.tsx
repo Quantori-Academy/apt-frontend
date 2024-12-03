@@ -1,15 +1,18 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useTranslation } from "react-i18next";
 
 type SearchBarProps = {
   searchQuery: string;
   setSearchQuery: (value: string) => void;
+  isLoading?: boolean;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({
   searchQuery,
   setSearchQuery,
+  isLoading,
 }) => {
   const { t } = useTranslation();
   return (
@@ -28,9 +31,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton>
-              <SearchIcon />
-            </IconButton>
+            {isLoading ? (
+              <CircularProgress size={24} />
+            ) : (
+              <IconButton>
+                <SearchIcon />
+              </IconButton>
+            )}
           </InputAdornment>
         ),
       }}
