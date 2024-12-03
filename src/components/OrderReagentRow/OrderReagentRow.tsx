@@ -21,6 +21,7 @@ import { ORDER_STATUSES } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
 import { useUpdateOrderReagentMutation } from "@/store";
 import { OrderReagent, OrderReagentRowType, OrderStatus } from "@/types";
+import { getValidationRules } from "@/utils";
 
 type OrderReagentRowProps = {
   orderId: string;
@@ -69,6 +70,10 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
   };
 
   const handleEditClick = (id: number) => {
+    reset({
+      ...reagent,
+      catalogLink: reagent.catalogLink || "",
+    });
     setEditableRowId((prevId: number | null) => (prevId === id ? null : id));
   };
 
@@ -85,6 +90,8 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
         },
       }).unwrap();
       showSuccess(t("substanceDetails.snackBarMessages.reagent.successUpdate"));
+      reset(data);
+      setEditableRowId(null);
     } catch (err) {
       if (typeof err === "object" && err !== null && "data" in err) {
         const errorMessage = (err as { data: { message: string } }).data
@@ -94,8 +101,6 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
         showError(t("substanceDetails.snackBarMessages.unexpectedError"));
       }
     }
-    setEditableRowId(null);
-    reset();
   };
 
   const canSelectReagent =
@@ -137,6 +142,9 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
             value = reagent[key];
           }
 
+          const isNumberType =
+            key === "pricePerUnit" || key === "quantity" || key === "amount";
+
           return (
             <TableCell key={label}>
               {isEditable && key !== "fromRequest" ? (
@@ -145,16 +153,8 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
                   fieldName={key}
                   errors={errors}
                   control={control}
-                  TextFieldType={
-                    key === "pricePerUnit" || key === "quantity"
-                      ? "number"
-                      : "text"
-                  }
-                  rules={{
-                    required: t(
-                      `createOrderForm.requiredFields.${label}.requiredMessage`
-                    ),
-                  }}
+                  TextFieldType={isNumberType ? "number" : "text"}
+                  rules={getValidationRules({ key, t })}
                 />
               ) : (
                 value
