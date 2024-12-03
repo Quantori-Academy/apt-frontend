@@ -1,17 +1,16 @@
 import {
   Autocomplete,
-  Box,
-  Button,
   Container,
+  Divider,
   Grid,
   TextField,
-  Typography,
 } from "@mui/material";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+import { AddSubstancesToSample } from "@/components";
 import { RouteProtectedPath } from "@/router";
 import { SampleData } from "@/types";
 
@@ -34,8 +33,8 @@ type AddSampleFormProps = {
 };
 
 const AddSampleForm: React.FC<AddSampleFormProps> = ({
-  isLoading,
-  reagentOptions,
+  // isLoading,
+  // reagentOptions,
   locationOptions,
   handleSubmit,
 }) => {
@@ -47,7 +46,6 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
   const {
     register,
     handleSubmit: handleFormSubmit,
-    // setValue,
     control,
     formState: { errors },
   } = useForm<SampleData>({
@@ -63,45 +61,52 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
       addedSubstances: [],
     },
   });
-  const [selectedReagents, setSelectedReagents] = React.useState<
-    { id: number; amount: string; unit: string; label: string }[]
-  >([]);
-
-  const handleReagentChange = (
-    _event: React.ChangeEvent<unknown>,
-    value: ReagentOption | null,
-    index: number
-  ) => {
-    const newReagents = [...selectedReagents];
-    if (value) {
-      const [amount, unit] = value.consumption.split(" ");
-      newReagents[index] = {
-        id: value.id,
-        label: value.label,
-        amount,
-        unit,
-      };
-      setSelectedReagents(newReagents);
-      // setValue(
-      //   "addedSubstances",
-      //   newReagents.map((reagent) => reagent.id)
-      // );
-    }
-  };
-  const handleAmountChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    index: number
-  ) => {
-    const newReagents = [...selectedReagents];
-    newReagents[index].amount = event.target.value;
-    setSelectedReagents(newReagents);
-  };
-  const addReagentField = () => {
-    setSelectedReagents([
-      ...selectedReagents,
-      { id: 0, amount: "", unit: "", label: "" },
-    ]);
-  };
+  // const [selectedReagents, setSelectedReagents] = React.useState<
+  //   { id: number; amount: string; unit: string; label: string }[]
+  // >([]);
+  //
+  // const handleReagentChange = (
+  //   _event: React.ChangeEvent<unknown>,
+  //   value: ReagentOption | null,
+  //   index: number
+  // ) => {
+  //   const newReagents = [...selectedReagents];
+  //   if (value) {
+  //     const [amount, unit] = value.consumption.split(" ");
+  //     newReagents[index] = {
+  //       id: value.id,
+  //       label: value.label,
+  //       amount,
+  //       unit,
+  //     };
+  //     setSelectedReagents(newReagents);
+  //     console.log(selectedReagents);
+  //     // setValue(
+  //     //   "addedSubstances",
+  //     //   newReagents.map((reagent) => {
+  //     //     return ...selectedReagents, {
+  //     //       addedSubstanceId: reagent.id;
+  //     //       addedSubstanceQuantity: reagent.amount;
+  //     //       addedSubstanceUnit: reagent.unit;
+  //     //     }
+  //     //   })
+  //     // );
+  //   }
+  // };
+  // const handleAmountChange = (
+  //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  //   index: number
+  // ) => {
+  //   const newReagents = [...selectedReagents];
+  //   newReagents[index].amount = event.target.value;
+  //   setSelectedReagents(newReagents);
+  // };
+  // const addReagentField = () => {
+  //   setSelectedReagents([
+  //     ...selectedReagents,
+  //     { id: 0, amount: "", unit: "", label: "" },
+  //   ]);
+  // };
 
   const navigate = useNavigate();
   const onSubmit = async (data: SampleData) => {
@@ -252,84 +257,9 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               helperText={errors.amount?.message}
             />
           </Grid>
-
-          <Grid item xs={12}>
-            <Button
-              variant="outlined"
-              onClick={addReagentField}
-              disabled={selectedReagents.length >= reagentOptions.length}
-              fullWidth
-            >
-              {t("substances.buttons.chooseSubstance")}
-            </Button>
-          </Grid>
-          {selectedReagents.map((reagent, index) => (
-            <Grid
-              container
-              spacing={2}
-              key={index}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                justifyContent: "center",
-              }}
-            >
-              <Grid item xs={12} sm={6}>
-                <Autocomplete
-                  options={reagentOptions}
-                  getOptionLabel={({ label }) => label}
-                  onChange={(event, value) =>
-                    handleReagentChange(event, value, index)
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label={t(
-                        "addSubstanceForm.requiredFields.substance.label"
-                      )}
-                      placeholder="Select reagent"
-                      fullWidth
-                      margin="normal"
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={4}
-                sx={{ display: "flex", alignItems: "center", gap: 1 }}
-              >
-                <TextField
-                  label={t("addSubstanceForm.requiredFields.consumption.label")}
-                  value={reagent.amount}
-                  onChange={(event) => handleAmountChange(event, index)}
-                  fullWidth
-                  margin="normal"
-                  InputProps={{
-                    inputProps: { min: 1 },
-                  }}
-                />
-                <Typography sx={{ marginTop: 1 }}>{reagent.unit}</Typography>
-              </Grid>
-            </Grid>
-          ))}
-          <Grid item xs={12}>
-            <Box display="flex" justifyContent="center">
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                disabled={isLoading}
-              >
-                {isLoading
-                  ? t("substances.buttons.adding")
-                  : t("substances.buttons.addSample")}
-              </Button>
-            </Box>
-          </Grid>
         </Grid>
+        <Divider sx={{ marginY: "20px" }} />
+        <AddSubstancesToSample />
       </form>
     </Container>
   );

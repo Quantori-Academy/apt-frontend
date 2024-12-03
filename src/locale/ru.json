@@ -190,7 +190,7 @@
         "addReagent": "Добавить реактив",
         "addSample": "Добавить образец",
         "addLoading": "Добавление...",
-        "chooseSubstance": "Выбрать вещество"
+        "chooseSubstance": "Добавить вещества"
       },
 
       "errors": {
@@ -265,7 +265,7 @@
         },
         "price": {
           "label": "Цена за единицу",
-          "requiredMessage": "Поле 'Цена' обязательно для заполнения",
+          "requiredMessage": "Цена обязательна",
           "minPriceMessage": "Цена должна быть положительной"
         },
         "unit": {
@@ -275,22 +275,23 @@
         "quantity": {
           "label": "Начальное количество*",
           "requiredMessage": "Начальное количество обязательно",
-          "minQuantityMessage": "Начальное количество должно быть положительным"
+          "minQuantityMessage": "Начальное количество не может быть 0"
         },
         "amount": {
           "label": "Количество*",
           "requiredMessage": "Количество обязательно",
-          "minQuantityMessage": "Количество должно быть положительным"
+          "minQuantityMessage": "Количество не может быть 0"
         },
         "expirationDate": {
-          "label": "Дата истечения срока*"
+          "label": "Дата истечения срока годности*",
+          "requiredMessage": "Дата истечения срока годности обязательна"
         },
         "location": {
           "label": "Местоположение*",
-          "requiredMessage": "Поле 'Местоположение' обязательно для заполнения"
+          "requiredMessage": "Местоположение обязательно"
         },
         "CASNumber": {
-          "label": "Номер CAS"
+          "label": "CAS номер"
         },
         "producer": {
           "label": "Производитель"
@@ -306,8 +307,8 @@
           "requiredMessage": "Вещество обязательно"
         },
         "consumption": {
-          "label": "Потребление",
-          "minConsumptionMessage": "Потребление должно быть положительным"
+          "label": "Расход",
+          "minConsumptionMessage": "Расход должен быть положительным"
         }
       }
     },
