@@ -75,14 +75,10 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
 
   const handleCancel = () => {
     setEditableRowId(null);
-    reset();
   };
 
   const handleEditClick = (id: number) => {
-    reset({
-      ...reagent,
-      catalogLink: reagent.catalogLink || "",
-    });
+    reset(reagent);
     setEditableRowId((prevId: number | null) => (prevId === id ? null : id));
   };
 
@@ -253,7 +249,7 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
                           >
                             <SmilesImage
                               smiles={reagent.structure}
-                              svgOptions={{ width: 200, height: 200 }}
+                              svgOptions={{ width: 350, height: 350 }}
                             />
                           </Dialog>
                         </>
