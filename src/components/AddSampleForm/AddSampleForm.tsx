@@ -27,7 +27,6 @@ type ReagentOption = {
 };
 
 type AddSampleFormProps = {
-  initialSampleData: SampleData;
   isLoading: boolean;
   reagentOptions: ReagentOption[];
   locationOptions: LocationOption[];
@@ -42,10 +41,13 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
+  const nextYearDate = new Date();
+  nextYearDate.setFullYear(nextYearDate.getFullYear() + 1);
+
   const {
     register,
     handleSubmit: handleFormSubmit,
-    setValue,
+    // setValue,
     control,
     formState: { errors },
   } = useForm<SampleData>({
@@ -53,12 +55,12 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
       name: "",
       description: "",
       structure: "",
-      pricePerUnit: 0,
-      quantityUnit: "",
-      quantityLeft: 0,
-      expirationDate: new Date().toISOString().slice(0, 16),
+      unit: "",
+      initialQuantity: 0,
+      amount: 0,
+      expirationDate: nextYearDate.toISOString().slice(0, 10),
       locationId: 0,
-      addedSubstanceIds: [],
+      addedSubstances: [],
     },
   });
   const [selectedReagents, setSelectedReagents] = React.useState<
@@ -80,10 +82,10 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
         unit,
       };
       setSelectedReagents(newReagents);
-      setValue(
-        "addedSubstanceIds",
-        newReagents.map((reagent) => reagent.id)
-      );
+      // setValue(
+      //   "addedSubstances",
+      //   newReagents.map((reagent) => reagent.id)
+      // );
     }
   };
   const handleAmountChange = (
@@ -110,7 +112,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
   return (
     <Container maxWidth="sm">
       <form onSubmit={handleFormSubmit(onSubmit)}>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           <Grid item xs={12} sm={6}>
             <TextField
               label={t("addSubstanceForm.requiredFields.name.label")}
@@ -141,63 +143,16 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               margin="normal"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.price.label")}
-              type="number"
-              {...register("pricePerUnit", {
-                valueAsNumber: true,
-                required: t(
-                  "addSubstanceForm.requiredFields.price.requiredMessage"
-                ),
-                min: {
-                  value: 0,
-                  message: t(
-                    "addSubstanceForm.requiredFields.price.minPriceMessage"
-                  ),
-                },
-              })}
-              fullWidth
-              margin="normal"
-              error={!!errors.pricePerUnit}
-              helperText={errors.pricePerUnit?.message}
-              InputProps={{
-                inputProps: { min: 0 },
-              }}
-              sx={{
-                "& input[type=number]": {
-                  MozAppearance: "textfield",
-                },
-                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
-                  {
-                    WebkitAppearance: "none",
-                    margin: 0,
-                  },
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.quantityUnit.label")}
-              {...register("quantityUnit", {
-                required: {
-                  value: true,
-                  message: t(
-                    "addSubstanceForm.requiredFields.quantityUnit.requiredMessage"
-                  ),
-                },
-              })}
-              fullWidth
-              margin="normal"
-              error={!!errors.quantityUnit}
-              helperText={errors.quantityUnit?.message}
-            />
-          </Grid>
+
           <Grid item xs={12} sm={6}>
             <TextField
               label={t("addSubstanceForm.requiredFields.expirationDate.label")}
-              type="datetime-local"
-              {...register("expirationDate")}
+              type="date"
+              {...register("expirationDate", {
+                required: t(
+                  "addSubstanceForm.requiredFields.expirationDate.requiredMessage"
+                ),
+              })}
               fullWidth
               margin="normal"
               InputLabelProps={{ shrink: true }}
@@ -237,17 +192,17 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               )}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label={t("addSubstanceForm.requiredFields.quantity.label")}
               type="number"
-              {...register("quantityLeft", {
+              {...register("initialQuantity", {
                 valueAsNumber: true,
                 required: t(
                   "addSubstanceForm.requiredFields.quantity.requiredMessage"
                 ),
                 min: {
-                  value: 0,
+                  value: 1,
                   message: t(
                     "addSubstanceForm.requiredFields.quantity.minQuantityMessage"
                   ),
@@ -255,10 +210,49 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               })}
               fullWidth
               margin="normal"
-              error={!!errors.quantityLeft}
-              helperText={errors.quantityLeft?.message}
+              error={!!errors.initialQuantity}
+              helperText={errors.initialQuantity?.message}
             />
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label={t("addSubstanceForm.requiredFields.unit.label")}
+              {...register("unit", {
+                required: t(
+                  "addSubstanceForm.requiredFields.unit.requiredMessage"
+                ),
+              })}
+              fullWidth
+              margin="normal"
+              error={!!errors.unit}
+              helperText={errors.unit?.message}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              type="number"
+              label={t("addSubstanceForm.requiredFields.amount.label")}
+              {...register("amount", {
+                min: {
+                  value: 1,
+                  message: t(
+                    "addSubstanceForm.requiredFields.amount.minQuantityMessage"
+                  ),
+                },
+                required: {
+                  value: true,
+                  message: t(
+                    "addSubstanceForm.requiredFields.amount.requiredMessage"
+                  ),
+                },
+              })}
+              fullWidth
+              margin="normal"
+              error={!!errors.amount}
+              helperText={errors.amount?.message}
+            />
+          </Grid>
+
           <Grid item xs={12}>
             <Button
               variant="outlined"

@@ -11,18 +11,6 @@ import {
 } from "@/store";
 import { SampleData } from "@/types";
 
-const defaultSampleData: SampleData = {
-  name: "",
-  description: "",
-  structure: "",
-  pricePerUnit: 0,
-  quantityUnit: "",
-  quantityLeft: 0,
-  expirationDate: "",
-  locationId: 0,
-  addedSubstanceIds: [],
-};
-
 const AddSampleModal: React.FC = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -79,7 +67,6 @@ const AddSampleModal: React.FC = () => {
       <Button variant="contained" onClick={handleOpenModal}>
         {t("substances.buttons.addSample")}
       </Button>
-
       <BasicModal
         title={t("addSubstanceForm.title.sample")}
         isOpen={isOpen}
@@ -92,7 +79,6 @@ const AddSampleModal: React.FC = () => {
           isLoading={isLoading}
           reagentOptions={reagentOptions}
           locationOptions={locationOptions}
-          initialSampleData={defaultSampleData}
         />
       </BasicModal>
     </div>

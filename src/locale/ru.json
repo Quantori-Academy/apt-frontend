@@ -254,7 +254,7 @@
 
       "requiredFields": {
         "name": {
-          "label": "Название",
+          "label": "Название*",
           "requiredMessage": "Название обязательно"
         },
         "description": {
@@ -268,20 +268,25 @@
           "requiredMessage": "Поле 'Цена' обязательно для заполнения",
           "minPriceMessage": "Цена должна быть положительной"
         },
-        "quantityUnit": {
-          "label": "Единица измерения",
-          "requiredMessage": "Поле 'Единица измерения' обязательно для заполнения"
+        "unit": {
+          "label": "Единица измерения*",
+          "requiredMessage": "Единица измерения обязательна"
         },
         "quantity": {
-          "label": "Остаток",
-          "requiredMessage": "Поле 'Остаток' обязательно для заполнения",
-          "minQuantityMessage": "Quantity must be positive"
+          "label": "Начальное количество*",
+          "requiredMessage": "Начальное количество обязательно",
+          "minQuantityMessage": "Начальное количество должно быть положительным"
+        },
+        "amount": {
+          "label": "Количество*",
+          "requiredMessage": "Количество обязательно",
+          "minQuantityMessage": "Количество должно быть положительным"
         },
         "expirationDate": {
-          "label": "Дата истечения срока"
+          "label": "Дата истечения срока*"
         },
         "location": {
-          "label": "Местоположение",
+          "label": "Местоположение*",
           "requiredMessage": "Поле 'Местоположение' обязательно для заполнения"
         },
         "CASNumber": {
@@ -297,7 +302,7 @@
           "label": "Ссылка на каталог"
         },
         "substance": {
-          "label": "Вещество",
+          "label": "Вещество*",
           "requiredMessage": "Вещество обязательно"
         },
         "consumption": {

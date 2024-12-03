@@ -254,7 +254,7 @@
 
       "requiredFields": {
         "name": {
-          "label": "Name",
+          "label": "Name*",
           "requiredMessage": "Name is required"
         },
         "description": {
@@ -268,20 +268,26 @@
           "requiredMessage": "Price is required",
           "minPriceMessage": "Price must be positive"
         },
-        "quantityUnit": {
-          "label": "Quantity Unit",
-          "requiredMessage": "Quantity unit is required"
+        "unit": {
+          "label": "Unit*",
+          "requiredMessage": "Unit is required"
         },
         "quantity": {
-          "label": "Quantity Left",
-          "requiredMessage": "Quantity left is required",
-          "minQuantityMessage": "Quantity must be positive"
+          "label": "Initial Quantity*",
+          "requiredMessage": "Initial quantity is required",
+          "minQuantityMessage": "Initial Quantity can't be 0"
+        },
+        "amount": {
+          "label": "Amount*",
+          "requiredMessage": "Amount is required",
+          "minQuantityMessage": "Amount can't be 0"
         },
         "expirationDate": {
-          "label": "Expiration Date"
+          "label": "Expiration Date*",
+          "requiredMessage": "Expiration Date is required"
         },
         "location": {
-          "label": "Location",
+          "label": "Location*",
           "requiredMessage": "Location is required"
         },
         "CASNumber": {
@@ -297,7 +303,7 @@
           "label": "Catalog Link"
         },
         "substance": {
-          "label": "Substance",
+          "label": "Substance*",
           "requiredMessage": "Substance is required"
         },
         "consumption": {
