@@ -1,8 +1,14 @@
-import { ExpandLess, ExpandMore, Link as LinkIcon } from "@mui/icons-material";
+import {
+  ExpandLess,
+  ExpandMore,
+  Link as LinkIcon,
+  VisibilityOutlined,
+} from "@mui/icons-material";
 import {
   Box,
   Checkbox,
   Collapse,
+  Dialog,
   IconButton,
   Link,
   Table,
@@ -11,12 +17,13 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { EditController, OrderReagentButtons } from "@/components";
+import { EditController, OrderReagentButtons, SmilesImage } from "@/components";
 import { ORDER_STATUSES } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
 import { useUpdateOrderReagentMutation } from "@/store";
@@ -53,6 +60,8 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
   const { t } = useTranslation();
 
   const { showSuccess, showError } = useAlertSnackbar();
+
+  const [showDrawer, setShowDrawer] = useState(false);
 
   const [isRowOpened, setIsRowOpened] = useState(false);
 
@@ -194,6 +203,9 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
               >
                 <TableHead>
                   <TableRow>
+                    <TableCell align="center">
+                      {t(`substanceDetails.fields.structure`)}
+                    </TableCell>
                     {OrderReagentSecondaryRows.map(({ label }) => (
                       <TableCell align="center" key={label}>
                         {t(`substanceDetails.fields.${label}`)}
@@ -212,6 +224,43 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
                       },
                     }}
                   >
+                    <TableCell align="center">
+                      {isEditable ? (
+                        <TextField
+                          size="small"
+                          {...register("structure")}
+                          defaultValue={reagent.structure}
+                          error={!!errors.structure}
+                          helperText={errors.structure?.message}
+                          variant="outlined"
+                        />
+                      ) : reagent.structure ? (
+                        <>
+                          {reagent.structure}
+
+                          <Tooltip placement="top" title="Show structure image">
+                            <IconButton
+                              size="small"
+                              onClick={() => setShowDrawer(true)}
+                            >
+                              <VisibilityOutlined fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+
+                          <Dialog
+                            open={showDrawer}
+                            onClose={() => setShowDrawer(false)}
+                          >
+                            <SmilesImage
+                              smiles={reagent.structure}
+                              svgOptions={{ width: 200, height: 200 }}
+                            />
+                          </Dialog>
+                        </>
+                      ) : (
+                        "-"
+                      )}
+                    </TableCell>
                     {OrderReagentSecondaryRows.map(({ key }) => (
                       <TableCell align="center" key={key}>
                         {isEditable ? (
