@@ -1,40 +1,32 @@
 import {
   Autocomplete,
+  Button,
   Container,
   Divider,
   Grid,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { AddSubstancesToSample } from "@/components";
 import { RouteProtectedPath } from "@/router";
-import { SampleData } from "@/types";
+import { SampleData, SampleSubstances } from "@/types";
 
 type LocationOption = {
   id: number;
   label: string;
 };
 
-type ReagentOption = {
-  id: number;
-  label: string;
-  consumption: string;
-};
-
 type AddSampleFormProps = {
   isLoading: boolean;
-  reagentOptions: ReagentOption[];
   locationOptions: LocationOption[];
   handleSubmit: (sampleData: SampleData) => Promise<void>;
 };
 
 const AddSampleForm: React.FC<AddSampleFormProps> = ({
-  // isLoading,
-  // reagentOptions,
   locationOptions,
   handleSubmit,
 }) => {
@@ -42,6 +34,10 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
 
   const nextYearDate = new Date();
   nextYearDate.setFullYear(nextYearDate.getFullYear() + 1);
+
+  const [addedSubstances, setAddedSubstances] = useState<
+    Array<SampleSubstances>
+  >([]);
 
   const {
     register,
@@ -58,58 +54,14 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
       amount: 0,
       expirationDate: nextYearDate.toISOString().slice(0, 10),
       locationId: 0,
-      addedSubstances: [],
     },
   });
-  // const [selectedReagents, setSelectedReagents] = React.useState<
-  //   { id: number; amount: string; unit: string; label: string }[]
-  // >([]);
-  //
-  // const handleReagentChange = (
-  //   _event: React.ChangeEvent<unknown>,
-  //   value: ReagentOption | null,
-  //   index: number
-  // ) => {
-  //   const newReagents = [...selectedReagents];
-  //   if (value) {
-  //     const [amount, unit] = value.consumption.split(" ");
-  //     newReagents[index] = {
-  //       id: value.id,
-  //       label: value.label,
-  //       amount,
-  //       unit,
-  //     };
-  //     setSelectedReagents(newReagents);
-  //     console.log(selectedReagents);
-  //     // setValue(
-  //     //   "addedSubstances",
-  //     //   newReagents.map((reagent) => {
-  //     //     return ...selectedReagents, {
-  //     //       addedSubstanceId: reagent.id;
-  //     //       addedSubstanceQuantity: reagent.amount;
-  //     //       addedSubstanceUnit: reagent.unit;
-  //     //     }
-  //     //   })
-  //     // );
-  //   }
-  // };
-  // const handleAmountChange = (
-  //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  //   index: number
-  // ) => {
-  //   const newReagents = [...selectedReagents];
-  //   newReagents[index].amount = event.target.value;
-  //   setSelectedReagents(newReagents);
-  // };
-  // const addReagentField = () => {
-  //   setSelectedReagents([
-  //     ...selectedReagents,
-  //     { id: 0, amount: "", unit: "", label: "" },
-  //   ]);
-  // };
 
   const navigate = useNavigate();
   const onSubmit = async (data: SampleData) => {
+    console.log(addedSubstances);
+    data.addedSubstances = addedSubstances;
+
     await handleSubmit(data);
     navigate(RouteProtectedPath.substances);
   };
@@ -259,7 +211,8 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           </Grid>
         </Grid>
         <Divider sx={{ marginY: "20px" }} />
-        <AddSubstancesToSample />
+        <AddSubstancesToSample setAddedSubstances={setAddedSubstances} />
+        <Button type="submit">Create Sample</Button>
       </form>
     </Container>
   );

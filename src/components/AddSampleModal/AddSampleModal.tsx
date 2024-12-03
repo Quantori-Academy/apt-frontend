@@ -4,19 +4,13 @@ import { useTranslation } from "react-i18next";
 
 import { AddSampleForm, BasicModal } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
-import {
-  useCreateSampleMutation,
-  useGetStorageRoomsQuery,
-  useGetSubstancesQuery,
-} from "@/store";
+import { useCreateSampleMutation, useGetStorageRoomsQuery } from "@/store";
 import { SampleData } from "@/types";
 
 const AddSampleModal: React.FC = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data: reagentData, isLoading: isReagentsLoading } =
-    useGetSubstancesQuery();
   const { data: storageRooms, isLoading: isLocationsLoading } =
     useGetStorageRoomsQuery();
 
@@ -38,16 +32,9 @@ const AddSampleModal: React.FC = () => {
   const handleOpenModal = () => setIsOpen(true);
   const handleCloseModal = () => setIsOpen(false);
 
-  if (isReagentsLoading || isLocationsLoading) {
+  if (isLocationsLoading) {
     return null;
   }
-
-  const reagentOptions =
-    reagentData?.map((reagent) => ({
-      id: Number(reagent.id),
-      label: reagent.name,
-      consumption: reagent.quantityLeft,
-    })) || [];
 
   const locationOptions =
     storageRooms?.flatMap((room) =>
@@ -72,7 +59,6 @@ const AddSampleModal: React.FC = () => {
         <AddSampleForm
           handleSubmit={handleCreateSample}
           isLoading={isLoading}
-          reagentOptions={reagentOptions}
           locationOptions={locationOptions}
         />
       </BasicModal>

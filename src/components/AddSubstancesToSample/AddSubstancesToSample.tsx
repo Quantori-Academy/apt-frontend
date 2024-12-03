@@ -1,42 +1,50 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { PageLoader, SearchBar } from "@/components";
 import { useGetSubstanceTotalQuantityQuery } from "@/store";
+import { SampleSubstances } from "@/types";
 
-const AddSubstancesToSample: React.FC = () => {
-  // const { t } = useTranslation();
-  // const [selectedSubstances, setSelectedSubstances] = useState([]);
+type AddSubstancesToSampleProps = {
+  setAddedSubstances: React.Dispatch<React.SetStateAction<SampleSubstances[]>>;
+};
 
+const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
+  setAddedSubstances,
+}) => {
   const { data: substances, isLoading } = useGetSubstanceTotalQuantityQuery();
   const [searchQuery, setSearchQuery] = useState("");
+  const textFieldRefs = useRef<{ [key: string]: HTMLInputElement }>({});
 
   if (!substances) return <PageLoader />;
   const search = substances.filter((substance) => {
     return substance.name.toLowerCase().includes(searchQuery);
   });
-  //[
-  //     {
-  //       "added_substance_id": 0,
-  //       "added_substance_location_id": 0,
-  //       "added_substance_quantity": 0,
-  //       "added_substance_unit": "string"
-  //     }
-  //   ]
-  //
-  // const handleAddSubstance = (item, location, quantity) => {
-  //   const newSubstance = {
-  //     name: item.name,
-  //     location: location.name,
-  //     quantity,
-  //   };
-  //   setSelectedSubstances((prev) => [...prev, newSubstance]);
-  // };
+
+  const handleAddSubstance = (itemIndex: number, locIndex: number) => {
+    const item = search[itemIndex];
+    const location = item.locations[locIndex];
+
+    const quantity = parseInt(
+      textFieldRefs.current[`${itemIndex}-${locIndex}`]?.value || "0",
+      10
+    );
+
+    const newSubstance: SampleSubstances = {
+      addedSubstanceId: item.id || null,
+      addedSubstanceLocationId: location.locationId || null,
+      addedSubstanceQuantity: quantity,
+      addedSubstanceUnit: location.unit,
+    };
+    setAddedSubstances((prev) => [...prev, newSubstance]);
+  };
 
   return (
     <>
-      <Box>Add Substances</Box>
+      <Typography variant="h6" sx={{ margin: "20px" }}>
+        Add Substances
+      </Typography>
       <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -54,7 +62,6 @@ const AddSubstancesToSample: React.FC = () => {
                 margin: "8px",
               }}
             >
-              {/* Main Item Row */}
               <Grid
                 alignItems="center"
                 container
@@ -70,7 +77,6 @@ const AddSubstancesToSample: React.FC = () => {
                 </Grid>
               </Grid>
 
-              {/* Location Rows */}
               {item.locations.map((location, locIndex) => (
                 <Grid
                   container
@@ -98,19 +104,20 @@ const AddSubstancesToSample: React.FC = () => {
                     sx={{ display: "flex", alignItems: "center" }}
                   >
                     <TextField
+                      inputRef={(ref) => {
+                        textFieldRefs.current[`${itemIndex}-${locIndex}`] = ref;
+                      }}
                       label={location.unit}
                       size="small"
                       type="number"
+                      inputProps={{
+                        max: location.totalQuantityLeft,
+                      }}
                       sx={{ width: "100px" }}
-
-                      // value={location.quantity}
-                      // onChange={(e) =>
-                      //   handleQuantityChange(itemIndex, locIndex, e.target.value)
-                      // }
                     />
                     <IconButton
                       color="primary"
-                      // onClick={() => handleAddSubstance(item, location, "20")}
+                      onClick={() => handleAddSubstance(itemIndex, locIndex)}
                     >
                       <AddCircleIcon />
                     </IconButton>

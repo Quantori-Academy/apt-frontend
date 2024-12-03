@@ -11,7 +11,8 @@ export type SampleData = {
 };
 
 export type SampleSubstances = {
-  addedSubstanceId: number;
+  addedSubstanceId: number | null;
+  addedSubstanceLocationId: number | null;
   addedSubstanceQuantity: number;
   addedSubstanceUnit: string;
 };
