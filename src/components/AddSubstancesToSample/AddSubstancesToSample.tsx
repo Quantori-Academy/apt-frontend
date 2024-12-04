@@ -80,14 +80,14 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
         setSearchQuery={setSearchQuery}
         isLoading={isLoading}
         placeholder="Type at least 3 letters to search..."
-        padding="15px 0 0 15px"
+        padding="15px 0 0 0"
       />
       {!search.length && searchQuery ? (
         <Typography margin="20px">
           No reagents found matching the given name
         </Typography>
       ) : (
-        <Box>
+        <Box width="100%">
           {search.map((item, itemIndex) => (
             <Box
               key={itemIndex}
@@ -95,7 +95,7 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
                 border: "1px solid #33ab9f",
                 borderRadius: "8px",
                 padding: "8px",
-                margin: "8px",
+                marginY: "8px",
               }}
             >
               <Grid

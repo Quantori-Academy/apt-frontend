@@ -1,5 +1,6 @@
 import {
   Autocomplete,
+  Box,
   Button,
   Grid,
   TextField,
@@ -218,17 +219,28 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               />
             </Grid>
           </Grid>
-          <AddedSubstancesInSample
-            substancesDetails={addedSubstancesDetails}
-            onChangeSubstancesDetails={setAddedSubstancesDetails}
-            onChangesAddedSubstances={setAddedSubstances}
-          />
+          <Box height="220px">
+            <Typography variant="h6" marginY="20px">
+              Added Substances
+            </Typography>
+            {!addedSubstances.length ? (
+              <Typography margin="20px">
+                You haven&apos;t added any substances yet
+              </Typography>
+            ) : (
+              <AddedSubstancesInSample
+                substancesDetails={addedSubstancesDetails}
+                onChangeSubstancesDetails={setAddedSubstancesDetails}
+                onChangesAddedSubstances={setAddedSubstances}
+              />
+            )}
+          </Box>
           <Button type="submit" sx={{ marginTop: "10px" }}>
             Create Sample
           </Button>
         </form>
       </Grid>
-      <Grid item xs={6} paddingX={5} width="100%">
+      <Grid item xs={6} paddingLeft={5} width="100%">
         <AddSubstancesToSample
           setAddedSubstances={setAddedSubstances}
           setAddedSubstancesDetails={setAddedSubstancesDetails}
