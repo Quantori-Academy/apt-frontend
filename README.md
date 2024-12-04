@@ -81,28 +81,30 @@ graph LR;
     %% Storage Management
     SM{{Storage Management}} --> AdminSM((Admin))
     SM-->UserSM
-    AdminSM --> AddSM(Add storage location)
+    AdminSM --> AddRSM(Add storage room)
+    AdminSM --> AddSSM(Add storage location)
     AdminSM --> EditSM(Edit storage location)
     AdminSM -->DeleteSM(Delete storage location)
     UserSM((Any Role)) --> ViewSMContent(View the reagents of each storage location)
-    SM -->UserSMResOfficer
-    UserSMResOfficer((Any Role)) --> MoveSMItems(Move items between storage locations)
 
     %% Reagent Request Management
     RRM{{Reagent Request Management}} --> ResearcherRRM((Researcher))
     ResearcherRRM --> CreateRequestRRM(Create a new reagent request)
     ResearcherRRM --> StatusRequestRRM(See his reagent request status)
+    ResearcherRRM --> EditRequestRRM(Edit his reagent request)
     RRM --> OfficerRRM((Procurement officer))
-    OfficerRRM --> ConsolidateRRM(Consolidate the requests and create orders to purchase the reagents)
     OfficerRRM --> ViewRRM(View all reagent requests)
+    OfficerRRM --> ConsolidateRRM(Consolidate the requests and create orders)
     OfficerRRM --> ManageRRM(Decline requests with a comment)
 
     %% Order Management
     OM{{Order Management}} --> OfficerOM((Procurement officer))
     OfficerOM-->ViewOrdersRRM(View existing orders)
     OfficerOM-->EditOrderRRM(Edit existing orders)
+    OfficerOM-->AddReagentRRM(Add new reagents to  existing orders)
+    OfficerOM-->RemoveReagentRRM(Remove reagents from existing orders)
+    OfficerOM-->EditReagentRRM(Edit reagents in existing orders)
     OfficerOM-->AllocateRRM(Allocates ordered reagents to their designated storage locations)
-    OfficerOM-->MarkRRM(Mark an order as completed when the reagents have been received and stored)
 
     %% Reagents and samples management
     RSM{{Reagents and samples management}} --> UserRSMQ((Any Role))
@@ -110,8 +112,8 @@ graph LR;
 
     UserRSMQ --> SeeReagentsSamples(See reagents and samples list)
     UserRSMR --> AddReagentsSamples(Add reagents in the system)
-    UserRSMR --> EditReagentsSamples(Edit reagents in the system)
-
+    UserRSMR --> EditReagentsSamples(Consume reagents)
+    UserRSMR --> MoveSamples(Move items between storage locations)
 
 
 
@@ -135,7 +137,7 @@ graph LR;
     class User,UserUM,UserSM,UserRSM,UserSMResOfficer,UserRSMQ user;
 
     %% Applying priority class
-    class Login,CreateUsers,UsersList,SeeAndEditUM,ChangeUserInfo,MH,DeleteUsers,AddSM,EditSM,DeleteSM,ViewSMContent,MoveSMItems,CreateRequestRRM,StatusRequestRRM,ConsolidateRRM,AllocateRRM,ManageRRM,ViewRRM,ViewOrdersRRM,EditOrderRRM,MarkRRM,SeeReagentsSamples,AddReagentsSamples,EditReagentsSamples must;
+    class RemoveReagentRRM,EditReagentRRM,MoveSamples,AddReagentRRM,EditRequestRRM,Login,CreateUsers,UsersList,SeeAndEditUM,ChangeUserInfo,MH,DeleteUsers,AddRSM,AddSSM,EditSM,DeleteSM,ViewSMContent,MoveSMItems,CreateRequestRRM,StatusRequestRRM,ConsolidateRRM,AllocateRRM,ManageRRM,ViewRRM,ViewOrdersRRM,EditOrderRRM,MarkRRM,SeeReagentsSamples,AddReagentsSamples,EditReagentsSamples must;
     class ResetPassUM,SH should;
     class ResetPass,CH could;
 
