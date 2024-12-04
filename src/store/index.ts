@@ -16,12 +16,13 @@ export {
 
 export {
   useGetReagentDetailsQuery,
-  useUpdateSubstanceMutation,
+  useUpdateLocationMutation,
   useGetSampleDetailsQuery,
   useDeleteSubstanceMutation,
   useGetSubstancesQuery,
   useCreateReagentMutation,
   useCreateSampleMutation,
+  useChangeQuantityMutation,
 } from "./substancesApi";
 
 export {

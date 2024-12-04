@@ -96,7 +96,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
           onRowsPerPageChange={handleChangeRowsPerPage}
           labelRowsPerPage={t("orders.table.Pagination.RowsPerPage")}
           labelDisplayedRows={({ from, to, count }) =>
-            `${from}-${to} ${t("orders.table.Pagination.of")} ${count !== -1 ? count : `${t("orders.table.Pagantion.moreThan")} ${to}`}`
+            `${from}-${to} ${t("orders.table.Pagination.of")} ${count !== -1 ? count : `${t("orders.table.Pagination.moreThan")} ${to}`}`
           }
         />
       }

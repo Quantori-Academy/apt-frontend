@@ -7,6 +7,7 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
+  Tooltip,
 } from "@mui/material";
 import type { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -25,6 +26,7 @@ type ReagentSampleTableProps = {
   page: number;
   rowsPerPage: number;
   totalPages: number;
+  isInLocation: boolean;
   visibleItems: Array<SubstancesDetails>;
   sortColumn: SortColumn;
   sortDirection: SortDirection;
@@ -43,6 +45,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
   rowsPerPage,
   page,
   setPage,
+  isInLocation,
 }) => {
   const { t } = useTranslation();
 
@@ -101,9 +104,11 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
           <TableCell align="right">
             {t("substances.table.quantityLeft")}
           </TableCell>
-          <TableCell align="right">
-            {t("substances.table.storageLocation")}
-          </TableCell>
+          {!isInLocation && (
+            <TableCell align="right">
+              {t("substances.table.storageLocation")}
+            </TableCell>
+          )}
           <TableCell align="right">{t("substances.table.actions")}</TableCell>
         </TableRow>
       </TableHead>
@@ -128,14 +133,17 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
             </TableCell>
             <TableCell align="center">{reagent.description}</TableCell>
             <TableCell align="right">{reagent.quantityLeft}</TableCell>
-            <TableCell align="right">{reagent.storageLocation}</TableCell>
+            {"storageLocation" in reagent && (
+              <TableCell align="right">{reagent.storageLocation}</TableCell>
+            )}
             <TableCell align="right">
-              <IconButton
-                title="Details"
-                onClick={() => onClickDetails(reagent.category, reagent.id)}
-              >
-                <DescriptionIcon />
-              </IconButton>
+              <Tooltip title="Details">
+                <IconButton
+                  onClick={() => onClickDetails(reagent.category, reagent.id)}
+                >
+                  <DescriptionIcon />
+                </IconButton>
+              </Tooltip>
             </TableCell>
           </TableRow>
         ))}
