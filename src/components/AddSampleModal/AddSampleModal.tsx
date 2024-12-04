@@ -1,4 +1,5 @@
-import { Box, Button, Drawer } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { Box, Button, Drawer, IconButton } from "@mui/material";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -50,6 +51,17 @@ const AddSampleModal: React.FC = () => {
         {t("substances.buttons.addSample")}
       </Button>
       <Drawer anchor="right" open={isOpen} onClose={() => setIsOpen(false)}>
+        <IconButton
+          onClick={() => setIsOpen(false)}
+          sx={{
+            position: "absolute",
+            top: 8,
+            left: 8,
+            color: "grey.500",
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
         <Box
           sx={{
             width: "70vw",

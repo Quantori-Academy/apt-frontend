@@ -32,7 +32,7 @@ const BasicModal: React.FC<BasicModalProps> = ({
           height,
           position: "absolute",
           top: "50%",
-          left: "80%",
+          left: "50%",
           transform: "translate(-50%, -50%)",
           boxShadow: 24,
           display: "flex",
