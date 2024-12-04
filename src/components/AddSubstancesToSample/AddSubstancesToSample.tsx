@@ -1,19 +1,24 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React, { useMemo, useState } from "react";
 
-import { PageLoader, SearchBar } from "@/components";
-import { AddSubstanceLocationToSample } from "@/components/AddSubstanceLocationToSample";
+import {
+  AddSubstanceLocationToSample,
+  PageLoader,
+  SearchBar,
+} from "@/components";
 import { useGetSubstanceTotalQuantityQuery } from "@/store";
-import { SampleSubstances } from "@/types";
+import { AddedSubstanceDetails, SampleSubstances } from "@/types";
 
 type AddSubstancesToSampleProps = {
-  addedSubstances: SampleSubstances[];
   setAddedSubstances: React.Dispatch<React.SetStateAction<SampleSubstances[]>>;
+  setAddedSubstancesDetails: React.Dispatch<
+    React.SetStateAction<AddedSubstanceDetails[]>
+  >;
 };
 
 const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
-  addedSubstances,
   setAddedSubstances,
+  setAddedSubstancesDetails,
 }) => {
   const { data: substances, isLoading } = useGetSubstanceTotalQuantityQuery();
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,12 +41,20 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
     const item = search[itemIndex];
     const location = item.locations[locIndex];
 
+    const addedSubstancesDetails: AddedSubstanceDetails = {
+      locationId: location.locationId,
+      name: item.name,
+      location: `${location.location} / ${location.room}`,
+      quantity: `${quantity} ${location.unit}`,
+    };
+
     const newSubstance: SampleSubstances = {
       addedSubstanceId: item.id || null,
       addedSubstanceLocationId: location.locationId || null,
       addedSubstanceQuantity: quantity,
       addedSubstanceUnit: location.unit,
     };
+    setAddedSubstancesDetails((prev) => [...prev, addedSubstancesDetails]);
     setAddedSubstances((prev) => [...prev, newSubstance]);
   };
 
@@ -55,7 +68,11 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
         placeholder="Type at least 3 letters to search..."
         padding="15px 0 0 15px"
       />
-      {searchQuery && (
+      {!search.length && searchQuery ? (
+        <Typography margin="20px">
+          No reagents found matching the given name
+        </Typography>
+      ) : (
         <Box>
           {search.map((item, itemIndex) => (
             <Box
@@ -87,7 +104,7 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
                   key={location.locationId}
                   isLast={locIndex === item.locations.length - 1}
                   location={location}
-                  onAdd={(quantity) =>
+                  onAdd={(quantity: number) =>
                     handleAddSubstance(itemIndex, locIndex, quantity)
                   }
                 />
@@ -96,7 +113,6 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
           ))}
         </Box>
       )}
-      <pre>{JSON.stringify(addedSubstances, null, 2)}</pre>
     </>
   );
 };

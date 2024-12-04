@@ -13,7 +13,7 @@ type AddSubstanceLocationToSampleProps = {
 const AddSubstanceLocationToSample: React.FC<
   AddSubstanceLocationToSampleProps
 > = ({ isLast, location, onAdd }) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState<number>(0);
 
   return (
     <Grid

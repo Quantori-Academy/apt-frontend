@@ -16,3 +16,10 @@ export type SampleSubstances = {
   addedSubstanceQuantity: number;
   addedSubstanceUnit: string;
 };
+
+export type AddedSubstanceDetails = {
+  locationId: number;
+  name: string;
+  location: string;
+  quantity: string;
+};

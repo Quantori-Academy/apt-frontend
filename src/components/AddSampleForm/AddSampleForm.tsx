@@ -1,6 +1,5 @@
 import {
   Autocomplete,
-  Box,
   Button,
   Grid,
   TextField,
@@ -11,9 +10,9 @@ import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { AddSubstancesToSample } from "@/components";
+import { AddSubstancesToSample, AddedSubstancesInSample } from "@/components";
 import { RouteProtectedPath } from "@/router";
-import { SampleData, SampleSubstances } from "@/types";
+import { AddedSubstanceDetails, SampleData, SampleSubstances } from "@/types";
 
 type LocationOption = {
   id: number;
@@ -37,6 +36,9 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
 
   const [addedSubstances, setAddedSubstances] = useState<
     Array<SampleSubstances>
+  >([]);
+  const [addedSubstancesDetails, setAddedSubstancesDetails] = useState<
+    AddedSubstanceDetails[]
   >([]);
 
   const {
@@ -67,10 +69,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
 
   return (
     <Grid container sx={{ height: "100vh" }}>
-      <Grid
-        item
-        xs={6} // 4/12 = 33% of the screen
-      >
+      <Grid item xs={6}>
         <Typography variant="h6">
           {t("addSubstanceForm.title.sample")}
         </Typography>
@@ -219,30 +218,20 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               />
             </Grid>
           </Grid>
-          {addedSubstances.length > 0 && (
-            <Box
-              sx={{
-                border: "1px solid #33ab9f",
-                borderRadius: "8px",
-                padding: "8px",
-                margin: "8px",
-              }}
-            ></Box>
-          )}
+          <AddedSubstancesInSample
+            substancesDetails={addedSubstancesDetails}
+            onChangeSubstancesDetails={setAddedSubstancesDetails}
+            onChangesAddedSubstances={setAddedSubstances}
+          />
           <Button type="submit" sx={{ marginTop: "10px" }}>
             Create Sample
           </Button>
         </form>
       </Grid>
-      <Grid
-        item
-        xs={6}
-        paddingX={5}
-        width="100%" // 8/12 = 66% of the screen
-      >
+      <Grid item xs={6} paddingX={5} width="100%">
         <AddSubstancesToSample
-          addedSubstances={addedSubstances}
           setAddedSubstances={setAddedSubstances}
+          setAddedSubstancesDetails={setAddedSubstancesDetails}
         />
       </Grid>
     </Grid>
