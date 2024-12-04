@@ -47,10 +47,7 @@ export const substancesApi = createApi({
       query: (substanceIds) => ({
         url: `/substances`,
         method: "DELETE",
-        body: (() => {
-          console.log("Body I send", { substanceIds });
-          return { substanceIds };
-        })(),
+        body: { substanceIds },
       }),
       transformErrorResponse: (response: MutationResponse) => {
         return {
