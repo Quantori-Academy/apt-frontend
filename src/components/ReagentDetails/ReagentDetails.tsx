@@ -121,7 +121,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
             onClickDispose={onClickDelete}
           />
         )}
-        {locations?.length ? (
+        {locations ? (
           <SubstanceLocationsTable
             locations={locations}
             substanceType={category}
