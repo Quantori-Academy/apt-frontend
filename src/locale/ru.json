@@ -342,7 +342,8 @@
         "structure": "Структура",
         "addedSubstances": "Вещества",
         "room": "Комната",
-        "location": "Локация"
+        "location": "Локация",
+        "expirationDate": "Дата окончания срока"
       },
 
       "quantityValidation": {
@@ -352,6 +353,7 @@
         "lessThanCurrent": "Количество должно быть меньше текущего количества {{currentQuantity}}"
       },
 
+      "outOfStock": "Нет в наличии",
       "currentLocation": " (текущая)",
 
       "quantityWarning": "Будет удалено, если количество равно 0",
@@ -363,7 +365,8 @@
 
       "snackBarMessages": {
         "reagent": {
-          "successDelete": "Реактив успешно удалён",
+          "successDelete": "Субстанция успешно удалён",
+          "errorDelete": "Ошибка при удалении субстанции",
           "successUpdate": "Реактив успешно обновлён"
         },
         "sample": {

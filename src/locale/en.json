@@ -282,7 +282,7 @@
           "minAmountMessage": "Initial quantity can not be negative"
         },
 
-        "initialQuantity":{
+        "initialQuantity": {
           "label": "Initial Quantity*",
           "requiredMessage": "Initial quantity is required",
           "minQuantityMessage": "Initial quantity must be positive"
@@ -330,7 +330,9 @@
         "editDetails": "Edit Details",
         "saveChanges": "Save Changes",
         "changeQuantity": "Change quantity",
-        "changeLocation": "Change location"
+        "changeLocation": "Change location",
+        "disposeReagent": "Dispose Expired Reagent",
+        "disposeSample": "Dispose Expired Sample"
       },
 
       "fields": {
@@ -353,7 +355,8 @@
         "structure": "Structure",
         "addedSubstances": "Substances",
         "room": "Room",
-        "location": "Location"
+        "location": "Location",
+        "expirationDate": "Expiration date"
       },
 
       "quantityValidation": {
@@ -363,6 +366,7 @@
         "lessThanCurrent": "The quantity must be less than the current quantity of {{currentQuantity}}"
       },
 
+      "outOfStock": "Out of Stock",
       "currentLocation": " (current)",
 
       "quantityWarning": "Will be deleted, if quantity is 0",
@@ -374,7 +378,8 @@
 
       "snackBarMessages": {
         "reagent": {
-          "successDelete": "Reagent deleted successfully",
+          "successDelete": "Substance disposed successfully",
+          "errorDelete": "Failed to dispose substance",
           "successUpdate": "Reagent updated successfully"
         },
         "sample": {
