@@ -61,6 +61,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
   });
 
   const navigate = useNavigate();
+
   const onSubmit = async (data: SampleData) => {
     data.addedSubstances = addedSubstances;
 
@@ -160,6 +161,10 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                inputProps={{
+                  step: "any",
+                  min: 0.01,
+                }}
                 label={t(
                   "addSubstanceForm.requiredFields.initialQuantity.label"
                 )}
@@ -198,6 +203,10 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                inputProps={{
+                  step: "any",
+                  min: 1,
+                }}
                 type="number"
                 label={t("addSubstanceForm.requiredFields.amount.label")}
                 {...register("amount", {

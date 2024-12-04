@@ -46,21 +46,18 @@ const AddedSubstancesInSample: React.FC<AddedSubstancesInSampleProps> = ({
             alignItems: "center",
           }}
         >
-          {/* Name */}
           <Grid item xs={4}>
             <Typography variant="body2" sx={{ fontSize: "12px" }}>
               {reagent.name}
             </Typography>
           </Grid>
 
-          {/* Location */}
           <Grid item xs={4}>
             <Typography variant="body2" sx={{ fontSize: "12px" }}>
               {reagent.location}
             </Typography>
           </Grid>
 
-          {/* Quantity */}
           <Grid item xs={2}>
             <Typography
               variant="body2"
@@ -70,7 +67,6 @@ const AddedSubstancesInSample: React.FC<AddedSubstancesInSampleProps> = ({
             </Typography>
           </Grid>
 
-          {/* Delete Icon */}
           <Grid item xs={2} sx={{ textAlign: "right" }}>
             <IconButton
               onClick={() => handleDelete(reagent.locationId)}
