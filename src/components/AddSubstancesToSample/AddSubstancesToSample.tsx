@@ -106,7 +106,7 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
                   paddingY: 1,
                 }}
               >
-                <Grid item xs={4}>
+                <Grid item xs={12}>
                   <Typography variant="body2" fontWeight="bold">
                     {item.name}
                   </Typography>

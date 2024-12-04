@@ -27,8 +27,11 @@ const AddSubstanceLocationToSample: React.FC<
         <Typography variant="body2">{`${location.location} /${location.room}`}</Typography>
       </Grid>
       <Grid item xs={4}>
+        <Typography variant="body2" fontWeight="100">
+          Total quantity:
+        </Typography>
         <Typography variant="body2">
-          TotalQuantity: {`${location.totalQuantityLeft} ${location.unit}`}
+          {`${location.totalQuantityLeft} ${location.unit}`}
         </Typography>
       </Grid>
       <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
