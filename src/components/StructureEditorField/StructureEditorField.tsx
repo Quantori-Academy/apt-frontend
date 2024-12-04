@@ -7,20 +7,18 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import React, { useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { BasicModal, StructureEditor } from "@/components";
-import { ReagentData } from "@/types";
 
 type StructureEditorFieldProps = {
-  register: UseFormRegister<ReagentData>;
-  onChange: (newStructure: string) => void;
+  value: string;
+  onChange: (newValue: string) => void;
 };
 
 const StructureEditorField: React.FC<StructureEditorFieldProps> = ({
-  register,
+  value,
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +39,8 @@ const StructureEditorField: React.FC<StructureEditorFieldProps> = ({
           shrink: true,
         }}
         label={t("createRequestForm.requiredFields.structure.label")}
-        {...register("structure")}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

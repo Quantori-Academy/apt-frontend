@@ -6,10 +6,10 @@ export type ReagentData = {
   amount: number;
   expirationDate: string;
   initialQuantity: number;
-  locationId: number;
+  locationId: number | null;
   casNumber: string | null;
   producer: string | null;
   catalogId: number | null;
   catalogLink: string | null;
-  structure?: string | null;
+  structure: string | null;
 };
