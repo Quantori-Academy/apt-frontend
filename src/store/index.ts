@@ -18,7 +18,7 @@ export {
   useGetReagentDetailsQuery,
   useUpdateLocationMutation,
   useGetSampleDetailsQuery,
-  useDeleteSubstanceMutation,
+  useDeleteSubstancesMutation,
   useGetSubstancesQuery,
   useCreateReagentMutation,
   useCreateSampleMutation,
