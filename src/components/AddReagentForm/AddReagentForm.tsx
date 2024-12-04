@@ -127,6 +127,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
               title={""}
               isOpen={isOpen}
               closeModal={() => setIsOpen(false)}
+              width="60%"
             >
               <Box height="400px">
                 <StructureEditor onChange={(smile) => setSmile(smile)} />
