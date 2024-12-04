@@ -1,6 +1,7 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Grid, IconButton, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { SubstanceLocation } from "@/types";
 
@@ -14,6 +15,7 @@ const AddSubstanceLocationToSample: React.FC<
   AddSubstanceLocationToSampleProps
 > = ({ isLast, location, onAdd }) => {
   const [quantity, setQuantity] = useState<number>(0);
+  const { t } = useTranslation();
 
   return (
     <Grid
@@ -28,7 +30,7 @@ const AddSubstanceLocationToSample: React.FC<
       </Grid>
       <Grid item xs={4}>
         <Typography variant="body2" fontWeight="100">
-          Total quantity:
+          {t("addSubstanceForm.texts.totalQuantity")}
         </Typography>
         <Typography variant="body2">
           {`${location.totalQuantityLeft} ${location.unit}`}

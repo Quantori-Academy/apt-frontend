@@ -1,5 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   AddSubstanceLocationToSample,
@@ -23,6 +24,7 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
   const { data: substances, isLoading } = useGetSubstanceTotalQuantityQuery();
   const [searchQuery, setSearchQuery] = useState("");
 
+  const { t } = useTranslation();
   const search = useMemo(() => {
     if (!substances || searchQuery.length < 3) return [];
 
@@ -74,17 +76,19 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
 
   return (
     <>
-      <Typography variant="h6">Add Substances</Typography>
+      <Typography variant="h6">
+        {t("addSubstanceForm.title.addSubstance")}
+      </Typography>
       <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         isLoading={isLoading}
-        placeholder="Type at least 3 letters to search..."
+        placeholder={t("addSubstanceForm.placeholders.search")}
         padding="15px 0 0 0"
       />
       {!search.length && searchQuery ? (
         <Typography margin="20px">
-          No reagents found matching the given name
+          {t("addSubstanceForm.emptyAreas.noSearchReagent")}
         </Typography>
       ) : (
         <Box width="100%">

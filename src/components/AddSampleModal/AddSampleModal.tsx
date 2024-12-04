@@ -20,7 +20,7 @@ const AddSampleModal: React.FC = () => {
 
   const handleCreateSample = async (sampleData: SampleData) => {
     if (!sampleData.addedSubstances.length) {
-      showError("You can't create a sample without adding substances");
+      showError(t("addSubstanceForm.snackBarMessages.sample.validationError"));
     } else {
       try {
         await createSample(sampleData).unwrap();

@@ -160,17 +160,19 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label={t("addSubstanceForm.requiredFields.quantity.label")}
+                label={t(
+                  "addSubstanceForm.requiredFields.initialQuantity.label"
+                )}
                 type="number"
                 {...register("initialQuantity", {
                   valueAsNumber: true,
                   required: t(
-                    "addSubstanceForm.requiredFields.quantity.requiredMessage"
+                    "addSubstanceForm.requiredFields.initialQuantity.requiredMessage"
                   ),
                   min: {
                     value: 1,
                     message: t(
-                      "addSubstanceForm.requiredFields.quantity.minQuantityMessage"
+                      "addSubstanceForm.requiredFields.initialQuantity.minQuantityMessage"
                     ),
                   },
                 })}
@@ -221,11 +223,11 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
           </Grid>
           <Box>
             <Typography variant="h6" marginY="20px">
-              Added Substances
+              {t("addSubstanceForm.title.addedSubstances")}
             </Typography>
             {!addedSubstances.length ? (
               <Typography margin="20px">
-                You haven&apos;t added any substances yet
+                {t("addSubstanceForm.emptyAreas.noAddedSubstances")}
               </Typography>
             ) : (
               <AddedSubstancesInSample
@@ -236,7 +238,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
             )}
           </Box>
           <Button type="submit" sx={{ marginTop: "10px" }}>
-            Create Sample
+            {t("addSubstanceForm.buttons.createSample")}
           </Button>
         </form>
       </Grid>
