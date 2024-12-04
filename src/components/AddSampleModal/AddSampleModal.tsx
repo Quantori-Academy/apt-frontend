@@ -18,14 +18,17 @@ const AddSampleModal: React.FC = () => {
   const { showSuccess, showError } = useAlertSnackbar();
 
   const handleCreateSample = async (sampleData: SampleData) => {
-    try {
-      await createSample(sampleData).unwrap();
-
-      showSuccess(t("addSubstanceForm.snackBarMessages.sample.success"));
-      setIsOpen(false);
-    } catch (error) {
-      console.error("Failed to create sample:", error);
-      showError(t("addSubstanceForm.snackBarMessages.sample.error"));
+    if (!sampleData.addedSubstances.length) {
+      showError("You can't create a sample without adding substances");
+    } else {
+      try {
+        await createSample(sampleData).unwrap();
+        showSuccess(t("addSubstanceForm.snackBarMessages.sample.success"));
+        setIsOpen(false);
+      } catch (error) {
+        console.error("Failed to create sample:", error);
+        showError(t("addSubstanceForm.snackBarMessages.sample.error"));
+      }
     }
   };
 

@@ -219,7 +219,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               />
             </Grid>
           </Grid>
-          <Box height="220px">
+          <Box>
             <Typography variant="h6" marginY="20px">
               Added Substances
             </Typography>
