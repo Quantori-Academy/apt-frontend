@@ -44,7 +44,7 @@ const AddSubstanceLocationToSample: React.FC<
           size="small"
           type="number"
           inputProps={{
-            min: 0.01,
+            min: 0,
             max: location.totalQuantityLeft,
             step: "any",
           }}
