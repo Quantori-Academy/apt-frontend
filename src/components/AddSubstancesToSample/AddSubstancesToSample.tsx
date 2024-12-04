@@ -54,8 +54,22 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
       addedSubstanceQuantity: quantity,
       addedSubstanceUnit: location.unit,
     };
-    setAddedSubstancesDetails((prev) => [...prev, addedSubstancesDetails]);
-    setAddedSubstances((prev) => [...prev, newSubstance]);
+    setAddedSubstancesDetails((prevItems) => {
+      const updatedItems = prevItems.filter(
+        (item) => item.locationId !== addedSubstancesDetails.locationId
+      );
+      return [...updatedItems, addedSubstancesDetails];
+    });
+
+    setAddedSubstances((prevItems) => {
+      const updatedItems = prevItems.filter(
+        (item) =>
+          item.addedSubstanceLocationId !==
+            newSubstance.addedSubstanceLocationId ||
+          item.addedSubstanceId !== newSubstance.addedSubstanceId
+      );
+      return [...updatedItems, newSubstance];
+    });
   };
 
   return (
