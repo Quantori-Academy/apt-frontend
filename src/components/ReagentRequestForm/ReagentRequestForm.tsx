@@ -1,18 +1,9 @@
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  Stack,
-  TextField,
-  Tooltip,
-} from "@mui/material";
-import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { Box, Button, Stack, TextField } from "@mui/material";
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { BasicModal, StructureEditor } from "@/components";
+import { StructureEditorField } from "@/components";
 import { ReagentRequestInput } from "@/types";
 
 import style from "@/components/AddUserForm/AddUserForm.module.css";
@@ -30,20 +21,13 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
   onSubmit,
   onClose,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [smile, setSmile] = useState("");
   const { t } = useTranslation();
   const {
     handleSubmit,
     register,
     formState: { errors },
-    setValue,
+    control,
   } = useFormContext<ReagentRequestInput>();
-
-  const handleStructureDone = () => {
-    setIsOpen(false);
-    setValue("structure", smile);
-  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
@@ -62,39 +46,16 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
           label={t("createRequestForm.requiredFields.CASNumber.label")}
           {...register("CAS")}
         />
-
-        <TextField
-          InputLabelProps={{
-            shrink: true,
-          }}
-          label={t("createRequestForm.requiredFields.structure.label")}
-          {...register("structure")}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Tooltip title="Click To Draw Structure">
-                  <IconButton edge="end" onClick={() => setIsOpen(true)}>
-                    <OpenInNewIcon />
-                  </IconButton>
-                </Tooltip>
-              </InputAdornment>
-            ),
-          }}
+        <Controller
+          name="structure"
+          control={control}
+          render={({ field }) => (
+            <StructureEditorField
+              value={field.value || ""}
+              onChange={(newValue) => field.onChange(newValue)}
+            />
+          )}
         />
-        <BasicModal
-          title={""}
-          isOpen={isOpen}
-          closeModal={() => setIsOpen(false)}
-        >
-          <Box height="400px">
-            <StructureEditor onChange={(smile) => setSmile(smile)} />
-          </Box>
-          <Box
-            sx={{ margin: "4px", display: "flex", justifyContent: "flex-end" }}
-          >
-            <Button onClick={handleStructureDone}>Done</Button>
-          </Box>
-        </BasicModal>
         <Box display="flex" justifyContent="space-between" gap={1}>
           <TextField
             type="number"

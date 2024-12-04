@@ -15,10 +15,16 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import React, { useState } from "react";
+import {
+  Controller,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import { StructureEditorField } from "@/components";
 import { OrderInput } from "@/types";
 
 type OrderFormProps = {
@@ -267,10 +273,15 @@ const OrderForm: React.FC<OrderFormProps> = ({
                       {...register(`reagents.${index}.producer`)}
                     />
                   </Box>
-                  <TextField
-                    label={t("addSubstanceForm.requiredFields.structure.label")}
-                    fullWidth
-                    {...register(`reagents.${index}.structure`)}
+                  <Controller
+                    name={`reagents.${index}.structure`}
+                    control={control}
+                    render={({ field }) => (
+                      <StructureEditorField
+                        value={field.value || ""}
+                        onChange={(newValue) => field.onChange(newValue)}
+                      />
+                    )}
                   />
                   <Box sx={{ display: "flex", gap: 2 }}>
                     <TextField
