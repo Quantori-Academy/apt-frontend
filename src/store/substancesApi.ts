@@ -49,11 +49,9 @@ export const substancesApi = createApi({
         method: "DELETE",
         body: { substanceIds },
       }),
-      transformErrorResponse: (response: MutationResponse) => {
-        return {
-          message: response.data?.message || "An unexpected error occurred.",
-        };
-      },
+      transformErrorResponse: (response: MutationResponse) => ({
+        message: response.data?.message || "An unexpected error occurred.",
+      }),
       invalidatesTags: ["Substances"],
     }),
 
