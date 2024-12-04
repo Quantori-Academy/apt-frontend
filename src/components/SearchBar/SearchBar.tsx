@@ -7,18 +7,25 @@ type SearchBarProps = {
   searchQuery: string;
   setSearchQuery: (value: string) => void;
   isLoading?: boolean;
+  placeholder?: string;
+  width?: string;
+  padding?: string;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({
   searchQuery,
   setSearchQuery,
   isLoading,
+  placeholder,
+  width = "100%",
+  padding,
 }) => {
   const { t } = useTranslation();
   return (
     <TextField
       sx={{
-        width: "100%",
+        width: `${width}`,
+        padding: `${padding}`,
         "& .MuiInputBase-input": {
           height: "auto",
         },
@@ -26,7 +33,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       variant="outlined"
       size="medium"
       value={searchQuery}
-      placeholder={t("users.filters.search")}
+      placeholder={placeholder || t("users.filters.search")}
       onChange={(e) => setSearchQuery(e.target.value)}
       InputProps={{
         endAdornment: (

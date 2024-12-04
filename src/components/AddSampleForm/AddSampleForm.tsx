@@ -1,10 +1,10 @@
 import {
   Autocomplete,
+  Box,
   Button,
-  Container,
-  Divider,
   Grid,
   TextField,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -59,7 +59,6 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
 
   const navigate = useNavigate();
   const onSubmit = async (data: SampleData) => {
-    console.log(addedSubstances);
     data.addedSubstances = addedSubstances;
 
     await handleSubmit(data);
@@ -67,154 +66,186 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
   };
 
   return (
-    <Container maxWidth="sm">
-      <form onSubmit={handleFormSubmit(onSubmit)}>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.name.label")}
-              {...register("name", {
-                required: t(
-                  "addSubstanceForm.requiredFields.name.requiredMessage"
-                ),
-              })}
-              fullWidth
-              margin="normal"
-              error={!!errors.name}
-              helperText={errors.name?.message}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.structure.label")}
-              {...register("structure")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.description.label")}
-              {...register("description")}
-              fullWidth
-              margin="normal"
-            />
-          </Grid>
+    <Grid container sx={{ height: "100vh" }}>
+      <Grid
+        item
+        xs={6} // 4/12 = 33% of the screen
+      >
+        <Typography variant="h6">
+          {t("addSubstanceForm.title.sample")}
+        </Typography>
 
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.expirationDate.label")}
-              type="date"
-              {...register("expirationDate", {
-                required: t(
-                  "addSubstanceForm.requiredFields.expirationDate.requiredMessage"
-                ),
-              })}
-              fullWidth
-              margin="normal"
-              InputLabelProps={{ shrink: true }}
-            />
+        <form onSubmit={handleFormSubmit(onSubmit)}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label={t("addSubstanceForm.requiredFields.name.label")}
+                {...register("name", {
+                  required: t(
+                    "addSubstanceForm.requiredFields.name.requiredMessage"
+                  ),
+                })}
+                fullWidth
+                margin="normal"
+                error={!!errors.name}
+                helperText={errors.name?.message}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label={t("addSubstanceForm.requiredFields.structure.label")}
+                {...register("structure")}
+                fullWidth
+                margin="normal"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label={t("addSubstanceForm.requiredFields.description.label")}
+                {...register("description")}
+                fullWidth
+                margin="normal"
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label={t(
+                  "addSubstanceForm.requiredFields.expirationDate.label"
+                )}
+                type="date"
+                {...register("expirationDate", {
+                  required: t(
+                    "addSubstanceForm.requiredFields.expirationDate.requiredMessage"
+                  ),
+                })}
+                fullWidth
+                margin="normal"
+                InputLabelProps={{ shrink: true }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Controller
+                name="locationId"
+                control={control}
+                rules={{
+                  required: t(
+                    "addSubstanceForm.requiredFields.location.requiredMessage"
+                  ),
+                }}
+                render={({ field, fieldState: { error } }) => (
+                  <Autocomplete
+                    id="location-select"
+                    options={locationOptions}
+                    getOptionLabel={({ label }) => label}
+                    onChange={(_event, value) =>
+                      field.onChange(value ? value.id : 0)
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label={t(
+                          "addSubstanceForm.requiredFields.location.label"
+                        )}
+                        placeholder="Select location"
+                        fullWidth
+                        margin="normal"
+                        error={!!error}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label={t("addSubstanceForm.requiredFields.quantity.label")}
+                type="number"
+                {...register("initialQuantity", {
+                  valueAsNumber: true,
+                  required: t(
+                    "addSubstanceForm.requiredFields.quantity.requiredMessage"
+                  ),
+                  min: {
+                    value: 1,
+                    message: t(
+                      "addSubstanceForm.requiredFields.quantity.minQuantityMessage"
+                    ),
+                  },
+                })}
+                fullWidth
+                margin="normal"
+                error={!!errors.initialQuantity}
+                helperText={errors.initialQuantity?.message}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label={t("addSubstanceForm.requiredFields.unit.label")}
+                {...register("unit", {
+                  required: t(
+                    "addSubstanceForm.requiredFields.unit.requiredMessage"
+                  ),
+                })}
+                fullWidth
+                margin="normal"
+                error={!!errors.unit}
+                helperText={errors.unit?.message}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                type="number"
+                label={t("addSubstanceForm.requiredFields.amount.label")}
+                {...register("amount", {
+                  min: {
+                    value: 1,
+                    message: t(
+                      "addSubstanceForm.requiredFields.amount.minQuantityMessage"
+                    ),
+                  },
+                  required: {
+                    value: true,
+                    message: t(
+                      "addSubstanceForm.requiredFields.amount.requiredMessage"
+                    ),
+                  },
+                })}
+                fullWidth
+                margin="normal"
+                error={!!errors.amount}
+                helperText={errors.amount?.message}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Controller
-              name="locationId"
-              control={control}
-              rules={{
-                required: t(
-                  "addSubstanceForm.requiredFields.location.requiredMessage"
-                ),
+          {addedSubstances.length > 0 && (
+            <Box
+              sx={{
+                border: "1px solid #33ab9f",
+                borderRadius: "8px",
+                padding: "8px",
+                margin: "8px",
               }}
-              render={({ field, fieldState: { error } }) => (
-                <Autocomplete
-                  id="location-select"
-                  options={locationOptions}
-                  getOptionLabel={({ label }) => label}
-                  onChange={(_event, value) =>
-                    field.onChange(value ? value.id : 0)
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label={t(
-                        "addSubstanceForm.requiredFields.location.label"
-                      )}
-                      placeholder="Select location"
-                      fullWidth
-                      margin="normal"
-                      error={!!error}
-                      helperText={error?.message}
-                    />
-                  )}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.quantity.label")}
-              type="number"
-              {...register("initialQuantity", {
-                valueAsNumber: true,
-                required: t(
-                  "addSubstanceForm.requiredFields.quantity.requiredMessage"
-                ),
-                min: {
-                  value: 1,
-                  message: t(
-                    "addSubstanceForm.requiredFields.quantity.minQuantityMessage"
-                  ),
-                },
-              })}
-              fullWidth
-              margin="normal"
-              error={!!errors.initialQuantity}
-              helperText={errors.initialQuantity?.message}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label={t("addSubstanceForm.requiredFields.unit.label")}
-              {...register("unit", {
-                required: t(
-                  "addSubstanceForm.requiredFields.unit.requiredMessage"
-                ),
-              })}
-              fullWidth
-              margin="normal"
-              error={!!errors.unit}
-              helperText={errors.unit?.message}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              type="number"
-              label={t("addSubstanceForm.requiredFields.amount.label")}
-              {...register("amount", {
-                min: {
-                  value: 1,
-                  message: t(
-                    "addSubstanceForm.requiredFields.amount.minQuantityMessage"
-                  ),
-                },
-                required: {
-                  value: true,
-                  message: t(
-                    "addSubstanceForm.requiredFields.amount.requiredMessage"
-                  ),
-                },
-              })}
-              fullWidth
-              margin="normal"
-              error={!!errors.amount}
-              helperText={errors.amount?.message}
-            />
-          </Grid>
-        </Grid>
-        <Divider sx={{ marginY: "20px" }} />
-        <AddSubstancesToSample setAddedSubstances={setAddedSubstances} />
-        <Button type="submit">Create Sample</Button>
-      </form>
-    </Container>
+            ></Box>
+          )}
+          <Button type="submit" sx={{ marginTop: "10px" }}>
+            Create Sample
+          </Button>
+        </form>
+      </Grid>
+      <Grid
+        item
+        xs={6}
+        paddingX={5}
+        width="100%" // 8/12 = 66% of the screen
+      >
+        <AddSubstancesToSample
+          addedSubstances={addedSubstances}
+          setAddedSubstances={setAddedSubstances}
+        />
+      </Grid>
+    </Grid>
   );
 };
 

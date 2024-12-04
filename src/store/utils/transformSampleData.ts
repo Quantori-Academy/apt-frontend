@@ -21,22 +21,3 @@ export const transformSampleData = (sample: SampleData) => {
     added_substances: addedSubstances,
   };
 };
-
-//{
-//   "location_id": 0,
-//   "unit": "string",
-//   "initial_quantity": 0,
-//   "amount": 0,
-//   "expiration_date": "2024-12-03T13:13:03.566Z",
-//   "name": "string",
-//   "description": "string",
-//   "structure": "string",
-//   "added_substances": [
-//     {
-//       "added_substance_id": 0,
-//       "added_substance_location_id": 0,
-//       "added_substance_quantity": 0,
-//       "added_substance_unit": "string"
-//     }
-//   ]
-// }

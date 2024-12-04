@@ -89,10 +89,10 @@ export type SubstancesTotalQuantity = {
   id: number;
   name: string;
   category: SubstancesCategory;
-  locations: Array<SubstanceLocations>;
+  locations: Array<SubstanceLocation>;
 };
 
-export type SubstanceLocations = {
+export type SubstanceLocation = {
   room: string;
   locationId: number;
   location: string;

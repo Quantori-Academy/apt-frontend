@@ -1,35 +1,40 @@
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import { Box, Grid, Typography } from "@mui/material";
+import React, { useMemo, useState } from "react";
 
 import { PageLoader, SearchBar } from "@/components";
+import { AddSubstanceLocationToSample } from "@/components/AddSubstanceLocationToSample";
 import { useGetSubstanceTotalQuantityQuery } from "@/store";
 import { SampleSubstances } from "@/types";
 
 type AddSubstancesToSampleProps = {
+  addedSubstances: SampleSubstances[];
   setAddedSubstances: React.Dispatch<React.SetStateAction<SampleSubstances[]>>;
 };
 
 const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
+  addedSubstances,
   setAddedSubstances,
 }) => {
   const { data: substances, isLoading } = useGetSubstanceTotalQuantityQuery();
   const [searchQuery, setSearchQuery] = useState("");
-  const textFieldRefs = useRef<{ [key: string]: HTMLInputElement }>({});
+
+  const search = useMemo(() => {
+    if (!substances || searchQuery.length < 3) return [];
+
+    return substances.filter((substance) =>
+      substance.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery, substances]);
 
   if (!substances) return <PageLoader />;
-  const search = substances.filter((substance) => {
-    return substance.name.toLowerCase().includes(searchQuery);
-  });
 
-  const handleAddSubstance = (itemIndex: number, locIndex: number) => {
+  const handleAddSubstance = (
+    itemIndex: number,
+    locIndex: number,
+    quantity: number
+  ) => {
     const item = search[itemIndex];
     const location = item.locations[locIndex];
-
-    const quantity = parseInt(
-      textFieldRefs.current[`${itemIndex}-${locIndex}`]?.value || "0",
-      10
-    );
 
     const newSubstance: SampleSubstances = {
       addedSubstanceId: item.id || null,
@@ -42,13 +47,13 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
 
   return (
     <>
-      <Typography variant="h6" sx={{ margin: "20px" }}>
-        Add Substances
-      </Typography>
+      <Typography variant="h6">Add Substances</Typography>
       <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         isLoading={isLoading}
+        placeholder="Type at least 3 letters to search..."
+        padding="15px 0 0 15px"
       />
       {searchQuery && (
         <Box>
@@ -78,56 +83,20 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
               </Grid>
 
               {item.locations.map((location, locIndex) => (
-                <Grid
-                  container
-                  key={locIndex}
-                  sx={{
-                    borderBottom:
-                      locIndex === item.locations.length - 1
-                        ? "none"
-                        : "1px solid #eee",
-                    paddingY: 1,
-                  }}
-                >
-                  <Grid item xs={4}>
-                    <Typography variant="body2">{`${location.location} /${location.room}`}</Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="body2">
-                      TotalQuantity:{" "}
-                      {`${location.totalQuantityLeft} ${location.unit}`}
-                    </Typography>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={4}
-                    sx={{ display: "flex", alignItems: "center" }}
-                  >
-                    <TextField
-                      inputRef={(ref) => {
-                        textFieldRefs.current[`${itemIndex}-${locIndex}`] = ref;
-                      }}
-                      label={location.unit}
-                      size="small"
-                      type="number"
-                      inputProps={{
-                        max: location.totalQuantityLeft,
-                      }}
-                      sx={{ width: "100px" }}
-                    />
-                    <IconButton
-                      color="primary"
-                      onClick={() => handleAddSubstance(itemIndex, locIndex)}
-                    >
-                      <AddCircleIcon />
-                    </IconButton>
-                  </Grid>
-                </Grid>
+                <AddSubstanceLocationToSample
+                  key={location.locationId}
+                  isLast={locIndex === item.locations.length - 1}
+                  location={location}
+                  onAdd={(quantity) =>
+                    handleAddSubstance(itemIndex, locIndex, quantity)
+                  }
+                />
               ))}
             </Box>
           ))}
         </Box>
       )}
+      <pre>{JSON.stringify(addedSubstances, null, 2)}</pre>
     </>
   );
 };
