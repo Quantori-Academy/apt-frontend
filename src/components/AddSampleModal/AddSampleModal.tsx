@@ -1,6 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Button, Drawer, IconButton } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { AddSampleForm } from "@/components";
