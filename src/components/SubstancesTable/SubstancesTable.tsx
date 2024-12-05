@@ -61,9 +61,11 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
       navigate(RouteProtectedPath.samplePage.replace(":id", substanceId));
     }
   };
+  console.log(visibleItems);
 
   return (
     <ScrollableTable
+      size="small"
       paginationComponent={
         <TablePagination
           sx={{ backgroundColor: "#f5f5f5" }}

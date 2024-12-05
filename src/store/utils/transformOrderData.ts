@@ -17,7 +17,7 @@ export const transformOrderReagentData = (
   return {
     reagent_name: orderReagentData.reagentName,
     unit: orderReagentData.unit,
-    initial_quantity: Number(orderReagentData.quantity),
+    initial_quantity: Number(orderReagentData.quantity).toFixed(2),
     price_per_unit: orderReagentData.pricePerUnit,
     amount: orderReagentData.amount,
     from_request: orderReagentData.fromRequest,

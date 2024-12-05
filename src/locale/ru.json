@@ -190,7 +190,7 @@
         "addReagent": "Добавить реактив",
         "addSample": "Добавить образец",
         "addLoading": "Добавление...",
-        "chooseSubstance": "Выбрать вещество"
+        "chooseSubstance": "Добавить вещества"
       },
 
       "errors": {
@@ -234,11 +234,13 @@
     "addSubstanceForm": {
       "title": {
         "reagent": "Добавить новый реактив",
-        "sample": "Добавить новый образец"
+        "sample": "Добавить новый образец",
+        "addedSubstances": "Добавленные вещества",
+        "addSubstance": "Добавить вещество"
       },
 
       "buttons": {
-        "createUser": "Создать пользователя"
+        "createSample": "Создать образец"
       },
 
       "snackBarMessages": {
@@ -248,13 +250,14 @@
         },
         "sample": {
           "success": "Образец успешно добавлен",
-          "error": "Не удалось добавить образец"
+          "error": "Не удалось добавить образец",
+          "validationError": "Вы не можете создать образец без добавления веществ"
         }
       },
 
       "requiredFields": {
         "name": {
-          "label": "Название",
+          "label": "Название*",
           "requiredMessage": "Название обязательно"
         },
         "description": {
@@ -265,27 +268,33 @@
         },
         "price": {
           "label": "Цена за единицу",
-          "requiredMessage": "Поле 'Цена' обязательно для заполнения",
+          "requiredMessage": "Цена обязательна",
           "minPriceMessage": "Цена должна быть положительной"
         },
-        "quantityUnit": {
-          "label": "Единица измерения",
-          "requiredMessage": "Поле 'Единица измерения' обязательно для заполнения"
+        "unit": {
+          "label": "Единица измерения*",
+          "requiredMessage": "Единица измерения обязательна"
         },
-        "quantity": {
-          "label": "Остаток",
-          "requiredMessage": "Поле 'Остаток' обязательно для заполнения",
-          "minQuantityMessage": "Quantity must be positive"
+        "amount": {
+          "label": "Количество*",
+          "requiredMessage": "Количество обязательно",
+          "minQuantityMessage": "Количество не может быть 0"
+        },
+        "initialQuantity": {
+          "label": "Начальное количество*",
+          "requiredMessage": "Начальное количество обязательно",
+          "minQuantityMessage": "Начальное количество не может быть 0"
         },
         "expirationDate": {
-          "label": "Дата истечения срока"
+          "label": "Дата истечения срока годности*",
+          "requiredMessage": "Дата истечения срока годности обязательна"
         },
         "location": {
-          "label": "Местоположение",
-          "requiredMessage": "Поле 'Местоположение' обязательно для заполнения"
+          "label": "Местоположение*",
+          "requiredMessage": "Местоположение обязательно"
         },
         "CASNumber": {
-          "label": "Номер CAS"
+          "label": "CAS номер"
         },
         "producer": {
           "label": "Производитель"
@@ -297,13 +306,23 @@
           "label": "Ссылка на каталог"
         },
         "substance": {
-          "label": "Вещество",
+          "label": "Вещество*",
           "requiredMessage": "Вещество обязательно"
         },
         "consumption": {
-          "label": "Потребление",
-          "minConsumptionMessage": "Потребление должно быть положительным"
+          "label": "Расход",
+          "minConsumptionMessage": "Расход должен быть положительным"
         }
+      },
+      "emptyAreas": {
+        "noAddedSubstances": "Вы ещё не добавили вещества",
+        "noSearchReagent": "Не найдено реактивов, соответствующих заданному имени"
+      },
+      "placeholders": {
+        "search": "Введите хотя бы 3 буквы для поиска..."
+      },
+      "texts": {
+        "totalQuantity": "Общее количество:"
       }
     },
 

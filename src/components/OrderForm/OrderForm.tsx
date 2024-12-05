@@ -195,6 +195,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
                   <TextField
                     fullWidth
                     label={t("createOrderForm.requiredFields.amount.label")}
+                    inputProps={{ min: 1, step: "any" }}
                     type="number"
                     {...register(`reagents.${index}.amount`, {
                       required: t(
@@ -206,7 +207,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
                   <TextField
                     label={t("createOrderForm.requiredFields.quantity.label")}
                     fullWidth
-                    inputProps={{ min: 0 }}
+                    inputProps={{ min: 0.01, step: "any" }}
                     type="number"
                     {...register(`reagents.${index}.quantity`, {
                       required: t(
@@ -228,7 +229,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
                   <TextField
                     label={t("createOrderForm.requiredFields.price.label")}
                     fullWidth
-                    inputProps={{ min: 0 }}
+                    inputProps={{ min: 0.01, step: "any" }}
                     type="number"
                     {...register(`reagents.${index}.pricePerUnit`, {
                       required: t(

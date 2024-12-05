@@ -190,11 +190,11 @@
         "addReagent": "Add reagent",
         "addSample": "Add sample",
         "addLoading": "Adding...",
-        "chooseSubstance": "Choose Substance"
+        "chooseSubstance": "Add Substances"
       },
 
       "errors": {
-        "loadError": "Faild to load Reagents and Sample page, Please try later"
+        "loadError": "Failed to load Reagents and Sample page, Please try later"
       },
 
       "filters": {
@@ -234,11 +234,13 @@
     "addSubstanceForm": {
       "title": {
         "reagent": "Add New Reagent",
-        "sample": "Add New Sample"
+        "sample": "Add New Sample",
+        "addedSubstances": "Added Substances",
+        "addSubstance": "Add Substance"
       },
 
       "buttons": {
-        "createUser": "Create User"
+        "createSample": "Create Sample"
       },
 
       "snackBarMessages": {
@@ -248,7 +250,8 @@
         },
         "sample": {
           "success": "Sample added successfully",
-          "error": "Failed to add sample"
+          "error": "Failed to add sample",
+          "validationError": "You can't create a sample without adding substances"
         }
       },
 
@@ -277,19 +280,20 @@
           "requiredMessage": "Amount is required",
           "minAmountMessage": "Amount must be positive"
         },
+
         "quantity": {
           "label": "Quantity*",
           "minAmountMessage": "Initial quantity can not be negative"
         },
 
-        "initialQuantity": {
+        "initialQuantity":{
           "label": "Initial Quantity*",
           "requiredMessage": "Initial quantity is required",
           "minQuantityMessage": "Initial quantity must be positive"
         },
-
         "expirationDate": {
-          "label": "Expiration Date"
+          "label": "Expiration Date*",
+          "requiredMessage": "Expiration Date is required"
         },
         "location": {
           "label": "Location*",
@@ -308,13 +312,23 @@
           "label": "Catalog Link"
         },
         "substance": {
-          "label": "Substance",
+          "label": "Substance*",
           "requiredMessage": "Substance is required"
         },
         "consumption": {
           "label": "Consumption",
           "minConsumptionMessage": "Consumption must be positive"
         }
+      },
+      "emptyAreas": {
+        "noAddedSubstances":  "You haven't added any substances yet",
+        "noSearchReagent": " No reagents found matching the given name"
+      },
+      "placeholders": {
+        "search": "Type at least 3 letters to search..."
+      },
+      "texts": {
+        "totalQuantity": "Total quantity:"
       }
     },
 

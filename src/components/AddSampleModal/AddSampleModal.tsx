@@ -1,34 +1,17 @@
-import { Button } from "@mui/material";
-import React, { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import { Box, Button, Drawer, IconButton } from "@mui/material";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { AddSampleForm, BasicModal } from "@/components";
+import { AddSampleForm } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
-import {
-  useCreateSampleMutation,
-  useGetStorageRoomsQuery,
-  useGetSubstancesQuery,
-} from "@/store";
+import { useCreateSampleMutation, useGetStorageRoomsQuery } from "@/store";
 import { SampleData } from "@/types";
-
-const defaultSampleData: SampleData = {
-  name: "",
-  description: "",
-  structure: "",
-  pricePerUnit: 0,
-  quantityUnit: "",
-  quantityLeft: 0,
-  expirationDate: "",
-  locationId: 0,
-  addedSubstanceIds: [],
-};
 
 const AddSampleModal: React.FC = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data: reagentData, isLoading: isReagentsLoading } =
-    useGetSubstancesQuery();
   const { data: storageRooms, isLoading: isLocationsLoading } =
     useGetStorageRoomsQuery();
 
@@ -36,35 +19,23 @@ const AddSampleModal: React.FC = () => {
   const { showSuccess, showError } = useAlertSnackbar();
 
   const handleCreateSample = async (sampleData: SampleData) => {
-    try {
-      const processedSampleData = {
-        ...sampleData,
-        structure: sampleData.structure?.trim() || null,
-      };
-
-      await createSample(processedSampleData).unwrap();
-
-      showSuccess(t("addSubstanceForm.snackBarMessages.sample.success"));
-      setIsOpen(false);
-    } catch (error) {
-      console.error("Failed to create sample:", error);
-      showError(t("addSubstanceForm.snackBarMessages.sample.error"));
+    if (!sampleData.addedSubstances.length) {
+      showError(t("addSubstanceForm.snackBarMessages.sample.validationError"));
+    } else {
+      try {
+        await createSample(sampleData).unwrap();
+        showSuccess(t("addSubstanceForm.snackBarMessages.sample.success"));
+        setIsOpen(false);
+      } catch (error) {
+        console.error("Failed to create sample:", error);
+        showError(t("addSubstanceForm.snackBarMessages.sample.error"));
+      }
     }
   };
 
-  const handleOpenModal = () => setIsOpen(true);
-  const handleCloseModal = () => setIsOpen(false);
-
-  if (isReagentsLoading || isLocationsLoading) {
+  if (isLocationsLoading) {
     return null;
   }
-
-  const reagentOptions =
-    reagentData?.map((reagent) => ({
-      id: Number(reagent.id),
-      label: reagent.name,
-      consumption: reagent.quantityLeft,
-    })) || [];
 
   const locationOptions =
     storageRooms?.flatMap((room) =>
@@ -76,25 +47,35 @@ const AddSampleModal: React.FC = () => {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpenModal}>
+      <Button variant="contained" onClick={() => setIsOpen(true)}>
         {t("substances.buttons.addSample")}
       </Button>
-
-      <BasicModal
-        title={t("addSubstanceForm.title.sample")}
-        isOpen={isOpen}
-        closeModal={handleCloseModal}
-        width="700px"
-        height="600px"
-      >
-        <AddSampleForm
-          handleSubmit={handleCreateSample}
-          isLoading={isLoading}
-          reagentOptions={reagentOptions}
-          locationOptions={locationOptions}
-          initialSampleData={defaultSampleData}
-        />
-      </BasicModal>
+      <Drawer anchor="right" open={isOpen} onClose={() => setIsOpen(false)}>
+        <IconButton
+          onClick={() => setIsOpen(false)}
+          sx={{
+            position: "absolute",
+            top: 8,
+            left: 8,
+            color: "grey.500",
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Box
+          sx={{
+            width: "70vw",
+            height: "100%",
+            padding: 5,
+          }}
+        >
+          <AddSampleForm
+            handleSubmit={handleCreateSample}
+            isLoading={isLoading}
+            locationOptions={locationOptions}
+          />
+        </Box>
+      </Drawer>
     </div>
   );
 };
