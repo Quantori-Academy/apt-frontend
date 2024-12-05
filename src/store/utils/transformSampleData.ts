@@ -1,4 +1,4 @@
-import { SampleData } from "@/types/sampleData";
+import { SampleData } from "@/types";
 
 export const transformSampleData = (sample: SampleData) => {
   const addedSubstances = sample.addedSubstances.map((substance) => {

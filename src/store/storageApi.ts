@@ -1,6 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { transformTotalQuantityResponse } from "@/store/utils/transformTotalQuantityResponse.ts";
 import {
   BackendRoomData,
   BackendStorageRoomsBrief,
@@ -15,7 +14,11 @@ import {
 } from "@/types";
 
 import { fetchQuery } from "./fetchQuery";
-import { transformStorageLocationResponse, transformStorageRoomsResponse } from "./utils";
+import {
+  transformStorageLocationResponse,
+  transformStorageRoomsResponse,
+  transformTotalQuantityResponse,
+} from "./utils";
 
 export const storageApi = createApi({
   reducerPath: "storageApi",

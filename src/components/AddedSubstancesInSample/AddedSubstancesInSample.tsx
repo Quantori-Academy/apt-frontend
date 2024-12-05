@@ -1,6 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
-import React from "react";
 
 import { AddedSubstanceDetails, SampleSubstances } from "@/types";
 

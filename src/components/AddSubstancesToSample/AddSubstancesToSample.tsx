@@ -1,5 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
