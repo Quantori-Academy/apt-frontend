@@ -99,7 +99,9 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
               {t("substances.table.category")}
             </TableSortLabel>
           </TableCell>
-          <TableCell align="right">{t("substances.table.structure")}</TableCell>
+          <TableCell align="center">
+            {t("substances.table.structure")}
+          </TableCell>
           <TableCell align="right">
             {t("substances.table.description")}
           </TableCell>
@@ -126,7 +128,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
             <TableCell align="left">
               {t(`substances.filters.options.${reagent.category}`)}
             </TableCell>
-            <TableCell align="right">
+            <TableCell align="center">
               <SmilesImage
                 index={index}
                 smiles={reagent.structure}
