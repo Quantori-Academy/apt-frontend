@@ -43,10 +43,15 @@ export const substancesApi = createApi({
       },
       providesTags: ["Substances"],
     }),
-    deleteSubstance: builder.mutation<MutationResponse, string>({
-      query: (substanceId) => ({
-        url: `substances/${substanceId}`,
+
+    deleteSubstances: builder.mutation<MutationResponse, string[]>({
+      query: (substanceIds) => ({
+        url: `/substances`,
         method: "DELETE",
+        body: { substanceIds },
+      }),
+      transformErrorResponse: (response: MutationResponse) => ({
+        message: response.data?.message || "An unexpected error occurred.",
       }),
       invalidatesTags: ["Substances"],
     }),
@@ -118,10 +123,10 @@ export const substancesApi = createApi({
 export const {
   useGetSubstancesQuery,
   useGetReagentDetailsQuery,
-  useDeleteSubstanceMutation,
   useCreateSampleMutation,
   useCreateReagentMutation,
   useGetSampleDetailsQuery,
   useUpdateLocationMutation,
   useChangeQuantityMutation,
+  useDeleteSubstancesMutation,
 } = substancesApi;

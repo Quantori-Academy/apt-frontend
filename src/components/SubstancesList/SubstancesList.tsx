@@ -13,6 +13,7 @@ import {
   AddSampleModal,
   CategoryFilter,
   DashboardBreadcrumbs,
+  DeleteExpiredSubstances,
   SearchBar,
   SubstancesTable,
 } from "@/components";
@@ -46,7 +47,6 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
     useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const { t } = useTranslation();
@@ -103,6 +103,9 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
       )}
       {role === userRoles.Researcher && !isInLocation && (
         <Box className={style.buttonBox} sx={{ display: "flex", gap: 2 }}>
+          {expiredFilter === "Expired" && (
+            <DeleteExpiredSubstances substances={visibleItems} />
+          )}
           <AddReagentModal />
           <AddSampleModal />
         </Box>

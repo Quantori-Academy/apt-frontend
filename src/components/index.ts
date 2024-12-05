@@ -74,3 +74,4 @@ export { AddSubstanceLocationToSample } from "./AddSubstanceLocationToSample";
 export { AddedSubstancesInSample } from "./AddedSubstancesInSample";
 export { StructureEditor } from "./StructureEditor";
 export { StructureEditorField } from "./StructureEditorField";
+export { DeleteExpiredSubstances } from "./DeleteExpiredSubstances";
