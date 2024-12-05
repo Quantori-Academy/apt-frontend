@@ -13,10 +13,15 @@ import { useTranslation } from "react-i18next";
 import {
   AddedSubstancesTable,
   DetailItem,
+  DisposeButton,
+  OutOfStock,
   SmilesImage,
   SubstanceLocationsTable,
 } from "@/components";
+import { useAlertSnackbar } from "@/hooks";
+import { useDeleteSubstancesMutation } from "@/store";
 import { Sample } from "@/types";
+import { formatDate } from "@/utils";
 
 import CustomTabPanel from "./CustomTabelPanel";
 
@@ -26,6 +31,7 @@ const sampleDetailsRows: SampleKey[] = [
   "name",
   "totalQuantityLeft",
   "description",
+  "expirationDate",
 ];
 
 type SampleDetailsProps = {
@@ -41,7 +47,34 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
     setValue(newValue);
   };
 
-  const { structure, locations, addedSubstances, category } = sampleDetails;
+  const [deleteSubstances] = useDeleteSubstancesMutation();
+
+  const { showSuccess, showError } = useAlertSnackbar();
+
+  const onClickDelete = async () => {
+    const { error } = await deleteSubstances([Number(substanceId)]);
+
+    if (error && "message" in error) {
+      showError(t("substanceDetails.snackBarMessages.reagent.errorDelete"));
+    } else {
+      showSuccess(t("substanceDetails.snackBarMessages.reagent.successDelete"));
+    }
+  };
+
+  const {
+    substanceId,
+    structure,
+    locations,
+    addedSubstances,
+    category,
+    expirationDate,
+  } = sampleDetails;
+
+  const hasLocations = !!locations?.length;
+
+  const isExpired = expirationDate
+    ? new Date() > new Date(expirationDate)
+    : false;
 
   return (
     <Card sx={{ background: "#0080800f" }}>
@@ -57,7 +90,12 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
                 <DetailItem
                   key={key}
                   label={t(`substanceDetails.fields.${key}`)}
-                  value={sampleDetails[key] || "-"}
+                  value={
+                    key === "expirationDate"
+                      ? formatDate(sampleDetails[key])
+                      : sampleDetails[key] || "-"
+                  }
+                  color={isExpired && key === "expirationDate" ? "red" : ""}
                 />
               );
             })}
@@ -73,21 +111,30 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
             </Grid>
           )}
         </Grid>
+        {isExpired && locations && (
+          <DisposeButton
+            substanceType={category}
+            onClickDispose={onClickDelete}
+          />
+        )}
+        {!hasLocations && <OutOfStock />}
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs value={value} onChange={handleChange} variant="fullWidth">
             <Tab label="Added substances" id="tab-1" />
-            <Tab label="Locations" id="tab-2" />
+            {hasLocations && <Tab label="Locations" id="tab-2" />}
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
           <AddedSubstancesTable addedSubstances={addedSubstances} />
         </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <SubstanceLocationsTable
-            locations={locations}
-            substanceType={category}
-          />
-        </CustomTabPanel>
+        {hasLocations && (
+          <CustomTabPanel value={value} index={1}>
+            <SubstanceLocationsTable
+              locations={locations}
+              substanceType={category}
+            />
+          </CustomTabPanel>
+        )}
       </CardContent>
     </Card>
   );

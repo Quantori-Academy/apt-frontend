@@ -7,6 +7,7 @@ import {
 } from "react-hook-form";
 
 import { EditableRowsProps } from "@/types";
+import { decimalFormatter } from "@/utils";
 
 type EditControllerProps<T extends FieldValues> = EditableRowsProps<T>;
 
@@ -30,8 +31,15 @@ const EditController = <T extends FieldValues>({
           size="small"
           type={TextFieldType}
           error={!!errors?.[fieldName]}
-          helperText={errors?.[fieldName]?.message as string}
           variant="outlined"
+          onChange={(e) => {
+            if (fieldName === "pricePerUnit" || fieldName === "quantity") {
+              value = decimalFormatter(e.target.value);
+              field.onChange(value);
+            } else {
+              field.onChange(e);
+            }
+          }}
         />
       )}
     />

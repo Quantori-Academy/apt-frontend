@@ -7,14 +7,16 @@ export const transformSampleResponse = (sample: BackendSample): Sample => ({
   structure: sample.structure,
   category: sample.category,
   totalQuantityLeft: sample.total_quantity_left,
-  locations: sample.locations.map((location) => ({
-    contentId: location.content_id,
-    locationId: location.location_id,
-    room: location.room,
-    location: location.location,
-    quantityLeft: location.quantity_left,
-    pricePerUnit: location.price_per_unit,
-  })),
+  expirationDate: sample.expiration_date,
+  locations:
+    sample.locations?.map((location) => ({
+      contentId: location.content_id,
+      locationId: location.location_id,
+      room: location.room,
+      location: location.location,
+      quantityLeft: location.quantity_left,
+      pricePerUnit: location.price_per_unit,
+    })) ?? null,
   addedSubstances: sample.added_substances.map(({ added_amount, ...rest }) => ({
     ...rest,
     addedAmount: added_amount,

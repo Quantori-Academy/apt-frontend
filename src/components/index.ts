@@ -69,6 +69,8 @@ export { FormsLoadingBox } from "./FormsLoadingBox";
 export { AddedSubstancesTable } from "./AddedSubstancesTable";
 export { SubstanceQuantityChangingForm } from "./SubstanceQuantityChangingForm";
 export { SubstancesList } from "./SubstancesList";
+export { OutOfStock } from "./OutOfStock";
+export { DisposeButton } from "./DisposeButton";
 export { AddSubstancesToSample } from "./AddSubstancesToSample";
 export { AddSubstanceLocationToSample } from "./AddSubstanceLocationToSample";
 export { AddedSubstancesInSample } from "./AddedSubstancesInSample";

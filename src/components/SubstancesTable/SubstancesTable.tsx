@@ -65,6 +65,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
 
   return (
     <ScrollableTable
+      size="small"
       paginationComponent={
         <TablePagination
           sx={{ backgroundColor: "#f5f5f5" }}
