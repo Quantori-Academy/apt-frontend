@@ -46,7 +46,7 @@ export type UpdatedReagent = OrderReagent & {
 
 export type BackendOrderReagent = Pick<OrderReagent, "id" | "unit" | "amount" | "structure" | "producer"> & {
   reagent_name: string;
-  initial_quantity: number;
+  initial_quantity: string;
   price_per_unit: string;
   from_request: boolean;
   is_allocated?: boolean;

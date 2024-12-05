@@ -1,8 +1,14 @@
-import { ExpandLess, ExpandMore, Link as LinkIcon } from "@mui/icons-material";
+import {
+  ExpandLess,
+  ExpandMore,
+  Link as LinkIcon,
+  VisibilityOutlined,
+} from "@mui/icons-material";
 import {
   Box,
   Checkbox,
   Collapse,
+  Dialog,
   IconButton,
   Link,
   Table,
@@ -11,16 +17,18 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { EditController, OrderReagentButtons } from "@/components";
+import { EditController, OrderReagentButtons, SmilesImage } from "@/components";
 import { ORDER_STATUSES } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
 import { useUpdateOrderReagentMutation } from "@/store";
 import { OrderReagent, OrderReagentRowType, OrderStatus } from "@/types";
+import { getValidationRules } from "@/utils";
 
 type OrderReagentRowProps = {
   orderId: string;
@@ -53,6 +61,8 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
 
   const { showSuccess, showError } = useAlertSnackbar();
 
+  const [showSMILES, setShowSMILES] = useState(false);
+
   const [isRowOpened, setIsRowOpened] = useState(false);
 
   const {
@@ -65,10 +75,10 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
 
   const handleCancel = () => {
     setEditableRowId(null);
-    reset();
   };
 
   const handleEditClick = (id: number) => {
+    reset(reagent);
     setEditableRowId((prevId: number | null) => (prevId === id ? null : id));
   };
 
@@ -85,6 +95,8 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
         },
       }).unwrap();
       showSuccess(t("substanceDetails.snackBarMessages.reagent.successUpdate"));
+      reset(data);
+      setEditableRowId(null);
     } catch (err) {
       if (typeof err === "object" && err !== null && "data" in err) {
         const errorMessage = (err as { data: { message: string } }).data
@@ -94,8 +106,6 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
         showError(t("substanceDetails.snackBarMessages.unexpectedError"));
       }
     }
-    setEditableRowId(null);
-    reset();
   };
 
   const canSelectReagent =
@@ -137,6 +147,9 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
             value = reagent[key];
           }
 
+          const isNumberType =
+            key === "pricePerUnit" || key === "quantity" || key === "amount";
+
           return (
             <TableCell key={label}>
               {isEditable && key !== "fromRequest" ? (
@@ -145,16 +158,8 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
                   fieldName={key}
                   errors={errors}
                   control={control}
-                  TextFieldType={
-                    key === "pricePerUnit" || key === "quantity"
-                      ? "number"
-                      : "text"
-                  }
-                  rules={{
-                    required: t(
-                      `createOrderForm.requiredFields.${label}.requiredMessage`
-                    ),
-                  }}
+                  TextFieldType={isNumberType ? "number" : "text"}
+                  rules={getValidationRules({ key, t })}
                 />
               ) : (
                 value
@@ -194,6 +199,9 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
               >
                 <TableHead>
                   <TableRow>
+                    <TableCell align="center">
+                      {t(`substanceDetails.fields.structure`)}
+                    </TableCell>
                     {OrderReagentSecondaryRows.map(({ label }) => (
                       <TableCell align="center" key={label}>
                         {t(`substanceDetails.fields.${label}`)}
@@ -212,6 +220,43 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
                       },
                     }}
                   >
+                    <TableCell align="center">
+                      {isEditable ? (
+                        <TextField
+                          size="small"
+                          {...register("structure")}
+                          defaultValue={reagent.structure}
+                          error={!!errors.structure}
+                          helperText={errors.structure?.message}
+                          variant="outlined"
+                        />
+                      ) : reagent.structure ? (
+                        <>
+                          {reagent.structure}
+
+                          <Tooltip placement="top" title="Show structure image">
+                            <IconButton
+                              size="small"
+                              onClick={() => setShowSMILES(true)}
+                            >
+                              <VisibilityOutlined fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+
+                          <Dialog
+                            open={showSMILES}
+                            onClose={() => setShowSMILES(false)}
+                          >
+                            <SmilesImage
+                              smiles={reagent.structure}
+                              svgOptions={{ width: 350, height: 350 }}
+                            />
+                          </Dialog>
+                        </>
+                      ) : (
+                        "-"
+                      )}
+                    </TableCell>
                     {OrderReagentSecondaryRows.map(({ key }) => (
                       <TableCell align="center" key={key}>
                         {isEditable ? (

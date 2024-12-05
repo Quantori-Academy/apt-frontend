@@ -27,7 +27,6 @@ const OrderReagentMainRows: readonly OrderReagentRowType[] = [
 ];
 
 const OrderReagentSecondaryRows: readonly OrderReagentRowType[] = [
-  { label: "structure", key: "structure" },
   { label: "CASNumber", key: "CASNumber" },
   { label: "producer", key: "producer" },
   { label: "catalogID", key: "catalogId" },
