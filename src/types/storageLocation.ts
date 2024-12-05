@@ -1,4 +1,4 @@
-import { SubstancesCategory, SubstancesDetails } from "@/types/substances.ts";
+import { SubstancesCategory, SubstancesDetails } from "@/types";
 
 export type StorageRoomsBrief = {
   id: string;
