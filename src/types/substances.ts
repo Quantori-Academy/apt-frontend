@@ -63,19 +63,21 @@ export type Reagent = {
   catalogLink: string;
   description: string;
   structure: string;
-  locations: ReagentLocation[];
+  expirationDate: string | null;
+  locations: ReagentLocation[] | null;
 };
 
 export type BackendReagent = Omit<
   Reagent,
-  "substanceId" | "CASNumber" | "catalogID" | "catalogLink" | "totalQuantityLeft" | "locations"
+  "substanceId" | "CASNumber" | "catalogID" | "catalogLink" | "totalQuantityLeft" | "locations" | "expirationDate"
 > & {
   substance_id: string;
   cas_number: string;
   catalog_id: number;
   catalog_link: string;
   total_quantity_left: number;
-  locations: BackendReagentLocation[];
+  expiration_date: string | null;
+  locations: BackendReagentLocation[] | null;
 };
 
 export type Sample = Omit<Reagent, "CASNumber" | "producer" | "catalogID" | "catalogLink"> & {
