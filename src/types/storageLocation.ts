@@ -69,3 +69,33 @@ export type MoveSubstance = {
   substanceId: string;
   newLocationId?: string;
 };
+
+export type SubstancesTotalQuantityResponse = {
+  substance_id: number;
+  name: string;
+  category: SubstancesCategory;
+  locations: Array<SubstanceLocationsResponse>;
+};
+
+export type SubstanceLocationsResponse = {
+  room: string;
+  location_id: number;
+  location: string;
+  total_quantity_left: number;
+  unit: string;
+};
+
+export type SubstancesTotalQuantity = {
+  id: number;
+  name: string;
+  category: SubstancesCategory;
+  locations: Array<SubstanceLocation>;
+};
+
+export type SubstanceLocation = {
+  room: string;
+  locationId: number;
+  location: string;
+  totalQuantityLeft: number;
+  unit: string;
+};

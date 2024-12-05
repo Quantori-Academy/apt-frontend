@@ -8,11 +8,17 @@ import {
   NewStorageRoom,
   RoomData,
   StorageRoomsBrief,
+  SubstancesTotalQuantity,
+  SubstancesTotalQuantityResponse,
   UpdateStorageRoom,
 } from "@/types";
 
 import { fetchQuery } from "./fetchQuery";
-import { transformStorageLocationResponse, transformStorageRoomsResponse } from "./utils";
+import {
+  transformStorageLocationResponse,
+  transformStorageRoomsResponse,
+  transformTotalQuantityResponse,
+} from "./utils";
 
 export const storageApi = createApi({
   reducerPath: "storageApi",
@@ -67,6 +73,13 @@ export const storageApi = createApi({
       invalidatesTags: ["StorageRooms"],
     }),
 
+    getSubstanceTotalQuantity: builder.query<Array<SubstancesTotalQuantity>, void>({
+      query: () => "/storage/total",
+      transformResponse: (baseQueryReturnValue: Array<SubstancesTotalQuantityResponse>) => {
+        return transformTotalQuantityResponse(baseQueryReturnValue);
+      },
+    }),
+
     deleteStorageLocation: builder.mutation<void, number>({
       query: (locationId) => ({
         url: `/storage/location/${locationId}`,
@@ -98,4 +111,5 @@ export const {
   useCreateStorageRoomMutation,
   useDeleteStorageLocationMutation,
   useMoveSubstanceMutation,
+  useGetSubstanceTotalQuantityQuery,
 } = storageApi;
