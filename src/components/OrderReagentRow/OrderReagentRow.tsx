@@ -20,10 +20,15 @@ import {
   Tooltip,
 } from "@mui/material";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { EditController, OrderReagentButtons, SmilesImage } from "@/components";
+import {
+  EditController,
+  OrderReagentButtons,
+  SmilesImage,
+  StructureEditorField,
+} from "@/components";
 import { ORDER_STATUSES } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
 import { useUpdateOrderReagentMutation } from "@/store";
@@ -222,13 +227,16 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
                   >
                     <TableCell align="center">
                       {isEditable ? (
-                        <TextField
-                          size="small"
-                          {...register("structure")}
-                          defaultValue={reagent.structure}
-                          error={!!errors.structure}
-                          helperText={errors.structure?.message}
-                          variant="outlined"
+                        <Controller
+                          name="structure"
+                          control={control}
+                          render={({ field }) => (
+                            <StructureEditorField
+                              value={field.value || ""}
+                              onChange={(newValue) => field.onChange(newValue)}
+                              // padding={}
+                            />
+                          )}
                         />
                       ) : reagent.structure ? (
                         <>
