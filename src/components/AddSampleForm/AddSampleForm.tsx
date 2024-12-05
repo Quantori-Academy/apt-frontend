@@ -57,10 +57,10 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
       description: "",
       structure: "",
       unit: "",
-      initialQuantity: 0,
-      amount: 0,
+      initialQuantity: null,
+      amount: null,
       expirationDate: nextYearDate.toISOString().slice(0, 10),
-      locationId: 0,
+      locationId: null,
     },
   });
 

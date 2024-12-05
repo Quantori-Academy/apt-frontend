@@ -2,10 +2,10 @@ export type SampleData = {
   name: string;
   description: string;
   unit: string;
-  initialQuantity: number;
-  amount: number;
+  initialQuantity: number | null;
+  amount: number | null;
   expirationDate: string;
-  locationId: number;
+  locationId: number | null;
   addedSubstances: SampleSubstances[];
   structure?: string | null;
 };
