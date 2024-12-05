@@ -21,7 +21,6 @@ test("renders dashboard cards for Administrator", () => {
   expect(screen.getByRole("heading", { name: "Substances" }));
   expect(screen.getByRole("heading", { name: "Users" }));
   expect(screen.getByRole("heading", { name: "Storage" }));
-  expect(screen.getByRole("heading", { name: "Reagent Requests" }));
 });
 
 test("renders dashboard cards for Researcher", () => {
