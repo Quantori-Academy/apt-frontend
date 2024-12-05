@@ -52,6 +52,7 @@ export type BackendSubstance = {
   structure: string | null;
   category: SubstancesCategory;
   is_expired: boolean;
+  expiration_date: string;
   quantity_left: number;
   unit: string;
 };

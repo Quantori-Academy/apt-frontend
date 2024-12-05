@@ -9,6 +9,7 @@ export type SubstancesDetails = {
   quantityLeft: string;
   storageLocation?: string;
   isExpired: boolean;
+  expirationDate: string;
   unit?: string;
 };
 export type CategoryFilterOption = SubstancesCategory | "All";

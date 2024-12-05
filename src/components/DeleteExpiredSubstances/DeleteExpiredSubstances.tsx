@@ -3,14 +3,15 @@ import { useState } from "react";
 
 import { BasicModal } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
-import { useDeleteSubstancesMutation } from "@/store/substancesApi.ts";
+import { useDeleteSubstancesMutation } from "@/store";
 import { SubstancesDetails } from "@/types";
+import { formatExpDate } from "@/utils";
 
-type DeleteExpiredSubstancesProps = {
+type DisposeExpiredSubstancesProps = {
   substances: Array<SubstancesDetails>;
 };
 
-const DeleteExpiredSubstances: React.FC<DeleteExpiredSubstancesProps> = ({
+const DisposeExpiredSubstances: React.FC<DisposeExpiredSubstancesProps> = ({
   substances,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,13 +21,14 @@ const DeleteExpiredSubstances: React.FC<DeleteExpiredSubstancesProps> = ({
   const [deleteSubstances, { isLoading: isDeleting }] =
     useDeleteSubstancesMutation();
 
-  const handelDeleteExpiredSubstances = async () => {
-    const ids = substances.map((substance) => substance.id);
-    const { error } = await deleteSubstances(ids);
+  const handelDisposeExpiredSubstances = async () => {
+    const ids = substances.map((substance) => Number(substance.id));
+
+    const { error } = await deleteSubstances([...new Set(ids)]);
     if (error) {
-      showError("Failed to delete substances");
+      showError("Failed to Dispose substances");
     } else {
-      showSuccess("Expired Substances successfully deleted");
+      showSuccess("Expired Substances successfully Disposed");
       setIsOpen(false);
     }
   };
@@ -37,7 +39,7 @@ const DeleteExpiredSubstances: React.FC<DeleteExpiredSubstancesProps> = ({
         sx={{ borderColor: "#ef5350", color: "#ef5350" }}
         onClick={() => setIsOpen(true)}
       >
-        Delete Expired Substances
+        Dispose Expired Substances
       </Button>
       <BasicModal
         titleColor="#ef5350"
@@ -46,51 +48,63 @@ const DeleteExpiredSubstances: React.FC<DeleteExpiredSubstancesProps> = ({
         closeModal={() => setIsOpen(false)}
       >
         <Typography marginBottom="20px">
-          Are you sure you want to delete this substances? This action cannot be
-          undone
+          Are you sure you want to Dispose this substances?
         </Typography>
-        {substances.map((substance) => (
-          <Grid
-            container
-            key={substance.id}
-            sx={{
-              borderBottom: "1px solid #ddd",
-              padding: "4px",
-              alignItems: "center",
-            }}
-          >
-            <Grid item xs={4}>
-              <Typography variant="body2" sx={{ fontSize: "12px" }}>
-                {substance.name}
-              </Typography>
+        <Box sx={{ maxHeight: "200px", overflowY: "auto" }}>
+          {substances.map((substance) => (
+            <Grid
+              container
+              key={substance.id}
+              sx={{
+                borderBottom: "1px solid #ddd",
+                padding: "4px",
+                display: "flex",
+                flexDirection: "column", // Stack the data vertically
+                alignItems: "flex-start",
+              }}
+            >
+              <Grid item>
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: "12px", fontWeight: "bold" }}
+                >
+                  {substance.name}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: "10px", color: "#666" }}
+                >
+                  Location: {substance.storageLocation}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: "10px", color: "#666" }}
+                >
+                  Expiration: {formatExpDate(substance.expirationDate)}
+                </Typography>
+              </Grid>
+              <Grid item sx={{ marginTop: "4px" }}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: "12px", textAlign: "center" }}
+                >
+                  {substance.quantityLeft} left
+                </Typography>
+              </Grid>
             </Grid>
-
-            <Grid item xs={4}>
-              <Typography variant="body2" sx={{ fontSize: "12px" }}>
-                {substance.storageLocation}
-              </Typography>
-            </Grid>
-
-            <Grid item xs={2}>
-              <Typography
-                variant="body2"
-                sx={{ fontSize: "12px", textAlign: "center" }}
-              >
-                {substance.quantityLeft}
-              </Typography>
-            </Grid>
-
-            <Grid item xs={2} sx={{ textAlign: "center" }}></Grid>
-          </Grid>
-        ))}
-
-        <Box display="flex" justifyContent="flex-end" gap={3} marginTop={3}>
+          ))}
+        </Box>
+        <Box display="flex" justifyContent="flex-end" gap={1} marginTop={3}>
           <Button
-            onClick={handelDeleteExpiredSubstances}
+            onClick={handelDisposeExpiredSubstances}
             disabled={isDeleting}
             sx={{ borderColor: "#ef5350", color: "#ef5350" }}
           >
-            Delete
+            Dispose
           </Button>
           <Button onClick={() => setIsOpen(false)} disabled={isDeleting}>
             Cancel
@@ -101,4 +115,4 @@ const DeleteExpiredSubstances: React.FC<DeleteExpiredSubstancesProps> = ({
   );
 };
 
-export default DeleteExpiredSubstances;
+export default DisposeExpiredSubstances;
