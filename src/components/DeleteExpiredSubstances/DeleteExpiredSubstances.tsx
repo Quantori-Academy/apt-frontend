@@ -24,7 +24,7 @@ const DisposeExpiredSubstances: React.FC<DisposeExpiredSubstancesProps> = ({
   const handelDisposeExpiredSubstances = async () => {
     const ids = substances.map((substance) => Number(substance.id));
 
-    const { error } = await deleteSubstances([...new Set(ids)]);
+    const { error } = await deleteSubstances(ids);
     if (error) {
       showError("Failed to Dispose substances");
     } else {
