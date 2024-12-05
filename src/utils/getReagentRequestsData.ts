@@ -35,10 +35,14 @@ const filterListData = (items: ReagentRequests, statusFilter: StatusFilterOption
 };
 
 const sortListData = (items: ReagentRequests, sortColumn: RequestsSortColumns, sortDirection: SortDirection) => {
-  return items.toSorted((a, b) => {
-    const order = a[sortColumn].localeCompare(b[sortColumn]);
-    return sortDirection === "asc" ? order : -1 * order;
-  });
+  if (sortDirection === "none") {
+    return items;
+  } else {
+    return items.toSorted((a, b) => {
+      const order = a[sortColumn].localeCompare(b[sortColumn]);
+      return sortDirection === "asc" ? order : -1 * order;
+    });
+  }
 };
 
 const paginateListData = (items: ReagentRequests, page: number, pageSize: number) => {

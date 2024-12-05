@@ -42,7 +42,7 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
 }) => {
   const [page, setPage] = useState(0);
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("none");
   const [categoryFilter, setCategoryFilter] =
     useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -85,7 +85,6 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
       searchQuery,
       expiredFilter,
       rowsPerPage,
-      isInLocation,
     ]
   );
 

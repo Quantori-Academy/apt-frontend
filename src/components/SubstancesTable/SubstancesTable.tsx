@@ -83,7 +83,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
           <TableCell>
             <TableSortLabel
               active={sortColumn === "name"}
-              direction={sortDirection}
+              direction={sortDirection === "none" ? undefined : sortDirection}
               onClick={() => onSortChange("name")}
             >
               {t("substances.table.name")}
@@ -92,7 +92,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
           <TableCell>
             <TableSortLabel
               active={sortColumn === "category"}
-              direction={sortDirection}
+              direction={sortDirection === "none" ? undefined : sortDirection}
               onClick={() => onSortChange("category")}
             >
               {t("substances.table.category")}

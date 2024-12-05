@@ -13,7 +13,7 @@ export type SubstancesDetails = {
   unit?: string;
 };
 export type CategoryFilterOption = SubstancesCategory | "All";
-export type SortDirection = "asc" | "desc";
+export type SortDirection = "asc" | "desc" | "none";
 export type SortColumn = "name" | "category";
 export type ExpiredFilter = "All" | "Expired";
 

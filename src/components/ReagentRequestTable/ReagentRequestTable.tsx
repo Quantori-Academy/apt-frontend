@@ -159,7 +159,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
             <TableCell>
               <TableSortLabel
                 active={sortColumn === "name"}
-                direction={sortDirection}
+                direction={sortDirection === "none" ? undefined : sortDirection}
                 onClick={() => onSortChange("name")}
               >
                 {t("requests.table.name")}
@@ -174,7 +174,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
             <TableCell>
               <TableSortLabel
                 active={sortColumn === "status"}
-                direction={sortDirection}
+                direction={sortDirection === "none" ? undefined : sortDirection}
                 onClick={() => onSortChange("status")}
               >
                 {t("requests.table.Status")}
@@ -189,7 +189,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
             <TableCell>
               <TableSortLabel
                 active={sortColumn === "dateCreated"}
-                direction={sortDirection}
+                direction={sortDirection === "none" ? undefined : sortDirection}
                 onClick={() => onSortChange("dateCreated")}
               >
                 {t("requests.table.CreationDate")}
