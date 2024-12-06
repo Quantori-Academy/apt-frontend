@@ -1,4 +1,5 @@
 import { skipToken } from "@reduxjs/toolkit/query";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import {
@@ -11,8 +12,9 @@ import { RouteProtectedPath } from "@/router";
 import { useGetSampleDetailsQuery } from "@/store";
 
 const SamplePage: React.FC = () => {
-  const { id: sampleId } = useParams<{ id: string }>();
+  const { t } = useTranslation();
 
+  const { id: sampleId } = useParams<{ id: string }>();
   const {
     data: sampleDetails,
     isError,
@@ -24,7 +26,7 @@ const SamplePage: React.FC = () => {
   }
 
   if (!sampleDetails || !sampleId || isError) {
-    return <PageError text={"Failed to load sample details. "} />;
+    return <PageError text={t("substanceDetails.errors.sampleLoadError")} />;
   }
 
   return (

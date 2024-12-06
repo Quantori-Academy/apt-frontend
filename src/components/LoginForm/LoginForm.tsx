@@ -56,7 +56,11 @@ const LoginForm: React.FC = () => {
           required: t("addUserForm.requiredFields.password.requiredMessage"),
         }}
       />
-      {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
+      {errorMessage && (
+        <FormHelperText error>
+          {t(`backendErrors.${errorMessage}`)}
+        </FormHelperText>
+      )}
 
       {isLoading ? (
         <div>
