@@ -3,7 +3,6 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   BackendRoomData,
   BackendStorageRoomsBrief,
-  MoveSubstance,
   NewRoom,
   NewStorageRoom,
   RoomData,
@@ -87,19 +86,6 @@ export const storageApi = createApi({
       }),
       invalidatesTags: ["StorageRooms"],
     }),
-
-    moveSubstance: builder.mutation<void, MoveSubstance>({
-      query: ({ oldRoomId, substanceId, newLocationId }) => ({
-        url: "/storage/move",
-        method: "PUT",
-        body: {
-          old_location_id: oldRoomId,
-          substance_id: substanceId,
-          new_location_id: newLocationId,
-        },
-      }),
-      invalidatesTags: ["StorageRooms"],
-    }),
   }),
 });
 
@@ -110,6 +96,5 @@ export const {
   useUpdateStorageRoomMutation,
   useCreateStorageRoomMutation,
   useDeleteStorageLocationMutation,
-  useMoveSubstanceMutation,
   useGetSubstanceTotalQuantityQuery,
 } = storageApi;
