@@ -360,13 +360,7 @@
           "requiredMessage": "Amount is required",
           "minAmountMessage": "Amount must be positive"
         },
-
-        "quantity": {
-          "label": "Quantity*",
-          "minAmountMessage": "Initial quantity can not be negative"
-        },
-
-        "initialQuantity": {
+        "initialQuantity":{
           "label": "Initial Quantity*",
           "requiredMessage": "Initial quantity is required",
           "minQuantityMessage": "Initial quantity must be positive"
@@ -697,7 +691,7 @@
           "errorMessage": "Amount must be greater than 0"
         },
         "structure": {
-          "label": "Structure"
+          "label": "Structure in SMILES"
         },
         "CASNumber": {
           "label": "CAS Number"

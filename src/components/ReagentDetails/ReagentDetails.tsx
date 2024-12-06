@@ -41,7 +41,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
 
   const onClickDelete = async () => {
     try {
-      await deleteSubstances([substanceId]).unwrap();
+      await deleteSubstances([Number(substanceId)]).unwrap();
       showSuccess(t("substanceDetails.snackBarMessages.reagent.successDelete"));
     } catch (error) {
       handleError({ error, t, showError });

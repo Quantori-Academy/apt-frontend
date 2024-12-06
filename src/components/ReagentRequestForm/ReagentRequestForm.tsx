@@ -1,7 +1,9 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import { StructureEditorField } from "@/components";
 import { ReagentRequestInput } from "@/types";
 
 import style from "@/components/AddUserForm/AddUserForm.module.css";
@@ -24,6 +26,7 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
     handleSubmit,
     register,
     formState: { errors },
+    control,
   } = useFormContext<ReagentRequestInput>();
 
   return (
@@ -43,9 +46,15 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
           label={t("createRequestForm.requiredFields.CASNumber.label")}
           {...register("CAS")}
         />
-        <TextField
-          label={t("createRequestForm.requiredFields.structure.label")}
-          {...register("structure")}
+        <Controller
+          name="structure"
+          control={control}
+          render={({ field }) => (
+            <StructureEditorField
+              value={field.value || ""}
+              onChange={(newValue) => field.onChange(newValue)}
+            />
+          )}
         />
         <Box display="flex" justifyContent="space-between" gap={1}>
           <TextField

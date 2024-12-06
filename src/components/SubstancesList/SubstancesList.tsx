@@ -13,6 +13,7 @@ import {
   AddSampleModal,
   CategoryFilter,
   DashboardBreadcrumbs,
+  DisposeExpiredSubstances,
   SearchBar,
   SubstancesTable,
 } from "@/components";
@@ -41,12 +42,11 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
 }) => {
   const [page, setPage] = useState(0);
   const [sortColumn, setSortColumn] = useState<SortColumn>("name");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("none");
   const [categoryFilter, setCategoryFilter] =
     useState<CategoryFilterOption>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [expiredFilter, setExpiredFilter] = useState<ExpiredFilter>("All");
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const { t } = useTranslation();
@@ -85,7 +85,6 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
       searchQuery,
       expiredFilter,
       rowsPerPage,
-      isInLocation,
     ]
   );
 
@@ -103,6 +102,9 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
       )}
       {role === userRoles.Researcher && !isInLocation && (
         <Box className={style.buttonBox} sx={{ display: "flex", gap: 2 }}>
+          {expiredFilter === "Expired" && visibleItems.length > 0 && (
+            <DisposeExpiredSubstances substances={visibleItems} />
+          )}
           <AddReagentModal />
           <AddSampleModal />
         </Box>

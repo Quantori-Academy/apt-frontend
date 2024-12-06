@@ -53,8 +53,15 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
 
   const onClickDelete = async () => {
     try {
-      await deleteSubstances([substanceId]);
-      showSuccess(t("substanceDetails.snackBarMessages.reagent.successDelete"));
+      const { error } = await deleteSubstances([Number(substanceId)]);
+
+      if (error && "message" in error) {
+        showError(t("substanceDetails.snackBarMessages.reagent.errorDelete"));
+      } else {
+        showSuccess(
+          t("substanceDetails.snackBarMessages.reagent.successDelete")
+        );
+      }
     } catch (error) {
       handleError({ error, t, showError });
     }

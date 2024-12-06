@@ -61,7 +61,6 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
       navigate(RouteProtectedPath.samplePage.replace(":id", substanceId));
     }
   };
-  console.log(visibleItems);
 
   return (
     <ScrollableTable
@@ -84,7 +83,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
           <TableCell>
             <TableSortLabel
               active={sortColumn === "name"}
-              direction={sortDirection}
+              direction={sortDirection === "none" ? undefined : sortDirection}
               onClick={() => onSortChange("name")}
             >
               {t("substances.table.name")}
@@ -93,13 +92,15 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
           <TableCell>
             <TableSortLabel
               active={sortColumn === "category"}
-              direction={sortDirection}
+              direction={sortDirection === "none" ? undefined : sortDirection}
               onClick={() => onSortChange("category")}
             >
               {t("substances.table.category")}
             </TableSortLabel>
           </TableCell>
-          <TableCell align="right">{t("substances.table.structure")}</TableCell>
+          <TableCell align="center">
+            {t("substances.table.structure")}
+          </TableCell>
           <TableCell align="right">
             {t("substances.table.description")}
           </TableCell>
@@ -126,7 +127,7 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
             <TableCell align="left">
               {t(`substances.filters.options.${reagent.category}`)}
             </TableCell>
-            <TableCell align="right">
+            <TableCell align="center">
               <SmilesImage
                 index={index}
                 smiles={reagent.structure}

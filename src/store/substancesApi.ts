@@ -43,7 +43,8 @@ export const substancesApi = createApi({
       },
       providesTags: ["Substances"],
     }),
-    deleteSubstances: builder.mutation<MutationResponse, string[]>({
+
+    deleteSubstances: builder.mutation<MutationResponse, number[]>({
       query: (substanceIds) => ({
         url: `/substances`,
         method: "DELETE",
@@ -115,10 +116,10 @@ export const substancesApi = createApi({
 export const {
   useGetSubstancesQuery,
   useGetReagentDetailsQuery,
-  useDeleteSubstancesMutation,
   useCreateSampleMutation,
   useCreateReagentMutation,
   useGetSampleDetailsQuery,
   useUpdateLocationMutation,
   useChangeQuantityMutation,
+  useDeleteSubstancesMutation,
 } = substancesApi;

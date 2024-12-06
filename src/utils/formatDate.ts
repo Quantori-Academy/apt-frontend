@@ -8,3 +8,11 @@ export function formatDate(dateString: string | null) {
     minute: "numeric",
   });
 }
+
+export function formatExpDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}

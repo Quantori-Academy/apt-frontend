@@ -11,7 +11,11 @@ import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { AddSubstancesToSample, AddedSubstancesInSample } from "@/components";
+import {
+  AddSubstancesToSample,
+  AddedSubstancesInSample,
+  StructureEditorField,
+} from "@/components";
 import { RouteProtectedPath } from "@/router";
 import { AddedSubstanceDetails, SampleData, SampleSubstances } from "@/types";
 
@@ -53,10 +57,10 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
       description: "",
       structure: "",
       unit: "",
-      initialQuantity: 0,
-      amount: 0,
+      initialQuantity: null,
+      amount: null,
       expirationDate: nextYearDate.toISOString().slice(0, 10),
-      locationId: 0,
+      locationId: null,
     },
   });
 
@@ -93,11 +97,15 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                label={t("addSubstanceForm.requiredFields.structure.label")}
-                {...register("structure")}
-                fullWidth
-                margin="normal"
+              <Controller
+                name="structure"
+                control={control}
+                render={({ field }) => (
+                  <StructureEditorField
+                    value={field.value || ""}
+                    onChange={(newValue) => field.onChange(newValue)}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>

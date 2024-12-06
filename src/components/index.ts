@@ -73,3 +73,6 @@ export { DisposeButton } from "./DisposeButton";
 export { AddSubstancesToSample } from "./AddSubstancesToSample";
 export { AddSubstanceLocationToSample } from "./AddSubstanceLocationToSample";
 export { AddedSubstancesInSample } from "./AddedSubstancesInSample";
+export { StructureEditor } from "./StructureEditor";
+export { StructureEditorField } from "./StructureEditorField";
+export { DisposeExpiredSubstances } from "./DisposeExpiredSubstances";

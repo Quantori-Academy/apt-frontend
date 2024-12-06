@@ -13,6 +13,7 @@ export const transformSubstanceData = (substances: SubstancesResponse): Array<Su
       structure: substance.structure || "",
       unit: substance.unit || "",
       isExpired: substance.expiration_date ? expirationDate < currentDate : false,
+      expirationDate: substance.expiration_date || "",
       quantityLeft: `${substance.location.quantity_left} ${substance.location.unit}`,
       storageLocation: `${substance.location.room} / ${substance.location.location}`,
     };

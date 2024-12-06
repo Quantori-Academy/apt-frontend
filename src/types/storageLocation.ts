@@ -1,4 +1,4 @@
-import { SubstancesCategory, SubstancesDetails } from "@/types/substances.ts";
+import { SubstancesCategory, SubstancesDetails } from "@/types";
 
 export type StorageRoomsBrief = {
   id: string;
@@ -52,6 +52,7 @@ export type BackendSubstance = {
   structure: string | null;
   category: SubstancesCategory;
   is_expired: boolean;
+  expiration_date: string;
   quantity_left: number;
   unit: string;
 };

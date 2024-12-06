@@ -14,6 +14,7 @@ const mockData: Array<SubstancesDetails> = [
     storageLocation: "Fridge A1",
     isExpired: false,
     unit: "t",
+    expirationDate: "2025-12-01",
   },
   {
     id: "2",
@@ -25,6 +26,7 @@ const mockData: Array<SubstancesDetails> = [
     storageLocation: "Shelf B2",
     isExpired: false,
     unit: "ml",
+    expirationDate: "2026-05-15",
   },
   {
     id: "3",
@@ -36,6 +38,7 @@ const mockData: Array<SubstancesDetails> = [
     storageLocation: "Shelf C3",
     isExpired: true,
     unit: "g",
+    expirationDate: "2023-08-30",
   },
   {
     id: "4",
@@ -47,6 +50,7 @@ const mockData: Array<SubstancesDetails> = [
     storageLocation: "Gas Cylinder D4",
     isExpired: false,
     unit: "L",
+    expirationDate: "2025-02-01",
   },
   {
     id: "5",
@@ -58,6 +62,7 @@ const mockData: Array<SubstancesDetails> = [
     storageLocation: "Cabinet E5",
     isExpired: false,
     unit: "ml",
+    expirationDate: "2026-11-22",
   },
   {
     id: "6",
@@ -69,6 +74,7 @@ const mockData: Array<SubstancesDetails> = [
     storageLocation: "Shelf F6",
     isExpired: true,
     unit: "g",
+    expirationDate: "2023-04-17",
   },
   {
     id: "7",
@@ -80,6 +86,7 @@ const mockData: Array<SubstancesDetails> = [
     storageLocation: "Storage G7",
     isExpired: false,
     unit: "L",
+    expirationDate: "2025-07-30",
   },
   {
     id: "8",
@@ -91,6 +98,7 @@ const mockData: Array<SubstancesDetails> = [
     storageLocation: "Cabinet H8",
     isExpired: false,
     unit: "ml",
+    expirationDate: "2026-03-01",
   },
   {
     id: "9",
@@ -102,6 +110,7 @@ const mockData: Array<SubstancesDetails> = [
     storageLocation: "Drawer I9",
     isExpired: true,
     unit: "g",
+    expirationDate: "2023-09-10",
   },
   {
     id: "10",
@@ -113,6 +122,7 @@ const mockData: Array<SubstancesDetails> = [
     storageLocation: "Cylinder J10",
     isExpired: false,
     unit: "L",
+    expirationDate: "2025-06-20",
   },
 ];
 
