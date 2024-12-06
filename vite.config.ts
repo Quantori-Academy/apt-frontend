@@ -21,10 +21,14 @@ export default defineConfig({
       enabled: true,
     },
   },
-
   define: {
-    "process.env.NODE_ENV": JSON.stringify("VITE_APP_API_URL"),
-    "process.env.API_URL": JSON.stringify("VITE_APP_API"),
-    global: "globalThis",
+    'process.env': {},
+    global: {},
+  },
+  resolve: {
+    alias: {
+      process: 'process/browser',
+      global: 'global',
+    },
   },
 });

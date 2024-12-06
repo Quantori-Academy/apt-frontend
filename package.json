@@ -25,6 +25,7 @@
     "@mui/material": "^5.16.7",
     "@reduxjs/toolkit": "^2.2.7",
     "clsx": "^2.1.1",
+    "global": "^4.4.0",
     "i18next": "^23.16.4",
     "jwt-decode": "^4.0.0",
     "ketcher-core": "^2.26.0",
