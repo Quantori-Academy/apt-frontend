@@ -22,5 +22,7 @@ export default defineConfig({
       enabled: true,
     },
   },
-
+  build: {
+    commonjsOptions: { transformMixedEsModules: true }
+  }
 });
