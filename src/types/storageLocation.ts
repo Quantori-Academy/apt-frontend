@@ -64,12 +64,6 @@ export type LocationDetails = {
   substances: Array<SubstancesDetails>;
 };
 
-export type MoveSubstance = {
-  oldRoomId: string;
-  substanceId: string;
-  newLocationId?: string;
-};
-
 export type SubstancesTotalQuantityResponse = {
   substance_id: number;
   name: string;
