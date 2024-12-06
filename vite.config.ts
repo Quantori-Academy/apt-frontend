@@ -2,10 +2,11 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsConfigPaths()],
+  plugins: [react(), tsConfigPaths(), nodePolyfills()],
 
   server: {
     port: 3000,
@@ -21,10 +22,7 @@ export default defineConfig({
       enabled: true,
     },
   },
-  define: {
-    'process.env': {},
-    global: {},
-  },
+
   resolve: {
     alias: {
       process: 'process/browser',
