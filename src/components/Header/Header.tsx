@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router-dom";
 
 import { AuthUserInfo, LanguageSwitcher, Logo } from "@/components";
+import { LANGUAGES, type LanguageKey } from "@/constants";
 import { useAppSelector } from "@/hooks";
 import { RoutePublicPath } from "@/router";
 import { selectUserIsAuthenticated } from "@/store";
@@ -14,11 +15,16 @@ const Header: React.FC = () => {
     i18n: { changeLanguage, language },
   } = useTranslation();
 
-  const [currentLanguage, setCurrentLanguage] = useState(() => {
-    return localStorage.getItem("appLanguage") || language;
+  const [currentLanguage, setCurrentLanguage] = useState<LanguageKey>(() => {
+    const savedLanguage = localStorage.getItem("appLanguage");
+
+    if (savedLanguage && savedLanguage in LANGUAGES) {
+      return savedLanguage as LanguageKey;
+    }
+    return language as LanguageKey;
   });
 
-  const handleChangeLanguage = async (value: string) => {
+  const handleChangeLanguage = async (value: LanguageKey) => {
     setCurrentLanguage(value);
     await changeLanguage(value);
     localStorage.setItem("appLanguage", value);
@@ -26,15 +32,15 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem("appLanguage");
-    if (savedLanguage) {
-      setCurrentLanguage(savedLanguage);
+    if (savedLanguage && savedLanguage in LANGUAGES) {
+      setCurrentLanguage(savedLanguage as LanguageKey);
       changeLanguage(savedLanguage);
     }
   }, [changeLanguage]);
 
   const isAuthenticated = useAppSelector(selectUserIsAuthenticated);
 
-  const displayLanguageValue = currentLanguage === "ENG" ? "ENG" : "РУС";
+  const displayLanguageValue = LANGUAGES[currentLanguage];
 
   const location = useLocation();
   const path = location.pathname;

@@ -252,7 +252,7 @@ const ReagentRequestTable: React.FC<ReagentRequestTableProps> = ({
                   )}
                 {role === userRoles.Researcher && row.status === "Pending" && (
                   <IconButton
-                    title="Edit"
+                    title={t("buttons.edit")}
                     onClick={() => handleEdit(index, row.id)}
                   >
                     <EditIcon color="disabled" />

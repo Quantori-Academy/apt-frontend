@@ -12,7 +12,7 @@ import { FormsLoadingBox, SaveCancelButtons } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useChangeQuantityMutation } from "@/store";
 import { SubstancesCategory } from "@/types";
-import { validateQuantity } from "@/utils";
+import { handleError, validateQuantity } from "@/utils";
 
 type QuantityChangingProps = {
   storageContentId: number;
@@ -52,17 +52,18 @@ const SubstanceQuantityChangingForm: React.FC<QuantityChangingProps> = ({
 
   const onSubmit = async (data: NewQuantity) => {
     const lowerCaseType = substanceType.toLowerCase();
-    const { error } = await changeQuantity({
-      storageContentId,
-      newQuantity: data.newQuantity,
-    });
-    if (error && "message" in error) {
-      showError(t(`substanceDetails.snackBarMessages.unexpectedError`));
-    } else {
+    try {
+      await changeQuantity({
+        storageContentId,
+        newQuantity: data.newQuantity,
+      }).unwrap();
+
       showSuccess(
         t(`substanceDetails.snackBarMessages.${lowerCaseType}.successUpdate`)
       );
       onCancel();
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 

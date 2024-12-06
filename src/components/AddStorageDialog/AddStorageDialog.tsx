@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { useAlertSnackbar } from "@/hooks";
 import { useCreateStorageRoomMutation } from "@/store";
 import { StorageRoomsBrief } from "@/types";
+import { handleError } from "@/utils";
 
 type AddStorageDialogProps = {
   open: boolean;
@@ -37,18 +38,18 @@ const AddStorageDialog: React.FC<AddStorageDialogProps> = ({
   const { showSuccess, showError } = useAlertSnackbar();
 
   const handleCreateSubmit = async () => {
-    const { error } = await createStorageRoom({
-      roomId: selectedRoomId,
-      locationName: locationName,
-    });
+    try {
+      await createStorageRoom({
+        roomId: selectedRoomId,
+        locationName: locationName,
+      }).unwrap();
 
-    if (!error) {
+      showSuccess(t("storage.snackBarMessages.creationSuccess"));
       onClose();
       setSelectedRoomId("0");
       setLocationName("");
-      showSuccess(t("storage.snackBarMessages.creationSuccess"));
-    } else {
-      showError(t("storage.snackBarMessages.creationError"));
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 

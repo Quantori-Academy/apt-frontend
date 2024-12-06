@@ -6,6 +6,7 @@ import { PageLoader, SaveCancelButtons } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useChooseLocationMutation, useGetStorageRoomsQuery } from "@/store";
 import { RoomLocationBrief, StorageRoomsBrief } from "@/types";
+import { handleError } from "@/utils";
 
 type ChooseReagentsLocationFormProps = {
   orderId: string;
@@ -41,18 +42,19 @@ const ChooseReagentsLocationForm: React.FC<ChooseReagentsLocationFormProps> = ({
   }
 
   const handleSubmit = async () => {
-    const { error } = await chooseLocation({
-      orderId: orderId,
-      locationId: selectedLocation!.locationId,
-      reagentIds: selectedReagents,
-    });
-    if (error) {
-      showError(t("substanceDetails.snackBarMessages.unexpectedError"));
-    } else {
-      showSuccess(t("orders.snackBarMessages.editing.success"));
+    try {
+      await chooseLocation({
+        orderId: orderId,
+        locationId: selectedLocation!.locationId,
+        reagentIds: selectedReagents,
+      }).unwrap();
+      showSuccess(t("orders.snackBarMessages.allocated"));
+    } catch (error) {
+      handleError({ error, t, showError });
+    } finally {
+      onAllocation();
+      onClose();
     }
-    onAllocation();
-    onClose();
   };
   return (
     <>

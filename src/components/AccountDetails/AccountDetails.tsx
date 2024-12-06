@@ -14,6 +14,7 @@ import { PageLoader } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from "@/store";
 import { UserBase } from "@/types";
+import { handleError } from "@/utils";
 
 import style from "./AccountDetails.module.css";
 
@@ -34,7 +35,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   const [updateUserDetails, { isLoading: isUpdatingDetails }] =
     useUpdateUserDetailsMutation();
 
-  const { showError } = useAlertSnackbar();
+  const { showSuccess, showError } = useAlertSnackbar();
 
   const {
     register,
@@ -47,12 +48,12 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ userId }) => {
   if (isLoadingUserDetails) return <PageLoader />;
 
   const onSubmit = async (updatedUserDetails: UserDetails) => {
-    const { error } = await updateUserDetails(updatedUserDetails);
-
-    if (error) {
-      showError(t("userDetails.snackBarMessages.details.error"));
-    } else {
+    try {
+      await updateUserDetails(updatedUserDetails).unwrap();
+      showSuccess(t("userDetails.snackBarMessages.details.success"));
       setIsEditMode(false);
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 

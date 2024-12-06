@@ -16,6 +16,7 @@ import { ORDER_STATUSES } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
 import { useDeleteReagentFromOrderMutation } from "@/store";
 import { OrderReagent, OrderReagentRowType, OrderStatus } from "@/types";
+import { handleError } from "@/utils";
 
 const OrderReagentMainRows: readonly OrderReagentRowType[] = [
   { label: "name", key: "reagentName" },
@@ -103,14 +104,8 @@ const OrderReagentDetails: React.FC<OrderReagentDetailsProps> = ({
       }).unwrap();
 
       showSuccess(t("substanceDetails.snackBarMessages.reagent.successDelete"));
-    } catch (err) {
-      if (typeof err === "object" && err !== null && "data" in err) {
-        const errorMessage = (err as { data: { message: string } }).data
-          .message;
-        showError(errorMessage);
-      } else {
-        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
-      }
+    } catch (error) {
+      handleError({ error, t, showError });
     } finally {
       setDeleteModalIsOpen(false);
     }

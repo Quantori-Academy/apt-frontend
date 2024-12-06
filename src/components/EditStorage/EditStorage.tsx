@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 
 import { useAlertSnackbar } from "@/hooks";
 import { useUpdateStorageRoomMutation } from "@/store";
+import { handleError } from "@/utils";
 
 type EditStorageProps = {
   open: boolean;
@@ -45,24 +46,24 @@ const EditStorage: React.FC<EditStorageProps> = ({ open, id, onClose }) => {
 
   const onSubmit = async (editedStorage: editRoomSelect) => {
     const { roomName, roomDescription } = editedStorage;
-    const { error } = await updateStorageRoom({
-      id,
-      room: roomName,
-      description: roomDescription,
-    });
 
-    if (error) {
-      showError(t("storage.snackBarMessages.error"));
-    } else {
+    try {
+      await updateStorageRoom({
+        id,
+        room: roomName,
+        description: roomDescription,
+      }).unwrap();
       showSuccess(t("storage.snackBarMessages.success"));
       onClose();
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 
   return (
     <>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Edit Storage Room</DialogTitle>
+        <DialogTitle>{t("storage.title.editRoom")}</DialogTitle>
         <DialogContent sx={{ display: "flex", flexDirection: "column" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextField
