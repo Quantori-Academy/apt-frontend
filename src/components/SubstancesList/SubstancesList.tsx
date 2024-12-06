@@ -13,7 +13,7 @@ import {
   AddSampleModal,
   CategoryFilter,
   DashboardBreadcrumbs,
-  DeleteExpiredSubstances,
+  DisposeExpiredSubstances,
   SearchBar,
   SubstancesTable,
 } from "@/components";
@@ -103,7 +103,7 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
       {role === userRoles.Researcher && !isInLocation && (
         <Box className={style.buttonBox} sx={{ display: "flex", gap: 2 }}>
           {expiredFilter === "Expired" && visibleItems.length > 0 && (
-            <DeleteExpiredSubstances substances={visibleItems} />
+            <DisposeExpiredSubstances substances={visibleItems} />
           )}
           <AddReagentModal />
           <AddSampleModal />

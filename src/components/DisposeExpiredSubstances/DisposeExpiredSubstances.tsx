@@ -51,15 +51,15 @@ const DisposeExpiredSubstances: React.FC<DisposeExpiredSubstancesProps> = ({
           Are you sure you want to Dispose this substances?
         </Typography>
         <Box sx={{ maxHeight: "200px", overflowY: "auto" }}>
-          {substances.map((substance) => (
+          {substances.map((substance, index) => (
             <Grid
               container
-              key={substance.id}
+              key={`${substance.id}-${index}`}
               sx={{
                 borderBottom: "1px solid #ddd",
                 padding: "4px",
                 display: "flex",
-                flexDirection: "column", // Stack the data vertically
+                flexDirection: "column",
                 alignItems: "flex-start",
               }}
             >
