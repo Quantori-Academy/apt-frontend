@@ -1,19 +1,24 @@
 import LanguageIcon from "@mui/icons-material/Language";
 import { Box, IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
+import type { LanguageKey, LanguageValue } from "@/constants";
 
 type LanguageSwitcherProps = {
-  language: string;
-  handleChangeLanguage: (value: string) => void;
+  language: LanguageValue;
+  handleChangeLanguage: (value: LanguageKey) => void;
 };
 
 const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   language,
   handleChangeLanguage,
 }) => {
+  const { t } = useTranslation();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleClose = (value: string) => {
+  const handleClose = (value: LanguageKey) => {
     handleChangeLanguage(value);
     setAnchorEl(null);
   };
@@ -35,12 +40,19 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
         <LanguageIcon fontSize="small" style={{ marginRight: 5 }} />
         {language}
       </IconButton>
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={() => setAnchorEl(null)}
+      >
         <MenuItem sx={{ paddingX: "40px" }} onClick={() => handleClose("ENG")}>
-          English
+          {t("languages.ENG")}
         </MenuItem>
         <MenuItem sx={{ paddingX: "40px" }} onClick={() => handleClose("RUS")}>
-          Russian
+          {t("languages.RUS")}
+        </MenuItem>
+        <MenuItem sx={{ paddingX: "40px" }} onClick={() => handleClose("KA")}>
+          {t("languages.KA")}
         </MenuItem>
       </Menu>
     </Box>
