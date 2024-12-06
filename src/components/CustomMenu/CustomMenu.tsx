@@ -1,17 +1,20 @@
 import { Menu, Typography } from "@mui/material";
+import type { ReactNode } from "react";
 
-type NotificationMenuProps = {
-  notificationText: string;
+type CustomMenuProps = {
+  title?: string;
   anchorEl: HTMLElement | null;
   open: boolean;
   handleClose: () => void;
+  children?: ReactNode;
 };
 
-const NotificationMenu: React.FC<NotificationMenuProps> = ({
-  notificationText,
+const CustomMenu: React.FC<CustomMenuProps> = ({
+  title,
   anchorEl,
   open,
   handleClose,
+  children,
 }) => {
   return (
     <Menu
@@ -50,9 +53,10 @@ const NotificationMenu: React.FC<NotificationMenuProps> = ({
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <Typography>{notificationText}</Typography>
+      <Typography>{title}</Typography>
+      {children}
     </Menu>
   );
 };
 
-export default NotificationMenu;
+export default CustomMenu;

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router-dom";
 
-import { BasicModal, NotificationMenu, PageLoader } from "@/components";
+import { BasicModal, CustomMenu, PageLoader } from "@/components";
 import { useAppSelector, useMenu } from "@/hooks";
 import { RouteProtectedPath } from "@/router";
 import { selectUserId, useGetUserPasswordStatusQuery } from "@/store";
@@ -36,8 +36,8 @@ const ResetPasswordNotification: React.FC = () => {
           <IconButton onClick={handleOpen}>
             <NotificationsActiveIcon color="error" />
           </IconButton>
-          <NotificationMenu
-            notificationText={t("users.statusResetPassword.text")}
+          <CustomMenu
+            title={t("users.statusResetPassword.text")}
             anchorEl={anchorEl}
             handleClose={handleClose}
             open={open}

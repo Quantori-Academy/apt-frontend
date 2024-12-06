@@ -44,7 +44,7 @@ export { OrderForm } from "./OrderForm";
 export { AddReagentsToOrder } from "./AddReagentsToOrder";
 export { DashboardBreadcrumbs } from "./DashboardBreadcrumbs";
 export { AuthUserInfo } from "./AuthUserInfo";
-export { NotificationMenu } from "./NotificationMenu";
+export { CustomMenu } from "./CustomMenu";
 export { AccountMenu } from "./AccountMenu";
 export { ResetPasswordNotification } from "./ResetPasswordNotification";
 export { AlertSnackbar } from "./AlertSnackbar";
