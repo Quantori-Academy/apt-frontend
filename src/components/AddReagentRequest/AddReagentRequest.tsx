@@ -6,11 +6,12 @@ import { useReagentRequestForm } from "@/components/ReagentRequestForm";
 import { Severity } from "@/hooks";
 import { useAddReagentRequestMutation } from "@/store";
 import { ReagentRequestInput } from "@/types";
+import { isFetchBaseQueryError } from "@/utils";
 
 type AddReagentRequestProps = {
   modalOpen: boolean;
   onClose: () => void;
-  onAddRequestForm: (severity: Severity) => void;
+  onAddRequestForm: (severity: Severity, errorMessage?: string) => void;
 };
 
 const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
@@ -33,14 +34,15 @@ const AddReagentRequest: React.FC<AddReagentRequestProps> = ({
   const [addReagentRequest, { isLoading }] = useAddReagentRequestMutation();
 
   const onSubmit = async (newReagentRequest: ReagentRequestInput) => {
-    const { error } = await addReagentRequest(newReagentRequest);
-
-    if (error) {
-      onAddRequestForm("error");
-    } else {
+    try {
+      await addReagentRequest(newReagentRequest).unwrap();
       formMethods.reset();
-      onClose();
       onAddRequestForm("success");
+      onClose();
+    } catch (error) {
+      if (isFetchBaseQueryError(error) && error.data) {
+        onAddRequestForm("error", error.data as string);
+      }
     }
   };
 

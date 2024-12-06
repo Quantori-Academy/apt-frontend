@@ -156,7 +156,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                         label={t(
                           "addSubstanceForm.requiredFields.location.label"
                         )}
-                        placeholder="Select location"
+                        placeholder={t("addSubstanceForm.title.selectLocation")}
                         fullWidth
                         margin="normal"
                         error={!!error}

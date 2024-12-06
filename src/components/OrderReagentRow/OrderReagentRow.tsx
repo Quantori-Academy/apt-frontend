@@ -33,7 +33,7 @@ import { ORDER_STATUSES } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
 import { useUpdateOrderReagentMutation } from "@/store";
 import { OrderReagent, OrderReagentRowType, OrderStatus } from "@/types";
-import { getValidationRules } from "@/utils";
+import { getValidationRules, handleError } from "@/utils";
 
 type OrderReagentRowProps = {
   orderId: string;
@@ -102,14 +102,8 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
       showSuccess(t("substanceDetails.snackBarMessages.reagent.successUpdate"));
       reset(data);
       setEditableRowId(null);
-    } catch (err) {
-      if (typeof err === "object" && err !== null && "data" in err) {
-        const errorMessage = (err as { data: { message: string } }).data
-          .message;
-        showError(errorMessage);
-      } else {
-        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
-      }
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 
@@ -145,9 +139,9 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
         {OrderReagentMainRows.map(({ label, key }) => {
           let value;
           if (reagent[key] === true) {
-            value = "Yes";
+            value = t("Yes");
           } else if (reagent[key] === false) {
-            value = "No";
+            value = t("No");
           } else {
             value = reagent[key];
           }
@@ -242,7 +236,10 @@ const OrderReagentRow: React.FC<OrderReagentRowProps> = ({
                         <>
                           {reagent.structure}
 
-                          <Tooltip placement="top" title="Show structure image">
+                          <Tooltip
+                            placement="top"
+                            title={t("orders.buttons.showStructure")}
+                          >
                             <IconButton
                               size="small"
                               onClick={() => setShowSMILES(true)}

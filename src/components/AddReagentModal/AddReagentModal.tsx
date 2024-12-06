@@ -6,6 +6,7 @@ import { AddReagentForm, BasicModal } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useCreateReagentMutation, useGetStorageRoomsQuery } from "@/store";
 import { ReagentData } from "@/types";
+import { handleError } from "@/utils";
 
 const AddReagentModal: React.FC = () => {
   const { t } = useTranslation();
@@ -53,8 +54,7 @@ const AddReagentModal: React.FC = () => {
       showSuccess(t("addSubstanceForm.snackBarMessages.reagent.success"));
       setIsOpen(false);
     } catch (error) {
-      console.error("Error adding reagent:", error);
-      showError(t("addSubstanceForm.snackBarMessages.reagent.error"));
+      handleError({ error, t, showError });
     }
   };
 

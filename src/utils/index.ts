@@ -6,3 +6,5 @@ export * from "./getReagentRequestsData";
 export * from "./formatDate";
 export * from "./validateQuantity";
 export * from "./PriceQuantityAmountFormatters";
+export * from "./isFetchBaseQueryError";
+export * from "./handleError";

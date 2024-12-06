@@ -1,5 +1,6 @@
 import { Edit, MoveUp } from "@mui/icons-material";
 import { IconButton, TableCell, TableRow, Tooltip } from "@mui/material";
+import { t } from "i18next";
 
 import { userRoles } from "@/constants";
 import { useAppSelector } from "@/hooks";
@@ -30,7 +31,10 @@ export const SubstanceLocationTableRow: React.FC<
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       <TableCell>
         {isResearcher && (
-          <Tooltip placement="top" title="Change reagent's location">
+          <Tooltip
+            placement="top"
+            title={t(`substanceDetails.title.changeLocation${substanceType}`)}
+          >
             <IconButton onClick={onClickChangeLocation}>
               <MoveUp />
             </IconButton>
@@ -41,7 +45,10 @@ export const SubstanceLocationTableRow: React.FC<
       <TableCell align="right">
         {quantityLeft}
         {isResearcher && (
-          <Tooltip placement="top" title="Change  reagent's quantity">
+          <Tooltip
+            placement="top"
+            title={t(`substanceDetails.title.changeQuantity${substanceType}`)}
+          >
             <IconButton onClick={onClickChangeQuantity}>
               <Edit />
             </IconButton>

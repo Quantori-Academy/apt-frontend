@@ -7,6 +7,7 @@ import { AddSampleForm } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useCreateSampleMutation, useGetStorageRoomsQuery } from "@/store";
 import { SampleData } from "@/types";
+import { handleError } from "@/utils";
 
 const AddSampleModal: React.FC = () => {
   const { t } = useTranslation();
@@ -27,8 +28,7 @@ const AddSampleModal: React.FC = () => {
         showSuccess(t("addSubstanceForm.snackBarMessages.sample.success"));
         setIsOpen(false);
       } catch (error) {
-        console.error("Failed to create sample:", error);
-        showError(t("addSubstanceForm.snackBarMessages.sample.error"));
+        handleError({ error, t, showError });
       }
     }
   };

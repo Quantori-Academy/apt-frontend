@@ -117,9 +117,8 @@ const ReagentRequests: React.FC = () => {
     setSortColumn(property);
   };
 
-  const onAddRequestForm = (severity: Severity) => {
-    if (severity === "error")
-      showError(t("requests.snackBarMessages.failedAdd"));
+  const onAddRequestForm = (severity: Severity, errorMessage?: string) => {
+    if (severity === "error") showError(t(`backendErrors.${errorMessage}`));
     else {
       showSuccess(t("requests.snackBarMessages.added"));
     }

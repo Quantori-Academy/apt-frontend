@@ -1,7 +1,6 @@
 import {
   BackendOrder,
   BackendOrderDetailPage,
-  MutationResponse,
   Order,
   OrderDetailPage,
   OrderInput,
@@ -76,11 +75,6 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
         },
       }),
       invalidatesTags: ["Orders"],
-      transformErrorResponse: (response: MutationResponse) => {
-        return {
-          message: response.data?.message || "An unexpected error occurred.",
-        };
-      },
     }),
 
     updateOrderStatus: builder.mutation<void, UpdateOrderStatus>({
@@ -90,11 +84,6 @@ export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
         body: { status },
       }),
       invalidatesTags: ["Orders", "Requests"],
-      transformErrorResponse: (response: MutationResponse) => {
-        return {
-          message: response.data?.message || "An unexpected error occurred.",
-        };
-      },
     }),
 
     chooseLocation: builder.mutation<void, Allocation>({

@@ -5,6 +5,12 @@
       "accountSettings": "Account Settings"
     },
 
+    "languages": {
+      "ENG": "English",
+      "RUS": "Russian",
+      "KA": "Georgian"
+    },
+
     "breadcrumbs": {
       "Dashboard": "Dashboard",
       "Users": "Users",
@@ -29,6 +35,78 @@
       "create": "Create",
       "submit": "Submit",
       "add": "Add"
+    },
+
+    "Yes": "Yes",
+    "No": "No",
+
+    "backendErrors": {
+      "Storage location not found.": "Storage location not found",
+      "The given substance does not exist at the specified location.": "The given substance does not exist at the specified location",
+      "Storage room not found.": "Storage room not found",
+      "Storage room already exists.": "Storage room already exists",
+      "Storage location already exists.": "Storage location already exists",
+      "Storage location contains substances and can't be deleted.": "Storage location contains substances and can't be deleted",
+      "Storage room contains locations and can't be deleted.": "Storage room contains locations and can't be deleted",
+      "Failed to update storage room.": "Failed to update storage room",
+      "Unprocessable type.": "Unprocessable type",
+      "Storage record of that substance could not be found.": "Storage record of that substance could not be found",
+
+      "An unknown error occurred": "An unknown error occurred",
+      "Invalid refresh token.": "Invalid refresh token",
+      "Invalid email format.": "Invalid email format",
+      "Password must contain at least 8 characters and at least 1 uppercase letter.": "Password must contain at least 8 characters and at least 1 uppercase letter",
+      "Invalid access token.": "Invalid access token",
+      "User with the given information already exists.": "User with the given information already exists",
+      "User not found.": "User not found",
+      "Incorrect current password.": "Incorrect current password",
+      "Invalid user ID": "Invalid user ID",
+      "Not authorized for this action.": "Not authorized for this action",
+      "Current password is required.": "Current password is required",
+      "Incorrect username or password.": "Incorrect username or password.",
+      "Incorrect password.": "Incorrect password",
+      "Failed to update user profile.": "Failed to update user profile",
+      "Profile updated successfully.": "Profile updated successfully",
+      "Current password is required when updating password.": "Current password is required when updating password",
+      "Validation error.": "Validation error",
+      "Invalid password(s) format.": "Invalid password(s) format",
+
+      "Substance not found.": "Substance not found",
+      "Quantity/amount must be positive.": "Quantity/amount must be positive",
+      "Added quantity must be a positive floating point number.": "Added quantity must be a positive floating point number",
+      "2 or more of the same location can't be provided for a single unique substance.": "2 or more of the same location can't be provided for a single unique substance",
+      "Substance(s) have not reached expiration.": "Substance(s) have not reached expiration",
+      "Reduced quantity must be positive and less than current quantity.": "Reduced quantity must be positive and less than current quantity",
+
+      "Reagent not found.": "Reagent not found",
+      "Couldn't create reagent.": "Couldn't create reagent",
+
+      "Sample not found.": "Sample not found",
+      "Couldn't create sample.": "Couldn't create sample",
+      "Insufficient amount of Reagent(s)/sample(s) in storage.": "Insufficient amount of Reagent(s)/sample(s) in storage",
+      "Sample must be created from at least one substance.": "Sample must be created from at least one substance",
+
+      "Request(s) not found.": "Request(s) not found",
+      "Request is already declined.": "Request is already declined",
+      "Request already exists.": "Request already exists",
+      "Amount must be a positive integer.": "Amount must be a positive integer",
+      "Only requests with status set to 'Pending' can be updated.": "Only requests with status set to 'Pending' can be updated",
+
+      "Order not found.": "Order not found",
+      "Order item not found.": "Order item not found",
+      "Order must contain at least 1 reagent.": "Order must contain at least 1 reagent",
+      "Order with same title already exists.": "Order with same title already exists",
+      "Reagent(s) for that order couldn't be found.": "Reagent(s) for that order couldn't be found",
+      "At least one reagent must be provided.": "At least one reagent must be provided",
+      "Provided request(s) is/are already linked to an order.": "Provided request(s) is/are already linked to an order",
+      "Amount/Quantity must be positive.": "Amount/Quantity must be positive",
+      "Order reagents are already stored in storage location(s).": "Order reagents are already stored in storage location(s)",
+      "Can't allocate reagents for order, because it doesn't have 'Submitted' status.": "Can't allocate reagents for order, because it doesn't have 'Submitted' status",
+      "Can't set Cancelled or Fulfilled status for Pending orders.": "Can't set Cancelled or Fulfilled status for Pending orders",
+      "Order details can be modified if and only if its status is set to 'Pending'.": "Order details can be modified if and only if its status is set to 'Pending'",
+      "Can't change status for Cancelled or Fulfilled orders.": "Can't change status for Cancelled or Fulfilled orders",
+
+      "An unexpected error occurred": "An unexpected error occurred"
     },
 
     "users": {
@@ -81,6 +159,7 @@
       },
 
       "snackBarMessages": {
+        "noUser": "No user found with the specified ID",
         "password": {
           "success": "Password changed successfully",
           "error": "Failed to change password"
@@ -236,7 +315,8 @@
         "reagent": "Add New Reagent",
         "sample": "Add New Sample",
         "addedSubstances": "Added Substances",
-        "addSubstance": "Add Substance"
+        "addSubstance": "Add Substance",
+        "selectLocation": "Select location"
       },
 
       "buttons": {
@@ -314,13 +394,16 @@
           "minConsumptionMessage": "Consumption must be positive"
         }
       },
+
       "emptyAreas": {
-        "noAddedSubstances":  "You haven't added any substances yet",
+        "noAddedSubstances": "You haven't added any substances yet",
         "noSearchReagent": " No reagents found matching the given name"
       },
+
       "placeholders": {
         "search": "Type at least 3 letters to search..."
       },
+
       "texts": {
         "totalQuantity": "Total quantity:"
       }
@@ -331,7 +414,11 @@
         "reagent": "Reagent Details",
         "sample": "Sample Details",
         "editReagent": "Edit Reagent",
-        "editSample": "Edit Sample"
+        "editSample": "Edit Sample",
+        "changeLocationReagent": "Change reagent's location",
+        "changeLocationSample": "Change sample's location",
+        "changeQuantityReagent": "Change reagent's location",
+        "changeQuantitySample": "Change sample's location"
       },
 
       "buttons": {
@@ -381,7 +468,7 @@
 
       "errors": {
         "reagentLoadError": "Failed to load reagent details",
-        "sampleLoadError": "Failed to load reagent details"
+        "sampleLoadError": "Failed to load sample details"
       },
 
       "snackBarMessages": {
@@ -402,7 +489,8 @@
       "title": {
         "storage": "Storage Locations",
         "dashboardStorage": "Storage",
-        "location": "Location Details"
+        "location": "Location Details",
+        "editRoom": "Edit Storage Room"
       },
 
       "buttons": {
@@ -480,7 +568,8 @@
         "allocateSelected": "Allocate Reagents",
         "chooseLocation": "Choose location",
         "markSubmitted": "Mark as Submitted",
-        "markCancelled": "Mark as Cancelled"
+        "markCancelled": "Mark as Cancelled",
+        "showStructure": "Show structure image"
       },
 
       "tooltip": "Once all reagents are allocated, the order will be fulfilled",
@@ -495,11 +584,6 @@
         "editing": {
           "success": "Order updated successfully"
         },
-        "Order with same title already exists.": "Order with same title already exists",
-        "Can't change status for Cancelled or Fulfilled orders.": "Can't change status for Cancelled or Fulfilled orders",
-        "Order details can be modified if and only if its status is set to 'Pending'.": "Order details can be modified if and only if its status is set to 'Pending'",
-        "Can't set Cancelled or Fulfilled status for Pending orders.": "Can't set Cancelled or Fulfilled status for Pending orders",
-        "An unexpected error occurred": "An unexpected error occurred",
         "allocated": "Reagents allocated successfully"
       },
 
@@ -612,7 +696,6 @@
         "CASNumber": {
           "label": "CAS Number"
         },
-
         "comment": {
           "label": "Comment"
         }
@@ -651,6 +734,9 @@
         "failedAdd": "Failed to add request",
         "added": "Request added successfully"
       },
+
+      "successDecline": "Request declined successfully",
+      "successUpdate": "Request updated successfully",
 
       "statusFilter": {
         "All": "All",

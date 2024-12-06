@@ -32,7 +32,6 @@ export {
   useUpdateStorageRoomMutation,
   useCreateStorageRoomMutation,
   useDeleteStorageLocationMutation,
-  useMoveSubstanceMutation,
   useGetSubstanceTotalQuantityQuery,
 } from "./storageApi";
 
