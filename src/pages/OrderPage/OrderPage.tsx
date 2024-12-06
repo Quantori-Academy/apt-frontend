@@ -43,7 +43,7 @@ import {
   useUpdateOrderStatusMutation,
 } from "@/store";
 import { Order } from "@/types";
-import { formatDate } from "@/utils";
+import { formatDate, handleError } from "@/utils";
 
 const OrderPage: React.FC = () => {
   const { t } = useTranslation();
@@ -100,19 +100,19 @@ const OrderPage: React.FC = () => {
   };
 
   const onSubmitEditing = async (data: Pick<Order, "title" | "seller">) => {
-    const { error } = await editOrderTitleSeller({
-      orderId: order.id,
-      title: data.title === order.title ? null : data.title,
-      seller: data.seller,
-    });
-
-    if (error && "message" in error) {
-      resetEditing({ title: order.title, seller: order.seller });
-      showError(t(`orders.snackBarMessages.${error.message}`));
-    } else {
+    try {
+      await editOrderTitleSeller({
+        orderId: order.id,
+        title: data.title === order.title ? null : data.title,
+        seller: data.seller,
+      }).unwrap();
       showSuccess(t("orders.snackBarMessages.editing.success"));
+    } catch (error) {
+      handleError({ error, t, showError });
+      resetEditing({ title: order.title, seller: order.seller });
+    } finally {
+      setIsEditable(false);
     }
-    setIsEditable(false);
   };
 
   const onSubmitUpdatingStatus = async () => {
@@ -121,15 +121,14 @@ const OrderPage: React.FC = () => {
         ? ORDER_STATUSES.Submitted
         : ORDER_STATUSES.Cancelled;
 
-    const { error } = await updateOrderStatus({
-      orderId: order.id,
-      status: statusToSend,
-    });
-
-    if (error && "message" in error) {
-      showError(t(`orders.snackBarMessages.${error.message}`));
-    } else {
+    try {
+      await updateOrderStatus({
+        orderId: order.id,
+        status: statusToSend,
+      }).unwrap();
       showSuccess(t("orders.snackBarMessages.editing.success"));
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 

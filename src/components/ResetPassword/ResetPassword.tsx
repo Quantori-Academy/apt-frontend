@@ -7,6 +7,7 @@ import { RevealableField } from "@/components";
 import { PASSWORD_REGEX } from "@/constants";
 import { useAlertSnackbar } from "@/hooks";
 import { useResetPasswordMutation } from "@/store";
+import { handleError } from "@/utils";
 
 import style from "./ResetPassword.module.css";
 
@@ -48,17 +49,16 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({
   const { showSuccess, showError } = useAlertSnackbar();
 
   const onSubmit = async (formData: ResetPasswordFields) => {
-    const { error } = await resetPassword({
-      userId,
-      currentPassword: formData.currentPassword,
-      newPassword: formData.password,
-    });
-
-    if (error) {
-      showError(t("userDetails.snackBarMessages.password.error"));
-    } else {
+    try {
+      await resetPassword({
+        userId,
+        currentPassword: formData.currentPassword,
+        newPassword: formData.password,
+      }).unwrap();
       showSuccess(t("userDetails.snackBarMessages.password.success"));
       setIsEditMode(false);
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 

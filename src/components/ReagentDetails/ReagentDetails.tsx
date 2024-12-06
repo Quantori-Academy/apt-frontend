@@ -13,6 +13,7 @@ import { useAlertSnackbar } from "@/hooks";
 import { useDeleteSubstancesMutation } from "@/store";
 import { Reagent } from "@/types";
 import { formatDate } from "@/utils";
+import { handleError } from "@/utils/handleError";
 
 type ReagentKey = keyof Omit<Reagent, "locations">;
 
@@ -39,12 +40,11 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
   const { showSuccess, showError } = useAlertSnackbar();
 
   const onClickDelete = async () => {
-    const { error } = await deleteSubstances([substanceId]);
-
-    if (error && "message" in error) {
-      showError(t("substanceDetails.snackBarMessages.reagent.errorDelete"));
-    } else {
+    try {
+      await deleteSubstances([substanceId]).unwrap();
       showSuccess(t("substanceDetails.snackBarMessages.reagent.successDelete"));
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 

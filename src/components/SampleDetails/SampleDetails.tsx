@@ -21,7 +21,7 @@ import {
 import { useAlertSnackbar } from "@/hooks";
 import { useDeleteSubstancesMutation } from "@/store";
 import { Sample } from "@/types";
-import { formatDate } from "@/utils";
+import { formatDate, handleError } from "@/utils";
 
 import CustomTabPanel from "./CustomTabelPanel";
 
@@ -52,12 +52,11 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
   const { showSuccess, showError } = useAlertSnackbar();
 
   const onClickDelete = async () => {
-    const { error } = await deleteSubstances([substanceId]);
-
-    if (error && "message" in error) {
-      showError(t("substanceDetails.snackBarMessages.reagent.errorDelete"));
-    } else {
+    try {
+      await deleteSubstances([substanceId]);
       showSuccess(t("substanceDetails.snackBarMessages.reagent.successDelete"));
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 
@@ -120,8 +119,16 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
         {!hasLocations && <OutOfStock />}
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs value={value} onChange={handleChange} variant="fullWidth">
-            <Tab label="Added substances" id="tab-1" />
-            {hasLocations && <Tab label="Locations" id="tab-2" />}
+            <Tab
+              label={t("addSubstanceForm.title.addedSubstances")}
+              id="tab-1"
+            />
+            {hasLocations && (
+              <Tab
+                label={t("storage.fields.locations").slice(0, -1)}
+                id="tab-2"
+              />
+            )}
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>

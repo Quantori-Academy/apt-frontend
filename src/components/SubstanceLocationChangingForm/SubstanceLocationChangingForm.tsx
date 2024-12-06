@@ -15,6 +15,7 @@ import {
   useUpdateLocationMutation,
 } from "@/store";
 import { LocationChangingIds, SubstancesCategory } from "@/types";
+import { handleError } from "@/utils";
 
 type LocationChangingProps = {
   locationIdsToChange: LocationChangingIds;
@@ -56,21 +57,15 @@ const SubstanceLocationChangingForm: React.FC<LocationChangingProps> = ({
         storageContentId: locationIdsToChange.storageContentId as number,
       };
 
-      await updateLocation(updatedDetails);
+      await updateLocation(updatedDetails).unwrap();
       showSuccess(
         t(
           `substanceDetails.snackBarMessages.${substanceType === "Reagent" ? "reagent.successUpdate" : "sample.successUpdate"}`
         )
       );
       onCancel();
-    } catch (err) {
-      if (typeof err === "object" && err !== null && "data" in err) {
-        const errorMessage = (err as { data: { message: string } }).data
-          .message;
-        showError(errorMessage);
-      } else {
-        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
-      }
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 

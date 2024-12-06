@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 import { ConfirmRemoving } from "@/components";
 import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import { RouteProtectedPath } from "@/router";
 import { selectUserId, useDeleteUserMutation } from "@/store";
+import { handleError } from "@/utils";
 
 type DeleteUserProps = {
   userId: string;
@@ -23,13 +25,12 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
   const { showSuccess, showError } = useAlertSnackbar();
 
   const handleDeleteUser = async () => {
-    const { error } = await deleteUser(userId);
-
-    if (error) {
-      showError(t("userDetails.snackBarMessages.delete.error"));
-    } else {
+    try {
+      await deleteUser(userId).unwrap();
       showSuccess(t("userDetails.snackBarMessages.delete.success"));
-      navigate("/users");
+      navigate(RouteProtectedPath.users);
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 

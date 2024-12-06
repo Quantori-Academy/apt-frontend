@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { BasicModal } from "@/components";
 import { Severity } from "@/hooks";
 import { useDeclineReagentRequestMutation } from "@/store";
+import { isFetchBaseQueryError } from "@/utils";
 
 type DeclineReagentRequestProps = {
   id: string;
@@ -37,16 +38,18 @@ const DeclineReagentRequest: React.FC<DeclineReagentRequestProps> = ({
   const [declineReagentRequest] = useDeclineReagentRequestMutation();
 
   const onSubmit = async (message: DeclineMessage) => {
-    const { error } = await declineReagentRequest({
-      requestId: id,
-      declineMessage: message.declineComment,
-    });
+    try {
+      await declineReagentRequest({
+        requestId: id,
+        declineMessage: message.declineComment,
+      }).unwrap();
 
-    if (error) {
-      onDeclineSubmit("error", "Failed to Decline Request");
-    } else {
-      onDeclineSubmit("success", "Request Declined Successfully");
+      onDeclineSubmit("success", t("requests.successDecline"));
       onClose();
+    } catch (error) {
+      if (isFetchBaseQueryError(error) && error.data) {
+        onDeclineSubmit("error", t(`backendErrors.${error.data}`));
+      }
     }
   };
 

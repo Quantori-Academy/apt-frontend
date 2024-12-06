@@ -5,6 +5,7 @@ import { OrderForm } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useCreateOrderFromRequestsMutation } from "@/store";
 import { OrderInput, ReagentRequests } from "@/types";
+import { handleError } from "@/utils";
 
 type AddOrderProps = {
   modalOpen: boolean;
@@ -55,14 +56,8 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
       }).unwrap();
       showSuccess(t("createOrderForm.snackBarMessages.creation.success"));
       onClose();
-    } catch (err) {
-      if (typeof err === "object" && err !== null && "data" in err) {
-        const errorMessage = (err as { data: { message: string } }).data
-          .message;
-        showError(errorMessage);
-      } else {
-        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
-      }
+    } catch (error) {
+      handleError({ error, t, showError });
     } finally {
       onCreateOrder();
     }

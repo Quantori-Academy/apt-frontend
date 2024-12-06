@@ -16,6 +16,7 @@ import {
   useDeleteStorageLocationMutation,
   useGetStorageLocationDetailQuery,
 } from "@/store";
+import { handleError } from "@/utils";
 
 const StorageLocationDetails: React.FC = () => {
   const { t } = useTranslation();
@@ -36,13 +37,12 @@ const StorageLocationDetails: React.FC = () => {
 
   const handleDelete = async () => {
     if (locationDetails?.substances.length === 0) {
-      const { error } = await deleteStorageLocation(Number(locationId));
-
-      if (!error) {
+      try {
+        await deleteStorageLocation(Number(locationId)).unwrap();
         showSuccess(t("storage.snackBarMessages.successDelete"));
         navigate(RouteProtectedPath.storageLocation);
-      } else {
-        showError(t("storage.snackBarMessages.errorDelete"));
+      } catch (error) {
+        handleError({ error, t, showError });
       }
     } else {
       showError(t("storage.snackBarMessages.notEmptyError"));

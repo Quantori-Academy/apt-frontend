@@ -19,6 +19,7 @@ import {
   useUpdateRoleMutation,
 } from "@/store";
 import { UserRole } from "@/types";
+import { handleError } from "@/utils";
 
 type EditUserRoleProps = {
   userId: string;
@@ -50,16 +51,15 @@ const EditUserRole: React.FC<EditUserRoleProps> = ({ userId }) => {
   if (isLoadingUserDetails) return <PageLoader />;
 
   const onSubmit = async ({ role: updatedRole }: UserRoleUpdate) => {
-    const { error } = await updateRole({
-      userId,
-      updatedRole,
-    });
-
-    if (error) {
-      showError(t("userDetails.snackBarMessages.role.error"));
-    } else {
+    try {
+      await updateRole({
+        userId,
+        updatedRole,
+      }).unwrap();
       showSuccess(t("userDetails.snackBarMessages.role.success"));
       setIsEditMode(false);
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 
