@@ -23,10 +23,4 @@ export default defineConfig({
     },
   },
 
-  resolve: {
-    alias: {
-      process: 'process/browser',
-      global: 'global',
-    },
-  },
 });
