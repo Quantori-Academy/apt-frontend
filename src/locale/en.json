@@ -6,9 +6,9 @@
     },
 
     "languages": {
-      "ENG": "English",
-      "RUS": "Russian",
-      "KA": "Georgian"
+      "ENG": "English (US)",
+      "RUS": "Русский (RU)",
+      "KA": "ქართული (GE)"
     },
 
     "breadcrumbs": {
