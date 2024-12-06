@@ -38,6 +38,7 @@ export const authSlice = createReducerSlice({
   reducers: (create) => ({
     logout: create.reducer((state) => {
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       state.isAuthenticated = false;
       state.user = null;
     }),
