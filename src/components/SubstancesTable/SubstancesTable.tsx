@@ -61,7 +61,6 @@ const SubstancesTable: React.FC<ReagentSampleTableProps> = ({
       navigate(RouteProtectedPath.samplePage.replace(":id", substanceId));
     }
   };
-  console.log(visibleItems);
 
   return (
     <ScrollableTable

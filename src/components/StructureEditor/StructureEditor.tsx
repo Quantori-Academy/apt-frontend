@@ -21,7 +21,7 @@ const StructureEditor: React.FC<KetcherEditorProps> = ({ onChange }) => {
 
   return (
     <Editor
-      staticResourcesUrl="./"
+      staticResourcesUrl="process.env.PUBLIC_URL"
       structServiceProvider={structServiceProvider}
       errorHandler={console.error}
       onInit={handleInit}
