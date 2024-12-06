@@ -21,7 +21,6 @@ export { ReagentDetails } from "./ReagentDetails";
 export { SampleDetails } from "./SampleDetails";
 export { PageError } from "./PageError";
 export { AddStorageDialog } from "./AddStorageDialog";
-export { ChangeLocationDialog } from "./ChangeLocationDialog";
 export { EditStorage } from "./EditStorage";
 export { SubstanceDetails } from "./SubstanceDetails";
 export { CategoryFilter } from "./CategoryFilter";
@@ -74,4 +73,3 @@ export { DisposeButton } from "./DisposeButton";
 export { AddSubstancesToSample } from "./AddSubstancesToSample";
 export { AddSubstanceLocationToSample } from "./AddSubstanceLocationToSample";
 export { AddedSubstancesInSample } from "./AddedSubstancesInSample";
-
