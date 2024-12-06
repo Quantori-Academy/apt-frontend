@@ -1,0 +1,763 @@
+{
+  "translation": {
+    "header": {
+      "dashboard": "დეშბორდი",
+      "accountSettings": "ანგარიშის პარამეტრები"
+    },
+
+    "languages": {
+      "ENG": "ინგლისური",
+      "RUS": "რუსული",
+      "KA": "ქართული"
+    },
+
+    "breadcrumbs": {
+      "Dashboard": "დეშბორდი",
+      "Users": "მომხმარებლები",
+      "User Details": "მომხმარებლის დეტალები",
+      "Storage Locations": "საცავების ადგილები",
+      "Storage Detail": "საცავის დეტალები",
+      "Substances": "სუბსტანციები",
+      "Reagent Detail": "რეაგენტის დეტალები",
+      "Sample Detail": "ნიმუშის დეტალები",
+      "Orders": "შეკვეთები",
+      "Order Details": "შეკვეთის დეტალები",
+      "Reagent Requests": "რეაგენტის მოთხოვნები"
+    },
+
+    "buttons": {
+      "edit": "რედაქტირება",
+      "save": "შენახვა",
+      "cancel": "გაუქმება",
+      "delete": "წაშლა",
+      "login": "შესვლა",
+      "logout": "გამოსვლა",
+      "create": "შექმნა",
+      "submit": "გაგზავნა",
+      "add": "დამატება"
+    },
+
+    "Yes": "დიახ",
+    "No": "არა",
+
+    "backendErrors": {
+      "Storage location not found.": "საცავის მდებარეობა ვერ მოიძებნა",
+      "The given substance does not exist at the specified location.": "მოცემული სუბსტანცია აღნიშნულ მდებარეობაზე არ არსებობს",
+      "Storage room not found.": "საცავი ოთახი ვერ მოიძებნა",
+      "Storage room already exists.": "საცავი ოთახი უკვე არსებობს",
+      "Storage location already exists.": "საცავის მდებარეობა უკვე არსებობს",
+      "Storage location contains substances and can't be deleted.": "საცავის მდებარეობა შეიცავს სუბსტანციებს და ვერ წაიშლება",
+      "Storage room contains locations and can't be deleted.": "საცავი ოთახი შეიცავს მდებარეობებს და ვერ წაიშლება",
+      "Failed to update storage room.": "საცავი ოთახის განახლება ვერ მოხერხდა",
+      "Unprocessable type.": "დაუმუშავებელი ტიპი",
+      "Storage record of that substance could not be found.": "იმ სუბსტანციის საცავის ჩანაწერი ვერ მოიძებნა",
+
+      "An unknown error occurred": "უცნობი შეცდომა მოხდა",
+      "Invalid refresh token.": "არასწორი განახლების ტოკენი",
+      "Invalid email format.": "არასწორი ელფოსტის ფორმატი",
+      "Password must contain at least 8 characters and at least 1 uppercase letter.": "პაროლი უნდა შეიცავდეს მინიმუმ 8 სიმბოლოს და მინიმუმ 1 დიდ ასოს",
+      "Invalid access token.": "არასწორი წვდომის ტოკენი",
+      "User with the given information already exists.": "მომხმარებელი ამ ინფორმაციით უკვე არსებობს",
+      "User not found.": "მომხმარებელი ვერ მოიძებნა",
+      "Incorrect current password.": "არასწორი მიმდინარე პაროლი",
+      "Invalid user ID": "არასწორი მომხმარებლის ID",
+      "Not authorized for this action.": "ამ ქმედებისთვის ავტორიზაცია არ გაქვთ",
+      "Current password is required.": "მიმდინარე პაროლი აუცილებელია",
+      "Incorrect username or password.": "არასწორი მომხმარებლის სახელი ან პაროლი",
+      "Incorrect password.": "არასწორი პაროლი",
+      "Failed to update user profile.": "მომხმარებლის პროფილის განახლება ვერ მოხერხდა",
+      "Profile updated successfully.": "პროფილი წარმატებით განახლდა",
+      "Current password is required when updating password.": "პაროლის განახლებისთვის აუცილებელია მიმდინარე პაროლი",
+      "Validation error.": "ვალიდაციის შეცდომა",
+      "Invalid password(s) format.": "არასწორი პაროლის ფორმატი",
+
+      "Substance not found.": "სუბსტანცია ვერ მოიძებნა",
+      "Quantity/amount must be positive.": "რაოდენობა/მოცულობა უნდა იყოს დადებითი",
+      "Added quantity must be a positive floating point number.": "დამატებული რაოდენობა უნდა იყოს დადებითი ათწილადური რიცხვი",
+      "2 or more of the same location can't be provided for a single unique substance.": "ერთი უნიკალური სუბსტანციისთვის ორი ან მეტი იგივე მდებარეობა ვერ მიეთითება",
+      "Substance(s) have not reached expiration.": "სუბსტანციას/სუბსტანციებს ვადა არ გაუვლიათ",
+      "Reduced quantity must be positive and less than current quantity.": "შემცირებული რაოდენობა უნდა იყოს დადებითი და ნაკლები მიმდინარე რაოდენობაზე",
+
+      "Reagent not found.": "რეაგენტი ვერ მოიძებნა",
+      "Couldn't create reagent.": "რეაგენტის შექმნა ვერ მოხერხდა",
+
+      "Sample not found.": "ნიმუში ვერ მოიძებნა",
+      "Couldn't create sample.": "ნიმუშის შექმნა ვერ მოხერხდა",
+      "Insufficient amount of Reagent(s)/sample(s) in storage.": "საცავში რეაგენტების/ნიმუშების რაოდენობა არასაკმარისია",
+      "Sample must be created from at least one substance.": "ნიმუში უნდა შეიქმნას მინიმუმ ერთი სუბსტანციისგან",
+
+      "Request(s) not found.": "მოთხოვნა/მოთხოვნები ვერ მოიძებნა",
+      "Request is already declined.": "მოთხოვნა უკვე უარყოფილია",
+      "Request already exists.": "მოთხოვნა უკვე არსებობს",
+      "Amount must be a positive integer.": "რაოდენობა უნდა იყოს დადებითი მთელი რიცხვი",
+      "Only requests with status set to 'Pending' can be updated.": "მხოლოდ სტატუსით 'მოლოდინში' მყოფი მოთხოვნები შეიძლება განახლდეს",
+
+      "Order not found.": "შეკვეთა ვერ მოიძებნა",
+      "Order item not found.": "შეკვეთის ელემენტი ვერ მოიძებნა",
+      "Order must contain at least 1 reagent.": "შეკვეთაში უნდა იყოს მინიმუმ ერთი რეაგენტი",
+      "Order with same title already exists.": "იგივე სათაურის შეკვეთა უკვე არსებობს",
+      "Reagent(s) for that order couldn't be found.": "იმ შეკვეთისთვის რეაგენტი/რეაგენტები ვერ მოიძებნა",
+      "At least one reagent must be provided.": "უნდა იყოს მინიმუმ ერთი რეაგენტი",
+      "Provided request(s) is/are already linked to an order.": "მოცემული მოთხოვნა/მოთხოვნები უკვე შეკვეთასთან არის დაკავშირებული",
+      "Amount/Quantity must be positive.": "რაოდენობა/მოცულობა უნდა იყოს დადებითი",
+      "Order reagents are already stored in storage location(s).": "შეკვეთის რეაგენტები უკვე შენახულია საცავის ადგილებში",
+      "Can't allocate reagents for order, because it doesn't have 'Submitted' status.": "შეკვეთისთვის რეაგენტების განაწილება შეუძლებელია, რადგან მას 'გაგზავნილი' სტატუსი არ აქვს",
+      "Can't set Cancelled or Fulfilled status for Pending orders.": "მოლოდინში მყოფ შეკვეთებს ვერ მიენიჭება 'გაუქმებული' ან 'შესრულებული' სტატუსი",
+      "Order details can be modified if and only if its status is set to 'Pending'.": "შეკვეთის დეტალები შეიძლება შეიცვალოს მხოლოდ იმ შემთხვევაში, თუ მისი სტატუსი არის 'მოლოდინში'",
+      "Can't change status for Cancelled or Fulfilled orders.": "გაუქმებული ან შესრულებული შეკვეთების სტატუსის შეცვლა შეუძლებელია",
+
+      "An unexpected error occurred": "გამოუცნობი შეცდომა მოხდა"
+    },
+
+    "users": {
+      "title": "მომხმარებლები",
+
+      "buttons": {
+        "addUser": "მომხმარებლის დამატება"
+      },
+
+      "errors": {
+        "loadError": "მომხმარებლების ჩატვირთვა ვერ მოხერხდა."
+      },
+
+      "filters": {
+        "search": "ძიება...",
+        "role": "როლი"
+      },
+
+      "roles": {
+        "All": "ყველა",
+        "Administrator": "ადმინისტრატორი",
+        "Procurement Officer": "შესყიდვების ოფიცერი",
+        "Researcher": "მკვლევარი"
+      },
+
+      "table": {
+        "username": "მომხმარებლის სახელი",
+        "firstName": "სახელი",
+        "lastName": "გვარი",
+        "email": "ელფოსტა",
+        "role": "როლი",
+        "lastLogin": "ბოლო შესვლა",
+        "actions": "მოქმედებები"
+      },
+
+      "statusResetPassword": {
+        "title": "გაფრთხილება!",
+        "text": "თქვენი პაროლი დროებითია. გთხოვთ, შეცვალეთ იგი თქვენი ანგარიშის უსაფრთხოებისთვის."
+      }
+    },
+
+    "userDetails": {
+      "title": "ანგარიშის დეტალები",
+
+      "buttons": {
+        "editDetails": "დეტალების რედაქტირება",
+        "changePassword": "პაროლის შეცვლა",
+        "editRole": "როლის რედაქტირება",
+        "deleteUser": "მომხმარებლის წაშლა"
+      },
+
+      "snackBarMessages": {
+        "noUser": "მითითებული ID-ით მომხმარებელი ვერ მოიძებნა",
+        "password": {
+          "success": "პაროლი წარმატებით შეიცვალა",
+          "error": "პაროლის შეცვლა ვერ მოხერხდა"
+        },
+        "role": {
+          "success": "როლი წარმატებით შეიცვალა",
+          "error": "როლის შეცვლა ვერ მოხერხდა"
+        },
+        "details": {
+          "success": "დეტალები წარმატებით განახლდა",
+          "error": "დეტალების განახლება ვერ მოხერხდა"
+        },
+        "delete": {
+          "success": "მომხმარებელი წარმატებით წაიშალა",
+          "error": "მომხმარებლის წაშლა ვერ მოხერხდა"
+        }
+      },
+
+      "modalMessages": {
+        "confirmDelete": "დარწმუნებული ხართ, რომ გსურთ ამ მომხმარებლის წაშლა?"
+      },
+
+      "requiredFields": {
+        "firstName": "სახელი აუცილებელია",
+        "lastName": "გვარი აუცილებელია",
+        "email": {
+          "requiredMessage": "ელფოსტა აუცილებელია",
+          "patternMessage": "გთხოვთ, შეიყვანეთ სწორი ელფოსტა"
+        },
+        "password": {
+          "label": "პაროლი",
+          "requiredMessage": "პაროლი აუცილებელია",
+          "minLengthMessage": "პაროლი უნდა იყოს მინიმუმ 8 სიმბოლო",
+          "patternMessage": "პაროლი უნდა შეიცავდეს მინიმუმ ერთ დიდ ასოს"
+        },
+        "confirmPassword": {
+          "label": "პაროლის დადასტურება",
+          "requiredMessage": "ეს ველი აუცილებელია",
+          "matchMessage": "პაროლები უნდა ემთხვეოდეს"
+        },
+        "currentPassword": {
+          "label": "მიმდინარე პაროლი",
+          "requiredMessage": "ეს ველი აუცილებელია",
+          "incorrectPasswordMessage": "პაროლი არასწორია"
+        }
+      }
+    },
+
+    "addUserForm": {
+      "title": "ახალი მომხმარებლის დამატება",
+
+      "buttons": {
+        "createUser": "მომხმარებლის შექმნა"
+      },
+
+      "snackBarMessages": {
+        "success": "მომხმარებელი წარმატებით დაემატა",
+        "error": "მომხმარებლის დამატება ვერ მოხერხდა"
+      },
+
+      "requiredFields": {
+        "username": {
+          "label": "მომხმარებლის სახელი",
+          "requiredMessage": "მომხმარებლის სახელი აუცილებელია"
+        },
+
+        "firstName": {
+          "label": "სახელი",
+          "requiredMessage": "სახელი აუცილებელია"
+        },
+
+        "lastName": {
+          "label": "გვარი",
+          "requiredMessage": "გვარი აუცილებელია"
+        },
+
+        "email": {
+          "label": "ელფოსტა",
+          "requiredMessage": "ელფოსტა აუცილებელია",
+          "patternMessage": "გთხოვთ, შეიყვანეთ სწორი ელფოსტა"
+        },
+
+        "password": {
+          "label": "პაროლი",
+          "requiredMessage": "პაროლი აუცილებელია",
+          "minLengthMessage": "პაროლი უნდა იყოს მინიმუმ 8 სიმბოლო",
+          "patternMessage": "პაროლი უნდა შეიცავდეს მინიმუმ ერთ დიდ ასოს"
+        },
+
+        "confirmPassword": {
+          "label": "პაროლის დადასტურება",
+          "requiredMessage": "ეს ველი აუცილებელია",
+          "matchMessage": "პაროლები უნდა ემთხვეოდეს"
+        },
+
+        "role": {
+          "label": "როლის არჩევა",
+          "requiredMessage": "გთხოვთ, აირჩიოთ როლი"
+        }
+      }
+    },
+
+    "substances": {
+      "title": "სუბსტანციები",
+
+      "buttons": {
+        "addReagent": "რეაგენტის დამატება",
+        "addSample": "ნიმუშის დამატება",
+        "addLoading": "დამატება...",
+        "chooseSubstance": "სუბსტანციების დამატება"
+      },
+
+      "errors": {
+        "loadError": "რეაგენტებისა და ნიმუშების გვერდის ჩატვირთვა ვერ მოხერხდა, გთხოვთ სცადეთ მოგვიანებით"
+      },
+
+      "filters": {
+        "all": "ყველა",
+        "expired": "ვადაგასული",
+        "label": "კატეგორია",
+        "options": {
+          "All": "ყველა",
+          "Reagent": "რეაგენტი",
+          "Sample": "ნიმუში"
+        }
+      },
+
+      "table": {
+        "name": "სახელი",
+        "category": "კატეგორია",
+        "structure": "სტრუქტურა",
+        "description": "აღწერა",
+        "quantityLeft": "დარჩენილი რაოდენობა",
+        "storageLocation": "საცავის მდებარეობა",
+        "actions": "მოქმედებები",
+        "addedQuantity": "დამატებული რაოდენობა"
+      },
+
+      "modalMessages": {
+        "confirmDelete": "დარწმუნებული ხართ, რომ გსურთ ამ სუბსტანციის წაშლა?"
+      },
+
+      "snackBarMessages": {
+        "delete": {
+          "success": "სუბსტანცია წარმატებით წაიშალა",
+          "error": "სუბსტანციის წაშლა ვერ მოხერხდა"
+        }
+      }
+    },
+
+    "addSubstanceForm": {
+      "title": {
+        "reagent": "ახალი რეაგენტის დამატება",
+        "sample": "ახალი ნიმუშის დამატება",
+        "addedSubstances": "დამატებული სუბსტანციები",
+        "addSubstance": "სუბსტანციის დამატება",
+        "selectLocation": "მდებარეობის არჩევა"
+      },
+
+      "buttons": {
+        "createSample": "ნიმუშის შექმნა"
+      },
+
+      "snackBarMessages": {
+        "reagent": {
+          "success": "რეაგენტი წარმატებით დაემატა",
+          "error": "რეაგენტის დამატება ვერ მოხერხდა"
+        },
+        "sample": {
+          "success": "ნიმუში წარმატებით დაემატა",
+          "error": "ნიმუშის დამატება ვერ მოხერხდა",
+          "validationError": "ნიმუშის შექმნა შეუძლებელია სუბსტანციების დამატების გარეშე"
+        }
+      },
+
+      "requiredFields": {
+        "name": {
+          "label": "სახელი*",
+          "requiredMessage": "სახელი აუცილებელია"
+        },
+        "description": {
+          "label": "აღწერა"
+        },
+        "structure": {
+          "label": "სტრუქტურა"
+        },
+        "price": {
+          "label": "ერთეულის ფასი",
+          "requiredMessage": "ფასი აუცილებელია",
+          "minPriceMessage": "ფასი უნდა იყოს დადებითი"
+        },
+        "unit": {
+          "label": "ერთეული*",
+          "requiredMessage": "ერთეული აუცილებელია"
+        },
+        "amount": {
+          "label": "რაოდენობა*",
+          "requiredMessage": "რაოდენობა აუცილებელია",
+          "minAmountMessage": "რაოდენობა უნდა იყოს დადებითი"
+        },
+
+        "quantity": {
+          "label": "რაოდენობა*",
+          "minAmountMessage": "საწყისი რაოდენობა არ შეიძლება იყოს უარყოფითი"
+        },
+
+        "initialQuantity": {
+          "label": "საწყისი რაოდენობა*",
+          "requiredMessage": "საწყისი რაოდენობა აუცილებელია",
+          "minQuantityMessage": "საწყისი რაოდენობა უნდა იყოს დადებითი"
+        },
+        "expirationDate": {
+          "label": "ვადის გასვლის თარიღი*",
+          "requiredMessage": "ვადის გასვლის თარიღი აუცილებელია"
+        },
+        "location": {
+          "label": "მდებარეობა*",
+          "requiredMessage": "მდებარეობა აუცილებელია"
+        },
+        "CASNumber": {
+          "label": "CAS ნომერი"
+        },
+        "producer": {
+          "label": "მწარმოებელი"
+        },
+        "catalogId": {
+          "label": "კატალოგის ID"
+        },
+        "catalogLink": {
+          "label": "კატალოგის ლინკი"
+        },
+        "substance": {
+          "label": "სუბსტანცია*",
+          "requiredMessage": "სუბსტანცია აუცილებელია"
+        },
+        "consumption": {
+          "label": "მოხმარება",
+          "minConsumptionMessage": "მოხმარება უნდა იყოს დადებითი"
+        }
+      },
+
+      "emptyAreas": {
+        "noAddedSubstances": "ჯერ არ დაგიმატებიათ არცერთი სუბსტანცია",
+        "noSearchReagent": "მითითებული სახელის შესაბამისი რეაგენტები ვერ მოიძებნა"
+      },
+
+      "placeholders": {
+        "search": "ჩაწერეთ მინიმუმ 3 ასო ძიებისთვის..."
+      },
+
+      "texts": {
+        "totalQuantity": "საერთო რაოდენობა:"
+      }
+    },
+
+    "substanceDetails": {
+      "title": {
+        "reagent": "რეაგენტის დეტალები",
+        "sample": "ნიმუშის დეტალები",
+        "editReagent": "რეაგენტის რედაქტირება",
+        "editSample": "ნიმუშის რედაქტირება",
+        "changeLocationReagent": "რეაგენტის მდებარეობის შეცვლა",
+        "changeLocationSample": "ნიმუშის მდებარეობის შეცვლა",
+        "changeQuantityReagent": "რეაგენტის რაოდენობის შეცვლა",
+        "changeQuantitySample": "ნიმუშის რაოდენობის შეცვლა"
+      },
+
+      "buttons": {
+        "editDetails": "დეტალების რედაქტირება",
+        "saveChanges": "ცვლილებების შენახვა",
+        "changeQuantity": "რაოდენობის შეცვლა",
+        "changeLocation": "მდებარეობის შეცვლა",
+        "disposeReagent": "ვადაგასული რეაგენტის განადგურება",
+        "disposeSample": "ვადაგასული ნიმუშის განადგურება"
+      },
+
+      "fields": {
+        "substanceId": "რეაგენტის ID",
+        "name": "სახელი",
+        "category": "კატეგორია",
+        "CASNumber": "CAS ნომერი",
+        "producer": "მწარმოებელი",
+        "locationId": "საცავის მდებარეობა",
+        "unit": "ერთეულები",
+        "units": "ერთეულები",
+        "price": "ერთეულის ფასი",
+        "amount": "კონტეინერის რაოდენობა",
+        "fromRequest": "მოთხოვნიდან",
+        "totalQuantityLeft": "დარჩენილი რაოდენობა",
+        "quantity": "რაოდენობა",
+        "catalogID": "კატალოგის ID",
+        "catalogLink": "ლინკი",
+        "description": "აღწერა",
+        "structure": "სტრუქტურა",
+        "addedSubstances": "დამატებული სუბსტანციები",
+        "room": "ოთახი",
+        "location": "მდებარეობა",
+        "expirationDate": "ვადის გასვლის თარიღი"
+      },
+
+      "quantityValidation": {
+        "required": "რაოდენობა აუცილებელია",
+        "invalidNumber": "გთხოვთ, შეიყვანეთ სწორი რიცხვი",
+        "greaterThanZero": "რაოდენობა უნდა იყოს ნულზე მეტი",
+        "lessThanCurrent": "რაოდენობა უნდა იყოს ნაკლები მიმდინარე რაოდენობაზე {{currentQuantity}}"
+      },
+
+      "outOfStock": "საწყობში არ არის",
+      "currentLocation": " (მიმდინარე)",
+
+      "quantityWarning": "შეიცვლება, თუ რაოდენობა იქნება 0",
+
+      "errors": {
+        "reagentLoadError": "რეაგენტის დეტალების ჩატვირთვა ვერ მოხერხდა",
+        "sampleLoadError": "ნიმუშის დეტალების ჩატვირთვა ვერ მოხერხდა"
+      },
+
+      "snackBarMessages": {
+        "reagent": {
+          "successDelete": "სუბსტანცია წარმატებით განადგურდა",
+          "errorDelete": "სუბსტანციის განადგურება ვერ მოხერხდა",
+          "successUpdate": "რეაგენტი წარმატებით განახლდა"
+        },
+        "sample": {
+          "successDelete": "ნიმუში წარმატებით წაიშალა",
+          "successUpdate": "ნიმუში წარმატებით განახლდა"
+        },
+        "unexpectedError": "გამოუცნობი შეცდომა მოხდა"
+      }
+    },
+
+    "storage": {
+      "title": {
+        "storage": "საცავის ადგილები",
+        "dashboardStorage": "საცავი",
+        "location": "მდებარეობის დეტალები",
+        "editRoom": "საცავის ოთახის რედაქტირება"
+      },
+
+      "buttons": {
+        "createLocation": "ახალი საცავის ადგილის შექმნა",
+        "createRoom": "ახალი საცავის ოთახის შექმნა",
+        "editRoom": "ოთახის რედაქტირება",
+        "updatingRooms": "განახლება...",
+        "creatingLocation": "შექმნა...",
+        "changeLocation": "მდებარეობის შეცვლა"
+      },
+
+      "errors": {
+        "storageLoadError": "საცავის მიღება ვერ მოხერხდა",
+        "emptyStorageError": "საცავი არ არსებობს",
+        "locationLoadError": "მდებარეობის მიღება ვერ მოხერხდა",
+        "noLocation": "აქ არ არის მდებარეობა"
+      },
+
+      "fields": {
+        "room": "ოთახი",
+        "roomId": "ოთახის ID",
+        "selectRoom": "ოთახის არჩევა",
+        "location": "მდებარეობა",
+        "locationName": "მდებარეობის სახელი",
+        "locationId": "მდებარეობის ID",
+        "locations": "მდებარეობები:",
+        "totalSubstances": "სუბსტანციების საერთო რაოდენობა:",
+        "storedSubstances": "შენახული სუბსტანციები",
+        "description": "აღწერა",
+        "structure": "სტრუქტურა",
+        "emptyRoom": "ამ ოთახში სუბსტანციები არ არის"
+      },
+
+      "requiredFields": {
+        "roomName": {
+          "label": "ოთახის სახელი",
+          "requiredMessage": "ოთახის სახელი აუცილებელია"
+        },
+        "description": {
+          "label": "აღწერა",
+          "requiredMessage": "აღწერა აუცილებელია"
+        }
+      },
+
+      "modalMessages": {
+        "confirmLocationChange": "გსურთ ამ სუბსტანციის მდებარეობის შეცვლა?"
+      },
+
+      "snackBarMessages": {
+        "successEdit": "ოთახი წარმატებით განახლდა",
+        "errorEdit": "ოთახის განახლება ვერ მოხერხდა",
+        "successDelete": "საცავის ადგილი წარმატებით წაიშალა",
+        "errorDelete": "საცავის ადგილის წაშლა ვერ მოხერხდა",
+        "successMove": "სუბსტანცია წარმატებით გადაადგილდა",
+        "errorMove": "სუბსტანციების გადაადგილება ვერ მოხერხდა",
+        "notEmptyError": "თქვენ ვერ წაშლით ამ საცავის ადგილს, რადგან ის შეიცავს სუბსტანციებს",
+        "creationSuccess": "მდებარეობა წარმატებით შეიქმნა",
+        "creationError": "საცავის ადგილის შექმნა ვერ მოხერხდა"
+      }
+    },
+
+    "orders": {
+      "title": {
+        "OrdersPage": "შეკვეთები",
+        "Order": "შეკვეთა",
+        "OrderInformation": "შეკვეთის ინფორმაცია",
+        "Reagents": "რეაგენტები"
+      },
+
+      "buttons": {
+        "createOrder": "შეკვეთის შექმნა",
+        "create": "შექმნა",
+        "updateStatus": "სტატუსის განახლება",
+        "addReagents": "რეაგენტების დამატება",
+        "allocateSelected": "რეაგენტების განაწილება",
+        "chooseLocation": "მდებარეობის არჩევა",
+        "markSubmitted": "მონიშვნა როგორც გაგზავნილი",
+        "markCancelled": "მონიშვნა როგორც გაუქმებული",
+        "showStructure": "სტრუქტურის სურათის ჩვენება"
+      },
+
+      "tooltip": "როდესაც ყველა რეაგენტი იქნება განაწილებული, შეკვეთა შესრულდება",
+
+      "errors": {
+        "loadError": "შეკვეთების ჩატვირთვა ვერ მოხერხდა",
+        "emptyError": "შეკვეთების სია ცარიელია",
+        "detailedOrderError": "შეკვეთის დეტალების ჩატვირთვა ვერ მოხერხდა"
+      },
+
+      "snackBarMessages": {
+        "editing": {
+          "success": "შეკვეთა წარმატებით განახლდა"
+        },
+        "allocated": "რეაგენტები წარმატებით განაწილდა"
+      },
+
+      "statuses": {
+        "status": "სტატუსი",
+        "All": "ყველა",
+        "Pending": "მოლოდინში",
+        "Submitted": "გაგზავნილი",
+        "Fulfilled": "შესრულებული",
+        "Cancelled": "გაუქმებული"
+      },
+
+      "table": {
+        "Title": "სათაური",
+        "Creation Date": "შექმნის თარიღი",
+        "Modified Date": "განახლების თარიღი",
+        "Seller": "გამყიდველი",
+        "Status": "სტატუსი",
+        "Pagination": {
+          "RowsPerPage": "სტრიქონები გვერდზე:",
+          "of": "დან",
+          "moreThan": "მეტი ვიდრე"
+        }
+      }
+    },
+
+    "createOrderForm": {
+      "title": {
+        "form": "რეაგენტების დამატება შეკვეთაში",
+        "reagents": "შეკვეთის რეაგენტები"
+      },
+
+      "buttons": {
+        "removeReagentFromOrder": "წაშლა შეკვეთიდან"
+      },
+
+      "errors": {
+        "noReagentsOrder": "შეკვეთაში დაამატეთ მინიმუმ 1 რეაგენტი"
+      },
+
+      "snackBarMessages": {
+        "creation": {
+          "success": "შეკვეთა წარმატებით შეიქმნა"
+        },
+        "addingReagents": {
+          "success": "რეაგენტები წარმატებით დაემატა",
+          "error": "რეაგენტების დამატება ვერ მოხერხდა"
+        }
+      },
+
+      "requiredFields": {
+        "title": {
+          "label": "სათაური*",
+          "requiredMessage": "სათაური აუცილებელია",
+          "maxLengthMessage": "სათაური არ შეიძლება იყოს 200 სიმბოლოზე მეტი"
+        },
+        "seller": {
+          "label": "გამყიდველი",
+          "requiredMessage": "გამყიდველი აუცილებელია"
+        },
+
+        "name": {
+          "label": "სახელი*",
+          "requiredMessage": "სახელი აუცილებელია"
+        },
+        "units": {
+          "label": "ერთეულები*",
+          "requiredMessage": "ერთეულები აუცილებელია"
+        },
+        "amount": {
+          "label": "კონტეინერის რაოდენობა*",
+          "requiredMessage": "რაოდენობა აუცილებელია"
+        },
+        "quantity": {
+          "label": "რაოდენობა კონტეინერით*",
+          "requiredMessage": "რაოდენობა აუცილებელია"
+        },
+        "price": {
+          "label": "ფასი*",
+          "requiredMessage": "ფასი აუცილებელია"
+        }
+      }
+    },
+
+    "createRequestForm": {
+      "buttonText": "მოთხოვნის დამატება",
+      "title": "რეაგენტის მოთხოვნის შექმნა",
+      "requiredFields": {
+        "name": {
+          "label": "რეაგენტის სახელი*",
+          "requiredMessage": "რეაგენტის სახელი აუცილებელია!"
+        },
+        "units": {
+          "label": "ერთეული*",
+          "requiredMessage": "ერთეული აუცილებელია!"
+        },
+        "initialQuantity": {
+          "label": "საწყისი რაოდენობა*",
+          "requiredMessage": "საწყისი რაოდენობა აუცილებელია!",
+          "errorMessage": "საწყისი რაოდენობა უნდა იყოს 0-ზე მეტი"
+        },
+        "amount": {
+          "label": "რაოდენობა*",
+          "requiredMessage": "რაოდენობა აუცილებელია!",
+          "errorMessage": "რაოდენობა უნდა იყოს 0-ზე მეტი"
+        },
+        "structure": {
+          "label": "სტრუქტურა"
+        },
+        "CASNumber": {
+          "label": "CAS ნომერი"
+        },
+        "comment": {
+          "label": "კომენტარი"
+        }
+      }
+    },
+
+    "requests": {
+      "title": "რეაგენტის მოთხოვნები",
+      "table": {
+        "name": "სახელი",
+        "CreationDate": "შექმნის თარიღი",
+        "ModifiedDate": "განახლების თარიღი",
+        "InitialQuantity": "საწყისი რაოდენობა",
+        "Amount": "რაოდენობა",
+        "Structure": "სტრუქტურა",
+        "Status": "სტატუსი",
+        "CAS": "CAS",
+        "UserComments": "მომხმარებლის კომენტარები",
+        "ProcurementComments": "შესყიდვების კომენტარები",
+        "Actions": "მოქმედებები",
+        "Pagination": {
+          "RowsPerPage": "სტრიქონები გვერდზე:",
+          "of": "დან",
+          "moreThan": "მეტი ვიდრე"
+        },
+        "actionButtons": {
+          "decline": "უარის თქმა"
+        }
+      },
+
+      "errors": {
+        "emptyError": "რეაგენტის მოთხოვნები არ არის საჩვენებლად"
+      },
+
+      "snackBarMessages": {
+        "failedAdd": "მოთხოვნის დამატება ვერ მოხერხდა",
+        "added": "მოთხოვნა წარმატებით დაემატა"
+      },
+
+      "successDecline": "მოთხოვნა წარმატებით უარყოფილია",
+      "successUpdate": "მოთხოვნა წარმატებით განახლდა",
+
+      "statusFilter": {
+        "All": "ყველა",
+        "Pending": "მოლოდინში",
+        "Declined": "უარყოფილი",
+        "Ordered": "შეკვეთილი",
+        "Completed": "დასრულებული",
+        "Taken": "მიღებული"
+      },
+
+      "declineRequest": {
+        "title": "რეაგენტის მოთხოვნის უარყოფა",
+        "label": "შეიყვანეთ უარის თქმის მიზეზი",
+        "requiredField": "მოთხოვნის უარყოფისთვის აუცილებელია კომენტარი"
+      }
+    }
+  }
+}
