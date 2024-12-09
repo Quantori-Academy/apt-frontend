@@ -36,4 +36,5 @@ test("renders dashboard cards for Procurement Officer", () => {
   render(<Dashboard />, { wrapper: Wrapper });
   expect(screen.getByRole("heading", { name: "Orders" }));
   expect(screen.getByRole("heading", { name: "Reagent Requests" }));
+  expect(screen.getByRole("heading", { name: "Storage" }));
 });
