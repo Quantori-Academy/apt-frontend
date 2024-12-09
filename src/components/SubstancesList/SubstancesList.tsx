@@ -92,6 +92,13 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
     setPage(0);
   }, [searchQuery, setPage, categoryFilter, expiredFilter]);
 
+  const isResearcher = role === userRoles.Researcher;
+  const isProcurementOfficer = role === userRoles.ProcurementOfficer;
+
+  const renderButtons = (isResearcher && !isInLocation) || isProcurementOfficer;
+  const showDisposeButton =
+    isResearcher && expiredFilter === "Expired" && visibleItems.length > 0;
+
   return (
     <Container>
       {!isInLocation && <DashboardBreadcrumbs />}
@@ -100,13 +107,13 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
           {t("substances.title")}
         </Typography>
       )}
-      {role === userRoles.Researcher && !isInLocation && (
+      {renderButtons && (
         <Box className={style.buttonBox} sx={{ display: "flex", gap: 2 }}>
-          {expiredFilter === "Expired" && visibleItems.length > 0 && (
+          {showDisposeButton && (
             <DisposeExpiredSubstances substances={visibleItems} />
           )}
           <AddReagentModal />
-          <AddSampleModal />
+          {isResearcher && <AddSampleModal />}
         </Box>
       )}
 
