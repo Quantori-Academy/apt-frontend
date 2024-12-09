@@ -106,7 +106,7 @@
       "Order details can be modified if and only if its status is set to 'Pending'.": "შეკვეთის დეტალები შეიძლება შეიცვალოს მხოლოდ იმ შემთხვევაში, თუ მისი სტატუსი არის 'მოლოდინში'",
       "Can't change status for Cancelled or Fulfilled orders.": "გაუქმებული ან შესრულებული შეკვეთების სტატუსის შეცვლა შეუძლებელია",
 
-      "An unexpected error occurred": "გამოუცნობი შეცდომა მოხდა"
+      "An unexpected error occurred.": "გამოუცნობი შეცდომა მოხდა"
     },
 
     "users": {

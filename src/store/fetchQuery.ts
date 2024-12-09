@@ -46,7 +46,7 @@ export const fetchQuery: typeof baseQuery = async (...args) => {
     if (typeof result.error.status === "number") {
       const transformedError: FetchBaseQueryError = {
         status: result.error.status,
-        data: errorData?.message || "An unexpected error occurred",
+        data: errorData?.message || "An unexpected error occurred.",
       };
       return { error: transformedError };
     }

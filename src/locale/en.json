@@ -106,7 +106,7 @@
       "Order details can be modified if and only if its status is set to 'Pending'.": "Order details can be modified if and only if its status is set to 'Pending'",
       "Can't change status for Cancelled or Fulfilled orders.": "Can't change status for Cancelled or Fulfilled orders",
 
-      "An unexpected error occurred": "An unexpected error occurred"
+      "An unexpected error occurred.": "An unexpected error occurred"
     },
 
     "users": {
@@ -360,7 +360,7 @@
           "requiredMessage": "Amount is required",
           "minAmountMessage": "Amount must be positive"
         },
-        "initialQuantity":{
+        "initialQuantity": {
           "label": "Initial Quantity*",
           "requiredMessage": "Initial quantity is required",
           "minQuantityMessage": "Initial quantity must be positive"
