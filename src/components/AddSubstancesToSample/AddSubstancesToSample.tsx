@@ -43,24 +43,28 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
     const item = search[itemIndex];
     const location = item.locations[locIndex];
 
-    const addedSubstancesDetails: AddedSubstanceDetails = {
-      locationId: location.locationId,
-      name: item.name,
-      location: `${location.location} / ${location.room}`,
-      quantity: `${quantity} ${location.unit}`,
-    };
-
     const newSubstance: SampleSubstances = {
       addedSubstanceId: item.id || null,
       addedSubstanceLocationId: location.locationId || null,
       addedSubstanceQuantity: quantity,
       addedSubstanceUnit: location.unit,
     };
+
+    const addedSubstancesDetails: AddedSubstanceDetails = {
+      locationId: location.locationId,
+      substanceId: item.id,
+      name: item.name,
+      location: `${location.location} / ${location.room}`,
+      quantity: `${quantity} ${location.unit}`,
+    };
+
     setAddedSubstancesDetails((prevItems) => {
       const updatedItems = prevItems.filter(
-        (item) => item.locationId !== addedSubstancesDetails.locationId
+        (item) =>
+          item.locationId !== addedSubstancesDetails.locationId ||
+          item.substanceId !== addedSubstancesDetails.substanceId
       );
-      return [...updatedItems, addedSubstancesDetails];
+      return [addedSubstancesDetails, ...updatedItems];
     });
 
     setAddedSubstances((prevItems) => {
@@ -70,7 +74,7 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
             newSubstance.addedSubstanceLocationId ||
           item.addedSubstanceId !== newSubstance.addedSubstanceId
       );
-      return [...updatedItems, newSubstance];
+      return [newSubstance, ...updatedItems];
     });
   };
 

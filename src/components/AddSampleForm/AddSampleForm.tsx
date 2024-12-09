@@ -172,6 +172,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                 label={t(
                   "addSubstanceForm.requiredFields.initialQuantity.label"
                 )}
+                inputProps={{ min: 0.01, step: "any" }}
                 type="number"
                 {...register("initialQuantity", {
                   valueAsNumber: true,
@@ -179,7 +180,7 @@ const AddSampleForm: React.FC<AddSampleFormProps> = ({
                     "addSubstanceForm.requiredFields.initialQuantity.requiredMessage"
                   ),
                   min: {
-                    value: 1,
+                    value: 0.01,
                     message: t(
                       "addSubstanceForm.requiredFields.initialQuantity.minQuantityMessage"
                     ),
