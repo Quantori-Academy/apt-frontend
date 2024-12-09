@@ -18,8 +18,9 @@ import {
   SmilesImage,
   SubstanceLocationsTable,
 } from "@/components";
-import { useAlertSnackbar } from "@/hooks";
-import { useDeleteSubstancesMutation } from "@/store";
+import { userRoles } from "@/constants";
+import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import { selectUserRole, useDeleteSubstancesMutation } from "@/store";
 import { Sample } from "@/types";
 import { formatDate, handleError } from "@/utils";
 
@@ -40,6 +41,8 @@ type SampleDetailsProps = {
 
 const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
   const { t } = useTranslation();
+
+  const role = useAppSelector(selectUserRole);
 
   const [value, setValue] = useState(0);
 
@@ -117,7 +120,7 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
             </Grid>
           )}
         </Grid>
-        {isExpired && locations && (
+        {role === userRoles.Researcher && isExpired && locations && (
           <DisposeButton
             substanceType={category}
             onClickDispose={onClickDelete}
