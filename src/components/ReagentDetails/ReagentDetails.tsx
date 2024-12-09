@@ -9,8 +9,9 @@ import {
   SmilesImage,
   SubstanceLocationsTable,
 } from "@/components";
-import { useAlertSnackbar } from "@/hooks";
-import { useDeleteSubstancesMutation } from "@/store";
+import { userRoles } from "@/constants";
+import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import { selectUserRole, useDeleteSubstancesMutation } from "@/store";
 import { Reagent } from "@/types";
 import { formatDate } from "@/utils";
 import { handleError } from "@/utils/handleError";
@@ -34,6 +35,8 @@ type ReagentDetailsProps = {
 
 const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
   const { t } = useTranslation();
+
+  const role = useAppSelector(selectUserRole);
 
   const [deleteSubstances] = useDeleteSubstancesMutation();
 
@@ -115,7 +118,7 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
             </Grid>
           )}
         </Grid>
-        {isExpired && locations && (
+        {role === userRoles.Researcher && isExpired && locations && (
           <DisposeButton
             substanceType={category}
             onClickDispose={onClickDelete}

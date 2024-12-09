@@ -10,9 +10,11 @@ import {
   StorageLocationDetail,
   SubstancesList,
 } from "@/components";
-import { useAlertSnackbar } from "@/hooks";
+import { userRoles } from "@/constants";
+import { useAlertSnackbar, useAppSelector } from "@/hooks";
 import { RouteProtectedPath } from "@/router";
 import {
+  selectUserRole,
   useDeleteStorageLocationMutation,
   useGetStorageLocationDetailQuery,
 } from "@/store";
@@ -20,6 +22,8 @@ import { handleError } from "@/utils";
 
 const StorageLocationDetails: React.FC = () => {
   const { t } = useTranslation();
+
+  const role = useAppSelector(selectUserRole);
 
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
@@ -74,16 +78,18 @@ const StorageLocationDetails: React.FC = () => {
             {locationDetails.roomName} - {locationDetails.locationName}
           </Typography>
 
-          <Box display="flex" alignItems="center">
-            <IconButton
-              onClick={handleDelete}
-              color="error"
-              aria-label="delete"
-              disabled={isDeleting}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Box>
+          {role === userRoles.Administrator && (
+            <Box display="flex" alignItems="center">
+              <IconButton
+                onClick={handleDelete}
+                color="error"
+                aria-label="delete"
+                disabled={isDeleting}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          )}
         </Grid>
         <StorageLocationDetail locationDetails={locationDetails} />
         <Grid item xs={12}>

@@ -12,7 +12,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+import { userRoles } from "@/constants";
+import { useAppSelector } from "@/hooks";
 import { RouteProtectedPath } from "@/router";
+import { selectUserRole } from "@/store";
 import { StorageRoomsBrief } from "@/types";
 
 type StorageLocationsListProps = {
@@ -25,6 +28,8 @@ const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
   onEditRoom,
 }) => {
   const { t } = useTranslation();
+
+  const role = useAppSelector(selectUserRole);
 
   const navigate = useNavigate();
 
@@ -97,14 +102,16 @@ const StorageLocationsList: React.FC<StorageLocationsListProps> = ({
               {`${t("storage.fields.totalSubstances")} ${room.totalSubstances}`}
             </Typography>
 
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginTop: "10px" }}
-              onClick={() => onEditRoom(room.id)}
-            >
-              {t("storage.buttons.editRoom")}
-            </Button>
+            {role === userRoles.Administrator && (
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ marginTop: "10px" }}
+                onClick={() => onEditRoom(room.id)}
+              >
+                {t("storage.buttons.editRoom")}
+              </Button>
+            )}
           </CardContent>
         </Card>
       ))}

@@ -30,16 +30,14 @@ export const SubstanceLocationTableRow: React.FC<
   return (
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       <TableCell>
-        {isResearcher && (
-          <Tooltip
-            placement="top"
-            title={t(`substanceDetails.title.changeLocation${substanceType}`)}
-          >
-            <IconButton onClick={onClickChangeLocation}>
-              <MoveUp />
-            </IconButton>
-          </Tooltip>
-        )}
+        <Tooltip
+          placement="top"
+          title={t(`substanceDetails.title.changeLocation${substanceType}`)}
+        >
+          <IconButton onClick={onClickChangeLocation}>
+            <MoveUp />
+          </IconButton>
+        </Tooltip>
         {`${room}, ${location}`}{" "}
       </TableCell>
       <TableCell align="right">
