@@ -417,8 +417,8 @@
         "editSample": "Edit Sample",
         "changeLocationReagent": "Change reagent's location",
         "changeLocationSample": "Change sample's location",
-        "changeQuantityReagent": "Change reagent's location",
-        "changeQuantitySample": "Change sample's location"
+        "changeQuantityReagent": "Change reagent's quantity",
+        "changeQuantitySample": "Change sample's quantity"
       },
 
       "buttons": {
