@@ -64,7 +64,7 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
           item.locationId !== addedSubstancesDetails.locationId ||
           item.substanceId !== addedSubstancesDetails.substanceId
       );
-      return [...updatedItems, addedSubstancesDetails];
+      return [addedSubstancesDetails, ...updatedItems];
     });
 
     setAddedSubstances((prevItems) => {
@@ -74,7 +74,7 @@ const AddSubstancesToSample: React.FC<AddSubstancesToSampleProps> = ({
             newSubstance.addedSubstanceLocationId ||
           item.addedSubstanceId !== newSubstance.addedSubstanceId
       );
-      return [...updatedItems, newSubstance];
+      return [newSubstance, ...updatedItems];
     });
   };
 
