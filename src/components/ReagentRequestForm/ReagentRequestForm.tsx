@@ -59,6 +59,7 @@ const ReagentRequestForm: React.FC<ReagentRequestFormProps> = ({
         <Box display="flex" justifyContent="space-between" gap={1}>
           <TextField
             type="number"
+            inputProps={{ min: 0.01, step: "any" }}
             label={t("createRequestForm.requiredFields.initialQuantity.label")}
             {...register("initialQuantity", {
               required: t(

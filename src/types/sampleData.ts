@@ -19,6 +19,7 @@ export type SampleSubstances = {
 
 export type AddedSubstanceDetails = {
   locationId: number;
+  substanceId: number;
   name: string;
   location: string;
   quantity: string;

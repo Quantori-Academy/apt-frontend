@@ -110,6 +110,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
             <TextField
               label={t("addSubstanceForm.requiredFields.price.label")}
               type="number"
+              inputProps={{ min: 0, step: "any" }}
               {...register("pricePerUnit", {
                 valueAsNumber: true,
                 min: {
@@ -152,6 +153,7 @@ const AddReagentForm: React.FC<AddReagentFormProps> = ({
             <TextField
               label={t("addSubstanceForm.requiredFields.initialQuantity.label")}
               type="number"
+              inputProps={{ min: 0.01, step: "any" }}
               {...register("initialQuantity", {
                 valueAsNumber: true,
                 required: t(
