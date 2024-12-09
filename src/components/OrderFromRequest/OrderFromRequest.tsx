@@ -5,6 +5,7 @@ import { OrderForm } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useCreateOrderFromRequestsMutation } from "@/store";
 import { OrderInput, ReagentRequests } from "@/types";
+import { handleError } from "@/utils";
 
 type AddOrderProps = {
   modalOpen: boolean;
@@ -27,17 +28,19 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
     title: "",
     seller: "",
     reagents: requests.map((request) => {
-      const [reagentQuantity, reagentUnit] = request.desiredQuantity.split(" ");
+      const [reagentQuantity, reagentUnit] = request.quantity.split(" ");
       return {
         reagentName: request.name || "",
         unit: reagentUnit || "",
         quantity: reagentQuantity || "",
         pricePerUnit: "",
+        amount: String(request.amount),
         structure: request.structure || "",
         CASNumber: request.CAS || "",
         producer: "",
         catalogId: "",
         catalogLink: "",
+        fromRequest: true,
       };
     }),
   };
@@ -53,14 +56,8 @@ const OrderFromRequest: React.FC<AddOrderProps> = ({
       }).unwrap();
       showSuccess(t("createOrderForm.snackBarMessages.creation.success"));
       onClose();
-    } catch (err) {
-      if (typeof err === "object" && err !== null && "data" in err) {
-        const errorMessage = (err as { data: { message: string } }).data
-          .message;
-        showError(errorMessage);
-      } else {
-        showError(t("substanceDetails.snackBarMessages.unexpectedError"));
-      }
+    } catch (error) {
+      handleError({ error, t, showError });
     } finally {
       onCreateOrder();
     }

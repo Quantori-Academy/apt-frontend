@@ -19,7 +19,8 @@ const UserDetails: React.FC = () => {
 
   const { isError } = useGetUserDetailsQuery(id!);
   if (!id) return null;
-  if (isError) return <PageError text="No user found with the specified ID" />;
+  if (isError)
+    return <PageError text={t("userDetails.snackBarMessages.noUser")} />;
 
   return (
     <Container

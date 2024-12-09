@@ -1,46 +1,89 @@
-import { Card, CardContent, Grid, Typography } from "@mui/material";
-import React from "react";
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
+import { type SyntheticEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
 
-import { DetailItem, QuantityLocationButtons, SmilesImage } from "@/components";
+import {
+  AddedSubstancesTable,
+  DetailItem,
+  DisposeButton,
+  OutOfStock,
+  SmilesImage,
+  SubstanceLocationsTable,
+} from "@/components";
 import { userRoles } from "@/constants";
-import { useAppSelector } from "@/hooks";
-import { RouteProtectedPath } from "@/router";
-import { selectUserRole } from "@/store";
-import { RoomData, Sample } from "@/types";
+import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import { selectUserRole, useDeleteSubstancesMutation } from "@/store";
+import { Sample } from "@/types";
+import { formatDate, handleError } from "@/utils";
 
-type SampleKey = keyof Sample;
+import CustomTabPanel from "./CustomTabelPanel";
 
-type ReagentDetailRow = {
-  label: string;
-  key: SampleKey;
-};
+type SampleKey = keyof Omit<Sample, "locations" | "addedSubstances">;
 
-const sampleDetailsRows: ReagentDetailRow[] = [
-  { label: "Name", key: "name" },
-  { label: "Substances", key: "addedSubstances" },
-  { label: "Quantity left", key: "totalQuantityLeft" },
-  { label: "Storage location", key: "locationId" },
-  { label: "Description", key: "description" },
+const sampleDetailsRows: SampleKey[] = [
+  "name",
+  "totalQuantityLeft",
+  "description",
+  "expirationDate",
 ];
 
 type SampleDetailsProps = {
   sampleDetails: Sample;
-  sampleLocationDetails: RoomData;
-  setIsChangingQuantity: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsChangingLocation: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SampleDetails: React.FC<SampleDetailsProps> = ({
-  sampleDetails,
-  sampleLocationDetails,
-  setIsChangingQuantity,
-  setIsChangingLocation,
-}) => {
+const SampleDetails: React.FC<SampleDetailsProps> = ({ sampleDetails }) => {
   const { t } = useTranslation();
 
   const role = useAppSelector(selectUserRole);
+
+  const [value, setValue] = useState(0);
+
+  const handleChange = (_: SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+  const [deleteSubstances] = useDeleteSubstancesMutation();
+
+  const { showSuccess, showError } = useAlertSnackbar();
+
+  const onClickDelete = async () => {
+    try {
+      const { error } = await deleteSubstances([Number(substanceId)]);
+
+      if (error && "message" in error) {
+        showError(t("substanceDetails.snackBarMessages.reagent.errorDelete"));
+      } else {
+        showSuccess(
+          t("substanceDetails.snackBarMessages.reagent.successDelete")
+        );
+      }
+    } catch (error) {
+      handleError({ error, t, showError });
+    }
+  };
+
+  const {
+    substanceId,
+    structure,
+    locations,
+    addedSubstances,
+    category,
+    expirationDate,
+  } = sampleDetails;
+
+  const hasLocations = !!locations?.length;
+
+  const isExpired = expirationDate
+    ? new Date() > new Date(expirationDate)
+    : false;
 
   return (
     <Card sx={{ background: "#0080800f" }}>
@@ -49,79 +92,65 @@ const SampleDetails: React.FC<SampleDetailsProps> = ({
           {t("substanceDetails.title.sample")}
         </Typography>
 
-        <Grid container spacing={2}>
+        <Grid container spacing={2} mb={6}>
           <Grid item xs={12} sm={6}>
-            {sampleDetailsRows.map(({ label, key }) => {
-              let value;
-              if (key === "totalQuantityLeft") {
-                value = `${sampleDetails[key]} ${sampleDetails.unit || "-"}`;
-              } else if (key === "locationId") {
-                value = `${sampleLocationDetails.roomName}, ${sampleLocationDetails.locationName}`;
-              } else if (key === "addedSubstances") {
-                value = (
-                  <Typography key={label}>
-                    <Typography
-                      component="span"
-                      fontWeight="bold"
-                      marginRight={1}
-                    >
-                      {t(`substanceDetails.fields.${key}`)}:
-                    </Typography>
-                    {sampleDetails[key].map(({ id, name, category }, index) => (
-                      <React.Fragment key={id}>
-                        <NavLink
-                          to={
-                            category === "Reagent"
-                              ? RouteProtectedPath.reagentPage.replace(
-                                  ":id",
-                                  String(id)
-                                )
-                              : RouteProtectedPath.samplePage.replace(
-                                  ":id",
-                                  String(id)
-                                )
-                          }
-                        >
-                          {name}
-                        </NavLink>
-                        {index < sampleDetails[key].length - 1 && ", "}
-                      </React.Fragment>
-                    ))}
-                  </Typography>
-                );
-              } else {
-                value = sampleDetails[key] || "-";
-              }
-              {
-                return (
-                  <DetailItem
-                    key={label}
-                    label={t(`substanceDetails.fields.${key}`)}
-                    value={value}
-                  />
-                );
-              }
+            {sampleDetailsRows.map((key) => {
+              return (
+                <DetailItem
+                  key={key}
+                  label={t(`substanceDetails.fields.${key}`)}
+                  value={
+                    key === "expirationDate"
+                      ? formatDate(sampleDetails[key])
+                      : sampleDetails[key] || "-"
+                  }
+                  color={isExpired && key === "expirationDate" ? "red" : ""}
+                />
+              );
             })}
           </Grid>
 
-          {sampleDetails.structure && (
+          {structure && (
             <Grid item xs={12} sm={6}>
-              <Typography gutterBottom sx={{ textAlign: "center" }}>
-                {t("substanceDetails.fields.structure")}
-              </Typography>
               <SmilesImage
-                smiles={sampleDetails.structure}
+                smiles={structure}
                 svgOptions={{ width: 185, height: 185 }}
+                withBorder
               />
             </Grid>
           )}
         </Grid>
-
-        {role === userRoles.Researcher && (
-          <QuantityLocationButtons
-            onChangeQuantity={() => setIsChangingQuantity(true)}
-            onChangeLocation={() => setIsChangingLocation(true)}
+        {role === userRoles.Researcher && isExpired && locations && (
+          <DisposeButton
+            substanceType={category}
+            onClickDispose={onClickDelete}
           />
+        )}
+        {!hasLocations && <OutOfStock />}
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs value={value} onChange={handleChange} variant="fullWidth">
+            <Tab
+              label={t("addSubstanceForm.title.addedSubstances")}
+              id="tab-1"
+            />
+            {hasLocations && (
+              <Tab
+                label={t("storage.fields.locations").slice(0, -1)}
+                id="tab-2"
+              />
+            )}
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <AddedSubstancesTable addedSubstances={addedSubstances} />
+        </CustomTabPanel>
+        {hasLocations && (
+          <CustomTabPanel value={value} index={1}>
+            <SubstanceLocationsTable
+              locations={locations}
+              substanceType={category}
+            />
+          </CustomTabPanel>
         )}
       </CardContent>
     </Card>

@@ -1,1 +1,1 @@
-export { default as NavigationUnauth } from "./NavigationUnauth.tsx";
+export { default as NavigationUnauth } from "./NavigationUnauth";

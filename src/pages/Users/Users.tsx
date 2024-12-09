@@ -1,5 +1,5 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -26,6 +26,11 @@ const Users: React.FC = () => {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState<RoleFilterState>("All");
+  const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    setPage(0);
+  }, [roleFilter, searchQuery]);
 
   if (isLoading) {
     return <PageLoader />;
@@ -36,7 +41,7 @@ const Users: React.FC = () => {
   }
 
   const filteredUsers =
-    users && getFilteredUsers(users, searchQuery, roleFilter);
+    users && getFilteredUsers(users, searchQuery.toLowerCase(), roleFilter);
 
   return (
     <Container>
@@ -73,7 +78,7 @@ const Users: React.FC = () => {
           />
         </Box>
       </Box>
-      <UsersTable users={filteredUsers} />
+      <UsersTable users={filteredUsers} page={page} setPage={setPage} />
     </Container>
   );
 };

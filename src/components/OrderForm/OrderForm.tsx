@@ -15,10 +15,16 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import React, { useState } from "react";
+import {
+  Controller,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import { StructureEditorField } from "@/components";
 import { OrderInput } from "@/types";
 
 type OrderFormProps = {
@@ -61,7 +67,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
   });
 
   return (
-    <Dialog open={modalOpen} onClose={onClose} fullWidth maxWidth="md">
+    <Dialog open={modalOpen} onClose={onClose} fullWidth maxWidth="lg">
       <DialogTitle>
         {orderCreation
           ? t("orders.buttons.createOrder")
@@ -96,14 +102,8 @@ const OrderForm: React.FC<OrderFormProps> = ({
               />
               <TextField
                 label={t("createOrderForm.requiredFields.seller.label")}
-                {...register("seller", {
-                  required: t(
-                    "createOrderForm.requiredFields.seller.requiredMessage"
-                  ),
-                })}
+                {...register("seller")}
                 fullWidth
-                helperText={errors.seller?.message}
-                error={!!errors.seller}
               />
             </Stack>
           )}
@@ -114,6 +114,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
                 prepend({
                   reagentName: "",
                   unit: "",
+                  amount: "",
                   quantity: "",
                   pricePerUnit: "",
                   structure: "",
@@ -121,6 +122,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
                   producer: "",
                   catalogId: "",
                   catalogLink: "",
+                  fromRequest: false,
                 })
               }
             >
@@ -197,6 +199,30 @@ const OrderForm: React.FC<OrderFormProps> = ({
                     error={!!errors.reagents?.[index]?.reagentName}
                   />
                   <TextField
+                    fullWidth
+                    label={t("createOrderForm.requiredFields.amount.label")}
+                    inputProps={{ min: 1, step: "any" }}
+                    type="number"
+                    {...register(`reagents.${index}.amount`, {
+                      required: t(
+                        "createOrderForm.requiredFields.amount.requiredMessage"
+                      ),
+                    })}
+                    error={!!errors.reagents?.[index]?.amount}
+                  />
+                  <TextField
+                    label={t("createOrderForm.requiredFields.quantity.label")}
+                    fullWidth
+                    inputProps={{ min: 0.01, step: "any" }}
+                    type="number"
+                    {...register(`reagents.${index}.quantity`, {
+                      required: t(
+                        "createOrderForm.requiredFields.quantity.requiredMessage"
+                      ),
+                    })}
+                    error={!!errors.reagents?.[index]?.quantity}
+                  />
+                  <TextField
                     label={t("createOrderForm.requiredFields.units.label")}
                     fullWidth
                     {...register(`reagents.${index}.unit`, {
@@ -207,21 +233,9 @@ const OrderForm: React.FC<OrderFormProps> = ({
                     error={!!errors.reagents?.[index]?.unit}
                   />
                   <TextField
-                    label={t("createOrderForm.requiredFields.quantity.label")}
-                    fullWidth
-                    inputProps={{ min: 0 }}
-                    type="number"
-                    {...register(`reagents.${index}.quantity`, {
-                      required: t(
-                        "createOrderForm.requiredFields.quantity.requiredMessage"
-                      ),
-                    })}
-                    error={!!errors.reagents?.[index]?.quantity}
-                  />
-                  <TextField
                     label={t("createOrderForm.requiredFields.price.label")}
                     fullWidth
-                    inputProps={{ min: 0 }}
+                    inputProps={{ min: 0.01, step: "any" }}
                     type="number"
                     {...register(`reagents.${index}.pricePerUnit`, {
                       required: t(
@@ -260,10 +274,15 @@ const OrderForm: React.FC<OrderFormProps> = ({
                       {...register(`reagents.${index}.producer`)}
                     />
                   </Box>
-                  <TextField
-                    label={t("addSubstanceForm.requiredFields.structure.label")}
-                    fullWidth
-                    {...register(`reagents.${index}.structure`)}
+                  <Controller
+                    name={`reagents.${index}.structure`}
+                    control={control}
+                    render={({ field }) => (
+                      <StructureEditorField
+                        value={field.value || ""}
+                        onChange={(newValue) => field.onChange(newValue)}
+                      />
+                    )}
                   />
                   <Box sx={{ display: "flex", gap: 2 }}>
                     <TextField

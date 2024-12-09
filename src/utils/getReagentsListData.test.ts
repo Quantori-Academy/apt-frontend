@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 
 import { SubstancesDetails } from "@/types";
-import { getListData } from "@/utils/getReagentsListData.ts";
+import { getListData } from "@/utils/getReagentsListData";
 
 const mockData: Array<SubstancesDetails> = [
   {
@@ -10,9 +10,11 @@ const mockData: Array<SubstancesDetails> = [
     category: "Sample",
     structure: "C6H12O6",
     description: "Simple sugar compound.",
-    quantityLeft: "150g",
+    quantityLeft: "150",
     storageLocation: "Fridge A1",
     isExpired: false,
+    unit: "t",
+    expirationDate: "2025-12-01",
   },
   {
     id: "2",
@@ -20,9 +22,11 @@ const mockData: Array<SubstancesDetails> = [
     category: "Reagent",
     structure: "H2O",
     description: "Common solvent.",
-    quantityLeft: "500ml",
+    quantityLeft: "500",
     storageLocation: "Shelf B2",
     isExpired: false,
+    unit: "ml",
+    expirationDate: "2026-05-15",
   },
   {
     id: "3",
@@ -30,9 +34,11 @@ const mockData: Array<SubstancesDetails> = [
     category: "Sample",
     structure: "NaCl",
     description: "Table salt.",
-    quantityLeft: "250g",
+    quantityLeft: "250",
     storageLocation: "Shelf C3",
     isExpired: true,
+    unit: "g",
+    expirationDate: "2023-08-30",
   },
   {
     id: "4",
@@ -40,9 +46,11 @@ const mockData: Array<SubstancesDetails> = [
     category: "Reagent",
     structure: "CH4",
     description: "Methane gas.",
-    quantityLeft: "20L",
+    quantityLeft: "20",
     storageLocation: "Gas Cylinder D4",
     isExpired: false,
+    unit: "L",
+    expirationDate: "2025-02-01",
   },
   {
     id: "5",
@@ -50,9 +58,11 @@ const mockData: Array<SubstancesDetails> = [
     category: "Sample",
     structure: "C2H5OH",
     description: "Ethanol solution.",
-    quantityLeft: "200ml",
+    quantityLeft: "200",
     storageLocation: "Cabinet E5",
     isExpired: false,
+    unit: "ml",
+    expirationDate: "2026-11-22",
   },
   {
     id: "6",
@@ -60,9 +70,11 @@ const mockData: Array<SubstancesDetails> = [
     category: "Reagent",
     structure: "C12H22O11",
     description: "Sucrose compound.",
-    quantityLeft: "300g",
+    quantityLeft: "300",
     storageLocation: "Shelf F6",
     isExpired: true,
+    unit: "g",
+    expirationDate: "2023-04-17",
   },
   {
     id: "7",
@@ -70,9 +82,11 @@ const mockData: Array<SubstancesDetails> = [
     category: "Sample",
     structure: "C4H10",
     description: "Butane gas.",
-    quantityLeft: "15L",
+    quantityLeft: "15",
     storageLocation: "Storage G7",
     isExpired: false,
+    unit: "L",
+    expirationDate: "2025-07-30",
   },
   {
     id: "8",
@@ -80,9 +94,11 @@ const mockData: Array<SubstancesDetails> = [
     category: "Reagent",
     structure: "C3H8O",
     description: "Isopropanol solution.",
-    quantityLeft: "250ml",
+    quantityLeft: "250",
     storageLocation: "Cabinet H8",
     isExpired: false,
+    unit: "ml",
+    expirationDate: "2026-03-01",
   },
   {
     id: "9",
@@ -90,9 +106,11 @@ const mockData: Array<SubstancesDetails> = [
     category: "Sample",
     structure: "Fe2O3",
     description: "Iron oxide powder.",
-    quantityLeft: "100g",
+    quantityLeft: "100",
     storageLocation: "Drawer I9",
     isExpired: true,
+    unit: "g",
+    expirationDate: "2023-09-10",
   },
   {
     id: "10",
@@ -100,9 +118,11 @@ const mockData: Array<SubstancesDetails> = [
     category: "Reagent",
     structure: "NH3",
     description: "Ammonia gas.",
-    quantityLeft: "10L",
+    quantityLeft: "10",
     storageLocation: "Cylinder J10",
     isExpired: false,
+    unit: "L",
+    expirationDate: "2025-06-20",
   },
 ];
 

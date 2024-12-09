@@ -1,16 +1,21 @@
 import { SubstancesDetails, SubstancesResponse } from "@/types";
 
 export const transformSubstanceData = (substances: SubstancesResponse): Array<SubstancesDetails> => {
+  const currentDate = new Date();
+
   return substances.map((substance) => {
+    const expirationDate = new Date(substance.expiration_date);
     return {
-      id: substance.id,
+      id: String(substance.id),
       category: substance.category,
-      description: substance.description || "-",
+      description: substance.description || "",
       name: substance.name,
       structure: substance.structure || "",
-      isExpired: substance.is_expired,
-      quantityLeft: `${substance.locations[0].quantity_left} ${substance.locations[0].unit}`,
-      storageLocation: `${substance.locations[0].room}/${substance.locations[0].location}`,
+      unit: substance.unit || "",
+      isExpired: substance.expiration_date ? expirationDate < currentDate : false,
+      expirationDate: substance.expiration_date || "",
+      quantityLeft: `${substance.location.quantity_left} ${substance.location.unit}`,
+      storageLocation: `${substance.location.room} / ${substance.location.location}`,
     };
   });
 };

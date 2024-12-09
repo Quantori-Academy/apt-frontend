@@ -5,6 +5,12 @@
       "accountSettings": "Настройки аккаунта"
     },
 
+    "languages": {
+      "ENG": "English (US)",
+      "RUS": "Русский (RU)",
+      "KA": "ქართული (GE)"
+    },
+
     "breadcrumbs": {
       "Dashboard": "Панель управления",
       "Users": "Пользователи",
@@ -29,6 +35,78 @@
       "create": "Создать",
       "submit": "Отправить",
       "add": "Добавить"
+    },
+
+    "Yes": "Да",
+    "No": "Нет",
+
+    "backendErrors": {
+      "Storage location not found.": "Место хранения не найдено",
+      "The given substance does not exist at the specified location.": "Указанное вещество не существует в заданном местоположении",
+      "Storage room not found.": "Складское помещение не найдено",
+      "Storage room already exists.": "Складское помещение уже существует",
+      "Storage location already exists.": "Место хранения уже существует",
+      "Storage location contains substances and can't be deleted.": "Место хранения содержит вещества и не может быть удалено",
+      "Storage room contains locations and can't be deleted.": "Складское помещение содержит места хранения и не может быть удалено",
+      "Failed to update storage room.": "Не удалось обновить складское помещение",
+      "Unprocessable type.": "Необрабатываемый тип",
+      "Storage record of that substance could not be found.": "Запись о хранении данного вещества не найдена",
+
+      "An unknown error occurred": "Произошла неизвестная ошибка",
+      "Invalid refresh token.": "Недействительный токен обновления",
+      "Invalid email format.": "Неверный формат электронной почты",
+      "Password must contain at least 8 characters and at least 1 uppercase letter.": "Пароль должен содержать не менее 8 символов и хотя бы одну заглавную букву",
+      "Invalid access token.": "Недействительный токен доступа",
+      "User with the given information already exists.": "Пользователь с указанной информацией уже существует",
+      "User not found.": "Пользователь не найден",
+      "Incorrect current password.": "Неверный текущий пароль",
+      "Invalid user ID": "Неверный идентификатор пользователя",
+      "Not authorized for this action.": "Нет прав на выполнение этого действия",
+      "Current password is required.": "Требуется текущий пароль",
+      "Incorrect username or password.": "Неверное имя пользователя или пароль",
+      "Incorrect password.": "Неверный пароль",
+      "Failed to update user profile.": "Не удалось обновить профиль пользователя",
+      "Profile updated successfully.": "Профиль успешно обновлен",
+      "Current password is required when updating password.": "Текущий пароль требуется для обновления пароля",
+      "Validation error.": "Ошибка валидации",
+      "Invalid password(s) format.": "Неверный формат пароля(ей)",
+
+      "Substance not found.": "Вещество не найдено",
+      "Quantity/amount must be positive.": "Количество должно быть положительным",
+      "Added quantity must be a positive floating point number.": "Добавленное количество должно быть положительным числом с плавающей запятой",
+      "2 or more of the same location can't be provided for a single unique substance.": "Нельзя указать два или более одинаковых местоположений для одного уникального вещества",
+      "Substance(s) have not reached expiration.": "Срок годности вещества(в) еще не истек",
+      "Reduced quantity must be positive and less than current quantity.": "Уменьшенное количество должно быть положительным и меньше текущего",
+
+      "Reagent not found.": "Реактив не найден",
+      "Couldn't create reagent.": "Не удалось создать реактив",
+
+      "Sample not found.": "Образец не найден",
+      "Couldn't create sample.": "Не удалось создать образец",
+      "Insufficient amount of Reagent(s)/sample(s) in storage.": "Недостаточное количество реактивов/образцов на складе",
+      "Sample must be created from at least one substance.": "Образец должен быть создан хотя бы из одного вещества",
+
+      "Request(s) not found.": "Запрос(ы) не найден(ы).",
+      "Request is already declined.": "Запрос уже отклонен",
+      "Request already exists.": "Запрос уже существуе.",
+      "Amount must be a positive integer.": "Количество должно быть положительным целым числом",
+      "Only requests with status set to 'Pending' can be updated.": "Только запросы со статусом 'Ожидание' могут быть обновлены",
+
+      "Order not found.": "Заказ не найден",
+      "Order item not found.": "Элемент заказа не найден",
+      "Order must contain at least 1 reagent.": "Заказ должен содержать хотя бы один реактив",
+      "Order with same title already exists.": "Заказ с таким названием уже существует",
+      "Reagent(s) for that order couldn't be found.": "Реактив(ы) для этого заказа не найдены",
+      "At least one reagent must be provided.": "Необходимо указать хотя бы один реактив",
+      "Provided request(s) is/are already linked to an order.": "Предоставленные запрос(ы) уже связаны с заказом",
+      "Amount/Quantity must be positive.": "Количество должно быть положительным",
+      "Order reagents are already stored in storage location(s).": "Реактивы заказа уже размещены в местоположениях хранения",
+      "Can't allocate reagents for order, because it doesn't have 'Submitted' status.": "Невозможно распределить реактивы для заказа, так как он не имеет статуса 'Отправлен'",
+      "Can't set Cancelled or Fulfilled status for Pending orders.": "Нельзя установить статус 'Отменен' или 'Выполнен' для заказов со статусом 'Ожидание'",
+      "Order details can be modified if and only if its status is set to 'Pending'.": "Детали заказа можно изменить только если его статус установлен на 'Ожидание'",
+      "Can't change status for Cancelled or Fulfilled orders.": "Нельзя изменить статус для заказов со статусом 'Отменен' или 'Выполнен'",
+
+      "An unexpected error occurred.": "Произошла непредвиденная ошибка"
     },
 
     "users": {
@@ -64,9 +142,9 @@
         "actions": "Действия"
       },
 
-      "statusLocked": {
+      "statusResetPassword": {
         "title": "Предупреждение!",
-        "text": "Вам нужно сменить пароль, иначе ваш доступ будет заблокирован"
+        "text": "Ваш пароль временный. Пожалуйста, измените его, чтобы обеспечить безопасность вашей учетной записи."
       }
     },
 
@@ -81,6 +159,7 @@
       },
 
       "snackBarMessages": {
+        "noUser": "Пользователь с указанным ID не найден",
         "password": {
           "success": "Пароль успешно изменён",
           "error": "Не удалось изменить пароль"
@@ -190,7 +269,7 @@
         "addReagent": "Добавить реактив",
         "addSample": "Добавить образец",
         "addLoading": "Добавление...",
-        "chooseSubstance": "Выбрать вещество"
+        "chooseSubstance": "Добавить вещества"
       },
 
       "errors": {
@@ -215,7 +294,8 @@
         "description": "Описание",
         "quantityLeft": "Остаток",
         "storageLocation": "Место хранения",
-        "actions": "Действия"
+        "actions": "Действия",
+        "addedQuantity": "Добавленное количество"
       },
 
       "modalMessages": {
@@ -233,11 +313,14 @@
     "addSubstanceForm": {
       "title": {
         "reagent": "Добавить новый реактив",
-        "sample": "Добавить новый образец"
+        "sample": "Добавить новый образец",
+        "addedSubstances": "Добавленные вещества",
+        "addSubstance": "Добавить вещество",
+        "selectLocation": "Выбор локации"
       },
 
       "buttons": {
-        "createUser": "Создать пользователя"
+        "createSample": "Создать образец"
       },
 
       "snackBarMessages": {
@@ -247,13 +330,14 @@
         },
         "sample": {
           "success": "Образец успешно добавлен",
-          "error": "Не удалось добавить образец"
+          "error": "Не удалось добавить образец",
+          "validationError": "Вы не можете создать образец без добавления веществ"
         }
       },
 
       "requiredFields": {
         "name": {
-          "label": "Название",
+          "label": "Название*",
           "requiredMessage": "Название обязательно"
         },
         "description": {
@@ -264,27 +348,39 @@
         },
         "price": {
           "label": "Цена за единицу",
-          "requiredMessage": "Поле 'Цена' обязательно для заполнения",
+          "requiredMessage": "Цена обязательна",
           "minPriceMessage": "Цена должна быть положительной"
         },
-        "quantityUnit": {
-          "label": "Единица измерения",
-          "requiredMessage": "Поле 'Единица измерения' обязательно для заполнения"
+        "unit": {
+          "label": "Единица измерения*",
+          "requiredMessage": "Единица измерения обязательна"
         },
+        "amount": {
+          "label": "Количество*",
+          "requiredMessage": "Количество обязательно",
+          "minQuantityMessage": "Количество не может быть 0"
+        },
+
         "quantity": {
-          "label": "Остаток",
-          "requiredMessage": "Поле 'Остаток' обязательно для заполнения",
-          "minQuantityMessage": "Quantity must be positive"
+          "label": "Количество*",
+          "minAmountMessage": "Начальное количество не может быть отрицательным"
+        },
+
+        "initialQuantity": {
+          "label": "Начальное количество*",
+          "requiredMessage": "Начальное количество обязательно",
+          "minQuantityMessage": "Начальное количество не может быть 0"
         },
         "expirationDate": {
-          "label": "Дата истечения срока"
+          "label": "Дата истечения срока годности*",
+          "requiredMessage": "Дата истечения срока годности обязательна"
         },
         "location": {
-          "label": "Местоположение",
-          "requiredMessage": "Поле 'Местоположение' обязательно для заполнения"
+          "label": "Местоположение*",
+          "requiredMessage": "Местоположение обязательно"
         },
         "CASNumber": {
-          "label": "Номер CAS"
+          "label": "CAS номер"
         },
         "producer": {
           "label": "Производитель"
@@ -296,13 +392,26 @@
           "label": "Ссылка на каталог"
         },
         "substance": {
-          "label": "Вещество",
+          "label": "Вещество*",
           "requiredMessage": "Вещество обязательно"
         },
         "consumption": {
-          "label": "Потребление",
-          "minConsumptionMessage": "Потребление должно быть положительным"
+          "label": "Расход",
+          "minConsumptionMessage": "Расход должен быть положительным"
         }
+      },
+
+      "emptyAreas": {
+        "noAddedSubstances": "Вы ещё не добавили вещества",
+        "noSearchReagent": "Не найдено реактивов, соответствующих заданному имени"
+      },
+
+      "placeholders": {
+        "search": "Введите хотя бы 3 буквы для поиска..."
+      },
+
+      "texts": {
+        "totalQuantity": "Общее количество:"
       }
     },
 
@@ -311,14 +420,20 @@
         "reagent": "Детали реактива",
         "sample": "Детали образца",
         "editReagent": "Редактировать реактив",
-        "editSample": "Редактировать образец"
+        "editSample": "Редактировать образец",
+        "changeLocationReagent": "Изменить местоположение реактива",
+        "changeLocationSample": "Изменить местоположение образца",
+        "changeQuantityReagent": "Изменить количество реактива",
+        "changeQuantitySample": "Изменить количество образца"
       },
 
       "buttons": {
         "editDetails": "Редактировать детали",
         "saveChanges": "Сохранить изменения",
         "changeQuantity": "Изменить количество",
-        "changeLocation": "Изменить местоположение"
+        "changeLocation": "Изменить местоположение",
+        "disposeReagent": "Утилизировать просроченный реактив",
+        "disposeSample": "Утилизировать просроченный образец"
       },
 
       "fields": {
@@ -331,6 +446,8 @@
         "unit": "Единица измерения",
         "units": "Единица измерения",
         "price": "Цена за единицу",
+        "amount": "Количество контейнеров",
+        "fromRequest": "На основе запроса",
         "totalQuantityLeft": "Остаток",
         "quantity": "Количество",
         "catalogID": "ID каталога",
@@ -340,9 +457,17 @@
         "addedSubstances": "Вещества",
         "room": "Комната",
         "location": "Локация",
-        "noStructure": "Данные о структуре не указаны"
+        "expirationDate": "Дата окончания срока"
       },
 
+      "quantityValidation": {
+        "required": "Требуется указать количество",
+        "invalidNumber": "Пожалуйста, введите корректное число",
+        "greaterThanZero": "Количество должно быть больше нуля",
+        "lessThanCurrent": "Количество должно быть меньше текущего количества {{currentQuantity}}"
+      },
+
+      "outOfStock": "Нет в наличии",
       "currentLocation": " (текущая)",
 
       "quantityWarning": "Будет удалено, если количество равно 0",
@@ -354,7 +479,8 @@
 
       "snackBarMessages": {
         "reagent": {
-          "successDelete": "Реактив успешно удалён",
+          "successDelete": "Субстанция успешно удалён",
+          "errorDelete": "Ошибка при удалении субстанции",
           "successUpdate": "Реактив успешно обновлён"
         },
         "sample": {
@@ -369,11 +495,13 @@
       "title": {
         "storage": "Места хранения",
         "dashboardStorage": "Хранилище",
-        "location": "Детали локации"
+        "location": "Детали локации",
+        "editRoom": "Редактировать складское помещение"
       },
 
       "buttons": {
         "createLocation": "Создать новое место хранения",
+        "createRoom": "Создать новую комнату хранения",
         "editRoom": "Редактировать комнату",
         "updatingRooms": "Обновление...",
         "creatingLocation": "Создание...",
@@ -433,16 +561,24 @@
     "orders": {
       "title": {
         "OrdersPage": "Заказы",
-        "DetailPage": "Детали Заказа"
+        "Order": "Заказ",
+        "OrderInformation": "Информация о заказе",
+        "Reagents": "Реактивы"
       },
 
       "buttons": {
         "createOrder": "Создать заказ",
         "create": "Создать",
         "updateStatus": "Обновить Статус",
-        "chooseLocation": "Выбрать Локацию",
-        "addReagents": "Добавить реактивы"
+        "addReagents": "Добавить реактивы",
+        "allocateSelected": "Распределить реагенты",
+        "chooseLocation": "Выберите локацию",
+        "markSubmitted": "Отметить как отправленный",
+        "markCancelled": "Отметить как отмененое",
+        "showStructure": "Показать изображение структуры"
       },
+
+      "tooltip": "Как только все реагенты будут распределены, заказ будет выполнен",
 
       "errors": {
         "loadError": "Не удалось загрузить заказы",
@@ -454,11 +590,6 @@
         "editing": {
           "success": "Заказ успешно обновлен"
         },
-        "Order with same title already exists.": "Заказ с таким же названием уже существует",
-        "Can't change status for Cancelled or Fulfilled orders.": "Невозможно изменить статус для отменённых или выполненных заказов",
-        "Order details can be modified if and only if its status is set to 'Pending'.": "Детали заказа можно изменить только в том случае, если его статус установлен как \"В ожидании\"",
-        "Can't set Cancelled or Fulfilled status for Pending orders.": "Невозможно установить статус \"Отменён\" или \"Выполнен\" для заказов со статусом \"В ожидании\"",
-        "An unexpected error occurred": "Произошла непредвиденная ошибка",
         "allocated": "Реактивы успешно распределены"
       },
 
@@ -466,9 +597,9 @@
         "status": "Статус",
         "All": "Все",
         "Pending": "В ожидании",
-        "Submitted": "Отправлено",
-        "Fulfilled": "Выполнено",
-        "Cancelled": "Отменено"
+        "Submitted": "Отправлен",
+        "Fulfilled": "Выполнен",
+        "Cancelled": "Отменен"
       },
 
       "table": {
@@ -516,7 +647,7 @@
           "maxLengthMessage": "Название не должно превышать 200 символов"
         },
         "seller": {
-          "label": "Продавец*",
+          "label": "Продавец",
           "requiredMessage": "Продавец обязателен"
         },
 
@@ -528,8 +659,12 @@
           "label": "Единица измерения*",
           "requiredMessage": "Единица измерения обязательны"
         },
+        "amount": {
+          "label": "Количество контейнеров*",
+          "requiredMessage": "Количество обязательно"
+        },
         "quantity": {
-          "label": "Количество*",
+          "label": "Количество в контейнере*",
           "requiredMessage": "Количество обязательно"
         },
         "price": {
@@ -540,6 +675,7 @@
     },
 
     "createRequestForm": {
+      "buttonText": "Создать запрос",
       "title": "Создать запрос на реагент",
       "requiredFields": {
         "name": {
@@ -550,9 +686,18 @@
           "label": "Единица измерения*",
           "requiredMessage": "Единица измерения обязательны"
         },
-        "quantity": {
+        "initialQuantity": {
+          "label": "Начальное количество*",
+          "requiredMessage": "Начальное количество обязательно!",
+          "errorMessage": "Начальное количество должно быть больше 0"
+        },
+        "amount": {
           "label": "Количество*",
-          "requiredMessage": "Количество обязательно"
+          "requiredMessage": "Количество обязательно!",
+          "errorMessage": "Количество должно быть больше 0"
+        },
+        "structure": {
+          "label": "Структура в SMILES"
         },
         "CASNumber": {
           "label": "Номер CAS"
@@ -569,7 +714,8 @@
         "name": "Название",
         "CreationDate": "Дата создания",
         "ModifiedDate": "Дата изменения",
-        "Desired Quantity": "Желаемое количество",
+        "InitialQuantity": "Начальное количество",
+        "Amount": "Количество",
         "Structure": "Структура",
         "Status": "Статус",
         "CAS": "CAS",
@@ -595,6 +741,9 @@
         "added": "Запрос успешно добавлен"
       },
 
+      "successDecline": "Запрос успешно отклонен",
+      "successUpdate": "Запрос успешно обновлен",
+
       "statusFilter": {
         "All": "Все",
         "Pending": "В ожидании",
@@ -603,6 +752,7 @@
         "Completed": "Завершено",
         "Taken": "Одобрено"
       },
+
       "declineRequest": {
         "title": "Отклонить запрос на реагент",
         "label": "Укажите причину отклонения",

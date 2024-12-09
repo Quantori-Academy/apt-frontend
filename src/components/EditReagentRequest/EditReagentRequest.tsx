@@ -1,10 +1,12 @@
 import { FormProvider } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { BasicModal, ReagentRequestForm } from "@/components";
 import { useReagentRequestForm } from "@/components/ReagentRequestForm";
 import { Severity } from "@/hooks";
 import { useEditReagentRequestMutation } from "@/store";
 import { ReagentRequestInput, RequestedReagent } from "@/types";
+import { isFetchBaseQueryError } from "@/utils";
 
 type ReagentRequestDetailsProps = {
   requestId: string;
@@ -21,29 +23,35 @@ const EditReagentRequest: React.FC<ReagentRequestDetailsProps> = ({
   onClose,
   onEditSubmit,
 }) => {
-  const [desiredQuantity, unit] = request.desiredQuantity.split(" ");
+  const { t } = useTranslation();
+
+  const [desiredQuantity, unit] = request.quantity.split(" ");
 
   const formMethods = useReagentRequestForm({
     reagentName: request?.name,
     CAS: request?.CAS,
-    desiredQuantity: Number(desiredQuantity),
+    initialQuantity: Number(desiredQuantity),
     userComment: request?.userComment,
     unit: unit,
+    amount: request?.amount,
+    structure: request?.structure,
   });
 
   const [editReagentRequest] = useEditReagentRequestMutation();
 
   const onSubmit = async (editedRequest: ReagentRequestInput) => {
-    const { error } = await editReagentRequest({
-      requestId,
-      editedRequest,
-    });
+    try {
+      await editReagentRequest({
+        requestId,
+        editedRequest,
+      }).unwrap();
 
-    if (error) {
-      onEditSubmit("error", "Failed to Update Request");
-    } else {
+      onEditSubmit("success", t("requests.successUpdate"));
       onClose();
-      onEditSubmit("success", "Request Successfully Updated");
+    } catch (error) {
+      if (isFetchBaseQueryError(error) && error.data) {
+        onEditSubmit("error", t(`backendErrors.${error.data}`));
+      }
     }
   };
 

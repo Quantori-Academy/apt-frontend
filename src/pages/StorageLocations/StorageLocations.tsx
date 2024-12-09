@@ -1,8 +1,9 @@
 import { Box, Button, Container, Pagination, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
+  AddRoomDialog,
   AddStorageDialog,
   DashboardBreadcrumbs,
   EditStorage,
@@ -10,7 +11,9 @@ import {
   PageLoader,
   StorageLocationsList,
 } from "@/components";
-import { useGetStorageRoomsQuery } from "@/store";
+import { userRoles } from "@/constants";
+import { useAppSelector } from "@/hooks";
+import { selectUserRole, useGetStorageRoomsQuery } from "@/store";
 import { paginateStorages } from "@/utils";
 
 import style from "./StorageLocations.module.css";
@@ -20,9 +23,14 @@ const PAGE_SIZE = 3;
 const StorageLocations: React.FC = () => {
   const { t } = useTranslation();
 
+  const role = useAppSelector(selectUserRole);
+
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [createRoomDialogOpen, setCreateRoomDialogOpen] = useState(false);
+
   const [roomIdToEdit, setRoomIdToEdit] = useState("");
+
   const [page, setPage] = useState(1);
   const {
     data: storages,
@@ -49,14 +57,27 @@ const StorageLocations: React.FC = () => {
       <Typography variant="h3" sx={{ marginBottom: "30px" }}>
         {t("storage.title.storage")}
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setCreateDialogOpen(true)}
-        style={{ marginBottom: "20px" }}
-      >
-        {t("storage.buttons.createLocation")}
-      </Button>
+
+      {role === userRoles.Administrator && (
+        <Box className={style.buttonBox}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setCreateDialogOpen(true)}
+            style={{ marginBottom: "20px" }}
+          >
+            {t("storage.buttons.createLocation")}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setCreateRoomDialogOpen(true)}
+            style={{ marginBottom: "20px" }}
+          >
+            {t("storage.buttons.createRoom")}
+          </Button>
+        </Box>
+      )}
       <StorageLocationsList
         storages={paginatedStorages}
         onEditRoom={handleEdit}
@@ -71,6 +92,10 @@ const StorageLocations: React.FC = () => {
         open={createDialogOpen}
         onClose={() => setCreateDialogOpen(false)}
         storages={storages}
+      />
+      <AddRoomDialog
+        open={createRoomDialogOpen}
+        onClose={() => setCreateRoomDialogOpen(false)}
       />
       <Box className={style.pagination}>
         <Pagination

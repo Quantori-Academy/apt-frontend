@@ -1,1 +1,1 @@
-export { default as EditReagentRequest } from "./EditReagentRequest.tsx";
+export { default as EditReagentRequest } from "./EditReagentRequest";

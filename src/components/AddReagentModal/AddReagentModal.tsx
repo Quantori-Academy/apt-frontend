@@ -6,6 +6,7 @@ import { AddReagentForm, BasicModal } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useCreateReagentMutation, useGetStorageRoomsQuery } from "@/store";
 import { ReagentData } from "@/types";
+import { handleError } from "@/utils";
 
 const AddReagentModal: React.FC = () => {
   const { t } = useTranslation();
@@ -17,17 +18,43 @@ const AddReagentModal: React.FC = () => {
 
   const handleCreateReagent = async (reagentData: ReagentData) => {
     try {
-      const payload = {
-        ...reagentData,
-        structure: reagentData.structure || null,
+      const {
+        name,
+        description = null,
+        pricePerUnit = null,
+        unit,
+        amount,
+        initialQuantity,
+        expirationDate,
+        locationId,
+        casNumber,
+        producer = null,
+        catalogId = null,
+        catalogLink = null,
+        structure = null,
+      } = reagentData;
+
+      const payload: ReagentData = {
+        name,
+        description,
+        pricePerUnit,
+        unit,
+        amount,
+        initialQuantity,
+        expirationDate,
+        locationId,
+        casNumber,
+        producer,
+        catalogId,
+        catalogLink,
+        structure,
       };
 
       await createReagent(payload).unwrap();
       showSuccess(t("addSubstanceForm.snackBarMessages.reagent.success"));
       setIsOpen(false);
     } catch (error) {
-      console.error("Error adding reagent:", error);
-      showError(t("addSubstanceForm.snackBarMessages.reagent.error"));
+      handleError({ error, t, showError });
     }
   };
 
@@ -37,7 +64,7 @@ const AddReagentModal: React.FC = () => {
   const locationOptions =
     storageRooms?.flatMap((room) =>
       room.locations.map((location) => ({
-        id: location.locationId,
+        id: Number(location.locationId),
         label: `${room.room} - ${location.locationName}`,
       }))
     ) || [];

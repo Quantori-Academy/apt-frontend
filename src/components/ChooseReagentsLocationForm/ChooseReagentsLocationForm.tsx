@@ -1,4 +1,4 @@
-import { Autocomplete, Stack, TextField } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -6,14 +6,19 @@ import { PageLoader, SaveCancelButtons } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useChooseLocationMutation, useGetStorageRoomsQuery } from "@/store";
 import { RoomLocationBrief, StorageRoomsBrief } from "@/types";
+import { handleError } from "@/utils";
 
 type ChooseReagentsLocationFormProps = {
   orderId: string;
+  selectedReagents: number[];
+  onAllocation: () => void;
   onClose: () => void;
 };
 
 const ChooseReagentsLocationForm: React.FC<ChooseReagentsLocationFormProps> = ({
   orderId,
+  selectedReagents,
+  onAllocation,
   onClose,
 }) => {
   const { t } = useTranslation();
@@ -37,16 +42,19 @@ const ChooseReagentsLocationForm: React.FC<ChooseReagentsLocationFormProps> = ({
   }
 
   const handleSubmit = async () => {
-    const { error } = await chooseLocation({
-      orderId: orderId,
-      locationId: selectedLocation!.locationId,
-    });
-    if (error) {
-      showError(t("substanceDetails.snackBarMessages.unexpectedError"));
-    } else {
-      showSuccess(t("orders.snackBarMessages.editing.success"));
+    try {
+      await chooseLocation({
+        orderId: orderId,
+        locationId: selectedLocation!.locationId,
+        reagentIds: selectedReagents,
+      }).unwrap();
+      showSuccess(t("orders.snackBarMessages.allocated"));
+    } catch (error) {
+      handleError({ error, t, showError });
+    } finally {
+      onAllocation();
+      onClose();
     }
-    onClose();
   };
   return (
     <>
@@ -85,15 +93,11 @@ const ChooseReagentsLocationForm: React.FC<ChooseReagentsLocationFormProps> = ({
           )}
         />
       )}
-      <Stack direction="row" spacing={1}>
-        <SaveCancelButtons
-          saveText={t("buttons.save")}
-          saveDisabled={!selectedRoom || !selectedLocation}
-          cancelText={t("buttons.cancel")}
-          onClickCancel={onClose}
-          onClickSave={handleSubmit}
-        />
-      </Stack>
+      <SaveCancelButtons
+        saveDisabled={!selectedRoom || !selectedLocation}
+        onClickCancel={onClose}
+        onClickSave={handleSubmit}
+      />
     </>
   );
 };

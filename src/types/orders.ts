@@ -3,16 +3,12 @@ import { ORDER_STATUSES } from "@/constants";
 export type OrderStatus = (typeof ORDER_STATUSES)[keyof typeof ORDER_STATUSES];
 export type StatusFilter = OrderStatus | "All";
 
-export type StatusForm = {
-  status: OrderStatus;
-};
-
 export type SortType = "asc" | "desc";
 
 export type Order = {
   id: string;
-  title: string;
-  seller: string;
+  title: string | null;
+  seller: string | null;
   status: OrderStatus;
   createdAt: string;
   modifiedAt: string;
@@ -26,31 +22,42 @@ export type BackendOrder = Omit<Order, "createdAt" | "modifiedAt"> & {
 export type OrderReagent = {
   id: number;
   reagentName: string;
+  amount: string;
   quantity: string;
   unit: string;
   pricePerUnit: string;
-  structure?: string;
-  CASNumber?: string;
-  producer?: string;
+  fromRequest: boolean;
+  isAllocated?: boolean;
+  structure?: string | null;
+  CASNumber?: string | null;
+  producer?: string | null;
   catalogId?: string | null;
-  catalogLink?: string;
+  catalogLink?: string | null;
+};
+
+export type OrderReagentRowType = {
+  label: string;
+  key: keyof OrderReagent;
 };
 
 export type UpdatedReagent = OrderReagent & {
   orderId: string;
 };
 
-export type BackendOrderReagent = Pick<OrderReagent, "id" | "quantity" | "unit" | "structure" | "producer"> & {
+export type BackendOrderReagent = Pick<OrderReagent, "id" | "unit" | "amount" | "structure" | "producer"> & {
   reagent_name: string;
+  initial_quantity: string;
   price_per_unit: string;
-  cas_number?: string;
+  from_request: boolean;
+  is_allocated?: boolean;
+  cas_number?: string | null;
   catalog_id?: string | null;
-  catalog_link?: string;
+  catalog_link?: string | null;
 };
 
 export type OrderInput = {
   title?: string;
-  seller?: string;
+  seller?: string | null;
   requestIds?: string[];
   reagents: Omit<OrderReagent, "id">[];
 };

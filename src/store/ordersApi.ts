@@ -1,17 +1,14 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-
 import {
   BackendOrder,
   BackendOrderDetailPage,
-  MutationResponse,
   Order,
   OrderDetailPage,
   OrderInput,
-  StatusForm,
-  UpdatedReagent,
+  OrderReagent,
+  OrderStatus,
 } from "@/types";
 
-import { fetchQuery } from "./fetchQuery";
+import { requestsOrdersBaseApi } from "./requestsOrdersBaseApi";
 import {
   transformOrderData,
   transformOrderDetailResponse,
@@ -30,24 +27,22 @@ type AddReagentsToOrder = OrderInput & {
 
 type EditTitleSeller = {
   orderId: string;
-  title: string;
-  seller: string;
+  title: string | null;
+  seller: string | null;
 };
 
 type UpdateOrderStatus = {
   orderId: string;
-  status: StatusForm;
+  status: OrderStatus;
 };
 
 type Allocation = {
   orderId: string;
   locationId: string;
+  reagentIds: number[];
 };
 
-export const ordersApi = createApi({
-  reducerPath: "OrdersApi",
-  baseQuery: fetchQuery,
-  tagTypes: ["Orders", "Order"],
+export const ordersApi = requestsOrdersBaseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query<Order[], void>({
       query: () => "/orders",
@@ -67,7 +62,7 @@ export const ordersApi = createApi({
     getOrder: builder.query<OrderDetailPage, string>({
       query: (orderId) => `orders/${orderId}`,
       transformResponse: (response: BackendOrderDetailPage) => transformOrderDetailResponse(response),
-      providesTags: ["Order"],
+      providesTags: ["Orders"],
     }),
 
     editOrderTitleSeller: builder.mutation<void, EditTitleSeller>({
@@ -79,46 +74,37 @@ export const ordersApi = createApi({
           seller,
         },
       }),
-      invalidatesTags: ["Order", "Orders"],
-      transformErrorResponse: (response: MutationResponse) => {
-        return {
-          message: response.data?.message || "An unexpected error occurred.",
-        };
-      },
+      invalidatesTags: ["Orders"],
     }),
 
     updateOrderStatus: builder.mutation<void, UpdateOrderStatus>({
       query: ({ orderId, status }) => ({
         url: `/orders/${orderId}/status`,
         method: "PATCH",
-        body: status,
+        body: { status },
       }),
-      invalidatesTags: ["Order", "Orders"],
-      transformErrorResponse: (response: MutationResponse) => {
-        return {
-          message: response.data?.message || "An unexpected error occurred.",
-        };
-      },
+      invalidatesTags: ["Orders", "Requests"],
     }),
 
     chooseLocation: builder.mutation<void, Allocation>({
-      query: ({ orderId, locationId }) => ({
+      query: ({ orderId, locationId, reagentIds }) => ({
         url: `orders/${orderId}/allocate`,
         method: "POST",
         body: {
           location_id: locationId,
+          reagentIds,
         },
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Orders", "Requests"],
     }),
 
-    updateOrderReagent: builder.mutation<void, UpdatedReagent>({
-      query: (updatedReagent) => ({
-        url: `/orders/${updatedReagent.orderId}/reagents/${updatedReagent.id}`,
+    updateOrderReagent: builder.mutation<void, { orderId: string; reagent: OrderReagent }>({
+      query: ({ orderId, reagent }) => ({
+        url: `/orders/${orderId}/reagents/${reagent.id}`,
         method: "PUT",
-        body: transformOrderReagentData(updatedReagent),
+        body: transformOrderReagentData(reagent),
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Orders"],
     }),
 
     addReagentsToOrder: builder.mutation<void, AddReagentsToOrder>({
@@ -127,7 +113,7 @@ export const ordersApi = createApi({
         method: "POST",
         body: transformOrderData(newReagentsData).reagents,
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Orders"],
     }),
 
     deleteReagentFromOrder: builder.mutation<void, DeleteReagentIds>({
@@ -135,7 +121,7 @@ export const ordersApi = createApi({
         url: `/orders/${orderId}/reagents/${reagentId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Order"],
+      invalidatesTags: ["Orders"],
     }),
   }),
 });

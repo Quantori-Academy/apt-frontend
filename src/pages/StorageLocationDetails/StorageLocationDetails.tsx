@@ -1,35 +1,30 @@
 import { Delete as DeleteIcon } from "@mui/icons-material";
-import {
-  Box,
-  Divider,
-  Grid,
-  IconButton,
-  Paper,
-  Typography,
-} from "@mui/material";
-import React, { useState } from "react";
+import { Box, Grid, IconButton, Paper, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
-  ChangeLocationDialog,
   DashboardBreadcrumbs,
   PageError,
   PageLoader,
   StorageLocationDetail,
-  StoredSubstances,
+  SubstancesList,
 } from "@/components";
-import { useAlertSnackbar } from "@/hooks";
+import { userRoles } from "@/constants";
+import { useAlertSnackbar, useAppSelector } from "@/hooks";
 import { RouteProtectedPath } from "@/router";
 import {
+  selectUserRole,
   useDeleteStorageLocationMutation,
   useGetStorageLocationDetailQuery,
 } from "@/store";
+import { handleError } from "@/utils";
 
 const StorageLocationDetails: React.FC = () => {
   const { t } = useTranslation();
 
-  const [selectedSubstanceId, setSelectedSubstanceId] = useState("");
+  const role = useAppSelector(selectUserRole);
+
   const { locationId } = useParams<{ locationId: string }>();
   const navigate = useNavigate();
 
@@ -44,25 +39,18 @@ const StorageLocationDetails: React.FC = () => {
   const [deleteStorageLocation, { isLoading: isDeleting }] =
     useDeleteStorageLocationMutation();
 
-  const [modalIsOpened, setModalIsOpened] = useState(false);
-
   const handleDelete = async () => {
     if (locationDetails?.substances.length === 0) {
-      const { error } = await deleteStorageLocation(Number(locationId));
-
-      if (!error) {
+      try {
+        await deleteStorageLocation(Number(locationId)).unwrap();
         showSuccess(t("storage.snackBarMessages.successDelete"));
         navigate(RouteProtectedPath.storageLocation);
-      } else {
-        showError(t("storage.snackBarMessages.errorDelete"));
+      } catch (error) {
+        handleError({ error, t, showError });
       }
     } else {
       showError(t("storage.snackBarMessages.notEmptyError"));
     }
-  };
-
-  const handleChangeLocation = (substanceId: string) => {
-    setSelectedSubstanceId(substanceId);
   };
 
   if (isLoading || isDeleting) return <PageLoader />;
@@ -90,16 +78,18 @@ const StorageLocationDetails: React.FC = () => {
             {locationDetails.roomName} - {locationDetails.locationName}
           </Typography>
 
-          <Box display="flex" alignItems="center">
-            <IconButton
-              onClick={handleDelete}
-              color="error"
-              aria-label="delete"
-              disabled={isDeleting}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Box>
+          {role === userRoles.Administrator && (
+            <Box display="flex" alignItems="center">
+              <IconButton
+                onClick={handleDelete}
+                color="error"
+                aria-label="delete"
+                disabled={isDeleting}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          )}
         </Grid>
         <StorageLocationDetail locationDetails={locationDetails} />
         <Grid item xs={12}>
@@ -112,24 +102,21 @@ const StorageLocationDetails: React.FC = () => {
               boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ fontWeight: 600, margin: "20px" }}
+            >
               {t("storage.fields.storedSubstances")}
             </Typography>
-            <Divider sx={{ marginBottom: 2 }} />
-            <StoredSubstances
+
+            <SubstancesList
               substances={locationDetails.substances}
-              onChangeLocation={handleChangeLocation}
-              openModal={() => setModalIsOpened(true)}
+              isInLocation={true}
             />
           </Paper>
         </Grid>
       </Grid>
-      <ChangeLocationDialog
-        open={modalIsOpened}
-        onClose={() => setModalIsOpened(false)}
-        locationDetails={locationDetails}
-        selectedSubstanceId={selectedSubstanceId}
-      />
     </Box>
   );
 };

@@ -2,47 +2,67 @@ import LinkIcon from "@mui/icons-material/Link";
 import { Card, CardContent, Grid, Link, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { DetailItem, QuantityLocationButtons, SmilesImage } from "@/components";
+import {
+  DetailItem,
+  DisposeButton,
+  OutOfStock,
+  SmilesImage,
+  SubstanceLocationsTable,
+} from "@/components";
 import { userRoles } from "@/constants";
-import { useAppSelector } from "@/hooks";
-import { selectUserRole } from "@/store";
-import { Reagent, RoomData } from "@/types";
+import { useAlertSnackbar, useAppSelector } from "@/hooks";
+import { selectUserRole, useDeleteSubstancesMutation } from "@/store";
+import { Reagent } from "@/types";
+import { formatDate } from "@/utils";
+import { handleError } from "@/utils/handleError";
 
-type ReagentKey = keyof Reagent;
+type ReagentKey = keyof Omit<Reagent, "locations">;
 
-type ReagentDetailRow = {
-  label: string;
-  key: ReagentKey;
-};
-
-const reagentDetailsRows: ReagentDetailRow[] = [
-  { label: "name", key: "name" },
-  { label: "totalQuantityLeft", key: "totalQuantityLeft" },
-  { label: "price", key: "pricePerUnit" },
-  { label: "locationId", key: "locationId" },
-  { label: "CASNumber", key: "CASNumber" },
-  { label: "producer", key: "producer" },
-  { label: "catalogID", key: "catalogID" },
-  { label: "catalogLink", key: "catalogLink" },
-  { label: "description", key: "description" },
+const reagentDetailsRows: ReagentKey[] = [
+  "name",
+  "totalQuantityLeft",
+  "CASNumber",
+  "producer",
+  "catalogID",
+  "catalogLink",
+  "description",
+  "expirationDate",
 ];
 
 type ReagentDetailsProps = {
   reagentDetails: Reagent;
-  reagentLocationDetails: RoomData;
-  setIsChangingQuantity: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsChangingLocation: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ReagentDetails: React.FC<ReagentDetailsProps> = ({
-  reagentDetails,
-  reagentLocationDetails,
-  setIsChangingQuantity,
-  setIsChangingLocation,
-}) => {
+const ReagentDetails: React.FC<ReagentDetailsProps> = ({ reagentDetails }) => {
   const { t } = useTranslation();
 
   const role = useAppSelector(selectUserRole);
+
+  const [deleteSubstances] = useDeleteSubstancesMutation();
+
+  const { showSuccess, showError } = useAlertSnackbar();
+
+  const onClickDelete = async () => {
+    try {
+      await deleteSubstances([Number(substanceId)]).unwrap();
+      showSuccess(t("substanceDetails.snackBarMessages.reagent.successDelete"));
+    } catch (error) {
+      handleError({ error, t, showError });
+    }
+  };
+
+  const {
+    catalogLink,
+    structure,
+    locations,
+    category,
+    expirationDate,
+    substanceId,
+  } = reagentDetails;
+
+  const isExpired = expirationDate
+    ? new Date() > new Date(expirationDate)
+    : false;
 
   return (
     <Card sx={{ background: "#0080800f" }}>
@@ -51,18 +71,14 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
           {t("substanceDetails.title.reagent")}
         </Typography>
 
-        <Grid container spacing={2}>
+        <Grid container spacing={2} mb={6}>
           <Grid item xs={12} sm={6}>
-            {reagentDetailsRows.map(({ label, key }) => {
+            {reagentDetailsRows.map((key) => {
               let value;
-              if (key === "totalQuantityLeft") {
-                value = `${reagentDetails[key]} ${reagentDetails.unit || "-"}`;
-              } else if (key === "locationId") {
-                value = `${reagentLocationDetails.roomName}, ${reagentLocationDetails.locationName}`;
-              } else if (key === "catalogLink" && reagentDetails.catalogLink) {
+              if (key === "catalogLink" && catalogLink) {
                 value = (
                   <Link
-                    href={reagentDetails.catalogLink}
+                    href={catalogLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     underline="hover"
@@ -76,36 +92,45 @@ const ReagentDetails: React.FC<ReagentDetailsProps> = ({
                     {t("addSubstanceForm.requiredFields.catalogLink.label")}
                   </Link>
                 );
-              } else {
+              } else if (key === "expirationDate")
+                value = formatDate(reagentDetails[key]);
+              else {
                 value = reagentDetails[key] || "-";
               }
               return (
                 <DetailItem
-                  key={label}
-                  label={t(`substanceDetails.fields.${label}`)}
+                  key={key}
+                  label={t(`substanceDetails.fields.${key}`)}
                   value={value}
+                  color={isExpired && key === "expirationDate" ? "red" : ""}
                 />
               );
             })}
           </Grid>
 
-          {reagentDetails.structure && (
+          {structure && (
             <Grid item xs={12} sm={6}>
-              <Typography gutterBottom sx={{ textAlign: "center" }}>
-                {t("substanceDetails.fields.structure")}
-              </Typography>
               <SmilesImage
-                smiles={reagentDetails.structure}
+                smiles={structure}
                 svgOptions={{ width: 185, height: 185 }}
+                withBorder
               />
             </Grid>
           )}
         </Grid>
-        {role === userRoles.Researcher && (
-          <QuantityLocationButtons
-            onChangeQuantity={() => setIsChangingQuantity(true)}
-            onChangeLocation={() => setIsChangingLocation(true)}
+        {role === userRoles.Researcher && isExpired && locations && (
+          <DisposeButton
+            substanceType={category}
+            onClickDispose={onClickDelete}
           />
+        )}
+        {locations ? (
+          <SubstanceLocationsTable
+            locations={locations}
+            substanceType={category}
+          />
+        ) : (
+          <OutOfStock />
         )}
       </CardContent>
     </Card>

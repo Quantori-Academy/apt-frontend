@@ -1,3 +1,5 @@
+import { SubstancesCategory, SubstancesDetails } from "@/types";
+
 export type StorageRoomsBrief = {
   id: string;
   room: string;
@@ -18,7 +20,7 @@ export type RoomData = {
   locationId: string;
   roomName: string;
   locationName: string;
-  substances: Substance[];
+  substances: SubstancesDetails[];
 };
 
 export type BackendRoomLocationBrief = {
@@ -31,14 +33,9 @@ export type BackendStorageRoomsBrief = Omit<StorageRoomsBrief, "locations" | "to
   total_substances: number;
 };
 
-export type NewRoom = Pick<RoomData, "roomId" | "locationName">;
+export type NewStorageRoom = Pick<StorageRoomsBrief, "room" | "description">;
 
-export type Substance = {
-  substanceId: string;
-  name: string;
-  description: string;
-  structureSmiles: string;
-};
+export type NewRoom = Pick<RoomData, "roomId" | "locationName">;
 
 export type BackendRoomData = {
   room_id: string;
@@ -49,17 +46,15 @@ export type BackendRoomData = {
 };
 
 export type BackendSubstance = {
-  substance_id: string;
+  id: string;
   name: string;
   description: string;
-  structure_smiles: string;
-};
-
-export type SubstancesInLocation = {
-  description: string;
-  name: string;
-  structureSmiles: string;
-  substanceId: string;
+  structure: string | null;
+  category: SubstancesCategory;
+  is_expired: boolean;
+  expiration_date: string;
+  quantity_left: number;
+  unit: string;
 };
 
 export type LocationDetails = {
@@ -67,11 +62,35 @@ export type LocationDetails = {
   locationName: string;
   roomId: string;
   roomName: string;
-  substances: Array<SubstancesInLocation>;
+  substances: Array<SubstancesDetails>;
 };
 
-export type MoveSubstance = {
-  oldRoomId: string;
-  substanceId: string;
-  newLocationId?: string;
+export type SubstancesTotalQuantityResponse = {
+  substance_id: number;
+  name: string;
+  category: SubstancesCategory;
+  locations: Array<SubstanceLocationsResponse>;
+};
+
+export type SubstanceLocationsResponse = {
+  room: string;
+  location_id: number;
+  location: string;
+  total_quantity_left: number;
+  unit: string;
+};
+
+export type SubstancesTotalQuantity = {
+  id: number;
+  name: string;
+  category: SubstancesCategory;
+  locations: Array<SubstanceLocation>;
+};
+
+export type SubstanceLocation = {
+  room: string;
+  locationId: number;
+  location: string;
+  totalQuantityLeft: number;
+  unit: string;
 };

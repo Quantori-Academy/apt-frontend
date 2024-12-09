@@ -4,6 +4,7 @@ import { OrderForm } from "@/components";
 import { useAlertSnackbar } from "@/hooks";
 import { useAddReagentsToOrderMutation } from "@/store";
 import { OrderInput } from "@/types";
+import { handleError } from "@/utils";
 
 type AddReagentsToOrderProps = {
   isOpen: boolean;
@@ -27,6 +28,7 @@ const AddReagentsToOrder: React.FC<AddReagentsToOrderProps> = ({
       {
         reagentName: "",
         unit: "",
+        amount: "",
         quantity: "",
         pricePerUnit: "",
         structure: "",
@@ -34,20 +36,21 @@ const AddReagentsToOrder: React.FC<AddReagentsToOrderProps> = ({
         producer: "",
         catalogId: "",
         catalogLink: "",
+        fromRequest: false,
       },
     ],
   };
 
   const onSubmit = async (data: OrderInput) => {
-    const { error } = await addReagentsToOrder({
-      orderId,
-      ...data,
-    });
-    if (error) {
-      showError(t("createOrderForm.snackBarMessages.addingReagents.error"));
-    } else {
+    try {
+      await addReagentsToOrder({
+        orderId,
+        ...data,
+      }).unwrap();
       showSuccess(t("createOrderForm.snackBarMessages.addingReagents.success"));
       onClose();
+    } catch (error) {
+      handleError({ error, t, showError });
     }
   };
 

@@ -90,21 +90,25 @@ const Dashboard = () => {
         <NavLink to={RouteProtectedPath.substances} className={style.navLink}>
           <DashboardCard dashboardCard={substancesCard} bgColor="#e8eaf6" />
         </NavLink>
-        {(role === userRoles.Administrator ||
-          role === userRoles.Researcher) && (
-          <NavLink
-            to={RouteProtectedPath.storageLocation}
-            className={style.navLink}
-          >
-            <DashboardCard dashboardCard={storageCard} bgColor="#e0f2f1" />
-          </NavLink>
-        )}
+
         <NavLink
-          to={RouteProtectedPath.reagentRequests}
+          to={RouteProtectedPath.storageLocation}
           className={style.navLink}
         >
-          <DashboardCard dashboardCard={reagentRequestCard} bgColor="#efebe9" />
+          <DashboardCard dashboardCard={storageCard} bgColor="#e0f2f1" />
         </NavLink>
+
+        {role !== userRoles.Administrator && (
+          <NavLink
+            to={RouteProtectedPath.reagentRequests}
+            className={style.navLink}
+          >
+            <DashboardCard
+              dashboardCard={reagentRequestCard}
+              bgColor="#efebe9"
+            />
+          </NavLink>
+        )}
         {role === userRoles.ProcurementOfficer && (
           <NavLink to={RouteProtectedPath.orders} className={style.navLink}>
             <DashboardCard dashboardCard={ordersCard} bgColor="#eceff1" />

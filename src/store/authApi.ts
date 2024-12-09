@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { Token, UserLoginInput } from "@/types";
 
-import { fetchQuery } from "./fetchQuery.ts";
+import { fetchQuery } from "./fetchQuery";
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -10,17 +10,10 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     login: builder.mutation<Token, UserLoginInput>({
       query: (credentials) => ({
-        url: "/users/login",
+        url: "/auth/login",
         method: "post",
         body: credentials,
       }),
-      transformErrorResponse(response): string {
-        const error = response.data;
-
-        return error && typeof error === "object" && "message" in error
-          ? (error.message as string)
-          : "An unknown error occurred";
-      },
     }),
   }),
 });

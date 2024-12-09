@@ -16,21 +16,23 @@ export {
 
 export {
   useGetReagentDetailsQuery,
-  useUpdateSubstanceMutation,
+  useUpdateLocationMutation,
   useGetSampleDetailsQuery,
-  useDeleteSubstanceMutation,
+  useDeleteSubstancesMutation,
   useGetSubstancesQuery,
   useCreateReagentMutation,
   useCreateSampleMutation,
+  useChangeQuantityMutation,
 } from "./substancesApi";
 
 export {
   useGetStorageRoomsQuery,
   useGetStorageLocationDetailQuery,
+  useCreateRoomMutation,
   useUpdateStorageRoomMutation,
   useCreateStorageRoomMutation,
   useDeleteStorageLocationMutation,
-  useMoveSubstanceMutation,
+  useGetSubstanceTotalQuantityQuery,
 } from "./storageApi";
 
 export {

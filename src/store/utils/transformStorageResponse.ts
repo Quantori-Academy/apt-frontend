@@ -17,9 +17,13 @@ export const transformStorageLocationResponse = (location: BackendRoomData): Roo
   roomName: location.room_name,
   locationName: location.location_name,
   substances: location.substances.map((substance) => ({
-    substanceId: String(substance.substance_id),
+    id: String(substance.id),
     name: substance.name,
     description: substance.description,
-    structureSmiles: substance.structure_smiles,
+    structure: substance.structure || "",
+    category: substance.category,
+    isExpired: substance.is_expired,
+    expirationDate: substance.expiration_date,
+    quantityLeft: `${substance.quantity_left} ${substance.unit}`,
   })),
 });

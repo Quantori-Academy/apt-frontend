@@ -1,14 +1,15 @@
 export type ReagentData = {
   name: string;
-  description: string;
-  pricePerUnit: number;
-  quantityUnit: string;
-  quantityLeft: number;
+  description: string | null;
+  pricePerUnit: number | null;
+  unit: string;
+  amount: number | null;
   expirationDate: string;
-  locationId: string;
-  casNumber: string;
-  producer: string;
-  catalogId: number;
-  catalogLink: string;
-  structure?: string | null;
+  initialQuantity: number | null;
+  locationId: number | null;
+  casNumber: string | null;
+  producer: string | null;
+  catalogId: number | null;
+  catalogLink: string | null;
+  structure: string | null;
 };

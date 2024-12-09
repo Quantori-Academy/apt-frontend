@@ -37,20 +37,26 @@ const filterListData = (
   return items.filter((item) => {
     const satisfiesExpired = expiredFilter === "All" || item.isExpired;
     const satisfiesCategory = categoryFilter === "All" || item.category === categoryFilter;
+
     const satisfiesSearch =
       item.name.toLowerCase().includes(searchQuery) ||
       item.structure.toLowerCase().includes(searchQuery) ||
-      item.storageLocation.toLowerCase().includes(searchQuery);
+      item.storageLocation?.toLowerCase().includes(searchQuery);
 
     return satisfiesExpired && satisfiesCategory && satisfiesSearch;
   });
 };
 
 const sortListData = (items: Array<SubstancesDetails>, sortColumn: SortColumn, sortDirection: SortDirection) => {
-  return items.toSorted((a, b) => {
-    const order = a[sortColumn].localeCompare(b[sortColumn]);
-    return sortDirection === "asc" ? order : -1 * order;
-  });
+  if (sortDirection === "none") {
+    return items;
+  } else {
+    return items.toSorted((a, b) => {
+      const order = a[sortColumn].localeCompare(b[sortColumn]);
+
+      return sortDirection === "asc" ? order : -1 * order;
+    });
+  }
 };
 
 const paginateListData = (items: Array<SubstancesDetails>, page: number, pageSize: number) => {

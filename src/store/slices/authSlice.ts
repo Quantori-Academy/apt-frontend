@@ -2,6 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
 import { Token, UserAuth } from "@/types";
+import { isFetchBaseQueryError } from "@/utils/isFetchBaseQueryError";
 
 import { authApi } from "../authApi";
 import { createReducerSlice } from "../createReducerSlice";
@@ -37,6 +38,7 @@ export const authSlice = createReducerSlice({
   reducers: (create) => ({
     logout: create.reducer((state) => {
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       state.isAuthenticated = false;
       state.user = null;
     }),
@@ -69,7 +71,8 @@ export const authSlice = createReducerSlice({
       })
       .addMatcher(authApi.endpoints.login.matchRejected, (state, action: PayloadAction<string | unknown>) => {
         state.isLoading = false;
-        state.errorMessage = (action.payload as string) || "Unknown error!";
+        state.errorMessage =
+          (isFetchBaseQueryError(action.payload) && (action.payload.data as string)) || "An unknown error occurred";
       });
   },
 });
