@@ -95,8 +95,9 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
   const isResearcher = role === userRoles.Researcher;
   const isProcurementOfficer = role === userRoles.ProcurementOfficer;
 
-  const renderButtons = (isResearcher && !isInLocation) || isProcurementOfficer;
-  const showDisposeButton =
+  const areButtonsShown =
+    (isResearcher && !isInLocation) || isProcurementOfficer;
+  const isDisposeButtonShown =
     isResearcher && expiredFilter === "Expired" && visibleItems.length > 0;
 
   return (
@@ -107,9 +108,9 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
           {t("substances.title")}
         </Typography>
       )}
-      {renderButtons && (
+      {areButtonsShown && (
         <Box className={style.buttonBox} sx={{ display: "flex", gap: 2 }}>
-          {showDisposeButton && (
+          {isDisposeButtonShown && (
             <DisposeExpiredSubstances substances={visibleItems} />
           )}
           <AddReagentModal />
