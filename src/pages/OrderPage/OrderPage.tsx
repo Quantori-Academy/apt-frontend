@@ -129,6 +129,8 @@ const OrderPage: React.FC = () => {
       showSuccess(t("orders.snackBarMessages.editing.success"));
     } catch (error) {
       handleError({ error, t, showError });
+    } finally {
+      setIsEditable(false);
     }
   };
 
