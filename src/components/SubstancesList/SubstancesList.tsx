@@ -16,6 +16,7 @@ import {
   DisposeExpiredSubstances,
   EmptyTable,
   SearchBar,
+  SearchResultEmpty,
   SubstancesTable,
 } from "@/components";
 import { userRoles } from "@/constants";
@@ -118,7 +119,7 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
           {isResearcher && <AddSampleModal />}
         </Box>
       )}
-      {visibleItems.length > 0 ? (
+      {substances.length > 0 ? (
         <>
           <Box display="flex" gap={2} marginBottom={2}>
             <CategoryFilter
@@ -146,21 +147,25 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
-          <SubstancesTable
-            isInLocation={isInLocation}
-            sortColumn={sortColumn}
-            sortDirection={sortDirection}
-            onSortChange={handleSortChange}
-            visibleItems={visibleItems}
-            totalPages={totalPages}
-            rowsPerPage={rowsPerPage}
-            onChangePageSize={handleChangeRowsPerPage}
-            page={page}
-            setPage={setPage}
-          />
+          {!visibleItems.length ? (
+            <SearchResultEmpty />
+          ) : (
+            <SubstancesTable
+              isInLocation={isInLocation}
+              sortColumn={sortColumn}
+              sortDirection={sortDirection}
+              onSortChange={handleSortChange}
+              visibleItems={visibleItems}
+              totalPages={totalPages}
+              rowsPerPage={rowsPerPage}
+              onChangePageSize={handleChangeRowsPerPage}
+              page={page}
+              setPage={setPage}
+            />
+          )}
         </>
       ) : (
-        <EmptyTable tableName="subtancesList" />
+        <EmptyTable tableName="substancesList" />
       )}
     </Container>
   );

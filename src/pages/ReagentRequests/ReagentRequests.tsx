@@ -11,6 +11,7 @@ import {
   PageLoader,
   ReagentRequestTable,
   SearchBar,
+  SearchResultEmpty,
   StatusFilter,
 } from "@/components";
 import { userRoles } from "@/constants";
@@ -146,7 +147,7 @@ const ReagentRequests: React.FC = () => {
       <DashboardBreadcrumbs />
       <Typography variant="h3">{t("requests.title")}</Typography>
 
-      {!visibleItems.length ? (
+      {!reagentRequestsOfficer.length || !reagentRequestsResearcher.length ? (
         <>
           <Box
             sx={{ display: "flex", height: "60px", justifyContent: "flex-end" }}
@@ -192,22 +193,26 @@ const ReagentRequests: React.FC = () => {
             </Box>
           </Box>
 
-          <ReagentRequestTable
-            sortColumn={sortColumn}
-            sortDirection={sortDirection}
-            visibleItems={visibleItems}
-            selected={selected}
-            onSortChange={handleSortChange}
-            isSelected={isSelected}
-            handleSelectAllClick={handleSelectAllClick}
-            toggleCheckbox={toggleCheckbox}
-            pendingItems={pendingItems}
-            totalPages={totalPages}
-            page={page}
-            setPage={setPage}
-            rowsPerPage={rowsPerPage}
-            onChangePageSize={handleChangeRowsPerPage}
-          />
+          {!visibleItems.length ? (
+            <SearchResultEmpty />
+          ) : (
+            <ReagentRequestTable
+              sortColumn={sortColumn}
+              sortDirection={sortDirection}
+              visibleItems={visibleItems}
+              selected={selected}
+              onSortChange={handleSortChange}
+              isSelected={isSelected}
+              handleSelectAllClick={handleSelectAllClick}
+              toggleCheckbox={toggleCheckbox}
+              pendingItems={pendingItems}
+              totalPages={totalPages}
+              page={page}
+              setPage={setPage}
+              rowsPerPage={rowsPerPage}
+              onChangePageSize={handleChangeRowsPerPage}
+            />
+          )}
         </>
       )}
 

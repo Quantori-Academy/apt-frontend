@@ -9,6 +9,7 @@ import {
   PageLoader,
   RoleFilter,
   SearchBar,
+  SearchResultEmpty,
   UsersTable,
 } from "@/components";
 import { useGetUsersQuery } from "@/store";
@@ -78,7 +79,11 @@ const Users: React.FC = () => {
           />
         </Box>
       </Box>
-      <UsersTable users={filteredUsers} page={page} setPage={setPage} />
+      {!filteredUsers.length ? (
+        <SearchResultEmpty />
+      ) : (
+        <UsersTable users={filteredUsers} page={page} setPage={setPage} />
+      )}
     </Container>
   );
 };

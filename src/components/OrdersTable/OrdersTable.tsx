@@ -10,7 +10,7 @@ import { type ChangeEvent, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { ScrollableTable } from "@/components";
+import { ScrollableTable, SearchResultEmpty } from "@/components";
 import { ORDER_STATUS_COLORS } from "@/constants";
 import { RouteProtectedPath } from "@/router";
 import { Order, SortType, StatusFilter } from "@/types";
@@ -82,6 +82,8 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
     page > 0
       ? Math.max(0, (1 + page) * rowsPerPage - filteredOrders.length)
       : 0;
+
+  if (!visibleRows.length) return <SearchResultEmpty />;
 
   return (
     <ScrollableTable

@@ -41,7 +41,8 @@
       "substancesList": "No substances available",
       "requestsList": "No requests to display",
       "ordersList": "No orders to show",
-      "storagesList": "No storages available"
+      "storagesList": "No storages available",
+      "noResultFound": "No result found"
     },
 
     "Yes": "Yes",
