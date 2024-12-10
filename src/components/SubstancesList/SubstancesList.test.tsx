@@ -12,7 +12,7 @@ vi.mock("@/store", async () => ({
   useGetStorageRoomsQuery: vi.fn(() => ({ data: [], isLoading: false })),
 }));
 
-test("renders substances list for Researcher", () => {
+test("renders adding substances buttons for Researcher", () => {
   vi.mocked(selectUserRole).mockReturnValue(userRoles.Researcher);
   render(<SubstancesList substances={[]} isInLocation={false} />, {
     wrapper: Wrapper,
@@ -21,7 +21,7 @@ test("renders substances list for Researcher", () => {
   expect(screen.getByRole("button", { name: "Add sample" }));
 });
 
-test("renders substances list for Administrator", () => {
+test("renders adding substances for Administrator", () => {
   vi.mocked(selectUserRole).mockReturnValue(userRoles.Administrator);
   render(<SubstancesList substances={[]} isInLocation={false} />, {
     wrapper: Wrapper,
@@ -34,7 +34,7 @@ test("renders substances list for Administrator", () => {
   ).not.toBeInTheDocument();
 });
 
-test("renders substances list for Officer", () => {
+test("renders adding substances for Officer", () => {
   vi.mocked(selectUserRole).mockReturnValue(userRoles.ProcurementOfficer);
   render(<SubstancesList substances={[]} isInLocation={false} />, {
     wrapper: Wrapper,
