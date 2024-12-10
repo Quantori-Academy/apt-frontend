@@ -7,6 +7,7 @@ import {
   AddStorageDialog,
   DashboardBreadcrumbs,
   EditStorage,
+  EmptyTable,
   PageError,
   PageLoader,
   StorageLocationsList,
@@ -33,7 +34,7 @@ const StorageLocations: React.FC = () => {
 
   const [page, setPage] = useState(1);
   const {
-    data: storages,
+    data: storages = [],
     isError,
     isLoading: isGettingStorages,
   } = useGetStorageRoomsQuery();
@@ -45,8 +46,6 @@ const StorageLocations: React.FC = () => {
 
   if (isGettingStorages) return <PageLoader />;
   if (isError) return <PageError text={t("storage.errors.storageLoadError")} />;
-  if (!storages)
-    return <PageError text={t("storage.errors.emptyStorageError")} />;
 
   const totalPages = Math.ceil(storages.length / PAGE_SIZE);
   const paginatedStorages = paginateStorages(storages, page, PAGE_SIZE);
@@ -78,10 +77,14 @@ const StorageLocations: React.FC = () => {
           </Button>
         </Box>
       )}
-      <StorageLocationsList
-        storages={paginatedStorages}
-        onEditRoom={handleEdit}
-      />
+      {!storages.length ? (
+        <EmptyTable tableName="storagesList" />
+      ) : (
+        <StorageLocationsList
+          storages={paginatedStorages}
+          onEditRoom={handleEdit}
+        />
+      )}
 
       <EditStorage
         open={editDialogOpen}

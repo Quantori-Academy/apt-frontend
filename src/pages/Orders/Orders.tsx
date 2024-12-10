@@ -1,4 +1,3 @@
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -6,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import {
   AddOrder,
   DashboardBreadcrumbs,
+  EmptyTable,
   OrdersFilter,
   OrdersTable,
   PageError,
@@ -66,17 +66,7 @@ const Orders = () => {
         </Button>
       </Box>
       {!orders?.length ? (
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          height="50vh"
-          sx={{ textAlign: "center", color: "grey.500" }}
-        >
-          <ShoppingCartOutlinedIcon sx={{ fontSize: 60, mb: 2 }} />
-          <Typography variant="h6">{t("orders.errors.emptyError")}</Typography>
-        </Box>
+        <EmptyTable tableName="ordersList" />
       ) : (
         <>
           <Box

@@ -76,3 +76,4 @@ export { AddedSubstancesInSample } from "./AddedSubstancesInSample";
 export { StructureEditor } from "./StructureEditor";
 export { StructureEditorField } from "./StructureEditorField";
 export { DisposeExpiredSubstances } from "./DisposeExpiredSubstances";
+export { EmptyTable } from "./EmptyTable";

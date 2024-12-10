@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import {
   AddReagentRequest,
   DashboardBreadcrumbs,
+  EmptyTable,
   OrderFromRequest,
   PageError,
   PageLoader,
@@ -145,50 +146,71 @@ const ReagentRequests: React.FC = () => {
       <DashboardBreadcrumbs />
       <Typography variant="h3">{t("requests.title")}</Typography>
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 1,
-        }}
-      >
-        <StatusFilter
-          filter={statusFilter}
-          setFilter={setStatusFilter}
-          setPage={setPage}
-        />
-        <SearchBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
-        <Box sx={{ display: "flex", height: "60px" }}>
-          {role === userRoles.Researcher && (
-            <Button onClick={() => setModalOpen(true)}>
-              {t("createRequestForm.buttonText")}
-            </Button>
-          )}
-          {role === userRoles.ProcurementOfficer && (
-            <Button disabled={!selected.length} onClick={handleCreateOrder}>
-              {t("orders.buttons.createOrder")}
-            </Button>
-          )}
-        </Box>
-      </Box>
+      {!visibleItems.length ? (
+        <>
+          <Box
+            sx={{ display: "flex", height: "60px", justifyContent: "flex-end" }}
+          >
+            {role === userRoles.Researcher && (
+              <Button onClick={() => setModalOpen(true)}>
+                {t("createRequestForm.buttonText")}
+              </Button>
+            )}
+          </Box>
+          <EmptyTable tableName="requestsList" />
+        </>
+      ) : (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <StatusFilter
+              filter={statusFilter}
+              setFilter={setStatusFilter}
+              setPage={setPage}
+            />
+            <SearchBar
+              setSearchQuery={setSearchQuery}
+              searchQuery={searchQuery}
+            />
+            <Box sx={{ display: "flex", height: "60px" }}>
+              {role === userRoles.Researcher && (
+                <Button onClick={() => setModalOpen(true)}>
+                  {t("createRequestForm.buttonText")}
+                </Button>
+              )}
+              {role === userRoles.ProcurementOfficer && (
+                <Button disabled={!selected.length} onClick={handleCreateOrder}>
+                  {t("orders.buttons.createOrder")}
+                </Button>
+              )}
+            </Box>
+          </Box>
 
-      <ReagentRequestTable
-        sortColumn={sortColumn}
-        sortDirection={sortDirection}
-        visibleItems={visibleItems}
-        selected={selected}
-        onSortChange={handleSortChange}
-        isSelected={isSelected}
-        handleSelectAllClick={handleSelectAllClick}
-        toggleCheckbox={toggleCheckbox}
-        pendingItems={pendingItems}
-        totalPages={totalPages}
-        page={page}
-        setPage={setPage}
-        rowsPerPage={rowsPerPage}
-        onChangePageSize={handleChangeRowsPerPage}
-      />
+          <ReagentRequestTable
+            sortColumn={sortColumn}
+            sortDirection={sortDirection}
+            visibleItems={visibleItems}
+            selected={selected}
+            onSortChange={handleSortChange}
+            isSelected={isSelected}
+            handleSelectAllClick={handleSelectAllClick}
+            toggleCheckbox={toggleCheckbox}
+            pendingItems={pendingItems}
+            totalPages={totalPages}
+            page={page}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            onChangePageSize={handleChangeRowsPerPage}
+          />
+        </>
+      )}
+
       {isOrderModalOpen && (
         <OrderFromRequest
           modalOpen={isOrderModalOpen}

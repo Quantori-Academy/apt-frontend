@@ -14,6 +14,7 @@ import {
   CategoryFilter,
   DashboardBreadcrumbs,
   DisposeExpiredSubstances,
+  EmptyTable,
   SearchBar,
   SubstancesTable,
 } from "@/components";
@@ -117,40 +118,50 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
           {isResearcher && <AddSampleModal />}
         </Box>
       )}
-
-      <Box display="flex" gap={2} marginBottom={2}>
-        <CategoryFilter
-          filter={categoryFilter}
-          setFilter={setCategoryFilter}
-          setPage={setPage}
-        />
-        <SearchBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
-        <ToggleButtonGroup
-          color="primary"
-          value={expiredFilter}
-          exclusive
-          onChange={(_event: React.MouseEvent<HTMLElement>, value) =>
-            setExpiredFilter(value)
-          }
-        >
-          <ToggleButton value="All">{t("substances.filters.all")}</ToggleButton>
-          <ToggleButton value="Expired">
-            {t("substances.filters.expired")}
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </Box>
-      <SubstancesTable
-        isInLocation={isInLocation}
-        sortColumn={sortColumn}
-        sortDirection={sortDirection}
-        onSortChange={handleSortChange}
-        visibleItems={visibleItems}
-        totalPages={totalPages}
-        rowsPerPage={rowsPerPage}
-        onChangePageSize={handleChangeRowsPerPage}
-        page={page}
-        setPage={setPage}
-      />
+      {visibleItems.length > 0 ? (
+        <>
+          <Box display="flex" gap={2} marginBottom={2}>
+            <CategoryFilter
+              filter={categoryFilter}
+              setFilter={setCategoryFilter}
+              setPage={setPage}
+            />
+            <SearchBar
+              setSearchQuery={setSearchQuery}
+              searchQuery={searchQuery}
+            />
+            <ToggleButtonGroup
+              color="primary"
+              value={expiredFilter}
+              exclusive
+              onChange={(_event: React.MouseEvent<HTMLElement>, value) =>
+                setExpiredFilter(value)
+              }
+            >
+              <ToggleButton value="All">
+                {t("substances.filters.all")}
+              </ToggleButton>
+              <ToggleButton value="Expired">
+                {t("substances.filters.expired")}
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+          <SubstancesTable
+            isInLocation={isInLocation}
+            sortColumn={sortColumn}
+            sortDirection={sortDirection}
+            onSortChange={handleSortChange}
+            visibleItems={visibleItems}
+            totalPages={totalPages}
+            rowsPerPage={rowsPerPage}
+            onChangePageSize={handleChangeRowsPerPage}
+            page={page}
+            setPage={setPage}
+          />
+        </>
+      ) : (
+        <EmptyTable tableName="subtancesList" />
+      )}
     </Container>
   );
 };
