@@ -11,7 +11,7 @@ const SearchResultEmpty: React.FC = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      height="50vh"
+      pt="85px"
       sx={{ textAlign: "center", color: "grey.500" }}
     >
       <SearchIcon sx={{ fontSize: 40, mb: 2 }} />
