@@ -109,6 +109,11 @@
       "An unexpected error occurred.": "An unexpected error occurred"
     },
 
+    "notFoundPage": {
+      "title": "Oops! The page you’re looking for doesn’t exist",
+      "button": "Go to dashboard"
+    },
+
     "users": {
       "title": "Users",
 

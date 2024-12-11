@@ -1,6 +1,6 @@
 import { Navigate, RouteObject } from "react-router-dom";
 
-import { Login } from "@/pages";
+import { Login, NotFoundPage } from "@/pages";
 
 import { loginLoader } from "./utils/loginLoader";
 
@@ -29,6 +29,6 @@ export const publicRoutesRouterConfig: Record<AppPublicRoutes, RouteObject> = {
   },
   [AppPublicRoutes.NOT_FOUND]: {
     path: RoutePublicPath[AppPublicRoutes.NOT_FOUND],
-    element: <div>Page not found</div>,
+    element: <NotFoundPage />,
   },
 };

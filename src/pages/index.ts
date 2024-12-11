@@ -12,3 +12,4 @@ export { Orders } from "./Orders";
 export { ReagentRequests } from "./ReagentRequests";
 export { OrderPage } from "./OrderPage";
 export { Substances } from "./Substances";
+export { NotFoundPage } from "./NotFoundPage";
