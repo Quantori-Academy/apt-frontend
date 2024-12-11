@@ -5,9 +5,7 @@ import { useTranslation } from "react-i18next";
 import {
   AddReagentRequest,
   DashboardBreadcrumbs,
-  EmptyTable,
   OrderFromRequest,
-  PageError,
   PageLoader,
   ReagentRequestTable,
   SearchBar,
@@ -109,9 +107,6 @@ const ReagentRequests: React.FC = () => {
 
   if (isOfficerRequestsLoading || isResearcherRequestsLoading)
     return <PageLoader />;
-  if (!reagentRequestsOfficer || !reagentRequestsResearcher) {
-    return <PageError text={t("requests.errors.emptyError")} />;
-  }
 
   const handleSortChange = (property: RequestsSortColumns) => {
     const isAsc = sortColumn !== property || sortDirection === "desc";
@@ -147,74 +142,59 @@ const ReagentRequests: React.FC = () => {
       <DashboardBreadcrumbs />
       <Typography variant="h3">{t("requests.title")}</Typography>
 
-      {!reagentRequestsOfficer.length || !reagentRequestsResearcher.length ? (
-        <>
-          <Box
-            sx={{ display: "flex", height: "60px", justifyContent: "flex-end" }}
-          >
+      <>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 1,
+          }}
+        >
+          <StatusFilter
+            filter={statusFilter}
+            setFilter={setStatusFilter}
+            setPage={setPage}
+          />
+          <SearchBar
+            setSearchQuery={setSearchQuery}
+            searchQuery={searchQuery}
+          />
+          <Box sx={{ display: "flex", height: "60px" }}>
             {role === userRoles.Researcher && (
               <Button onClick={() => setModalOpen(true)}>
                 {t("createRequestForm.buttonText")}
               </Button>
             )}
+            {role === userRoles.ProcurementOfficer && (
+              <Button disabled={!selected.length} onClick={handleCreateOrder}>
+                {t("orders.buttons.createOrder")}
+              </Button>
+            )}
           </Box>
-          <EmptyTable tableName="requestsList" />
-        </>
-      ) : (
-        <>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            <StatusFilter
-              filter={statusFilter}
-              setFilter={setStatusFilter}
-              setPage={setPage}
-            />
-            <SearchBar
-              setSearchQuery={setSearchQuery}
-              searchQuery={searchQuery}
-            />
-            <Box sx={{ display: "flex", height: "60px" }}>
-              {role === userRoles.Researcher && (
-                <Button onClick={() => setModalOpen(true)}>
-                  {t("createRequestForm.buttonText")}
-                </Button>
-              )}
-              {role === userRoles.ProcurementOfficer && (
-                <Button disabled={!selected.length} onClick={handleCreateOrder}>
-                  {t("orders.buttons.createOrder")}
-                </Button>
-              )}
-            </Box>
-          </Box>
+        </Box>
 
-          {!visibleItems.length ? (
-            <SearchResultEmpty />
-          ) : (
-            <ReagentRequestTable
-              sortColumn={sortColumn}
-              sortDirection={sortDirection}
-              visibleItems={visibleItems}
-              selected={selected}
-              onSortChange={handleSortChange}
-              isSelected={isSelected}
-              handleSelectAllClick={handleSelectAllClick}
-              toggleCheckbox={toggleCheckbox}
-              pendingItems={pendingItems}
-              totalPages={totalPages}
-              page={page}
-              setPage={setPage}
-              rowsPerPage={rowsPerPage}
-              onChangePageSize={handleChangeRowsPerPage}
-            />
-          )}
-        </>
-      )}
+        {!visibleItems.length ? (
+          <SearchResultEmpty />
+        ) : (
+          <ReagentRequestTable
+            sortColumn={sortColumn}
+            sortDirection={sortDirection}
+            visibleItems={visibleItems}
+            selected={selected}
+            onSortChange={handleSortChange}
+            isSelected={isSelected}
+            handleSelectAllClick={handleSelectAllClick}
+            toggleCheckbox={toggleCheckbox}
+            pendingItems={pendingItems}
+            totalPages={totalPages}
+            page={page}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            onChangePageSize={handleChangeRowsPerPage}
+          />
+        )}
+      </>
 
       {isOrderModalOpen && (
         <OrderFromRequest
