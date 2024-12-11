@@ -98,7 +98,7 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
   const isProcurementOfficer = role === userRoles.ProcurementOfficer;
 
   const areButtonsShown =
-    (isResearcher && !isInLocation) || isProcurementOfficer;
+    (isResearcher || isProcurementOfficer) && !isInLocation;
   const isDisposeButtonShown =
     isResearcher && expiredFilter === "Expired" && visibleItems.length > 0;
 
