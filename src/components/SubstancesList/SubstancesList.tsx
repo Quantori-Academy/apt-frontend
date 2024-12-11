@@ -119,7 +119,7 @@ const SubstancesList: React.FC<SubstancesListProps> = ({
           {isResearcher && <AddSampleModal />}
         </Box>
       )}
-      {substances.length > 0 ? (
+      {substances.length ? (
         <>
           <Box display="flex" gap={2} marginBottom={2}>
             <CategoryFilter
